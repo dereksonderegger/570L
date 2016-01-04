@@ -1,0 +1,1972 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass book
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+knitr
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Data Structures: Matrices, Data Frames, and Lists
+\end_layout
+
+\begin_layout Section
+Matrices
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+opts_chunk$set(cache.path = './cache/DataStructures/',
+\end_layout
+
+\begin_layout Plain Layout
+
+               fig.path   = './figure/DataStructures/')
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+We often want to store numerical data in a square or rectangular format
+ and mathematicians will call these 
+\begin_inset Quotes eld
+\end_inset
+
+matrices
+\begin_inset Quotes erd
+\end_inset
+
+.
+ These will have two dimensions, rows and columns.
+ To create a matrix in R we can create it directly using the 
+\family typewriter
+matrix()
+\family default
+ command which requires the data to fill the matrix with, and optionally,
+ some information about the number of rows and columns:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+opts_chunk$set(cache.path = './cache/DataStructures/',
+\end_layout
+
+\begin_layout Plain Layout
+
+               fig.path   = './figure/DataStructures/')
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The alternative to this is we could create two columns as individual vectors
+ and just push them together.
+ Or we could have made three rows and lump them by rows instead.
+ To do this we'll use a group of functions that 
+\emph on
+bind
+\emph default
+ vectors together.
+ To join two column vectors together, we'll use 
+\family typewriter
+cbind
+\family default
+ and to bind rows together we'll use the
+\family typewriter
+ rbind
+\family default
+ function
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+first <- c(1,2,3)
+\end_layout
+
+\begin_layout Plain Layout
+
+second <- c(4,5,6)
+\end_layout
+
+\begin_layout Plain Layout
+
+cbind(first, second)
+\end_layout
+
+\begin_layout Plain Layout
+
+rbind(first, second)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notice that doing this has provided R with some names for the individual
+ rows and columns.
+ I can change these using the commands 
+\family typewriter
+colnames()
+\family default
+ and 
+\family typewriter
+rownames()
+\family default
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+M <- matrix(1:6, nrow=3, ncol=2, byrow=TRUE) 
+\end_layout
+
+\begin_layout Plain Layout
+
+colnames(M) <- c('Column1', 'Column2')
+\end_layout
+
+\begin_layout Plain Layout
+
+rownames(M) <- c('Row1', 'Row2','Row3')
+\end_layout
+
+\begin_layout Plain Layout
+
+M
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Accessing a particular element of a matrix is done in a similar manner as
+ with vectors, using the 
+\family typewriter
+[]
+\family default
+ notation, but this time we must specify which row and which column.
+ Notice that this scheme 
+\emph on
+always
+\emph default
+ is 
+\family typewriter
+[row, col]
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+M1 <- matrix(1:6, nrow=3, ncol=2)
+\end_layout
+
+\begin_layout Plain Layout
+
+M1
+\end_layout
+
+\begin_layout Plain Layout
+
+M1[1,2] # Grab row 1, column 2 value
+\end_layout
+
+\begin_layout Plain Layout
+
+M1[1, 1:2]  # grab the 1st and 2nd elements in row 1
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I might want to grab a single row or a single column out of a matrix, which
+ is sometimes referred to as taking a 
+\emph on
+slice
+\emph default
+ of the matrix.
+ I could figure out how long that vector is, but often I'm too lazy.
+ Instead I can just specify the specify the particular row or column I want.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+M1
+\end_layout
+
+\begin_layout Plain Layout
+
+M1[1,]  # grab the 1st row
+\end_layout
+
+\begin_layout Plain Layout
+
+M1[,2]  # grab second column
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Data Frames
+\end_layout
+
+\begin_layout Standard
+Matrices are great for mathematical operations, but I also want to be able
+ to store data that is numerical.
+ For example I might want to store a categorical variable such as manufacturer
+ brand.
+ To generalize our concept of a matrix to include these types of data, we
+ will create a structure called a 
+\family typewriter
+data.frame
+\family default
+.
+ These are very much like a simple Excel spreadsheet where each column represent
+s a different trait or measurement type and each row will represent an individua
+l.
+\end_layout
+
+\begin_layout Standard
+Perhaps the easiest way to create a data frame is to just type the columns
+ of data
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+data <- data.frame(
+\end_layout
+
+\begin_layout Plain Layout
+
+  Name  = c('Bob','Jeff','Mary'), 	
+\end_layout
+
+\begin_layout Plain Layout
+
+  Score = c(90, 75, 92)
+\end_layout
+
+\begin_layout Plain Layout
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# Show the data.frame 
+\end_layout
+
+\begin_layout Plain Layout
+
+data
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Because a data frame feels like a matrix, R also allows matrix notation
+ for accessing particular values.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+format
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+result
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[a,b]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+element in row 
+\family typewriter
+a
+\family default
+ and column 
+\family typewriter
+b
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[a,]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+all elements in row 
+\family typewriter
+a
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[,b]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+all elements in column 
+\family typewriter
+b
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\family default
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+data[1,1]
+\end_layout
+
+\begin_layout Plain Layout
+
+data[2,]
+\end_layout
+
+\begin_layout Plain Layout
+
+data[,2]
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Because the columns have meaning and we have given them column names, it
+ is desirable to want to access an element by the name of the column as
+ opposed to the column number.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+In large Excel spreadsheets I often get annoyed trying to remember which
+ column something was in and muttering 
+\begin_inset Quotes eld
+\end_inset
+
+Was total biomass in column P or Q?
+\begin_inset Quotes erd
+\end_inset
+
+ A system where I could just name the column 
+\family typewriter
+Total.Biomass
+\family default
+ and be done with it is much nicer to work with and I make fewer dumb mistakes.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+data$Name
+\end_layout
+
+\begin_layout Plain Layout
+
+data$Name[2]
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I can mix the 
+\family typewriter
+[]
+\family default
+ notation with the column names.
+ The following is also acceptable:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+data[, 'Name']
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The next thing we might wish to do is add a new column to a preexisting
+ data frame.
+ There are two ways to do this.
+ First, we could use the 
+\family typewriter
+cbind()
+\family default
+ function to bind two data frames together.
+ Second we could reference a new column name and assign values to it.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+Second.score <- data.frame(Score2=c(41,42,43))
+\end_layout
+
+\begin_layout Plain Layout
+
+data <-  cbind( data, Second.score )
+\end_layout
+
+\begin_layout Plain Layout
+
+data
+\end_layout
+
+\begin_layout Plain Layout
+
+data$Score3 <- c(61,62,63) # the Score3 column will created
+\end_layout
+
+\begin_layout Plain Layout
+
+data
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Data frames are very commonly used and many commonly used functions will
+ take a 
+\family typewriter
+data
+\family default
+ argument and all other arguments are assumed to be in the given data frame.
+ Unfortunately this is not universally supported by all functions and you
+ must look at the help file for the function you are interested in.
+\end_layout
+
+\begin_layout Section
+Lists
+\end_layout
+
+\begin_layout Standard
+Data frames are quite useful for storing data but sometimes we'll need to
+ store a bunch of different pieces of information and it won't fit neatly
+ as a data frame.
+ The most general form of a data structure is called a 
+\emph on
+list
+\emph default
+.
+ This can be thought of as a vector of objects where there is no requirement
+ for each element to be the same type of object.
+\end_layout
+
+\begin_layout Standard
+Consider that I might need to store information about person.
+ For example, suppose that I want make an object that holds information
+ about my immediate family.
+ This object should have my spouse's name (just one name) as well as my
+ siblings.
+ But since I have many siblings, I want the siblings to be a vector of names.
+ Likewise I might also include my pets, but we don't want any requirement
+ that the number of pets is the same as the number of siblings (or spouses!).
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+wife <- 'Aubrey'
+\end_layout
+
+\begin_layout Plain Layout
+
+sibs <- c('Tina','Caroline','Brandon','John')
+\end_layout
+
+\begin_layout Plain Layout
+
+pets <- c('Beau','Tess','Kaylee')
+\end_layout
+
+\begin_layout Plain Layout
+
+Derek <- list(Spouse=wife, Siblings=sibs, Pets=pets)
+\end_layout
+
+\begin_layout Plain Layout
+
+str(Derek) # show the structure of object
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notice that the object 
+\family typewriter
+Derek
+\family default
+ is a list of three elements.
+ The first is the single string containing my wife's name.
+ The next is a vector of my siblings' names and it a vector of length 
+\begin_inset Formula $4$
+\end_inset
+
+.
+ Finally the vector of pets' names is only of length 
+\begin_inset Formula $3$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+To access any element of this list we can use an indexing scheme similar
+ to matrices and vectors.
+ The only difference is that we'll use 
+\emph on
+two
+\emph default
+ square brackets instead of one.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+Derek[[ 1 ]]
+\end_layout
+
+\begin_layout Plain Layout
+
+Derek[[ 3 ]]
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There is a second way I can access elements.
+ For data frames it was convenient to use the notation 
+\family typewriter
+DataFrame$ColumnName
+\family default
+ and we will use the same convention for lists.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Actually a data frame is just a list with the requirement that each list
+ element is a vector and all vectors are of the same length.
+\end_layout
+
+\end_inset
+
+ To access my pets names we can use the following notation:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+Derek$Pets
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To add something new to the list object, we can just make an assignment
+ in a similar fashion.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+Derek$Offspring <- c('Elise')
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+We can also add extremely complicated items to my list.
+ Here we'll add a matrix as another list element.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# from the previous section, recall we had 
+\end_layout
+
+\begin_layout Plain Layout
+
+# defined the following data.frame
+\end_layout
+
+\begin_layout Plain Layout
+
+str(data)
+\end_layout
+
+\begin_layout Plain Layout
+
+Derek$foo <- data
+\end_layout
+
+\begin_layout Plain Layout
+
+str(Derek)
+\end_layout
+
+\begin_layout Plain Layout
+
+Derek$foo
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The place that most users will run into lists is that the output of many
+ statistical procedures will return the results in a list object.
+ When a user asks R to perform a regression, the output returned is a list
+ object, and we'll need to grab particular information from that object
+ afterwards.
+ For example, the output from a t-test in R is a list:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- c(5.1, 4.9, 5.6, 4.2, 4.8, 4.5, 5.3, 5.2) 
+\end_layout
+
+\begin_layout Plain Layout
+
+result <- t.test(x, alternative='less', mu=5) 
+\end_layout
+
+\begin_layout Plain Layout
+
+str(result)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We see that 
+\family typewriter
+result
+\family default
+ is actually a list with 
+\begin_inset Formula $9$
+\end_inset
+
+ elements in it.
+ To access the p-value we could use:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+result$p.value
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If I ask R to print the object 
+\family typewriter
+result
+\family default
+, it will hide the structure from you and print it in a 
+\begin_inset Quotes eld
+\end_inset
+
+pretty
+\begin_inset Quotes erd
+\end_inset
+
+ fashion because there is a print function defined specifically for objects
+ created by the 
+\family typewriter
+t.test()
+\family default
+ function.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+result
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Exercises
+\end_layout
+
+\begin_layout Enumerate
+In this problem, we will work with the matrix 
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccccc}
+2 & 4 & 6 & 8 & 10\\
+12 & 14 & 16 & 18 & 20\\
+22 & 24 & 26 & 28 & 30
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Create the matrix in two ways and save the resulting matrix as 
+\family typewriter
+M
+\family default
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Create the matrix using some combination of the 
+\family typewriter
+seq()
+\family default
+ and 
+\family typewriter
+matrix()
+\family default
+ commands.
+\end_layout
+
+\begin_layout Enumerate
+Create the same matrix by some combination of multiple 
+\family typewriter
+seq()
+\family default
+ commands and either the 
+\family typewriter
+rbind()
+\family default
+ or 
+\family typewriter
+cbind()
+\family default
+ command.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Extract the second row out of 
+\family typewriter
+M
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+Extract the element in the third row and second column of 
+\family typewriter
+M
+\family default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Create and manipulate a data frame.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Create a data frame named it 
+\family typewriter
+trees
+\family default
+ that has the following columns:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Itemize
+
+\family typewriter
+Girth = c(8.3, 8.6, 8.8, 10.5, 10.7, 10.8, 11.0)
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+Height= c(70, 65, 63, 72, 81, 83, 66)
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+Volume= c(10.3, 10.3, 10.2, 16.4, 18.8, 19.7, 15.6)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Extract the third observation.
+\end_layout
+
+\begin_layout Enumerate
+Extract the 
+\family typewriter
+Girth
+\family default
+ column referring to it by name (don't use whatever order you placed the
+ columns in).
+\end_layout
+
+\begin_layout Enumerate
+Create a data frame of all the observations 
+\emph on
+except
+\emph default
+ for the fourth observation.
+ (i.e.
+ Remove the fourth observation/row.)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Create and manipulate a list.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Create a list named 
+\family typewriter
+my.test
+\family default
+ with elements
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Itemize
+
+\family typewriter
+x = c(4,5,6,7,8,9,10)
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+y = c(34,35,41,40,45,47,51)
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+slope = 2.82
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+p.value = 0.000131
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Extract the second element in the list.
+\end_layout
+
+\begin_layout Enumerate
+Extract the element named 
+\family typewriter
+p.value
+\family default
+ from the list.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The function 
+\family typewriter
+lm()
+\family default
+ creates a linear model, which is a general class of model that includes
+ both regression and ANOVA.
+ We will call this on a data frame and examine the results.
+ For this problem, there isn't much to figure out, but rather the goal is
+ to recognize the data structures being used by common analysis functions.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+There are many data sets that are included with R and its packages.
+ One of which is the 
+\family typewriter
+trees
+\family default
+ data which is a data set of 
+\begin_inset Formula $n=31$
+\end_inset
+
+ cherry trees.
+ Load this dataset into your current workspace using the command
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+data(trees)     # load trees data.frame
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Examine the data frame using the 
+\family typewriter
+str()
+\family default
+ command.
+ Look at the help file for the data using the command 
+\family typewriter
+help(trees)
+\family default
+ or 
+\family typewriter
+?trees
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+Perform a regression relating the volume of lumber produced to the girth
+ and height of the tree using the following command
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+m <- lm( Volume ~ Girth + Height, data=trees)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Use the 
+\family typewriter
+str()
+\family default
+ command to inspect 
+\family typewriter
+m
+\family default
+.
+ Extract the model coefficients from this list.
+\end_layout
+
+\begin_layout Enumerate
+The list 
+\family typewriter
+m
+\family default
+ can be passed to other functions.
+ For example, the function 
+\family typewriter
+summary()
+\family default
+ will take the list and recognize that it was produced by the 
+\family typewriter
+lm()
+\family default
+ function and produce a summary table in the manner that we are used to
+ seeing.
+ Produce that summary table using the command
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+summary(m)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_body
+\end_document

@@ -1,0 +1,1445 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass book
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+knitr
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Importing Data
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+opts_chunk$set(cache.path = './cache/ImportingData/',
+\end_layout
+
+\begin_layout Plain Layout
+
+               fig.path   = './figure/ImportingData/')
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Reading data from external sources is necessary.
+ It is most common for data to be in a data-frame like storage, such as
+ a MS Excel workbook, so we will concentrate on reading data into a 
+\family typewriter
+data.frame
+\family default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+In the typical way data is organized, we think of each column of data representi
+ng some trait or variable that we might be interested in.
+ In general, we might wish to investigate the relationship between variables.
+ In contrast, the rows of our data represent a single object on which the
+ column traits are measured.
+ For example, in a grade book for recording students scores throughout the
+ semester, their is one row for every student and columns for each assignment.
+ A green-house experiment dataset will have a row for every plant and columns
+ for treatment type and biomass.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Need to add an introductory section about working directories and path names.
+ Additionally it would be good to add a footnote about how RMarkdown starts
+ a completely new session when you knit the output so you have to explicitly
+ set the working directory in the code or use full path names.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Comma Separated Data
+\end_layout
+
+\begin_layout Standard
+To consider how data might be stored, we first consider the simplest file
+ format...
+ the comma separated values file.
+ In this file time, each of the 
+\begin_inset Quotes eld
+\end_inset
+
+cells
+\begin_inset Quotes erd
+\end_inset
+
+ of data are separated by a comma.
+ For example, the data file storing scores for three students might be as
+ follows:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+Able, Dave, 98, 92, 94
+\end_layout
+
+\begin_layout Plain Layout
+
+Bowles, Jason, 85, 89, 91
+\end_layout
+
+\begin_layout Plain Layout
+
+Carr, Jasmine, 81, 96, 97
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Typically when you open up such a file on a computer with Microsoft Excel
+ installed, Excel will open up the file assuming it is a spreadsheet and
+ put each element in its own cell.
+ However, you can also open the file using a more primitive program (say
+ Notepad in Windows, TextEdit on a Mac) you'll see the raw form of the data.
+\end_layout
+
+\begin_layout Standard
+Having just the raw data without any sort of column header is problematic
+ (which of the three exams was the final??).
+ Ideally we would have column headers that store the name of the column.
+ 
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+LastName, FirstName, Exam1, Exam2, FinalExam
+\end_layout
+
+\begin_layout Plain Layout
+
+Able, Dave, 98, 92, 94
+\end_layout
+
+\begin_layout Plain Layout
+
+Bowles, Jason, 85, 89, 91
+\end_layout
+
+\begin_layout Plain Layout
+
+Carr, Jasmine, 81, 96, 97
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+To see another example, open the 
+\begin_inset Quotes eld
+\end_inset
+
+Body Fat
+\begin_inset Quotes erd
+\end_inset
+
+ dataset from the Lock
+\begin_inset Formula $^{5}$
+\end_inset
+
+ introductory text book at the website 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://www.lock5stat.com/datasets/BodyFat.csv"
+
+\end_inset
+
+.
+ The first few rows of the file are as follows:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Doublebox
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+Bodyfat,Age,Weight,Height,Neck,Chest,Abdomen,Ankle,Biceps,Wrist
+\end_layout
+
+\begin_layout Plain Layout
+
+32.3,41,247.25,73.5,42.1,117,115.6,26.3,37.3,19.7
+\end_layout
+
+\begin_layout Plain Layout
+
+22.5,31,177.25,71.5,36.2,101.1,92.4,24.6,30.1,18.2
+\end_layout
+
+\begin_layout Plain Layout
+
+22,42,156.25,69,35.5,97.8,86,24,31.2,17.4
+\end_layout
+
+\begin_layout Plain Layout
+
+12.3,23,154.25,67.75,36.2,93.1,85.2,21.9,32,17.1
+\end_layout
+
+\begin_layout Plain Layout
+
+20.5,46,177,70,37.2,99.7,95.6,22.5,29.1,17.7
+\end_layout
+
+\begin_layout Plain Layout
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+To make R read in the data arranged in this format, we need to tell R three
+ things:
+\end_layout
+
+\begin_layout Enumerate
+Where does the data live? Often this will be the name of a file on your
+ computer, but the file could just as easily live on the internet (provided
+ your computer has internet access).
+\end_layout
+
+\begin_layout Enumerate
+Is the first row data or is it the column names? 
+\end_layout
+
+\begin_layout Enumerate
+What character separates the data? Some programs store data using tabs to
+ distinguish between elements, some others use white space.
+ R's mechanism for reading in data is flexible enough to allow you to specify
+ what the separator is.
+\end_layout
+
+\begin_layout Standard
+The primary function that we'll use to read data from a file and into R
+ is the function 
+\family typewriter
+read.table()
+\family default
+.
+ This function has many optional arguments but the most commonly used ones
+ are outlined in the table below.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="12" columns="3">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+argument
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+default
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Interpretation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+file
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A character string denoting the file location
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+header
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+FALSE
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Is the first line column names?
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+sep
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+What character separates each data value.
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The default 
+\family typewriter
+sep=
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\family default
+ represents any whitespace
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+skip
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The number of lines to skip before reading anything.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+This is useful when there are multiple lines of text describing 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+how the data was collected or what the columns mean.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+na.strings
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+NA
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+What values represent missing data.
+ Can have multiple strings 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+such as 
+\family typewriter
+na.strings=c('NA',-9999)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+quote
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset Quotes eld
+\end_inset
+
+
+\family default
+ and 
+\family typewriter
+'
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+For character strings, what characters represent quotations.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+So to read in the 
+\begin_inset Quotes eld
+\end_inset
+
+Body Fat
+\begin_inset Quotes erd
+\end_inset
+
+ dataset we could run the R command:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+BodyFat <- read.table( 
+\end_layout
+
+\begin_layout Plain Layout
+
+  file   = 'http://www.lock5stat.com/datasets/BodyFat.csv',  # where the data
+ lives
+\end_layout
+
+\begin_layout Plain Layout
+
+  header = TRUE,                                             # first line
+ is column names
+\end_layout
+
+\begin_layout Plain Layout
+
+  sep    = ',' )                                             # Data is sparated
+ by commas
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+str(BodyFat)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Looking at the help file for 
+\family typewriter
+read.table()
+\family default
+ we see that there are variants such as 
+\family typewriter
+read.csv()
+\family default
+ that sets the default arguments to 
+\family typewriter
+header
+\family default
+ and 
+\family typewriter
+sep
+\family default
+ more intelligently.
+ Also, there are many options to customize how R responds to different input.
+\end_layout
+
+\begin_layout Section
+MS Excel
+\end_layout
+
+\begin_layout Standard
+Commonly our data is stored as a MS Excel file.
+ There are two approaches you could use to import the data into R.
+\end_layout
+
+\begin_layout Enumerate
+From within Excel, export the worksheet that contains your data as a comma
+ separated values (.csv) file and proceed using the tools in the previous
+ section.
+\end_layout
+
+\begin_layout Enumerate
+Use functions within R that automatically convert the worksheet into a 
+\family typewriter
+.csv
+\family default
+ file and read it in.
+ One package that works nicely for this is the 
+\family typewriter
+readxl
+\family default
+ package..
+\end_layout
+
+\begin_layout Standard
+I generally prefer using option 2 because all of my collaborators can't
+ live without Excel and I've resigned myself to this.
+ However if you have complicated formulas in your Excel file, it is often
+ times safer to export it as a 
+\family typewriter
+.csv
+\family default
+ file to guarantee the data imported into R is correct.
+ Furthermore, other spreadsheet applications (such as Google docs) requires
+ you to export the data as a 
+\family typewriter
+.csv
+\family default
+ file so it is good to know both paths.
+\end_layout
+
+\begin_layout Standard
+Because R can only import a complete worksheet, the desired data worksheet
+ must be free of notes to yourself about how the data was collected, preliminary
+ graphics, or other stuff that isn't the data.
+ I find it very helpful to have a worksheet in which I describe the sampling
+ procedure and describe what each column means (and give the units!), then
+ a second worksheet where the actual data is, and finally a third worksheet
+ where my 
+\begin_inset Quotes eld
+\end_inset
+
+Excel Only
+\begin_inset Quotes erd
+\end_inset
+
+ collaborators have created whatever plots and summary statistics they need.
+ 
+\end_layout
+
+\begin_layout Standard
+The simplest package for importing Excel files seems to be the package 
+\family typewriter
+readxl
+\family default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Another package that does this is the 
+\family typewriter
+\size normal
+XLConnect
+\family default
+ which does the Excel -> 
+\family typewriter
+.csv
+\family default
+ conversion using Java.
+ The 
+\family typewriter
+RODBC
+\family default
+ package allows R to connect to various databases and it is possible to
+ make it consider an Excel file as an extremely crude database.
+ 
+\end_layout
+
+\end_inset
+
+.
+ This library provides a function 
+\family typewriter
+read_exel()
+\family default
+ that allows us to specify which sheet within the Excel file to read and
+ what character specifies missing data (it assumes a blank cell is missing
+ data if you don't specifying anything).
+\end_layout
+
+\begin_layout Standard
+From Bblearn, download the 
+\family typewriter
+files Example_1.xls, Example_2.xls, Example_3.xls 
+\family default
+and
+\family typewriter
+ Example_4.xls
+\family default
+ Place these files in the same directory that you store your STA 599 course
+ work.
+ Make sure that the working directory that RStudio is using is that same
+ directory (Session -> Set Working Directory).
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<warnings=FALSE, message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# load the library that has the read.xls function.
+ Unfortunately it overwrites some
+\end_layout
+
+\begin_layout Plain Layout
+
+# functions in the mosaic package, so you should remove it once the data
+ are loaded.
+\end_layout
+
+\begin_layout Plain Layout
+
+library(readxl)    
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# read the first worksheet of the Example_1 file
+\end_layout
+
+\begin_layout Plain Layout
+
+data.1 <- read_excel('Example_1.xls')   
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# read the second worksheet where the second worksheet is named 'data'
+\end_layout
+
+\begin_layout Plain Layout
+
+data.2 <- read_excel('Example_2.xls', sheet=2     )   # both ways 
+\end_layout
+
+\begin_layout Plain Layout
+
+data.2 <- read_excel('Example_2.xls', sheet='data')   # will work
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+There is one additional problem that shows up while reading in Excel files.
+ Blank columns often show up in Excel files because at some point there
+ was some text in a cell that got deleted but a space remains and Excel
+ still thinks there is data in the column.
+ To fix this, you could find the cell with the space in it, or you can select
+ a bunch of columns at the edge and delete the entire columns.
+ Alternatively, you could remove the column after it is read into R.
+\end_layout
+
+\begin_layout Standard
+Open up the file 
+\family typewriter
+Example_4.xls
+\family default
+ in Excel and confirm that the data sheet has name columns out to 
+\family typewriter
+carb
+\family default
+.
+ Read in the data frame using the following code:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<warnings=FALSE, message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+setwd('~/GitHub/STA_570L_Book/')
+\end_layout
+
+\begin_layout Plain Layout
+
+data.4 <- read.xls('./Example_4.xls', sheet='data')   # Extra Column Example
+\end_layout
+
+\begin_layout Plain Layout
+
+str(data.4)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+We notice that after reading in the data, there are an additional two columns
+ (labeled 
+\family typewriter
+X
+\family default
+ and 
+\family typewriter
+X.1
+\family default
+ because R had to make up some column name so it chose that) that just has
+ missing data (the 
+\family typewriter
+NA
+\family default
+ stands for 
+\emph on
+not available
+\emph default
+ which means that the data is missing).
+ Go back to the Excel file and go to row 4 column N and notice that the
+ cell isn't actually blank...
+ there is a space.
+ Delete the space, save the file, and then reload the data into R.
+ You should notice that the extra columns are now gone.
+\end_layout
+
+\begin_layout Section
+Exercises
+\end_layout
+
+\begin_layout Enumerate
+Download from Bblearn the file 
+\family typewriter
+Example_5.xls
+\family default
+.
+ Open it in Excel and figure out which sheet of data we should import into
+ R.
+ At the same time figure out how many initial rows need to be skipped.
+ Import the data set into a data frame and show the structure of the imported
+ data using the 
+\family typewriter
+str()
+\family default
+ command.
+ Make sure that your data has 
+\begin_inset Formula $n=31$
+\end_inset
+
+ observations and the three columns are appropriately named.
+ If your computer doesn't have 
+\family typewriter
+Perl
+\family default
+ installed (most Windows machines don't) then export the Excel file as a
+ 
+\family typewriter
+.csv
+\family default
+ file and proceed.
+ If your machine does have 
+\family typewriter
+Perl
+\family default
+, just use the 
+\family typewriter
+read.xls()
+\family default
+ function directly.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<include=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(gdata)
+\end_layout
+
+\begin_layout Plain Layout
+
+Raw <- read.xls('./Example_5.xls', sheet='RawData', skip=3, header=TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+str(Raw)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

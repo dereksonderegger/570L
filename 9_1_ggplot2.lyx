@@ -1,0 +1,3034 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass book
+\use_default_options true
+\begin_modules
+knitr
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Graphing using 
+\family typewriter
+ggplot2
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+opts_chunk$set(cache.path = './cache/Graphics/',
+\end_layout
+
+\begin_layout Plain Layout
+
+               fig.path   = './figure/Graphics/')
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+There are three major 
+\begin_inset Quotes eld
+\end_inset
+
+systems
+\begin_inset Quotes erd
+\end_inset
+
+ of making graphs in R.
+ The basic plotting commands in R are quite effective but the commands do
+ not have a way of being combined in easy ways.
+ Lattice graphics (which the 
+\family typewriter
+mosaic
+\family default
+ package uses) makes it possible to create some quite complicated graphs
+ but it is very difficult to do make non-standard graphs.
+ The last package, 
+\family typewriter
+ggplot2
+\family default
+ tries to not anticipate what the user wants to do, but rather provide the
+ mechanisms for pulling together different graphical concepts and the user
+ gets to decide elements to combine.
+ 
+\end_layout
+
+\begin_layout Standard
+To make the most of 
+\family typewriter
+ggplot2
+\family default
+ it is important to wrap your mind around 
+\begin_inset Quotes eld
+\end_inset
+
+The Grammar of Graphics
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The act of building a graph can be broken down into three steps.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Define what data we are using.
+ 
+\end_layout
+
+\begin_layout Enumerate
+What is the major relationship we wish to exam.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Third, in what way should we present that relationship.
+ These relationships can be presented in multiple ways, and the process
+ of creating a good graph relies on building layers upon layers of information.
+ For example, we might start with printing the raw data and then overlay
+ a regression line over the top.
+ 
+\end_layout
+
+\begin_layout Standard
+Next, it should be noted that 
+\family typewriter
+ggplot2
+\family default
+ is designed to act on data frames.
+ It is actually hard to just draw three data points and for simple graphs
+ (like I might make for a lecture) I prefer to use the base graphing system
+ in R.
+ However for any real data analysis project, the data will already be in
+ a data frame and this is not an annoyance.
+\end_layout
+
+\begin_layout Standard
+These notes are in no sufficient for graphing, particularly with 
+\family typewriter
+ggplot2
+\family default
+.
+ There are many places online to get help with 
+\family typewriter
+ggplot2
+\family default
+.
+ One very nice resource is the website 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://www.cookbook-r.com/Graphs/"
+
+\end_inset
+
+ which gives much of the information available in the book 
+\emph on
+R Graphics Cookbook
+\emph default
+ which I highly recommend.
+ Second is just googling your problems and see what you can find on websites
+ such as StackExchange.
+\end_layout
+
+\begin_layout Standard
+In this chapter we will use three different data sets.
+ The first is the 
+\family typewriter
+iris
+\family default
+ data that shows the dimensions of petals and sepals for three varieties
+ of iris.
+ The 
+\family typewriter
+mtcars
+\family default
+ dataset shows some cars from a 
+\emph on
+Motor Trend
+\emph default
+ magazine and gives information about gas efficiency, number of cylinders,
+ volume of cylinders, etc.
+ Finally the 
+\family typewriter
+diamond
+\family default
+ data set looks at the price versus a number of other covariates such as
+ carats, cut, and clarity of the diamond.
+\end_layout
+
+\begin_layout Section
+A simple scatterplot
+\end_layout
+
+\begin_layout Standard
+To start with, we'll make a very simple scatterplot using the 
+\family typewriter
+iris
+\family default
+ dataset that will make a scatterplot of 
+\family typewriter
+Sepal.Length
+\family default
+ versus 
+\family typewriter
+Petal.Length
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3, fig.width=5, message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(ggplot2)
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot( data=iris, aes(x=Sepal.Length, y=Petal.Length) ) +  
+\end_layout
+
+\begin_layout Plain Layout
+
+	geom_point(  )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The data set we wish to use is specified using 
+\family typewriter
+data=iris
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+The relationship we want to explore is 
+\family typewriter
+x=Sepal.Length
+\family default
+ and 
+\family typewriter
+y=Petal.Length
+\family default
+.
+ This means the x-axis will be the Sepal Length and the y-axis will be the
+ Petal Length.
+\end_layout
+
+\begin_layout Enumerate
+The way we want to display this relationship is through graphing 1 point
+ for every observation.
+\end_layout
+
+\begin_layout Standard
+We can define other attributes that might reflect other aspects of the data.
+ For example, we might want for the of the data point to change dynamically
+ based on the species of iris.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3, fig.width=5, message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot( data=iris, aes(x=Sepal.Length, y=Petal.Length, color=Species) ) +
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+	geom_point(  )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+aes()
+\family default
+ command inside the previous section of code is quite mysterious.
+ The way to think about the 
+\family typewriter
+aes()
+\family default
+ is that it gives you a way to define relationships that are data dependent.
+ In the previous graph, the x-value and y-value for each point was defined
+ dynamically by the data, as was the color.
+ If we just wanted all the data points to be colored blue and larger, then
+ the following code would do that
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3, fig.width=5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot( data=iris, aes(x=Sepal.Length, y=Petal.Length) ) +  
+\end_layout
+
+\begin_layout Plain Layout
+
+	geom_point( color='blue', size=4 )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The important part isn't that 
+\family typewriter
+color
+\family default
+ and 
+\family typewriter
+size
+\family default
+ were defined in the 
+\family typewriter
+geom_point()
+\family default
+ but that they were defined 
+\emph on
+outside of an 
+\family typewriter
+aes()
+\family default
+ function! 
+\end_layout
+
+\begin_layout Enumerate
+Anything set inside an 
+\family typewriter
+aes()
+\family default
+ command will be of the form 
+\family typewriter
+attribute=Column_Name
+\family default
+ and will change based on the data.
+\end_layout
+
+\begin_layout Enumerate
+Anything set outside an 
+\family typewriter
+aes()
+\family default
+ command will be in the form 
+\family typewriter
+attribute=value
+\family default
+ and will be fixed.
+ 
+\end_layout
+
+\begin_layout Standard
+Next, I suppose I want to add a regression line
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+The line that best summarizes the relationship between 
+\family typewriter
+Sepal.Length
+\family default
+ and 
+\family typewriter
+Petal.Length
+\family default
+.
+\end_layout
+
+\end_inset
+
+ to each of these groups.
+ We can do this by adding another layer to the graph, in this case, a 
+\family typewriter
+smoother
+\family default
+ layer.
+ The 
+\family typewriter
+geom_smoother
+\family default
+ is intended to take a scatterplot of points and draw the best-fitting curve
+ to the data.
+ There are several options for how it choses to do this, but I'll tell it
+ to fit a regression line to each set of data.
+ Below, we have a graph of data points, a regression line, 
+\emph on
+and
+\emph default
+ a confidence region for the line
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+I typically don't use this method because it has too many limitations as
+ to how I fit the smoother.
+ I prefer to fit a model to the data and calculate the predicted values
+ along with whatever confidence intervals I want and plot those directly
+ using 
+\family typewriter
+geom_ribbon()
+\family default
+.
+\end_layout
+
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3, fig.width=5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot( data=iris, aes(x=Sepal.Length, y=Petal.Length, color=Species) ) +
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point( ) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_smooth( method='lm' ) # fit a regression to each species
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Geometries
+\end_layout
+
+\begin_layout Standard
+One way that 
+\family typewriter
+ggplot2
+\family default
+ makes it easy to form very complicated graphs is that it provides a large
+ number of basic building blocks that, when stacked upon each other, can
+ produce extremely complicated graphs.
+ A full list is available at 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://docs.ggplot2.org/current/"
+
+\end_inset
+
+ but the following list gives some idea of different building blocks.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="12" columns="2">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Geom
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Description
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+geom_bar
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A barplot
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+geom_boxplot
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Boxplots
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+geom_density
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A smoothed histogram
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+geom_errorbar
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Error bars
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+geom_histogram
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A histogram
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+geom_line
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Draw a line (after sorting x-values)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+geom_path
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Draw a line (without sorting x-values)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+geom_point
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Draw points (for a scatterplot)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+geom_ribbon
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Enclose a region, and color the interior
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+geom_smooth
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Add a ribbon that summarizes a scatterplot
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+geom_text
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Add text to a graph
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Bar plots
+\end_layout
+
+\begin_layout Standard
+These different geometries are different ways to display the relationship
+ between variables and can be combined in many interesting ways.
+ Suppose that you just want make some barplots and add 
+\begin_inset Formula $\pm$
+\end_inset
+
+ S.E.
+ bars.
+ This should be really easy to do, but in the base graphics in R, it is
+ a pain.
+ Fortunately in 
+\family typewriter
+ggplot2
+\family default
+ this is easy.
+ First, define a data frame with the bar heights you want to graph and the
+ 
+\begin_inset Formula $\pm$
+\end_inset
+
+ values you wish to use.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# Calculate the mean and sd of the Petal Widths for each species
+\end_layout
+
+\begin_layout Plain Layout
+
+library(dplyr)
+\end_layout
+
+\begin_layout Plain Layout
+
+stats <- iris %>% 
+\end_layout
+
+\begin_layout Plain Layout
+
+  group_by(Species) %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  summarize( Mean = mean(Petal.Width),                 # Mean   = ybar
+\end_layout
+
+\begin_layout Plain Layout
+
+             StdErr = sd(Petal.Width)/sqrt(n()) ) %>%  # StdErr = s / sqrt(n)
+\end_layout
+
+\begin_layout Plain Layout
+
+  mutate( lwr = Mean - StdErr,
+\end_layout
+
+\begin_layout Plain Layout
+
+          upr = Mean + StdErr )
+\end_layout
+
+\begin_layout Plain Layout
+
+stats
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Next we take these summary statistics and define the following graph which
+ makes a bar graph of the means and error bars that are 
+\begin_inset Formula $\pm$
+\end_inset
+
+1 estimated standard deviation of the mean (usually referred to as the 
+\emph on
+standard errors
+\emph default
+ of the means).
+ By default, 
+\family typewriter
+geom_bar()
+\family default
+ tries to draw a bar plot based on how many observations each group has.
+ What I want, though, is to draw bars of the height I specified, so to do
+ that I have to add 
+\family typewriter
+stat='identity'
+\family default
+ to specify that it should just use the heights I tell it.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3, fig.width=5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(stats, aes(x=Species)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_bar( aes(y=Mean), stat='identity') +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_errorbar( aes(ymin=lwr, ymax=upr) )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+While this isn't too bad, we would like to make this a bit more pleasing
+ to look at.
+ Each bars is a little too wide and the error bars should be a tad narrower
+ than then bar.
+ Also, the fill color for the bars is too dark.
+ So I'll change all of these, by setting those attributes 
+\emph on
+outside of an 
+\family typewriter
+aes()
+\family default
+ command.
+\begin_inset Newline newline
+\end_inset
+
+
+\emph default
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3, fig.width=5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(stats, aes(x=Species)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_bar( aes(y=Mean), stat='identity', fill='grey', width=.6) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_errorbar( aes(ymin=lwr, ymax=upr), color='red', width=.4 )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The last thing to notice is that the 
+\emph on
+order
+\emph default
+ in which the different layers matter.
+ This is similar to photoshop or GIS software where the layers added last
+ can obscure prior layers.
+ In the graph below, the lower part of the error bar is obscured by the
+ grey bar.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3, fig.width=5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(stats, aes(x=Species)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_errorbar( aes(ymin=lwr, ymax=upr), color='red', width=.4 ) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_bar( aes(y=Mean), stat='identity', fill='grey', width=.6)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Histograms
+\end_layout
+
+\begin_layout Standard
+Creating histograms of continuous data is a very common thing to do.
+ The simplest way to do this in 
+\family typewriter
+ggplot()
+\family default
+ is using the 
+\family typewriter
+geom_histogram
+\family default
+ function.
+ The simplest form is the the following:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.width=5, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+data <- data.frame(x=rexp(10000, rate=1/5))
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(data, aes(x=x)) + 
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_histogram() 
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Somewhat annoyingly, 
+\family typewriter
+ggplot2
+\family default
+ does not include an easy way for use intelligent choices for how many bins
+ to use.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+To use Scott's rule or Freedman-Draconis rule and we have to calculate those
+ by hand.
+ Letting the binwidth by 
+\begin_inset Formula $\hat{h}$
+\end_inset
+
+ these are 
+\begin_inset Formula $\hat{h}_{S}=3.49\hat{\sigma}n^{-1/3}$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{h}_{FD}=2*IQR*n^{-1/3}$
+\end_inset
+
+ where 
+\begin_inset Formula $\hat{\sigma}$
+\end_inset
+
+ is the standard deviation of the observations plotted and IQR is the inter-quar
+tile range.
+ 
+\end_layout
+
+\end_inset
+
+Instead we are stuck investigating different bin widths by hand.
+ To do this, we can set the number of bins via the 
+\family typewriter
+binwidth
+\family default
+ argument.
+ Notice that the y-axis is the number of observations in each bin.
+ If we want the y-axis to be 
+\emph on
+density
+\emph default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+So that the area shaded has area 1, so that when I compare a distribution
+ to the data, the y-axes are on the same scale.
+\end_layout
+
+\end_inset
+
+ we just need to tell 
+\family typewriter
+geom_histogram
+\family default
+ to have 
+\family typewriter
+y=..density..
+
+\family default
+ instead of the default.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.width=5, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(data, aes(x=x, y=..density..)) + 
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_histogram(binwidth=.25) 
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Often I want to also add some sort of smoothed density plot to my histogram.
+ The geom to do that is 
+\family typewriter
+geom_density()
+\family default
+ which takes your x-values and creates a smoothed density function using
+ kernel density algorithm with a normal kernel.
+ To do this, we need both layers of my plot to have a y-axis of density.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.width=5, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(data, aes(x=x, y=..density..)) + 
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_histogram(binwidth=.25) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_density(color='red', size=1.5)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case, we know the distribution the data came from, so we add the
+ exponential distribution that the data was drawn from over the top of the
+ histogram, mostly to demonstrate building a plot layer by layer.
+ We first need to create another data frame that has the distribution we
+ wish to plot.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- seq(0, 50, by=0.1) 
+\end_layout
+
+\begin_layout Plain Layout
+
+y <- dexp(x, rate=1/5) 
+\end_layout
+
+\begin_layout Plain Layout
+
+density.data <- data.frame(x=x, y=y)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Now to build our plot, we first by creating the histogram, and then add
+ the layer with the exponential distribution on top.
+ Notice that we must pass the data frame in which we stored the density
+ information to the 
+\family typewriter
+geom_line()
+\family default
+ function because the data we are using for this graph are in two different
+ data frames.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.width=5, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(data, aes(x=x)) + 
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_histogram(aes(y=..density..), binwidth=.25) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_line( data=density.data, aes(x=x, y=y), 
+\end_layout
+
+\begin_layout Plain Layout
+
+             color='red', size=1.5 )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Adjusting labels
+\end_layout
+
+\begin_layout Standard
+To make a graph more understandable, it is necessary to tweak labels for
+ the axes and add a main title and such.
+ Here we'll adjust labels in a graph, including the legend labels.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.width=5, fig.height=3>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# Treat the number of cylinders in a car as a 
+\end_layout
+
+\begin_layout Plain Layout
+
+# categorical variable (4,6 or 8)
+\end_layout
+
+\begin_layout Plain Layout
+
+mtcars$cyl <- factor(mtcars$cyl) 
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(mtcars, aes(x=wt, y=mpg, col=cyl)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+   geom_point() +
+\end_layout
+
+\begin_layout Plain Layout
+
+  labs( title='Weight vs Miles per Gallon') +
+\end_layout
+
+\begin_layout Plain Layout
+
+  labs( x="Weight in tons (2000 lbs)" ) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  labs( y="Miles per Gallon (US)") +
+\end_layout
+
+\begin_layout Plain Layout
+
+  labs( color="Cylinders")      
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Faceting
+\end_layout
+
+\begin_layout Standard
+The goal with faceting is to make many panels of graphics where each panel
+ represents the same relationship between variables, but something changes
+ between each panel.
+ For example using the 
+\family typewriter
+iris
+\family default
+ dataset we could look at the relationship between 
+\family typewriter
+Sepal.Length
+\family default
+ and 
+\family typewriter
+Petal.Length
+\family default
+ either with all the data in one graph, or one panel per species.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, fig.width=5, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(ggplot2)
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point() +
+\end_layout
+
+\begin_layout Plain Layout
+
+  facet_grid( .
+ ~ Species )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The line 
+\family typewriter
+facet_grid( formula )
+\family default
+ tells 
+\family typewriter
+ggplot2
+\family default
+ to make panels, and the formula tells how to orient the panels.
+ Recall that a formula is always in the order 
+\family typewriter
+y ~ x
+\family default
+ and because I want the species to change as we go across the page, but
+ don't have anything I want to change vertically we use 
+\family typewriter
+.
+ ~ Species
+\family default
+ to represent that.
+ If we had wanted three graphs stacked then we could use 
+\family typewriter
+Species ~ .
+\family default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+For a second example, we look at a dataset that examines the amount a waiter
+ was tipped by 244 parties.
+ Covariates that were measured include the day of the week, size of the
+ party, total amount of the bill, amount tipped, whether there were smokers
+ in the group
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Old data set when smoking in restaurants was allowed.
+\end_layout
+
+\end_inset
+
+ and the gender of the person paying the bill
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Mis-labeled as 
+\family typewriter
+sex
+\family default
+.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, fig.width=5, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(reshape2)
+\end_layout
+
+\begin_layout Plain Layout
+
+data(tips)
+\end_layout
+
+\begin_layout Plain Layout
+
+head(tips)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+It is easy to look at the relationship between the size of the bill and
+ the percent tipped.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, fig.width=5, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# make a graph and save it as an object
+\end_layout
+
+\begin_layout Plain Layout
+
+p2 <- ggplot(tips, aes(x = total_bill, y = tip / total_bill )) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point()
+\end_layout
+
+\begin_layout Plain Layout
+
+# Now print the graph
+\end_layout
+
+\begin_layout Plain Layout
+
+p2
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Next we ask if there is a difference in tipping percent based on gender
+ or day of the week by plotting this relationship for each combination of
+ gender and day.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, fig.width=5, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+p2 + facet_grid( sex ~ day )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sometimes we want multiple rows and columns of facets, but there is only
+ one categorical variable with many levels.
+ In that case we use 
+\family typewriter
+facet_wrap
+\family default
+ which takes a one-sided formula.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, fig.width=5, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+p2 + facet_wrap( ~ day )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finally we can allow the x and y 
+\family typewriter
+scales
+\family default
+ to vary between the panels by setting 
+\family typewriter
+
+\begin_inset Quotes eld
+\end_inset
+
+free
+\begin_inset Quotes erd
+\end_inset
+
+
+\family default
+, 
+\family typewriter
+
+\begin_inset Quotes eld
+\end_inset
+
+free_x
+\begin_inset Quotes erd
+\end_inset
+
+
+\family default
+, or 
+\family typewriter
+
+\begin_inset Quotes eld
+\end_inset
+
+free_y
+\begin_inset Quotes erd
+\end_inset
+
+
+\family default
+.
+ In the following code, the y-axis scale changes between the gender groups.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, fig.width=5, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+p2 + facet_grid( sex ~ day, scales="free_y" )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Exercises
+\end_layout
+
+\begin_layout Enumerate
+The 
+\family typewriter
+mosaic
+\family default
+ package includes a function that allows for a point and click interface
+ to building a graph in 
+\family typewriter
+ggplot2
+\family default
+.
+ The point of the 
+\family typewriter
+mplot()
+\family default
+ command is to allow you to do some point and click selection to build a
+ graph and then click the button that produces the R commands that produced
+ the graph.
+ You then copy and past the R commands into your markdown file.
+ Once you know the ggplot2 system better, you won’t ever bother with 
+\family typewriter
+mplot()
+\family default
+, you'll just type it in directly.
+ Until then it is nice to have some help in formatting the plotting commands.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Load the 
+\family typewriter
+mosaic
+\family default
+ library.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(mosaic)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+For the dataset 
+\family typewriter
+trees
+\family default
+, which should already be pre-loaded
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Look at the help file 
+\family typewriter
+\size normal
+?trees
+\family default
+ for more information about this data set.
+\end_layout
+
+\end_inset
+
+, we wish to build a scatterplot that compares the height and girth of these
+ cherry trees to the volume of lumber that was produced.
+ The 
+\family typewriter
+mosaic
+\family default
+ function 
+\family typewriter
+mplot()
+\family default
+ will allow you to explore many different ways of visualizing the data.
+ Run the command 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(mosaic)
+\end_layout
+
+\begin_layout Plain Layout
+
+mplot(trees)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+and create a graph using 
+\family typewriter
+ggplot2
+\family default
+ with 
+\family typewriter
+Height
+\family default
+ on the x-axis, 
+\family typewriter
+Volume
+\family default
+ on the y-axis, and 
+\family typewriter
+Girth
+\family default
+ as the either the size of the data point or the color of the data point.
+\end_layout
+
+\begin_layout Enumerate
+Have 
+\family typewriter
+mplot()
+\family default
+ produce the code to produce this graph and copy that code into your RMarkdown
+ file for this lab.
+ Because 
+\family typewriter
+mplot()
+\family default
+ *requires* user input via the mouse, it is a pointless command for a document
+ that will be printed and will cause an error when you try to knit your
+ results.
+ Instead you’ll use 
+\family typewriter
+mplot()
+\family default
+ to help produce the code for a graphic, and then do any final tweaking
+ on the graph that is necessary.
+ In your write up, I would recommend that you include the 
+\family typewriter
+mplot()
+\family default
+ command so that you can go back and remember how it was called but then
+ comment it out using the ‘#’ character.
+\end_layout
+
+\begin_layout Enumerate
+Add appropriate labels for the x and y axes along with a title.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Consider the following small dataset that represents the number of times
+ per day my wife plays "Ring around the Rosy
+\begin_inset Quotes erd
+\end_inset
+
+ with my daughter relative to the number of days since she has learned this
+ game.
+ The column 
+\family typewriter
+yhat
+\family default
+ represents the best fitting line through the data, and 
+\family typewriter
+lwr
+\family default
+ and 
+\family typewriter
+upr
+\family default
+ represent a 95% confidence interval for the predicted value on that day.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+This is actually a repeated measures study because we are taking repeated
+ observations on the same child so this analysis is 
+\emph on
+way
+\emph default
+ too simplistic, but our purpose here is just to make a pretty graph.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+Rosy <- data.frame(
+\end_layout
+
+\begin_layout Plain Layout
+
+  times = c(15, 11, 9, 12, 5, 2, 3),
+\end_layout
+
+\begin_layout Plain Layout
+
+  day   = 1:7,
+\end_layout
+
+\begin_layout Plain Layout
+
+  yhat  = c(14.36, 12.29, 10.21, 8.14,
+\end_layout
+
+\begin_layout Plain Layout
+
+             6.07,  4.00,  1.93),
+\end_layout
+
+\begin_layout Plain Layout
+
+  lwr   = c(9.54,  8.5, 7.22, 5.47, 3.08,
+\end_layout
+
+\begin_layout Plain Layout
+
+            0.22, -2.89),
+\end_layout
+
+\begin_layout Plain Layout
+
+  upr   = c(19.18, 16.07, 13.2, 10.82,
+\end_layout
+
+\begin_layout Plain Layout
+
+             9.06,  7.78,  6.75))
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Using 
+\family typewriter
+ggplot()
+\family default
+ and 
+\family typewriter
+geom_point()
+\family default
+, create a scatterplot with 
+\family typewriter
+day
+\family default
+ along the x-axis and 
+\family typewriter
+times
+\family default
+ along the y-axis.
+\end_layout
+
+\begin_layout Enumerate
+Add a line to the graph where the x-values are the 
+\family typewriter
+day
+\family default
+ values but now the y-values are the predicted values which we've called
+ 
+\family typewriter
+yhat
+\family default
+.
+ Notice that you have to set the aesthetic 
+\family typewriter
+y=times
+\family default
+ for the points and 
+\family typewriter
+y=yhat
+\family default
+ for the line.
+ Because each 
+\family typewriter
+geom_
+\family default
+ will accept and 
+\family typewriter
+aes()
+\family default
+ command, you can specify the y attribute to be different for different
+ layers of the graph.
+\end_layout
+
+\begin_layout Enumerate
+Add a ribbon that represents the confidence region of the regression line.
+ The 
+\family typewriter
+geom_ribbon()
+\family default
+ function requires and 
+\family typewriter
+x, ymin, ymax
+\family default
+ columns to be defined inside an 
+\family typewriter
+aes()
+\family default
+ command.
+ For the 
+\family typewriter
+x=day
+\family default
+, 
+\family typewriter
+ymin=lwr
+\family default
+, and 
+\family typewriter
+ymax=upr
+\family default
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<echo=FALSE, eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(Rosy, aes(x=day)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point(aes(y=times)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_line( aes(y=yhat)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_ribbon( aes(ymin=lwr, ymax=upr), fill='salmon')
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+What happened when you added the ribbon? Did some points get hidden? If
+ so, why?
+\end_layout
+
+\begin_layout Enumerate
+Reorder the statements that created the graph so that the ribbon is on the
+ bottom and the data points are on top and the regression line is visible.
+\end_layout
+
+\begin_layout Enumerate
+The color of the ribbon 
+\family typewriter
+fill
+\family default
+ is ugly.
+ Use google to find a list of named colors available to 
+\family typewriter
+ggplot2
+\family default
+.
+ For example, I googled 
+\begin_inset Quotes eld
+\end_inset
+
+ggplot2 named colors
+\begin_inset Quotes erd
+\end_inset
+
+ and found the following link: 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://sape.inf.usi.ch/quick-reference/ggplot2/colour"
+
+\end_inset
+
+.
+ Choose a color for the fill that is pleasing to you.
+\end_layout
+
+\begin_layout Enumerate
+Add labels for the x-axis and y-axis that are appropriate along with a main
+ title.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+We'll next make some density plots that relate several factors towards the
+ birthweight of a child.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Load the 
+\family typewriter
+MASS
+\family default
+ library, which includes the dataset 
+\family typewriter
+birthwt
+\family default
+ which contains information about 189 babies and their mothers.
+\end_layout
+
+\begin_layout Enumerate
+Add better labels to the 
+\family typewriter
+race
+\family default
+ and 
+\family typewriter
+smoke
+\family default
+ variables using the following:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+library(MASS)
+\end_layout
+
+\begin_layout Plain Layout
+
+birthwt$race  <- factor(birthwt$race,  labels=c('White','Black','Other'))
+\end_layout
+
+\begin_layout Plain Layout
+
+birthwt$smoke <- factor(birthwt$smoke, labels=c('No Smoke', 'Smoke'))
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Graph a histogram of the birthweights 
+\family typewriter
+bwt
+\family default
+ using 
+\family typewriter
+ggplot(birthwt, aes(x=bwt)) + geom_histogram()
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+Make separate graphs that denote whether a mother smoked during pregnancy
+ using the 
+\family typewriter
+facet_grid()
+\family default
+ command.
+\end_layout
+
+\begin_layout Enumerate
+Perhaps race matters in relation to smoking.
+ Make our grid of graphs vary with smoking status changing vertically, and
+ race changing horizontally (that is the formula in 
+\family typewriter
+facet_grid()
+\family default
+ should have smoking be the y variable and race as the x).
+\end_layout
+
+\begin_layout Enumerate
+Remove race from the facet grid, (so go back to the graph you had in part
+ d).
+ I'd like to next add an estimated density line to the graphs, but to do
+ that, I need to first change the y-axis to be density (instead of counts),
+ which we do by using 
+\family typewriter
+aes(y=..density..)
+\family default
+ in the 
+\family typewriter
+ggplot()
+\family default
+ aesthetics command.
+\end_layout
+
+\begin_layout Enumerate
+Next we can add the estimated smooth density using the 
+\family typewriter
+geom_density()
+\end_layout
+
+\begin_layout Enumerate
+To really make this look nice, lets change the fill color of the histograms
+ to be something less dark, lets use 
+\family typewriter
+fill='cornsilk'
+\family default
+ and 
+\family typewriter
+color='grey60'
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+Change the order in which the histogram and the density line are added to
+ the plot.
+ Does it matter and which do you prefer?
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Load the dataset 
+\family typewriter
+ChickWeight
+\family default
+ and remind yourself what the data was using 
+\family typewriter
+?ChickWeight
+\family default
+.
+ Using 
+\family typewriter
+facet_wrap()
+\family default
+, produce a scatter plot of weight vs age for each chick.
+ Use color to distinguish the four different 
+\family typewriter
+Diet
+\family default
+ treatments.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, fig.width=5, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# load the data
+\end_layout
+
+\begin_layout Plain Layout
+
+data(ChickWeight)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, fig.width=5, fig.height=6, eval=FALSE, echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(ChickWeight, aes(x=Time, y=weight, color=Diet)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point() +
+\end_layout
+
+\begin_layout Plain Layout
+
+  facet_wrap( ~ Chick )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

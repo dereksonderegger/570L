@@ -1,0 +1,218 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass book
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+knitr
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Minimal R commands with Mosaic
+\end_layout
+
+\begin_layout Standard
+In this chapter, I introduce a set of commands that are sufficient to get
+ a student through an introductory statistics course based on simulation
+ techniques.
+ To do this I make use of a package called 
+\family typewriter
+mosaic
+\family default
+ that was written expressly for use in intro stats courses.
+ The goal of 
+\family typewriter
+mosaic
+\family default
+ was to create a unified, consistent interface to the a large set of introductor
+y functions.
+ The downside of this is that the 
+\family typewriter
+mosaic
+\family default
+ commands are sometimes less flexible than what they replace.
+\end_layout
+
+\begin_layout Section
+The goal(y~x, data=mydata) template
+\end_layout
+
+\begin_layout Standard
+The primary template to remember is 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+goal
+\series default
+( 
+\series bold
+y
+\series default
+ ~ 
+\series bold
+x
+\series default
+ | 
+\series bold
+z
+\series default
+, data=
+\series bold
+mydata
+\series default
+ )
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+goal
+\series default
+ is whatever action you want (mean, sum, box-and-whisker plot) 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+y~x | z
+\series default
+ is a formula that describes a relationship you want to explore 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+mydata
+\series default
+ is the data frame that contains your data.
+\end_layout
+
+\begin_layout Standard
+Both the 
+\series bold
+goal
+\series default
+ and 
+\series bold
+mydata
+\series default
+ pieces are required but the formula can be missing pieces.
+ 
+\end_layout
+
+\begin_layout Subsection
+The groups argument
+\end_layout
+
+\begin_layout Section
+Summarizing data
+\end_layout
+
+\begin_layout Subsection
+Graphically
+\end_layout
+
+\begin_layout Subsection
+Numerically
+\end_layout
+
+\begin_layout Section
+Simulation techniques
+\end_layout
+
+\begin_layout Subsection
+Shuffling data
+\end_layout
+
+\begin_layout Subsection
+Resampling data
+\end_layout
+
+\end_body
+\end_document

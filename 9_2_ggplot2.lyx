@@ -1,0 +1,181 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass book
+\use_default_options true
+\begin_modules
+knitr
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Graphing using 
+\family typewriter
+ggplot2
+\family default
+: Lab 2
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+opts_chunk$set(cache.path = './cache/Graphics',
+\end_layout
+
+\begin_layout Plain Layout
+
+               fig.path   = './figure/Graphics')
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Multiple Plots in one Figure
+\end_layout
+
+\begin_layout Standard
+Give a link to the multi-plot command
+\end_layout
+
+\begin_layout Section
+Saving plots consistently
+\end_layout
+
+\begin_layout Standard
+Use 
+\family typewriter
+ggsave()
+\end_layout
+
+\begin_layout Section
+Themes
+\end_layout
+
+\begin_layout Standard
+Show a few of my favorite themes.
+ In part using the package 
+\family typewriter
+ggthemes
+\end_layout
+
+\begin_layout Enumerate
+theme_bw()
+\end_layout
+
+\begin_layout Enumerate
+theme_economist
+\end_layout
+
+\begin_layout Enumerate
+theme_wsj
+\end_layout
+
+\begin_layout Enumerate
+theme_excel - If you really must...
+\end_layout
+
+\begin_layout Section
+Googling to get help
+\end_layout
+
+\end_body
+\end_document

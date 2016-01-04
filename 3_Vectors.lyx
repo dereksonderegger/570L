@@ -1,0 +1,1454 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass book
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+knitr
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Data Structures: Vectors
+\end_layout
+
+\begin_layout Section
+Vector Creation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<echo=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+opts_chunk$set(cache.path = './cache/Vectors/',
+\end_layout
+
+\begin_layout Plain Layout
+
+               fig.path   = './figure/Vectors/')
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+R operates on vectors where we think of a vector as a collection of objects,
+ usually numbers.
+ The first thing we need to be able to do is define an arbitrary collection
+ using the 
+\family typewriter
+c()
+\family default
+ function
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The 
+\begin_inset Quotes eld
+\end_inset
+
+c
+\begin_inset Quotes erd
+\end_inset
+
+ stands for collection.
+ 
+\end_layout
+
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# Define the vector of numbers 1, ..., 4
+\end_layout
+
+\begin_layout Plain Layout
+
+c(1,2,3,4)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are many other ways to define vectors.
+ The function 
+\family typewriter
+rep(x, times)
+\family default
+ just repeats 
+\family typewriter
+x
+\family default
+ a the number times specified by 
+\family typewriter
+times
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+rep(2, 5)
+\end_layout
+
+\begin_layout Plain Layout
+
+rep( c('A','B'), 3 )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finally, we can also define a sequence of numbers using the 
+\family typewriter
+seq(to, from, by, length.out)
+\family default
+ function which expects the user to supply 3 out of 4 possible arguments.
+ The possible arguments are 
+\family typewriter
+from
+\family default
+, 
+\family typewriter
+to
+\family default
+, 
+\family typewriter
+by
+\family default
+, and 
+\family typewriter
+length.out
+\family default
+.
+ 
+\family typewriter
+From
+\family default
+ is the starting point of the sequence, 
+\family typewriter
+to
+\family default
+ is the ending point, 
+\family typewriter
+by
+\family default
+ is the difference between any two successive elements, and 
+\family typewriter
+length.out
+\family default
+ is the total number of elements in the vector.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+seq(from=1, to=4, by=1)
+\end_layout
+
+\begin_layout Plain Layout
+
+seq(1,4)        # 'by' has a default of 1   
+\end_layout
+
+\begin_layout Plain Layout
+
+1:4             # a shortcut for seq(1,4)
+\end_layout
+
+\begin_layout Plain Layout
+
+seq(1,5, by=.5)
+\end_layout
+
+\begin_layout Plain Layout
+
+seq(1,5, length.out=11) 
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If we have two vectors and we wish to combine them, we can again use the
+ 
+\family typewriter
+c()
+\family default
+ function.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+vec1 <- c(1,2,3)
+\end_layout
+
+\begin_layout Plain Layout
+
+vec2 <- c(4,5,6)
+\end_layout
+
+\begin_layout Plain Layout
+
+vec3 <- c(vec1, vec2)
+\end_layout
+
+\begin_layout Plain Layout
+
+vec3
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Accessing Vector Elements
+\end_layout
+
+\begin_layout Standard
+Suppose I have defined a vector
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+foo <- c('A', 'B', 'C', 'D', 'F')
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+and I am interested in accessing whatever is in the first spot of the vector.
+ Or perhaps the 3rd or 5th element.
+ To do that we use the 
+\family typewriter
+[]
+\family default
+ notation, where the square bracket represents a subscript.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+foo[1]  # First element in vector foo
+\end_layout
+
+\begin_layout Plain Layout
+
+foo[4]  # Fourth element in vector foo
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+This subscripting notation can get more complicated.
+ For example I might want the 2nd and 3rd element or the 3rd through 5th
+ elements.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+foo[c(2,3)]  # elements 2 and 3
+\end_layout
+
+\begin_layout Plain Layout
+
+foo[ 3:5 ]   # elements 3 to 5
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finally, I might be interested in getting the entire vector 
+\emph on
+except 
+\emph default
+for a certain element.
+ To do this, R allows us to use the square bracket notation with a negative
+ index number.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+foo[-1]  # everything but the first element
+\end_layout
+
+\begin_layout Plain Layout
+
+foo[ -1*c(1,2) ] # everything but the first two elements
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now is a good time to address what is the 
+\family typewriter
+[1]
+\family default
+ doing in our output? Because vectors are often very long and might span
+ multiple lines, R is trying to help us by telling us the index number of
+ the left most value.
+ If we have a very long vector, the second line of values will start with
+ the index of the first value on the second line.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# The letters vector is a vector of all 26 lower-case letters
+\end_layout
+
+\begin_layout Plain Layout
+
+letters
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Here the 
+\family typewriter
+[1]
+\family default
+ is telling me that 
+\family typewriter
+'a'
+\family default
+ is the first element of the vector and the 
+\family typewriter
+[18]
+\family default
+ is telling me that 
+\family typewriter
+'r'
+\family default
+ is the 18th element of the vector.
+\end_layout
+
+\begin_layout Section
+Scalar Functions Applied to Vectors
+\end_layout
+
+\begin_layout Standard
+It is very common to want to perform some operation on all the elements
+ of a vector simultaneously.
+ For example, I might want take the absolute value of every element.
+ Functions that are inherently defined on single values will almost always
+ apply the function to each element of the vector if given a vector.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- -5:5
+\end_layout
+
+\begin_layout Plain Layout
+
+x
+\end_layout
+
+\begin_layout Plain Layout
+
+abs(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+exp(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Vector Algebra
+\end_layout
+
+\begin_layout Standard
+All algebra done with vectors will be done 
+\emph on
+element-wise 
+\emph default
+by default.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+For matrix and vector multiplication as usually defined by mathematicians,
+ use 
+\family typewriter
+%*%
+\family default
+ instead of 
+\family typewriter
+*
+\family default
+.
+ 
+\end_layout
+
+\end_inset
+
+ So two vectors added together result in their individual elements being
+ summed.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- 1:4
+\end_layout
+
+\begin_layout Plain Layout
+
+y <- 5:8
+\end_layout
+
+\begin_layout Plain Layout
+
+x + y
+\end_layout
+
+\begin_layout Plain Layout
+
+x * y
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+R does another trick when doing vector algebra.
+ If the lengths of the two vectors don't match, R will recycle the elements
+ of the shorter vector to come up with vector the same length as the longer.
+ This is potentially confusing, but is most often used when adding a long
+ vector to a vector of length 
+\family typewriter
+1
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- 1:4
+\end_layout
+
+\begin_layout Plain Layout
+
+x + 1
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Commonly Used Vector Functions
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="2">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Function
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Result
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+min(x)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+returns the minimum element of the vector 
+\family typewriter
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+max(x)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+maximum element of 
+\family typewriter
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+length(x)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+number of elements in 
+\family typewriter
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+sum(x)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+sum of all the elements in 
+\family typewriter
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+mean(x), median(x)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mean and median of all the elements in 
+\family typewriter
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+var(x)
+\family default
+, 
+\family typewriter
+sd(x)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+variance and standard deviations of elements of 
+\family typewriter
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Putting this all together, we can easily perform tedious calculations with
+ ease.
+ To demonstrate how scalars, vectors, and functions of them work together,
+ we will calculate the variance of 5 numbers.
+ Recall that variance is defined as 
+\begin_inset Formula 
+\[
+Var\left(x\right)=\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}}{n-1}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+x <- c(2,4,6,8,10)
+\end_layout
+
+\begin_layout Plain Layout
+
+xbar <- mean(x)         # calculate the mean
+\end_layout
+
+\begin_layout Plain Layout
+
+xbar
+\end_layout
+
+\begin_layout Plain Layout
+
+x - xbar                # calculate the errors 
+\end_layout
+
+\begin_layout Plain Layout
+
+(x-xbar)^2
+\end_layout
+
+\begin_layout Plain Layout
+
+sum((x-xbar)^2)
+\end_layout
+
+\begin_layout Plain Layout
+
+n <- length(x)          # how many data points do we have
+\end_layout
+
+\begin_layout Plain Layout
+
+n
+\end_layout
+
+\begin_layout Plain Layout
+
+sum((x-xbar)^2)/(n-1)   # calculating the variance by hand
+\end_layout
+
+\begin_layout Plain Layout
+
+var(x)                  # Same thing using the built-in variance function
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Exercises
+\end_layout
+
+\begin_layout Enumerate
+Create a vector of three elements (2,4,6) and name that vector 
+\family typewriter
+vec_a
+\family default
+.
+ Create a second vector, 
+\family typewriter
+vec_b
+\family default
+, that contains (8,10,12).
+ Add these two vectors together and name the result 
+\family typewriter
+vec_c
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+Create a vector, named 
+\family typewriter
+vec_d
+\family default
+, that contains only two elements (14,20).
+ Add this vector to 
+\family typewriter
+vec_a
+\family default
+.
+ What is the result and what do you think R did (look up the recycling rule
+ in your text book)? What is the warning message that R gives you?
+\end_layout
+
+\begin_layout Enumerate
+Next add 
+\family typewriter
+5
+\family default
+ to the vector 
+\family typewriter
+vec_a
+\family default
+.
+ What is the result and what did R do? Why doesn't in give you a warning
+ message similar to what you saw in the previous problem?
+\end_layout
+
+\begin_layout Enumerate
+Generate the vector of integers 
+\begin_inset Formula $\left\{ 1,2,\dots5\right\} $
+\end_inset
+
+ in two different ways.
+ First use the 
+\family typewriter
+seq()
+\family default
+ function and second use the 
+\family typewriter
+a:b
+\family default
+ shortcut.
+\end_layout
+
+\begin_layout Enumerate
+Generate the vector of even numbers 
+\begin_inset Formula $\left\{ 2,4,6,\dots,20\right\} $
+\end_inset
+
+ using both the 
+\family typewriter
+seq()
+\family default
+ function and using the 
+\family typewriter
+a:b
+\family default
+ shortcut and some subsequent algebra.
+ 
+\emph on
+Hint: Generate a vector and multiple it by 2.
+\end_layout
+
+\begin_layout Enumerate
+Generate a vector of 1001 elements that are evenly placed between 0 and
+ 1 using the 
+\family typewriter
+seq()
+\family default
+ command and name this vector 
+\family typewriter
+x
+\family default
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Generate the vector 
+\begin_inset Formula $\left\{ 2,4,8,2,4,8,2,4,8\right\} $
+\end_inset
+
+ using the 
+\family typewriter
+rep()
+\family default
+ command to replicate the vector 
+\family typewriter
+c(2,4,8)
+\family default
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Generate the vector 
+\begin_inset Formula $\left\{ 2,2,2,2,4,4,4,4,8,8,8,8\right\} $
+\end_inset
+
+ using the 
+\family typewriter
+rep()
+\family default
+ command.
+ You might need to check the help file for 
+\family typewriter
+rep()
+\family default
+ to see all of the options that 
+\family typewriter
+rep()
+\family default
+ will accept.
+ In particular, look at the optional argument 
+\family typewriter
+each=
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+The vector 
+\family typewriter
+letters
+\family default
+ is a built-in vector to R and contains the lower case English alphabet.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Extract the 9th element of the 
+\family typewriter
+letters
+\family default
+ vector.
+\end_layout
+
+\begin_layout Enumerate
+Extract the sub-vector that contains the 9th, 11th, and 19th elements.
+\end_layout
+
+\begin_layout Enumerate
+Extract the sub-vector that contains everything 
+\emph on
+except
+\emph default
+ the last two elements.
+\end_layout
+
+\end_deeper
+\end_body
+\end_document
