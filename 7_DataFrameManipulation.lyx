@@ -347,6 +347,11 @@ scores <- grades[,-1]
 
 \begin_layout Plain Layout
 
+scores
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -610,8 +615,48 @@ target "http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html"
 .
 \end_layout
 
+\begin_layout Standard
+The pipe command 
+\family typewriter
+%>%
+\family default
+ allows for very readable code.
+ The idea is that the 
+\family typewriter
+%>%
+\family default
+ operator works in the context of functions that take a 
+\family typewriter
+data.frame
+\family default
+ as their first argument.
+ The 
+\family typewriter
+%>%
+\family default
+ operator translates 
+\family typewriter
+df %>% f()
+\family default
+ to the expression 
+\family typewriter
+f(df)
+\family default
+.
+ The beauty of this comes when you have functions that takes 
+\family typewriter
+data.frames
+\family default
+ as arguments and returns a modified 
+\family typewriter
+data.frame
+\family default
+.
+ This will allow me to chain together commands in a readable fashion.
+\end_layout
+
 \begin_layout Subsection
-Basic actions
+Verbs
 \end_layout
 
 \begin_layout Standard
@@ -619,13 +664,39 @@ The foundational operations to perform on a data frame are:
 \end_layout
 
 \begin_layout Itemize
+Subsetting - Returns a 
+\family typewriter
+data.frame
+\family default
+ with only particular columns or rows
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+select
+\family default
+ - Selecting a subset of columns by name or column number.
+\end_layout
+
+\begin_layout Itemize
 
 \family typewriter
 filter
 \family default
- - Selecting a subset of rows from a data frame.
+ - Selecting a subset of rows from a data frame based on logical expressions.
 \end_layout
 
+\begin_layout Itemize
+
+\family typewriter
+slice
+\family default
+ - Selecting a subset of rows by row number.
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 
 \family typewriter
@@ -637,17 +708,9 @@ arrange
 \begin_layout Itemize
 
 \family typewriter
-select
-\family default
- - Use only a certain set of columns
-\end_layout
-
-\begin_layout Itemize
-
-\family typewriter
 mutate
 \family default
- - Add a new column that might be some function of another column
+ - Add a new column that is some function of another column.
 \end_layout
 
 \begin_layout Itemize
@@ -656,6 +719,7 @@ mutate
 summarise
 \family default
  - calculate some summary statistic of a column of data.
+ This collapses a set of rows into a single row.
 \end_layout
 
 \begin_layout Standard
@@ -670,26 +734,193 @@ dplyr
 \family typewriter
 df$column
 \family default
- notation, and all of these functions will return a data frame.
+ notation.
+ All of these functions will return a data frame.
+\end_layout
+
+\begin_layout Subsubsection
+Subsetting with 
+\family typewriter
+select
+\family default
+, 
+\family typewriter
+filter
+\family default
+, and 
+\family typewriter
+slice
+\end_layout
+
+\begin_layout Standard
+These function allows you select certain columns and rows of a data frame.
 \end_layout
 
 \begin_layout Subsubsection*
 
-\family typewriter
-filter
-\family default
-()
+\series bold
+select()
+\series default
+ 
 \end_layout
 
 \begin_layout Standard
-This function allows you select certain rows of a data frame.
- The first argument is the data frame and the subsequent arguments are logical
- expressions that select the desired rows.
- 
+Often you only want to work with a small number of columns of a data frame.
+ It is relatively easy to do this using the standard 
+\family typewriter
+[,col.name]
+\family default
+ notation, but is often pretty tedious.
+ The dataset 
+\family typewriter
+mtcars
+\family default
+ contains information about 32 models of cars from the 70s.
 \begin_inset Newline newline
 \end_inset
 
 
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(dplyr)
+\end_layout
+
+\begin_layout Plain Layout
+
+str(mtcars)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+I could select the columns 
+\family typewriter
+mpg,
+\family default
+ 
+\family typewriter
+cyl,
+\family default
+ 
+\family typewriter
+disp,
+\family default
+ 
+\family typewriter
+hp
+\family default
+ by hand, or by using an extension of the 
+\family typewriter
+:
+\family default
+ operator
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+small <- mtcars %>% select( mpg, cyl, disp, hp )  # these two commands are
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+small <- mtcars %>% select( mpg:hp )              # equivalent
+\end_layout
+
+\begin_layout Plain Layout
+
+str(small)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+
+\series bold
+filter()
+\series default
+ 
+\end_layout
+
+\begin_layout Standard
+It is common to want to select particular rows where we have some logically
+ expression to pick the rows.
+\begin_inset Newline newline
+\end_inset
+
+ 
 \begin_inset Box Frameless
 position "t"
 hor_pos "c"
@@ -763,22 +994,12 @@ status open
 
 \begin_layout Plain Layout
 
-# load the dplyr library
-\end_layout
-
-\begin_layout Plain Layout
-
-library(dplyr)
-\end_layout
-
-\begin_layout Plain Layout
-
 # select students with Final grades greater than 90
 \end_layout
 
 \begin_layout Plain Layout
 
-filter(grades, Final > 90)
+grades %>% filter(Final > 90)
 \end_layout
 
 \begin_layout Plain Layout
@@ -870,7 +1091,7 @@ status open
 
 \begin_layout Plain Layout
 
-filter(grades, Final > 90, average > 90)
+grades %>% filter(Final > 90, average > 90)
 \end_layout
 
 \begin_layout Plain Layout
@@ -884,7 +1105,7 @@ filter(grades, Final > 90, average > 90)
 
 \begin_layout Plain Layout
 
-filter(grades, Final > 90 & average > 90)
+grades %>% filter(Final > 90 & average > 90)
 \end_layout
 
 \begin_layout Plain Layout
@@ -903,6 +1124,63 @@ filter(grades, Final > 90 & average > 90)
 \end_layout
 
 \begin_layout Subsubsection*
+slice()
+\end_layout
+
+\begin_layout Standard
+When you want to filter rows based on row number, this is called slicing.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# grab the first 2 rows
+\end_layout
+
+\begin_layout Plain Layout
+
+grades %>% slice(1:2)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
 arrange()
 \end_layout
 
@@ -948,7 +1226,7 @@ status open
 
 \begin_layout Plain Layout
 
-arrange(grades, l.name)
+grades %>% arrange(l.name)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1005,7 +1283,7 @@ status open
 
 \begin_layout Plain Layout
 
-arrange(grades, desc(Final))
+grades %>% arrange(desc(Final))
 \end_layout
 
 \begin_layout Plain Layout
@@ -1096,7 +1374,7 @@ dd
 
 \begin_layout Plain Layout
 
-arrange(dd, Trt, desc(y))
+dd %>% arrange(Trt, desc(y))
 \end_layout
 
 \begin_layout Plain Layout
@@ -1114,148 +1392,7 @@ arrange(dd, Trt, desc(y))
 
 \end_layout
 
-\begin_layout Subsubsection*
-select()
-\end_layout
-
-\begin_layout Standard
-Often you only want to work with a small number of columns of a data frame.
- It is relatively easy to do this using the standard 
-\family typewriter
-[,col.name]
-\family default
- notation, but is often pretty tedious.
- The dataset 
-\family typewriter
-mtcars
-\family default
- contains information about 32 models of cars from the 70s.
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-str(mtcars)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-I could select the columns 
-\family typewriter
-mpg,
-\family default
- 
-\family typewriter
-cyl,
-\family default
- 
-\family typewriter
-disp,
-\family default
- 
-\family typewriter
-hp
-\family default
- by hand, or by using an extension of the 
-\family typewriter
-:
-\family default
- operator
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-small <- select( mtcars, mpg, cyl, disp, hp )  # these two commands are
- 
-\end_layout
-
-\begin_layout Plain Layout
-
-small <- select( mtcars, mpg:hp )              # equivalent
-\end_layout
-
-\begin_layout Plain Layout
-
-str(small)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection*
+\begin_layout Subsubsection
 mutate()
 \end_layout
 
@@ -1341,9 +1478,10 @@ df
 \end_inset
 
 
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
+
 \begin_inset Box Frameless
 position "t"
 hor_pos "c"
@@ -1368,7 +1506,70 @@ status open
 
 \begin_layout Plain Layout
 
-mutate( grades, average = (Exam1 + Exam2 + Final)/3 )
+grades %>% mutate( average = (Exam1 + Exam2 + Final)/3 )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+You can do multiple calculations within the same 
+\family typewriter
+mutate()
+\family default
+ command, and you can even refer to columns that were created in the same
+ 
+\family typewriter
+mutate()
+\family default
+ command.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+grades %>% mutate( average = (Exam1 + Exam2 + Final)/3,
+\end_layout
+
+\begin_layout Plain Layout
+
+                   grade = cut(average, c(0,60,70,80,90,100), c('F','D','C','B',
+'A')) )
 \end_layout
 
 \begin_layout Plain Layout
@@ -1386,7 +1587,7 @@ mutate( grades, average = (Exam1 + Exam2 + Final)/3 )
 
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsubsection
 summarise()
 \end_layout
 
@@ -1395,7 +1596,8 @@ By itself, this function is quite boring, but will become useful later on.
  Its purpose is to calculate summary statistics using any or all of the
  data columns.
  Notice that we get to chose the name of the new column.
- 
+ The way to think about this is that we are collapsing information stored
+ in multiple rows into a single row of values.
 \begin_inset Newline newline
 \end_inset
 
@@ -1482,8 +1684,7 @@ status open
 
 \begin_layout Plain Layout
 
-summarise( grades, mean.E1=mean(Exam1), mean.E2=mean(Exam2), mean.Final=mean(Final)
- )
+grades %>% summarise( mean.E1=mean(Exam1), stddev.E1=sd(Exam2) )
 \end_layout
 
 \begin_layout Plain Layout
@@ -1499,6 +1700,100 @@ summarise( grades, mean.E1=mean(Exam1), mean.E2=mean(Exam2), mean.Final=mean(Fin
 \end_inset
 
 
+\begin_inset Newline newline
+\end_inset
+
+If we want to apply the same statistic to each column, we use the 
+\family typewriter
+summarise_each()
+\family default
+ command.
+ We have to be a little careful here because the function you use has to
+ work on every column (that isn't part of the grouping structure (see 
+\family typewriter
+group_by()
+\family default
+)).
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# calculate the mean and stddev of each column
+\end_layout
+
+\begin_layout Plain Layout
+
+grades %>% summarise_each( funs(mean, sd) )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Miscellaneous functions
+\end_layout
+
+\begin_layout Standard
+There are some more function that are useful but aren't as commonly used.
+ For sampling the functions 
+\family typewriter
+sample_n()
+\family default
+ and 
+\family typewriter
+sample_frac() 
+\family default
+will take a subsample of either 
+\family typewriter
+n
+\family default
+ rows or of a fraction of the data set.
+ The function 
+\family typewriter
+n()
+\family default
+ returns the number of rows in the data set.
+ Finally 
+\family typewriter
+rename()
+\family default
+ will rename a selected column.
 \end_layout
 
 \begin_layout Subsection
@@ -1614,7 +1909,7 @@ status open
 
 \begin_layout Plain Layout
 
-grouped.warpbreaks <- group_by( warpbreaks, wool, tension)
+grouped.warpbreaks <- warpbreaks %>% group_by( wool, tension)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1686,23 +1981,23 @@ status open
 
 \begin_layout Plain Layout
 
-summarise(grouped.warpbreaks, 
+warpbreaks %>% group_by(wool, tension) %>%
 \end_layout
 
 \begin_layout Plain Layout
 
-          n           = n(),             # I added some formatting to tell
- the
+  summarise( n           = n(),             # I added some formatting to
+ tell the
 \end_layout
 
 \begin_layout Plain Layout
 
-          mean.breaks = mean(breaks),    # reader I am calculating several
+             mean.breaks = mean(breaks),    # reader I am calculating several
 \end_layout
 
 \begin_layout Plain Layout
 
-          sd.breaks   = sd(breaks)       # statistics.
+             sd.breaks   = sd(breaks)       # statistics.
 \end_layout
 
 \begin_layout Plain Layout
@@ -1738,7 +2033,11 @@ mutating
 \emph default
 the data frame instead of summarizing it.
  For example, suppose that I want to calculate the residual value 
-\begin_inset Formula $e_{ijk}=y_{ijk}-\bar{y}_{ij\cdot}$
+\begin_inset Formula 
+\[
+e_{ijk}=y_{ijk}-\bar{y}_{ij\cdot}
+\]
+
 \end_inset
 
  where 
@@ -1778,7 +2077,17 @@ status open
 
 \begin_layout Plain Layout
 
-temp <- mutate(grouped.warpbreaks, resid = breaks - mean(breaks))
+temp <- warpbreaks %>% 
+\end_layout
+
+\begin_layout Plain Layout
+
+   group_by(wool, tension) %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+   mutate(resid = breaks - mean(breaks))
 \end_layout
 
 \begin_layout Plain Layout
@@ -1801,7 +2110,7 @@ head( temp )  # show the first couple of rows of the result
 
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection
 Chaining commands together 
 \end_layout
 
@@ -1879,7 +2188,7 @@ race.results <- data.frame(
 
 \begin_layout Plain Layout
 
-grouped.results <- group_by( race.results, gender)
+grouped.results <- race.results %>% group_by( gender)
 \end_layout
 
 \begin_layout Plain Layout
@@ -1893,21 +2202,7 @@ grouped.results <- group_by( race.results, gender)
 
 \begin_layout Plain Layout
 
-temp.df1 <- mutate( grouped.results, place = rank(time) )
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-# calculate the rankings using the rank() function
-\end_layout
-
-\begin_layout Plain Layout
-
-temp.df1 <- mutate( grouped.results, place = rank(time) )
+temp.df1 <- grouped.results %>% mutate( place = rank(time) )
 \end_layout
 
 \begin_layout Plain Layout
@@ -1921,7 +2216,7 @@ temp.df1 <- mutate( grouped.results, place = rank(time) )
 
 \begin_layout Plain Layout
 
-temp.df2 <- arrange( temp.df1, gender, place )
+temp.df2 <- temp.df1 %>% arrange( gender, place )
 \end_layout
 
 \begin_layout Plain Layout
@@ -2233,365 +2528,6 @@ race.results %>%                   # what data frame am I interested in
 \begin_layout Plain Layout
 
   arrange(gender, place)           # arrange the result by gender and place
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Package 
-\family typewriter
-tidyr
-\end_layout
-
-\begin_layout Standard
-There is a common issue with obtaining data with many columns that you wish
- were organized as rows.
- For example, I might have data in a grade book that has several homework
- scores and I'd like to produce a nice graph that has assignment number
- on the x-axis and score on the y-axis.
- Unfortunately this is incredibly hard to do when the data is arranged in
- the following way:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-grade.book <- rbind(
-\end_layout
-
-\begin_layout Plain Layout
-
-  data.frame(name='Alison',  HW.1=8, HW.2=5, HW.3=8),
-\end_layout
-
-\begin_layout Plain Layout
-
-  data.frame(name='Brandon', HW.1=5, HW.2=3, HW.3=6),
-\end_layout
-
-\begin_layout Plain Layout
-
-  data.frame(name='Charles', HW.1=9, HW.2=7, HW.3=9))
-\end_layout
-
-\begin_layout Plain Layout
-
-grade.book
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-What we want to do is turn this data frame from a 
-\emph on
-wide
-\emph default
- data frame into a 
-\emph on
-long
-\emph default
- data frame.
- In MS Excel this is called 
-\emph on
-pivoting
-\emph default
-.
- Essentially I'd like to create a data frame with three columns: 
-\family typewriter
-name
-\family default
-, 
-\family typewriter
-assignment
-\family default
-, and 
-\family typewriter
-score
-\family default
-.
- That is to say that each homework datum really has three pieces of information:
- who it came from, which homework it was, and what the score was.
- It doesn't conceptually matter if I store it as 5 columns or 5 rows so
- long as there is a way to identify how a student scored on a particular
- homework.
- So we want to reshape the HW1 to HW5 columns into two columns (assignment
- and score).
- 
-\end_layout
-
-\begin_layout Standard
-This package was built by the sample people that created 
-\family typewriter
-dplyr
-\family default
- and 
-\family typewriter
-ggplot2
-\family default
- and there is a nice introduction at:
-\begin_inset Newline newline
-\end_inset
-
- 
-\begin_inset CommandInset href
-LatexCommand href
-target "http://blog.rstudio.org/2014/07/22/introducing-tidyr/"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection*
-
-\family typewriter
-gather() and spread()
-\end_layout
-
-\begin_layout Standard
-As with the 
-\family typewriter
-dplyr
-\family default
- package, there are 3 main verbs to remember:
-\end_layout
-
-\begin_layout Enumerate
-Gather - Gather multiple columns that are related into two columns that
- contain the original column name and the value.
- For example for columns 
-\family typewriter
-HW1
-\family default
-, ..., 
-\family typewriter
-HW5
-\family default
- we would gather them into two column 
-\family typewriter
-HomeworkNumber
-\family default
- and 
-\family typewriter
-Score
-\family default
-.
- In this case, we refer to 
-\family typewriter
-HomeworkNumber
-\family default
- as the key column and 
-\family typewriter
-Score
-\family default
- as the value column.
- So for any key:value pair you know everything you need.
-\end_layout
-
-\begin_layout Enumerate
-Separate - The separates a key column into multiple key columns.
- Often this will involve some sort of regular expression rules for splitting
- a character string into 
-\end_layout
-
-\begin_layout Enumerate
-Spread - This is the opposite of gather.
- Takes a key column (or columns) and a results column and forms a new column
- for each level of the key column(s).
-\end_layout
-
-\begin_layout Standard
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-library(tidyr)
-\end_layout
-
-\begin_layout Plain Layout
-
-# first we gather the score columns into columns we'll name Assesment and
- Score
-\end_layout
-
-\begin_layout Plain Layout
-
-tidy.scores <- gather( grade.book, Assessement, Score, HW.1:HW.3 )
-\end_layout
-
-\begin_layout Plain Layout
-
-tidy.scores
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-To spread the key:value pairs out into a matrix, we use the 
-\family typewriter
-spread()
-\family default
- command.
- 
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-library(tidyr)
-\end_layout
-
-\begin_layout Plain Layout
-
-# first we gather the score columns into columns we'll name Assesment and
- Score
-\end_layout
-
-\begin_layout Plain Layout
-
-spread( tidy.scores, Assessement, Score )
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-# Commands can be chained together useing dplyr syntax
-\end_layout
-
-\begin_layout Plain Layout
-
-# First we'll tidy the data, and then spread it back out but transposing
-\end_layout
-
-\begin_layout Plain Layout
-
-# the rows for the columns.
-\end_layout
-
-\begin_layout Plain Layout
-
-grade.book %>% 
-\end_layout
-
-\begin_layout Plain Layout
-
-  gather( Assessement, Score, HW.1:HW.3 ) %>%
-\end_layout
-
-\begin_layout Plain Layout
-
-  spread( name, Score )
-\end_layout
-
-\begin_layout Plain Layout
-
 \end_layout
 
 \begin_layout Plain Layout
