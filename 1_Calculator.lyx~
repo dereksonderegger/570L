@@ -1315,8 +1315,7 @@ If you are using RStudio, it is often much easier to download the package
 Tools -> Install packages...
 \family default
 .
- By using the GUI, you avoid having to remember the addresses of the nearby
- CRAN mirrors.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1335,7 +1334,7 @@ every
  You can load the library where ever you want in the script, but recognize
  that when knitting a RMarkdown file, a completely new session of R is started
  and you must have the commands loading the library placed above where you
- use the functions or data from the library.
+ use the library.
 \begin_inset Newline newline
 \end_inset
 

@@ -924,22 +924,6 @@ cut(x, breaks=3)
 
 \begin_layout Plain Layout
 
-# Notice that the the outside breakpoints must include all the data points.
-\end_layout
-
-\begin_layout Plain Layout
-
-# That is, the smallest break must be smaller than all the data, and the
- largest
-\end_layout
-
-\begin_layout Plain Layout
-
-# must be larger (or equal) to all the data.
-\end_layout
-
-\begin_layout Plain Layout
-
 cut(x, breaks = c(0, 2.5, 5.0, 7.5, 10))
 \end_layout
 
