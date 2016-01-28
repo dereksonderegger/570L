@@ -130,8 +130,13 @@ opts_chunk$set(cache.path = './cache/PivotTables/',
 
 Most of the time, our data is in the form of a data frame and we are interested
  in exploring the relationships.
- This chapter explores how to manipulate data frames and methods.
- 
+ However most procedures in R expect the data to show up in a 'long' format
+ where each row is an observation and each column is a covariate.
+ In practice, the data is often not stored like that and the data comes
+ to us with repeated observations included on a single row.
+ This is often done as a memory saving technique or because there is some
+ structure in the data that makes the 'wide' format attractive.
+ As a result, we need a way to convert data from 'wide' to 'long' and vice-versa.
 \end_layout
 
 \begin_layout Section
@@ -318,8 +323,8 @@ Score
 
 \begin_layout Enumerate
 Spread - This is the opposite of gather.
- Takes a key column (or columns) and a results column and forms a new column
- for each level of the key column(s).
+ This takes a key column (or columns) and a results column and forms a new
+ column for each level of the key column(s).
 \end_layout
 
 \begin_layout Standard
