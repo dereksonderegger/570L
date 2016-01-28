@@ -260,11 +260,7 @@ dplyr
 \family typewriter
 ggplot2
 \family default
- and there is a nice introduction at:
-\begin_inset Newline newline
-\end_inset
-
- 
+ and there is a nice introduction at: 
 \begin_inset CommandInset href
 LatexCommand href
 target "http://blog.rstudio.org/2014/07/22/introducing-tidyr/"
@@ -362,7 +358,8 @@ library(tidyr)
 
 \begin_layout Plain Layout
 
-tidy.scores <- grade.book %>% gather( Assessement, Score, HW.1:HW.3 )
+tidy.scores <- grade.book %>% gather( key=Assessement, value=Score, HW.1:HW.3
+ )
 \end_layout
 
 \begin_layout Plain Layout
@@ -426,7 +423,7 @@ status open
 
 \begin_layout Plain Layout
 
-tidy.scores %>% spread( Assessement, Score )
+tidy.scores %>% spread( key=Assessement, value=Score )
 \end_layout
 
 \begin_layout Plain Layout
@@ -442,6 +439,27 @@ tidy.scores %>% spread( Assessement, Score )
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+One way to keep straight which column should be the 
+\family typewriter
+key
+\family default
+ column and which is the 
+\family typewriter
+value
+\family default
+ is that the 
+\family typewriter
+key
+\family default
+ is the category, while 
+\family typewriter
+value
+\family default
+ is the numerical value or response.
+ 
 \end_layout
 
 \begin_layout Section
@@ -480,13 +498,18 @@ status open
 
 \begin_layout Plain Layout
 
-read.csv('https://github.com/dereksonderegger/STA_570L_Book/raw/master/data/FlagMa
-xTemp.csv',
+FlagTemp <-  read.csv(
 \end_layout
 
 \begin_layout Plain Layout
 
-         header=TRUE, sep=',')
+  'https://github.com/dereksonderegger/STA_570L_Book/raw/master/data/FlagMaxTemp.c
+sv',
+\end_layout
+
+\begin_layout Plain Layout
+
+   header=TRUE, sep=',')
 \end_layout
 
 \begin_layout Plain Layout
@@ -502,7 +525,36 @@ xTemp.csv',
 \end_inset
 
 
+\begin_inset Newline newline
+\end_inset
+
+This file is in a wide format, where each row represents a month and the
+ columns X1, X2, ..., X31 represent the day of the month the observation was
+ made.
+ 
 \end_layout
 
+\begin_deeper
+\begin_layout Enumerate
+Convert data set to the long format where the data has only four columns:
+ 
+\family typewriter
+Year, Month, Day, Tmax
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+Calculate the average monthly maximum temperature for each Month in the
+ dataset (So there will be 360 mean maximum temperatures).
+\end_layout
+
+\begin_layout Enumerate
+Convert the average month maximums back to a wide data format where each
+ line represents a year and there are 12 columns of temperature data (one
+ for each month) along with a column for the year.
+\end_layout
+
+\end_deeper
 \end_body
 \end_document
