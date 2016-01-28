@@ -451,57 +451,7 @@ Exercises
 \begin_layout Enumerate
 Suppose we are given information about the maximum daily temperature from
  a weather station in Flagstaff, AZ.
- The file is available at the GitHub site that this book is hosted on.
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-read.csv('https://github.com/dereksonderegger/STA_570L_Book/raw/master/data/FlagMa
-xTemp.csv',
-\end_layout
-
-\begin_layout Plain Layout
-
-         header=TRUE, sep=',')
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+ The file is available via the
 \end_layout
 
 \end_body
