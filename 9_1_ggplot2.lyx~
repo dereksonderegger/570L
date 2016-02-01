@@ -1130,21 +1130,12 @@ You can have different datasets for each layer!
 \end_layout
 
 \end_deeper
-\begin_layout Itemize
-Can add layers with a +, or you can define two plots and add them together
- (second one over-writes anything that conflicts)
-\end_layout
-
 \begin_layout Section
 Examples 
 \end_layout
 
 \begin_layout Subsection
 Polished Bar Plot
-\end_layout
-
-\begin_layout Subsection
-Histogram with a theoretical distribution
 \end_layout
 
 \begin_layout Standard

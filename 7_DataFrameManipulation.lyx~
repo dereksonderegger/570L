@@ -602,6 +602,10 @@ dplyr
  in more detail how the various pieces work and I encourage you to read
  it at some point.
  
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset CommandInset href
 LatexCommand href
 target "http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html"
@@ -621,67 +625,34 @@ The pipe command
 \family typewriter
 %>%
 \family default
- operator works by translating the command 
-\family typewriter
-a %>% f(b)
-\family default
- to the expression 
-\family typewriter
-f(a,b)
-\family default
-.
- This operator works on any function and was introduced in the 
-\family typewriter
-magrittr
-\family default
- package.
- The beauty of this comes when you have a suite of functions that takes
- input arguments of the same type as their output.
- In 
-\family typewriter
-dplyr
-\family default
-, all the functions below take a 
+ operator works in the context of functions that take a 
 \family typewriter
 data.frame
 \family default
- as its first argument and outputs an appropriately modified 
+ as their first argument.
+ The 
+\family typewriter
+%>%
+\family default
+ operator translates 
+\family typewriter
+df %>% f()
+\family default
+ to the expression 
+\family typewriter
+f(df)
+\family default
+.
+ The beauty of this comes when you have functions that takes 
+\family typewriter
+data.frames
+\family default
+ as arguments and returns a modified 
 \family typewriter
 data.frame
 \family default
 .
  This will allow me to chain together commands in a readable fashion.
- For example if we wanted to start with 
-\family typewriter
-x
-\family default
-, and first apply function 
-\family typewriter
-f()
-\family default
-, then 
-\family typewriter
-g()
-\family default
-, and then 
-\family typewriter
-h()
-\family default
-, the usual R command would be 
-\family typewriter
-h(g(f(x)))
-\family default
- which is hard to read because you have to start reading at the innermost
- set of parentheses.
- Using the pipe command 
-\family typewriter
-%>%
-\family default
-, this sequence of operations becomes 
-\family typewriter
-x %>% f() %>% g() %>% h()
-\family default
-.
 \end_layout
 
 \begin_layout Subsection

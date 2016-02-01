@@ -108,12 +108,12 @@ status open
 
 \begin_layout Plain Layout
 
-opts_chunk$set(cache.path = './cache/PivotTables/',
+opts_chunk$set(cache.path =  './cache/ReshapingData/',
 \end_layout
 
 \begin_layout Plain Layout
 
-               fig.path   = './figure/PivotTables/')
+               fig.path   = './figure/ReshapingData/')
 \end_layout
 
 \begin_layout Plain Layout

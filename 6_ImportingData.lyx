@@ -148,19 +148,31 @@ ng some trait or variable that we might be interested in.
  semester, their is one row for every student and columns for each assignment.
  A green-house experiment dataset will have a row for every plant and columns
  for treatment type and biomass.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Need to add an introductory section about working directories and path names.
- Additionally it would be good to add a footnote about how RMarkdown starts
- a completely new session when you knit the output so you have to explicitly
- set the working directory in the code or use full path names.
 \end_layout
 
-\end_inset
+\begin_layout Standard
+One concept that will be important is to recognize that every time you start
+ up RStudio, it picks an appropriate working directory.
+ This is the directory where it will first look for script files or data
+ files.
+ So often I will set the working directory to be the same directory as the
+ Rmarkdown file that I'm working on (because I typically will have a couple
+ of MS Excel files, an Rmarkdown file that does an analysis, and the final
+ output file all stored in the same location).
+ If you click on an Rmarkdown file to open RStudio, then the working directory
+ will automatically be set appropriately.
+ To set the working directory explicitly, you can use the GUI tools 
+\family typewriter
+Session -> Set Working Directory...
+\family default
+.
+\end_layout
 
-
+\begin_layout Standard
+When you knit your Rmarkdown file, it always starts up a new version of
+ R with the working directory set to the location of the Rmarkdown file.
+ So whenever you specify a file location, it should be relative to the location
+ of the Rmarkdown file you are working on!
 \end_layout
 
 \begin_layout Section
@@ -1112,6 +1124,17 @@ XLConnect
 .csv
 \family default
  conversion using Java.
+ Another package the works well is the 
+\family typewriter
+xlsx
+\family default
+ package, but it also requires Java to be installed.
+ The nice thing about these two packages is that they also allow you to
+ 
+\emph on
+write
+\emph default
+ Excel files as well.
  The 
 \family typewriter
 RODBC
@@ -1134,7 +1157,7 @@ read_exel()
 \end_layout
 
 \begin_layout Standard
-From Bblearn, download the 
+From GitHub, download the 
 \family typewriter
 files Example_1.xls, Example_2.xls, Example_3.xls 
 \family default
@@ -1142,6 +1165,14 @@ and
 \family typewriter
  Example_4.xls
 \family default
+ from the directory 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://github.com/dereksonderegger/STA_570L_Book/tree/master/data"
+
+\end_inset
+
+.
  Place these files in the same directory that you store your STA 599 course
  work.
  Make sure that the working directory that RStudio is using is that same
@@ -1342,7 +1373,7 @@ Exercises
 \end_layout
 
 \begin_layout Enumerate
-Download from Bblearn the file 
+Download from GitHub the data file 
 \family typewriter
 Example_5.xls
 \family default

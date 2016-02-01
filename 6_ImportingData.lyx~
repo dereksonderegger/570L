@@ -1134,7 +1134,7 @@ read_exel()
 \end_layout
 
 \begin_layout Standard
-From Bblearn, download the 
+From GitHub, download the 
 \family typewriter
 files Example_1.xls, Example_2.xls, Example_3.xls 
 \family default
@@ -1142,6 +1142,14 @@ and
 \family typewriter
  Example_4.xls
 \family default
+ from the directory 
+\begin_inset CommandInset href
+LatexCommand href
+target "www.github.com/dereksonderegger/STA_570L_Book/data"
+
+\end_inset
+
+.
  Place these files in the same directory that you store your STA 599 course
  work.
  Make sure that the working directory that RStudio is using is that same
@@ -1390,12 +1398,12 @@ status open
 
 \begin_layout Plain Layout
 
-Raw <- read_excel('Example_5.xls', sheet='RawData', skip=3, header=TRUE)
+#Raw <- read_excel('Example_5.xls', sheet='RawData', skip=3, header=TRUE)
 \end_layout
 
 \begin_layout Plain Layout
 
-str(Raw)
+#str(Raw)
 \end_layout
 
 \begin_layout Plain Layout
