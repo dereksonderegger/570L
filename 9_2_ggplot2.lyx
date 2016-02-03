@@ -105,12 +105,12 @@ status open
 
 \begin_layout Plain Layout
 
-opts_chunk$set(cache.path = './cache/Graphics',
+opts_chunk$set(cache.path = './cache/Graphics2',
 \end_layout
 
 \begin_layout Plain Layout
 
-               fig.path   = './figure/Graphics')
+               fig.path   = './figure/Graphics2')
 \end_layout
 
 \begin_layout Plain Layout
@@ -298,7 +298,7 @@ status open
 
 \begin_layout Plain Layout
 
-library(reshape2)
+library(reshape) # for the dataset 'tips'
 \end_layout
 
 \begin_layout Plain Layout
@@ -357,27 +357,12 @@ status open
 
 \begin_layout Plain Layout
 
-# make a graph and save it as an object
-\end_layout
-
-\begin_layout Plain Layout
-
-p2 <- ggplot(tips, aes(x = total_bill, y = tip / total_bill )) +
+ggplot(tips, aes(x = total_bill, y = tip / total_bill )) +
 \end_layout
 
 \begin_layout Plain Layout
 
   geom_point()
-\end_layout
-
-\begin_layout Plain Layout
-
-# Now print the graph
-\end_layout
-
-\begin_layout Plain Layout
-
-p2
 \end_layout
 
 \begin_layout Plain Layout
@@ -427,7 +412,17 @@ status open
 
 \begin_layout Plain Layout
 
-p2 + facet_grid( sex ~ day )
+ggplot(tips, aes(x = total_bill, y = tip / total_bill )) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point() +
+\end_layout
+
+\begin_layout Plain Layout
+
+  facet_grid( sex ~ day )
 \end_layout
 
 \begin_layout Plain Layout
@@ -481,7 +476,17 @@ status open
 
 \begin_layout Plain Layout
 
-p2 + facet_wrap( ~ day )
+ggplot(tips, aes(x = total_bill, y = tip / total_bill )) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point() +
+\end_layout
+
+\begin_layout Plain Layout
+
+  facet_wrap( ~ day )
 \end_layout
 
 \begin_layout Plain Layout
@@ -570,7 +575,480 @@ status open
 
 \begin_layout Plain Layout
 
-p2 + facet_grid( sex ~ day, scales="free_y" )
+ggplot(tips, aes(x = total_bill, y = tip / total_bill )) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point() +
+\end_layout
+
+\begin_layout Plain Layout
+
+  facet_grid( sex ~ day, scales="free_y" )
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Modifying Scales
+\end_layout
+
+\begin_layout Standard
+Often it is useful to modify the scales that we have on the 
+\family typewriter
+x
+\family default
+ or 
+\family typewriter
+y
+\family default
+ axis.
+ In particular we might want to display some modified version of a variable.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Log scales
+\end_layout
+
+\begin_layout Standard
+For this example, we'll use the 
+\family typewriter
+ACS
+\family default
+ data from the 
+\family typewriter
+Lock5Data
+\family default
+ package that has information about 
+\family typewriter
+Income
+\family default
+ (in thousands of dollars) and 
+\family typewriter
+Age
+\family default
+.
+ Lets make a scatterplot of the data.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, warning=FALSE, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(Lock5Data)
+\end_layout
+
+\begin_layout Plain Layout
+
+data(ACS)
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(ACS, aes(x=Age, y=Income)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point()
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+This is an ugly graph because six observations dominate the graph and the
+ bulk of the data (income < $100,000) is squished together.
+ One solution is to plot income on the 
+\begin_inset Formula $\log_{10}$
+\end_inset
+
+ scale.
+ There are a couple ways to do this.
+ The simplest way is to just do a transformation on the column of data.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, warning=FALSE, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(ACS, aes(x=Age, y=log10(Income))) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point()
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+This works quite well to see the trend of peak earning happening in a persons
+ 40s and 50s, but the scale is difficult for me to understand (what does
+ 
+\begin_inset Formula $\log_{10}\left(X\right)=1$
+\end_inset
+
+ mean here? Oh right, that is 
+\begin_inset Formula $10^{1}=X$
+\end_inset
+
+ so that is the $10,000 line).
+ It would be really nice if we could do the transformation but have the
+ labels on the original scale.
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, warning=FALSE, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(ACS, aes(x=Age, y=log10(Income))) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point() +
+\end_layout
+
+\begin_layout Plain Layout
+
+  scale_y_log10()
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Now the y-axis is in the original units (thousands of dollars) but obnoxiously
+ we only have two labeled values...
+ so lets define the major break points (the white lines that have numerical
+ labels) to be at 1,10,100 thousand dollars in salary.
+ Likewise we will tell 
+\family typewriter
+ggplot2
+\family default
+ to set minor break points at 1 to 10 thousand dollars (with steps of 1
+ thousand dollars) and then 10 thousand to 100 thousand but with step sizes
+ of 10 thousand, and finally minor breaks above 100 thousand being in steps
+ of 100 thousand.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, warning=FALSE, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(ACS, aes(x=Age, y=Income)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point() +
+\end_layout
+
+\begin_layout Plain Layout
+
+  scale_y_log10(breaks=c(1,10,100),
+\end_layout
+
+\begin_layout Plain Layout
+
+                minor=c(1:10,
+\end_layout
+
+\begin_layout Plain Layout
+
+                        seq( 10, 100,by=10 ),
+\end_layout
+
+\begin_layout Plain Layout
+
+                        seq(100,1000,by=100))) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  ylab('Income (1000s of dollars)')
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Arbitrary transformations
+\end_layout
+
+\begin_layout Standard
+The function 
+\family typewriter
+scale_y_log10()
+\family default
+ is actually just a wrapper to the 
+\family typewriter
+scale_y_continuous()
+\family default
+ function with a predefined transformation.
+ If you want to rescale function using some other function (say the inverse,
+ or square-root, or 
+\begin_inset Formula $\log_{2}$
+\end_inset
+
+) you can use the 
+\family typewriter
+scale_y_continuous()
+\family default
+ function (for the x-axis there is a corresponding 
+\family typewriter
+scale_x_????
+\family default
+) family of functions.
+ There is a whole list of transformations built into 
+\family typewriter
+ggplot2
+\family default
+ that work (transformations include "asn", "atanh", "boxcox", "exp", "identity",
+ "log", "log10", "log1p", "log2", "logit", "probability", "probit", "reciprocal"
+, "reverse" and "sqrt").
+ If you need a custom function, that can be done by defining a new transformatio
+n via the 
+\family typewriter
+trans_new()
+\family default
+ function.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+I have never needed to do this.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, warning=FALSE, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(ACS, aes(x=Age, y=Income)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point() +
+\end_layout
+
+\begin_layout Plain Layout
+
+  scale_y_continuous(
+\end_layout
+
+\begin_layout Plain Layout
+
+                trans='sqrt',        # transform y-axis by sqrt!
+\end_layout
+
+\begin_layout Plain Layout
+
+                breaks=c(1,10,100),
+\end_layout
+
+\begin_layout Plain Layout
+
+                minor=c(1:10,
+\end_layout
+
+\begin_layout Plain Layout
+
+                        seq( 10, 100,by=10 ),
+\end_layout
+
+\begin_layout Plain Layout
+
+                        seq(100,1000,by=100))) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  ylab('Income (1000s of dollars)')
 \end_layout
 
 \begin_layout Plain Layout
@@ -593,17 +1071,240 @@ Multi-plot
 \end_layout
 
 \begin_layout Standard
-Give a link to the multi-plot command
-\end_layout
-
-\begin_layout Section
-Saving plots consistently
-\end_layout
-
-\begin_layout Standard
-Use 
+There are times that you must create a graphic that is composed of several
+ sub-graphs and think of it as one object.
+ Unfortunately the mechanism that 
 \family typewriter
-ggsave()
+ggplot2
+\family default
+ gives for this is cumbersome and it is usually easier to use a function
+ called 
+\family typewriter
+multiplot
+\family default
+.
+ The explaination I've heard about why this function wasn't included in
+ 
+\family typewriter
+ggplot2
+\family default
+ is that you should think about faceting first and only resort to 
+\family typewriter
+multiplot
+\family default
+ if you have to.
+ The function 
+\family typewriter
+multiplot
+\family default
+ is included in a couple of packages, e.g.
+ 
+\family typewriter
+Rmisc
+\family default
+, but I always just google 'ggplot2 multiplot' to get to the webpage 
+\begin_inset CommandInset href
+LatexCommand href
+name "http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/"
+target "http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/"
+
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, warning=FALSE, fig.height=2.5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+# This example uses the ChickWeight dataset, which comes with ggplot2 
+\end_layout
+
+\begin_layout Plain Layout
+
+# First plot 
+\end_layout
+
+\begin_layout Plain Layout
+
+p1 <- ggplot(ChickWeight, aes(x=Time, y=weight, colour=Diet, group=Chick))
+ +
+\end_layout
+
+\begin_layout Plain Layout
+
+    geom_line() +
+\end_layout
+
+\begin_layout Plain Layout
+
+    ggtitle("Growth curve for individual chicks")
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# Second plot
+\end_layout
+
+\begin_layout Plain Layout
+
+p2 <- ggplot(ChickWeight, aes(x=Time, y=weight, colour=Diet)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+    geom_point(alpha=.3) +
+\end_layout
+
+\begin_layout Plain Layout
+
+    geom_smooth(alpha=.2, size=1) +
+\end_layout
+
+\begin_layout Plain Layout
+
+    ggtitle("Fitted growth curve per diet")
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# Third plot 
+\end_layout
+
+\begin_layout Plain Layout
+
+p3 <- ggplot(subset(ChickWeight, Time==21), aes(x=weight, colour=Diet))
+ +
+\end_layout
+
+\begin_layout Plain Layout
+
+    geom_density() +
+\end_layout
+
+\begin_layout Plain Layout
+
+    ggtitle("Final weight, by diet")
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Suppose that I want to layout these three plots in an arrangement like so:
+\begin_inset Formula 
+\[
+\textrm{my.\texttt{layout}}=\left[\begin{array}{ccc}
+1 & 2 & 2\\
+1 & 2 & 2\\
+1 & 3 & 3
+\end{array}\right]
+\]
+
+\end_inset
+
+where plot 1 is a tall, skinny plot on the left, plot 2 is more squarish,
+ and plot 3 is short on the bottom right.
+ This sort of table arrangement can be quite flexible if you have many rows
+ and many columns, but generally we can get by with something with only
+ a couple rows/columns.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=5, warning=FALSE, message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(Rmisc)  # for the multiplot function
+\end_layout
+
+\begin_layout Plain Layout
+
+my.layout = cbind( c(1,1,1), c(2,2,3), c(2,2,3) )
+\end_layout
+
+\begin_layout Plain Layout
+
+multiplot( p1, p2, p3, layout=my.layout)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Section
@@ -611,30 +1312,189 @@ Themes
 \end_layout
 
 \begin_layout Standard
-Show a few of my favorite themes.
- In part using the package 
+A great deal of thought went into the default settings of 
+\family typewriter
+ggplot2
+\family default
+ to maximize the visual clarity of the graphs.
+ However some people believe the defaults for many of the tiny graphical
+ settings are poor.
+ You can modify each of these but it is often easier to modify them all
+ at once by selecting a different theme.
+ The 
+\family typewriter
+ggplot2
+\family default
+ package includes several 
+\family typewriter
+theme_bw()
+\family default
+, and 
+\family typewriter
+theme_minimal()
+\family default
+ being the two that I use most often.
+ Below are a few to examples:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=4>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+multiplot( p1 + theme_bw(),          # Black and white
+\end_layout
+
+\begin_layout Plain Layout
+
+           p1 + theme_minimal(),   
+\end_layout
+
+\begin_layout Plain Layout
+
+           p1 + theme_dark(),        
+\end_layout
+
+\begin_layout Plain Layout
+
+           p1 + theme_light(),
+\end_layout
+
+\begin_layout Plain Layout
+
+    cols=2 )                         # two columns of graphs      
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+There are more themes in the package 
 \family typewriter
 ggthemes
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=4>>=
 \end_layout
 
-\begin_layout Enumerate
-theme_bw()
+\begin_layout Plain Layout
+
+library(ggthemes)
 \end_layout
 
-\begin_layout Enumerate
-theme_economist
+\begin_layout Plain Layout
+
+multiplot( p1 + theme_stata(),          # Black and white
 \end_layout
 
-\begin_layout Enumerate
-theme_wsj
+\begin_layout Plain Layout
+
+           p1 + theme_economist(),   
 \end_layout
 
-\begin_layout Enumerate
-theme_excel - If you really must...
+\begin_layout Plain Layout
+
+           p1 + theme_fivethirtyeight(),        
 \end_layout
 
-\begin_layout Section
-Googling to get help
+\begin_layout Plain Layout
+
+           p1 + theme_excel(),
+\end_layout
+
+\begin_layout Plain Layout
+
+    cols=2 )                         # two columns of graphs      
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Almost everything you want to modify can be modified within the theme and
+ you should check out the 
+\family typewriter
+ggplot2
+\family default
+ documentation for more information and examples of how to modify different
+ elements.
+ 
+\begin_inset CommandInset href
+LatexCommand href
+name "http://docs.ggplot2.org/current/theme.html"
+target "http://docs.ggplot2.org/current/theme.html"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -692,7 +1552,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<>>=
+<<message=FALSE, warning=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -717,7 +1577,7 @@ birthwt <- birthwt %>% mutate(
 
 \begin_layout Plain Layout
 
-  smoke = factor(smoke, labels=c('No Smoke', 'Smoke'))
+  smoke = factor(smoke, labels=c('No Smoke', 'Smoke')))
 \end_layout
 
 \begin_layout Plain Layout

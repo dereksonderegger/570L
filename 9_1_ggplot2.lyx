@@ -103,12 +103,12 @@ status open
 
 \begin_layout Plain Layout
 
-opts_chunk$set(cache.path = './cache/Graphics/',
+opts_chunk$set(cache.path = './cache/Graphics1/',
 \end_layout
 
 \begin_layout Plain Layout
 
-               fig.path   = './figure/Graphics/')
+               fig.path   = './figure/Graphics1/')
 \end_layout
 
 \begin_layout Plain Layout
@@ -194,18 +194,14 @@ ggplot2
 \family default
  is designed to act on data frames.
  It is actually hard to just draw three data points and for simple graphs
- (like I might make for a lecture) I prefer to use the base graphing system
- in R.
+ it might be easier to use the base graphing system in R.
  However for any real data analysis project, the data will already be in
  a data frame and this is not an annoyance.
 \end_layout
 
 \begin_layout Standard
-These notes are in no sufficient for graphing, particularly with 
-\family typewriter
-ggplot2
-\family default
-.
+These notes are sufficient for graphing simple graphing, but are not intended
+ to be exhaustive.
  There are many places online to get help with 
 \family typewriter
 ggplot2
@@ -227,34 +223,8 @@ R Graphics Cookbook
  such as StackExchange.
 \end_layout
 
-\begin_layout Standard
-In this chapter we will use three different data sets.
- The first is the 
-\family typewriter
-iris
-\family default
- data that shows the dimensions of petals and sepals for three varieties
- of iris.
- The 
-\family typewriter
-mtcars
-\family default
- dataset shows some cars from a 
-\emph on
-Motor Trend
-\emph default
- magazine and gives information about gas efficiency, number of cylinders,
- volume of cylinders, etc.
- Finally the 
-\family typewriter
-diamond
-\family default
- data set looks at the price versus a number of other covariates such as
- carats, cut, and clarity of the diamond.
-\end_layout
-
 \begin_layout Section
-A few simple summaries 
+A few simple examples
 \end_layout
 
 \begin_layout Subsection
@@ -274,7 +244,7 @@ Sepal.Length
 \family typewriter
 Petal.Length
 \family default
-.
+, which are two columns in my dataset.
 \begin_inset Newline newline
 \end_inset
 
@@ -504,7 +474,11 @@ aes()
 \end_layout
 
 \begin_layout Enumerate
-Anything set inside an 
+Anything set 
+\emph on
+inside
+\emph default
+ an 
 \family typewriter
 aes()
 \family default
@@ -516,7 +490,11 @@ attribute=Column_Name
 \end_layout
 
 \begin_layout Enumerate
-Anything set outside an 
+Anything set 
+\emph on
+outside
+\emph default
+ an 
 \family typewriter
 aes()
 \family default
@@ -575,6 +553,10 @@ I typically don't use this method because it has too many limitations as
  I prefer to fit a model to the data, calculate the predicted values along
  with whatever confidence intervals I want, and plot those directly using
  
+\family typewriter
+geom_line()
+\family default
+ and 
 \family typewriter
 geom_ribbon()
 \family default
@@ -642,19 +624,360 @@ ggplot( data=iris, aes(x=Sepal.Length, y=Petal.Length, color=Species) ) +
 \end_layout
 
 \begin_layout Subsection
-Bar Charts and Histograms
+Bar Charts
+\end_layout
+
+\begin_layout Standard
+For displaying a categorical variable on the x-axis and a continuous variable
+ on the y-axis, a bar chart is a good option.
+ Here we consider a data set that gives the fuel efficiency of different
+ classes of vehicles in two different years.
+ This is a subset of data that the EPA makes available on http://fueleconomy.gov.
+ It contains only model which had a new release every year between 1999
+ and 2008 and therefore represents the most popular cars sold in the US.
+ It includes information for each model for years 1999 and 2008.
+ The dataset is included in the 
+\family typewriter
+ggplot2
+\family default
+ package as 
+\family typewriter
+mpg
+\family default
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3, fig.width=5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+str(mpg)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+First we could summarize the data by how many of each model there are in
+ the different classes.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3, fig.width=5>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(mpg, aes(x=class)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_bar()
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+By default, the 
+\family typewriter
+geom_box()
+\family default
+ just counts the number of cases and displays how many observations were
+ in each class.
+ If we were interested in knowing the mean 
+\family typewriter
+highway
+\family default
+ fuel efficiency, we would have to summarize the data and calculate the
+ mean for each class.
+ Fortunately that is pretty easy to do.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3, fig.width=5, message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(dplyr)  # for calculating the summary statistics
+\end_layout
+
+\begin_layout Plain Layout
+
+mpg.small <- mpg %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  group_by(class) %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  summarise(mean.hwy = mean(hwy),
+\end_layout
+
+\begin_layout Plain Layout
+
+            sd.hwy   = sd(hwy))
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(mpg.small, aes(x=class, y=mean.hwy)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_bar( stat = 'identity' )              # no further summarization!
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The 
+\family typewriter
+stat='identity'
+\family default
+ part is necessary to keep 
+\family typewriter
+geom_bar()
+\family default
+ from doing any default summarization.
+ We can add some error bars to show the standard deviation as well.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3, fig.width=5, message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(mpg.small, aes(x=class, y=mean.hwy,
+\end_layout
+
+\begin_layout Plain Layout
+
+                      ymin = mean.hwy-sd.hwy, 
+\end_layout
+
+\begin_layout Plain Layout
+
+                      ymax = mean.hwy+sd.hwy)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_bar( stat = 'identity' ) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_linerange()
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-Box Plots and Violin Plots
+Box Plots 
 \end_layout
 
-\begin_layout Subsection
-Two-dimensional Density Plot
+\begin_layout Standard
+Boxplots are a common way to show a categorical variable on the x-axis and
+ continuous on the y-axis.
+ I actually prefer these over the barchart we did prior.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3, fig.width=5, message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(mpg, aes(x=class, y=hwy)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_boxplot()
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
-Geometries
+Geometries and Layers
 \end_layout
 
 \begin_layout Standard
@@ -1106,12 +1429,8 @@ These different geometries are different ways to display the relationship
  between variables and can be combined in many interesting ways.
 \end_layout
 
-\begin_layout Section
-Layers
-\end_layout
-
-\begin_layout Itemize
-Graphs are built up layer by layer
+\begin_layout Standard
+A graph can be built up layer by layer, where:
 \end_layout
 
 \begin_layout Itemize
@@ -1132,7 +1451,7 @@ You can have different datasets for each layer!
 \end_deeper
 \begin_layout Itemize
 Can add layers with a +, or you can define two plots and add them together
- (second one over-writes anything that conflicts)
+ (second one over-writes anything that conflicts).
 \end_layout
 
 \begin_layout Section
@@ -1140,11 +1459,7 @@ Examples
 \end_layout
 
 \begin_layout Subsection
-Polished Bar Plot
-\end_layout
-
-\begin_layout Subsection
-Histogram with a theoretical distribution
+Bar Plot
 \end_layout
 
 \begin_layout Standard
@@ -1825,87 +2140,6 @@ Exercises
 \end_layout
 
 \begin_layout Enumerate
-The 
-\family typewriter
-mosaic
-\family default
- package includes a function that allows for a point and click interface
- to building a graph in 
-\family typewriter
-ggplot2
-\family default
-.
- The point of the 
-\family typewriter
-mplot()
-\family default
- command is to allow you to do some point and click selection to build a
- graph and then click the button that produces the R commands that produced
- the graph.
- You then copy and past the R commands into your markdown file.
- Once you know the ggplot2 system better, you won’t ever bother with 
-\family typewriter
-mplot()
-\family default
-, you'll just type it in directly.
- Until then it is nice to have some help in formatting the plotting commands.
- 
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Load the 
-\family typewriter
-mosaic
-\family default
- library.
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<message=FALSE>>=
-\end_layout
-
-\begin_layout Plain Layout
-
-library(mosaic)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
 For the dataset 
 \family typewriter
 trees
@@ -1927,69 +2161,12 @@ Look at the help file
 
 , we wish to build a scatterplot that compares the height and girth of these
  cherry trees to the volume of lumber that was produced.
- The 
-\family typewriter
-mosaic
-\family default
- function 
-\family typewriter
-mplot()
-\family default
- will allow you to explore many different ways of visualizing the data.
- Run the command 
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-<<message=FALSE, eval=FALSE>>=
+ and 
 \end_layout
 
-\begin_layout Plain Layout
-
-library(mosaic)
-\end_layout
-
-\begin_layout Plain Layout
-
-mplot(trees)
-\end_layout
-
-\begin_layout Plain Layout
-
-@
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-and create a graph using 
+\begin_deeper
+\begin_layout Enumerate
+Create a graph using 
 \family typewriter
 ggplot2
 \family default
@@ -2006,38 +2183,11 @@ Volume
 Girth
 \family default
  as the either the size of the data point or the color of the data point.
+ Which do you think is a more intuitive representation?
 \end_layout
 
 \begin_layout Enumerate
-Have 
-\family typewriter
-mplot()
-\family default
- produce the code to produce this graph and copy that code into your RMarkdown
- file for this lab.
- Because 
-\family typewriter
-mplot()
-\family default
- *requires* user input via the mouse, it is a pointless command for a document
- that will be printed and will cause an error when you try to knit your
- results.
- Instead you’ll use 
-\family typewriter
-mplot()
-\family default
- to help produce the code for a graphic, and then do any final tweaking
- on the graph that is necessary.
- In your write up, I would recommend that you include the 
-\family typewriter
-mplot()
-\family default
- command so that you can go back and remember how it was called but then
- comment it out using the ‘#’ character.
-\end_layout
-
-\begin_layout Enumerate
-Add appropriate labels for the x and y axes along with a title.
+Add appropriate labels for the main title and the x and y axes.
 \end_layout
 
 \end_deeper
@@ -2120,32 +2270,17 @@ Rosy <- data.frame(
 
 \begin_layout Plain Layout
 
-  yhat  = c(14.36, 12.29, 10.21, 8.14,
+  yhat  = c(14.36, 12.29, 10.21, 8.14, 6.07, 4.00,  1.93),
 \end_layout
 
 \begin_layout Plain Layout
 
-             6.07,  4.00,  1.93),
+  lwr   = c( 9.54,  8.5,   7.22, 5.47, 3.08, 0.22, -2.89),
 \end_layout
 
 \begin_layout Plain Layout
 
-  lwr   = c(9.54,  8.5, 7.22, 5.47, 3.08,
-\end_layout
-
-\begin_layout Plain Layout
-
-            0.22, -2.89),
-\end_layout
-
-\begin_layout Plain Layout
-
-  upr   = c(19.18, 16.07, 13.2, 10.82,
-\end_layout
-
-\begin_layout Plain Layout
-
-             9.06,  7.78,  6.75))
+  upr   = c(19.18, 16.07, 13.2, 10.82, 9.06, 7.78,  6.75))
 \end_layout
 
 \begin_layout Plain Layout
@@ -2244,7 +2379,19 @@ ymin=lwr
 ymax=upr
 \family default
 .
- 
+ For examples of using 
+\family typewriter
+geom_ribbon()
+\family default
+ see the online documentation: 
+\begin_inset CommandInset href
+LatexCommand href
+name "http://docs.ggplot2.org/current/geom_ribbon.html"
+target "http://docs.ggplot2.org/current/geom_ribbon.html"
+
+\end_inset
+
+.
 \begin_inset Newline newline
 \end_inset
 
@@ -2268,7 +2415,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<echo=FALSE, eval=FALSE>>=
+<<eval=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -2349,6 +2496,206 @@ target "http://sape.inf.usi.ch/quick-reference/ggplot2/colour"
 \begin_layout Enumerate
 Add labels for the x-axis and y-axis that are appropriate along with a main
  title.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The R package 
+\family typewriter
+babynames
+\family default
+ contains a single dataset that lists the number of children registered
+ with Social Security with a particular name along with the proportion out
+ of all children born in a given year.
+ The dataset covers the from 1880 to the present.
+ We want to plot the relative popularity of the names 'Elise' and 'Casey'.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Load the package.
+ If it is not found on your computer, download the package from CRAN.
+\end_layout
+
+\begin_layout Enumerate
+Read the help file for the data set 
+\family typewriter
+babynames
+\family default
+ to get a sense of the columns 
+\end_layout
+
+\begin_layout Enumerate
+Create a small dataset that only has the names 
+\family typewriter
+'Elise'
+\family default
+ and 
+\family typewriter
+'Casey'
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+Make a plot where the x-axis is the year and the y-axis is the proportion
+ of babies given the names.
+ Use a line to display this relationship and distinguish the two names by
+ color.
+ Notice this graph is a bit ugly because there is a lot of year-to-year
+ variability that we should smooth over.
+\end_layout
+
+\begin_layout Enumerate
+We'll use 
+\family typewriter
+dplyr
+\family default
+ to collapse the individual years into decades using the following code:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+small <- babynames %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  filter( name=='Elise' | name=='Casey') %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  mutate( decade = cut(year, breaks = seq(1869,2019,by=10) )) %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  group_by(name, decade) %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  summarise( prop = mean(prop),
+\end_layout
+
+\begin_layout Plain Layout
+
+             year = min(year)) 
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Now draw the same graph you had in part (d).
+\end_layout
+
+\begin_layout Enumerate
+Next we'll create an area plot where the height is the total proportion
+ of the 
+\emph on
+both
+\emph default
+ names and the colors split up the proportion.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(small, aes(x=year, y=prop, fill=name)) + geom_area()
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+This is a pretty neat graph as it show the relative popularity of the name
+ over time and can easily be expanded to many many names.
+ In fact, there is a wonderful website that takes this same data and allows
+ you select the names quite nicely: 
+\begin_inset CommandInset href
+LatexCommand href
+name "www.babynamewizard.com"
+target "http://www.babynamewizard.com/voyager#prefix=&sw=both&exact=false"
+
+\end_inset
+
+.
+ My wife and I used this a lot while figuring out what to name our children.
+ Notice that this site really uses the same graph type we just built but
+ there are a few extra neat tricks.
 \end_layout
 
 \end_deeper
