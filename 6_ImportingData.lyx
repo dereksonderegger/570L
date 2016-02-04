@@ -1173,8 +1173,12 @@ target "https://github.com/dereksonderegger/STA_570L_Book/tree/master/data"
 \end_inset
 
 .
- Place these files in the same directory that you store your STA 599 course
- work.
+ Place these files in the same directory that you store your course work
+ or make a subdirectory 
+\family typewriter
+data
+\family default
+ to store the files in..
  Make sure that the working directory that RStudio is using is that same
  directory (Session -> Set Working Directory).
  
@@ -1218,7 +1222,46 @@ status open
 
 \begin_layout Plain Layout
 
-library(readxl)    
+library(readxl)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# Where does the data live relative to my current working location? 
+\end_layout
+
+\begin_layout Plain Layout
+
+#
+\end_layout
+
+\begin_layout Plain Layout
+
+# I made a subdirectory named 'data' to store all the data files,
+\end_layout
+
+\begin_layout Plain Layout
+
+#   so the path to my data files will be './data/Example_1.xls'
+\end_layout
+
+\begin_layout Plain Layout
+
+#   where "." indicates the current working directory
+\end_layout
+
+\begin_layout Plain Layout
+
+# If you stored the files in the same directory as your RMarkdown script,
+\end_layout
+
+\begin_layout Plain Layout
+
+#   then you would use './Example_1.xls' or just 'Example_1.xls'
 \end_layout
 
 \begin_layout Plain Layout
@@ -1232,7 +1275,7 @@ library(readxl)
 
 \begin_layout Plain Layout
 
-data.1 <- read_excel('Example_1.xls')   
+data.1 <- read_excel(  './data/Example_1.xls'  )   
 \end_layout
 
 \begin_layout Plain Layout
@@ -1246,12 +1289,12 @@ data.1 <- read_excel('Example_1.xls')
 
 \begin_layout Plain Layout
 
-data.2 <- read_excel('Example_2.xls', sheet=2     )   # both ways 
+data.2 <- read_excel('./data/Example_2.xls', sheet=2     )   
 \end_layout
 
 \begin_layout Plain Layout
 
-data.2 <- read_excel('Example_2.xls', sheet='data')   # will work
+data.2 <- read_excel('./data/Example_2.xls', sheet='data')   
 \end_layout
 
 \begin_layout Plain Layout
@@ -1318,7 +1361,8 @@ status open
 
 \begin_layout Plain Layout
 
-data.4 <- read_excel('Example_4.xls', sheet='data')   # Extra Column Example
+data.4 <- read_excel('./data/Example_4.xls', sheet='data')   # Extra Column
+ Example
 \end_layout
 
 \begin_layout Plain Layout
