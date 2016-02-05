@@ -562,6 +562,49 @@ dplyr
 \end_layout
 
 \begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<warning=FALSE, message=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(dplyr)   # load the dplyr package!
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Many of the tools to manipulate data frames in R were written without a
  consistent syntax and are difficult use together.
  To remedy this, Hadley Wickham (the writer of 
@@ -602,10 +645,6 @@ dplyr
  in more detail how the various pieces work and I encourage you to read
  it at some point.
  
-\begin_inset Newline newline
-\end_inset
-
-
 \begin_inset CommandInset href
 LatexCommand href
 target "http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html"
@@ -625,34 +664,67 @@ The pipe command
 \family typewriter
 %>%
 \family default
- operator works in the context of functions that take a 
+ operator works by translating the command 
 \family typewriter
-data.frame
-\family default
- as their first argument.
- The 
-\family typewriter
-%>%
-\family default
- operator translates 
-\family typewriter
-df %>% f()
+a %>% f(b)
 \family default
  to the expression 
 \family typewriter
-f(df)
+f(a,b)
 \family default
 .
- The beauty of this comes when you have functions that takes 
+ This operator works on any function and was introduced in the 
 \family typewriter
-data.frames
+magrittr
 \family default
- as arguments and returns a modified 
+ package.
+ The beauty of this comes when you have a suite of functions that takes
+ input arguments of the same type as their output.
+ In 
+\family typewriter
+dplyr
+\family default
+, all the functions below take a 
+\family typewriter
+data.frame
+\family default
+ as its first argument and outputs an appropriately modified 
 \family typewriter
 data.frame
 \family default
 .
  This will allow me to chain together commands in a readable fashion.
+ For example if we wanted to start with 
+\family typewriter
+x
+\family default
+, and first apply function 
+\family typewriter
+f()
+\family default
+, then 
+\family typewriter
+g()
+\family default
+, and then 
+\family typewriter
+h()
+\family default
+, the usual R command would be 
+\family typewriter
+h(g(f(x)))
+\family default
+ which is hard to read because you have to start reading at the innermost
+ set of parentheses.
+ Using the pipe command 
+\family typewriter
+%>%
+\family default
+, this sequence of operations becomes 
+\family typewriter
+x %>% f() %>% g() %>% h()
+\family default
+.
 \end_layout
 
 \begin_layout Subsection
@@ -771,11 +843,7 @@ Often you only want to work with a small number of columns of a data frame.
 [,col.name]
 \family default
  notation, but is often pretty tedious.
- The dataset 
-\family typewriter
-mtcars
-\family default
- contains information about 32 models of cars from the 70s.
+ 
 \begin_inset Newline newline
 \end_inset
 
@@ -799,17 +867,17 @@ status open
 
 \begin_layout Plain Layout
 
-<<message=FALSE>>=
+<<>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-library(dplyr)
+# recall what the grades are
 \end_layout
 
 \begin_layout Plain Layout
 
-str(mtcars)
+grades
 \end_layout
 
 \begin_layout Plain Layout
@@ -828,23 +896,8 @@ str(mtcars)
 \begin_inset Newline newline
 \end_inset
 
-I could select the columns 
-\family typewriter
-mpg,
-\family default
- 
-\family typewriter
-cyl,
-\family default
- 
-\family typewriter
-disp,
-\family default
- 
-\family typewriter
-hp
-\family default
- by hand, or by using an extension of the 
+I could select the columns Exam columns by hand, or by using an extension
+ of the 
 \family typewriter
 :
 \family default
@@ -877,18 +930,210 @@ status open
 
 \begin_layout Plain Layout
 
-small <- mtcars %>% select( mpg, cyl, disp, hp )  # these two commands are
- 
+grades %>% select( Exam1, Exam2 )   # Exam1 and Exam2=
 \end_layout
 
 \begin_layout Plain Layout
 
-small <- mtcars %>% select( mpg:hp )              # equivalent
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-str(small)
+grades %>% select( Exam1:Final )    # Columns Exam1 through Final
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+grades %>% select( -Exam1 )         # Negative indexing by name works
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+grades %>% select( 1:2 )            # Can select column by column position
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The 
+\family typewriter
+select()
+\family default
+ command has a few other tricks.
+ There are functional calls that describe the columns you wish to select
+ that take advantage of pattern matching.
+ I generally can get by with 
+\family typewriter
+starts_with()
+\family default
+, 
+\family typewriter
+ends_with()
+\family default
+, and 
+\family typewriter
+contains()
+\family default
+, but there is a final operator 
+\family typewriter
+matches()
+\family default
+ that takes a regular expression.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+grades %>% select( starts_with('Exam') )   # Exam1 and Exam2
 \end_layout
 
 \begin_layout Plain Layout

@@ -1592,7 +1592,7 @@ Convert the vector of
 \family typewriter
 TRUE/FALSE
 \family default
- values in part (b) to integer values using the 
+ values in part (c) to integer values using the 
 \family typewriter
 as.numeric()
 \family default
@@ -1605,12 +1605,12 @@ TRUE
 \end_layout
 
 \begin_layout Enumerate
-Sum the vector of numbers you created in part (c) to count the number of
- values in 
+Sum (using the 
 \family typewriter
-x
+sum()
 \family default
- that are less than or equal to 0.
+ function) the vector you created to count the number of students with GPA
+ > 3.0 and are a forestry major.
 \end_layout
 
 \end_deeper

@@ -800,11 +800,7 @@ Often you only want to work with a small number of columns of a data frame.
 [,col.name]
 \family default
  notation, but is often pretty tedious.
- The dataset 
-\family typewriter
-mtcars
-\family default
- contains information about 32 models of cars from the 70s.
+ 
 \begin_inset Newline newline
 \end_inset
 
@@ -828,17 +824,17 @@ status open
 
 \begin_layout Plain Layout
 
-<<message=FALSE>>=
+<<>>=
 \end_layout
 
 \begin_layout Plain Layout
 
-library(dplyr)
+# recall what the grades are
 \end_layout
 
 \begin_layout Plain Layout
 
-str(mtcars)
+grades
 \end_layout
 
 \begin_layout Plain Layout
@@ -857,23 +853,8 @@ str(mtcars)
 \begin_inset Newline newline
 \end_inset
 
-I could select the columns 
-\family typewriter
-mpg,
-\family default
- 
-\family typewriter
-cyl,
-\family default
- 
-\family typewriter
-disp,
-\family default
- 
-\family typewriter
-hp
-\family default
- by hand, or by using an extension of the 
+I could select the columns Exam  columns by hand, or by using an extension
+ of the 
 \family typewriter
 :
 \family default
@@ -906,6 +887,11 @@ status open
 
 \begin_layout Plain Layout
 
+grades %>% select( HW.1, HW.2
+\end_layout
+
+\begin_layout Plain Layout
+
 small <- mtcars %>% select( mpg, cyl, disp, hp )  # these two commands are
  
 \end_layout
@@ -933,6 +919,33 @@ str(small)
 \end_inset
 
 
+\begin_inset Newline newline
+\end_inset
+
+The 
+\family typewriter
+select()
+\family default
+ command has a few other tricks.
+ There are functional calls that describe the columns you wish to select
+ that take advantage of pattern matching.
+ I generally can get by with 
+\family typewriter
+starts_with()
+\family default
+, 
+\family typewriter
+ends_with()
+\family default
+, and 
+\family typewriter
+contains()
+\family default
+, but there is a final operator 
+\family typewriter
+matches()
+\family default
+ that takes a regular expression.
 \end_layout
 
 \begin_layout Subsubsection*
