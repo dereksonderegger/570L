@@ -287,7 +287,7 @@ filename "7_DataFrameManipulation.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
-filename "7_1_DataFrameManipulation.lyx"
+filename "7_1_DataReshaping.lyx"
 
 \end_inset
 

@@ -1901,6 +1901,274 @@ rbinom(4, size=10, prob=.8)
 \end_layout
 
 \begin_layout Section
+Plotting distributions using ggplot2
+\end_layout
+
+\begin_layout Standard
+Often I need to plot a distribution and perhaps shade some area in.
+ In this section we'll give a method for plotting continuous and discrete
+ distributions using 
+\family typewriter
+ggplot2
+\family default
+.
+\end_layout
+
+\begin_layout Subsection
+Continuous distributions
+\end_layout
+
+\begin_layout Standard
+First we need to create a 
+\family typewriter
+data.frame
+\family default
+ that contains a sequence of (x,y) pairs that we'll pass to our graphing
+ program to draw the curve by connecting-the-dots, but because the dots
+ will be very close together, the resulting curve looks smooth.
+ For example, lets plot the F-distribution with parameters 
+\begin_inset Formula $\nu_{1}=5$
+\end_inset
+
+ and 
+\begin_inset Formula $\nu_{2}=30$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<message=FALSE, warning=FALSE, fig.height=3>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+library(dplyr)
+\end_layout
+
+\begin_layout Plain Layout
+
+library(ggplot2)
+\end_layout
+
+\begin_layout Plain Layout
+
+plot.data <- data.frame( x=seq(0,10, length=1000) ) %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  mutate( density = df(x, 5, 30) )
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(plot.data, aes(x=x, y=density)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_line()
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This isn't too bad, but often we want to add some color to two different
+ sections, perhaps we want different colors distinguishing between values
+ 
+\begin_inset Formula $\ge2.5$
+\end_inset
+
+ vs values 
+\begin_inset Formula $<2.5$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+plot.data <- data.frame( x=seq(0,10, length=1000) ) %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  mutate( density = df(x, 5, 30),
+\end_layout
+
+\begin_layout Plain Layout
+
+          Group = ifelse(x <= 2.5, 'Less','Greater') )
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(plot.data, aes(x=x, y=density, fill=Group)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_area() +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_line() 
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Discrete distributions
+\end_layout
+
+\begin_layout Standard
+The idea for discrete distributions will be to draw points for the height
+ and then add bars.
+ Lets look at doing this for the poisson distribution with rate parameter
+ 
+\begin_inset Formula $\lambda=2$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<fig.height=3>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+plot.data <- data.frame( x=seq(0,10) ) %>%
+\end_layout
+
+\begin_layout Plain Layout
+
+  mutate( probability = dpois(x, lambda=2) )
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(plot.data, aes(x=x)) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_point( aes(y=probability) ) +
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_linerange(aes(ymax=probability), ymin=0) 
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Exercises
 \end_layout
 
@@ -2050,16 +2318,6 @@ pexp()
 
 .
  
-\emph on
-Unfortunately there isn't a 
-\family typewriter
-mosaic
-\family default
- augmented 
-\family typewriter
-xpexp()
-\family default
- function.
 \end_layout
 
 \end_deeper
@@ -2132,14 +2390,14 @@ runif()
 
 \begin_layout Enumerate
 Generate a sample of size 20 from the same uniform distribution and save
- it.
- Then produce a histogram of the sample using the function 
+ it as a column in a data frame.
+ Then produce a histogram of the sample using the 
 \family typewriter
-hist()
+mosaic
 \family default
- or using 
+ function 
 \family typewriter
-ggplot2
+histogram()
 \family default
 .
  

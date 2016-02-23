@@ -194,18 +194,14 @@ ggplot2
 \family default
  is designed to act on data frames.
  It is actually hard to just draw three data points and for simple graphs
- (like I might make for a lecture) I prefer to use the base graphing system
- in R.
+ it might be easier to use the base graphing system in R.
  However for any real data analysis project, the data will already be in
  a data frame and this is not an annoyance.
 \end_layout
 
 \begin_layout Standard
-These notes are in no sufficient for graphing, particularly with 
-\family typewriter
-ggplot2
-\family default
-.
+These notes are sufficient for graphing simple graphing, but are not intended
+ to be exhaustive.
  There are many places online to get help with 
 \family typewriter
 ggplot2
@@ -225,32 +221,6 @@ R Graphics Cookbook
  which I highly recommend.
  Second is just googling your problems and see what you can find on websites
  such as StackExchange.
-\end_layout
-
-\begin_layout Standard
-In this chapter we will use three different data sets.
- The first is the 
-\family typewriter
-iris
-\family default
- data that shows the dimensions of petals and sepals for three varieties
- of iris.
- The 
-\family typewriter
-mtcars
-\family default
- dataset shows some cars from a 
-\emph on
-Motor Trend
-\emph default
- magazine and gives information about gas efficiency, number of cylinders,
- volume of cylinders, etc.
- Finally the 
-\family typewriter
-diamond
-\family default
- data set looks at the price versus a number of other covariates such as
- carats, cut, and clarity of the diamond.
 \end_layout
 
 \begin_layout Section
@@ -274,7 +244,7 @@ Sepal.Length
 \family typewriter
 Petal.Length
 \family default
-.
+, which are two columns in my dataset.
 \begin_inset Newline newline
 \end_inset
 
@@ -504,7 +474,11 @@ aes()
 \end_layout
 
 \begin_layout Enumerate
-Anything set inside an 
+Anything set 
+\emph on
+inside
+\emph default
+ an 
 \family typewriter
 aes()
 \family default
@@ -516,7 +490,11 @@ attribute=Column_Name
 \end_layout
 
 \begin_layout Enumerate
-Anything set outside an 
+Anything set 
+\emph on
+outside
+\emph default
+ an 
 \family typewriter
 aes()
 \family default
@@ -575,6 +553,10 @@ I typically don't use this method because it has too many limitations as
  I prefer to fit a model to the data, calculate the predicted values along
  with whatever confidence intervals I want, and plot those directly using
  
+\family typewriter
+geom_line()
+\family default
+ and 
 \family typewriter
 geom_ribbon()
 \family default
