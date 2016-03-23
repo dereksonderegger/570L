@@ -812,7 +812,7 @@ status open
 
 \begin_layout Plain Layout
 
-ggplot(ACS, aes(x=Age, y=log10(Income))) +
+ggplot(ACS, aes(x=Age, y=Income)) +
 \end_layout
 
 \begin_layout Plain Layout
