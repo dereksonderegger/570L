@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Sufficient Introduction to R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="A Sufficient Introduction to R">
+  <meta name="generator" content="bookdown 0.1.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Sufficient Introduction to R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Sufficient Introduction to R" />
+  
+  
+  
+
+<meta name="author" content="Derek L. Sonderegger">
+
+<meta name="date" content="2016-08-22">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="vectors.html">
+<link rel="next" href="exercises-2.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#r-as-a-simple-calculator"><i class="fa fa-check"></i><b>1.1</b> R as a simple calculator</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#assignment"><i class="fa fa-check"></i><b>1.2</b> Assignment</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#scripts-and-rmarkdown"><i class="fa fa-check"></i><b>1.3</b> Scripts and RMarkdown</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#r-scripts-.r-files"><i class="fa fa-check"></i><b>1.3.1</b> R Scripts (.R files)</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#r-markdown-.rmd-files"><i class="fa fa-check"></i><b>1.3.2</b> R Markdown (.Rmd files)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#exercises"><i class="fa fa-check"></i><b>1.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>2</b> Vectors</a><ul>
+<li class="chapter" data-level="2.1" data-path="vectors.html"><a href="vectors.html#accessing-vector-elements"><i class="fa fa-check"></i><b>2.1</b> Accessing Vector Elements</a></li>
+<li class="chapter" data-level="2.2" data-path="vectors.html"><a href="vectors.html#scalar-functions-applied-to-vectors"><i class="fa fa-check"></i><b>2.2</b> Scalar Functions Applied to Vectors</a></li>
+<li class="chapter" data-level="2.3" data-path="vectors.html"><a href="vectors.html#vector-algebra"><i class="fa fa-check"></i><b>2.3</b> Vector Algebra</a></li>
+<li class="chapter" data-level="2.4" data-path="vectors.html"><a href="vectors.html#commonly-used-vector-functions"><i class="fa fa-check"></i><b>2.4</b> Commonly Used Vector Functions</a></li>
+<li class="chapter" data-level="2.5" data-path="vectors.html"><a href="vectors.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>3</b> Data Types</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-types.html"><a href="data-types.html#integers-and-numerics"><i class="fa fa-check"></i><b>3.1</b> Integers and Numerics</a></li>
+<li class="chapter" data-level="3.2" data-path="data-types.html"><a href="data-types.html#character-strings"><i class="fa fa-check"></i><b>3.2</b> Character Strings</a></li>
+<li class="chapter" data-level="3.3" data-path="data-types.html"><a href="data-types.html#factors"><i class="fa fa-check"></i><b>3.3</b> Factors</a></li>
+<li class="chapter" data-level="3.4" data-path="data-types.html"><a href="data-types.html#logicals"><i class="fa fa-check"></i><b>3.4</b> Logicals</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exercises-2.html"><a href="exercises-2.html"><i class="fa fa-check"></i><b>4</b> Exercises</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Sufficient Introduction to R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-types" class="section level1">
+<h1><span class="header-section-number">3</span> Data Types</h1>
+<p>There are some basic data types that are commonly used.</p>
+<ol style="list-style-type: decimal">
+<li><p>Integers - These are the integer numbers <span class="math inline">\(\left(\dots,-2,-1,0,1,2,\dots\right)\)</span>. To convert a numeric value to an integer you may use the function <code>as.integer()</code>.</p></li>
+<li><p>Numeric - These could be any number (whole number or decimal). To convert another type to numeric you may use the function as.numeric().</p></li>
+<li><p>Strings - These are a collection of characters (example: Storing a student’s last name). To convert another type to a string, use as.character().</p></li>
+<li><p>Factors - These are strings that can only values from a finite set. For example we might wish to store a variable that records home department of a student. Since the department can only come from a finite set of possibilities, I would use a factor. Factors are categorical variables, but R calls them factors instead of categorical variable. A vector of values of another type can always be converted to a factor using the as.factor() command.</p></li>
+<li><p>Logicals - This is a special case of a factor that can only take on the values <code>TRUE</code> and <code>FALSE</code>. (Be careful to always capitalize <code>TRUE</code> and <code>FALSE</code>. Because R is case-sensitive, TRUE is not the same as true. Using the function <code>as.logical()</code> you can convert numeric values to <code>TRUE</code> and <code>FALSE</code> where <code>0</code> is <code>FALSE</code> and anything else is <code>TRUE</code>.</p></li>
+</ol>
+<p>Depending on the command, R will coerce your data if necessary, but it is a good habit to do the coercion yourself. If a variable is a number, R will automatically assume that it is continuous numerical variable. If it is a character string, then R will assume it is a factor when doing any statistical analysis.</p>
+<p>To find the type of an object, the str() command gives the type, and if the type is complicated, it describes the structure of the object.</p>
+<div id="integers-and-numerics" class="section level2">
+<h2><span class="header-section-number">3.1</span> Integers and Numerics</h2>
+<p>Integers and numerics are exactly what they sound like. Integers can take on whole number values, while numerics can take on any decimal value. The reason that there are two separate data types is that integers require less memory to store than numerics. For most users, the distinction can be ignored.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>)
+<span class="co"># show that x is of type &#39;numeric&#39;</span>
+<span class="kw">str</span>(x)   <span class="co"># the str() command show the STRucture of the object</span></code></pre></div>
+<pre><code>##  num [1:5] 1 2 1 2 1</code></pre>
+</div>
+<div id="character-strings" class="section level2">
+<h2><span class="header-section-number">3.2</span> Character Strings</h2>
+<p>In R, we can think of collections of letters and numbers as a single entity called a string. Other programming languages think of strings as vectors of letters, but R does not so you can’t just pull off the first character using vector tricks. In practice, there are no limits as to how long string can be.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> &quot;Goodnight Moon&quot;</span>
+
+<span class="co"># Notice x is of type character (chr)</span>
+<span class="kw">str</span>(x)</code></pre></div>
+<pre><code>##  chr &quot;Goodnight Moon&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># R doesn&#39;t care if I use single quotes or double quotes, but don&#39;t mix them...</span>
+y &lt;-<span class="st"> &#39;Hop on Pop!&#39;</span>
+
+<span class="co"># we can make a vector of character strings</span>
+Books &lt;-<span class="st"> </span><span class="kw">c</span>(x, y, <span class="st">&#39;Where the Wild Things Are&#39;</span>)
+Books</code></pre></div>
+<pre><code>## [1] &quot;Goodnight Moon&quot;            &quot;Hop on Pop!&quot;              
+## [3] &quot;Where the Wild Things Are&quot;</code></pre>
+<p>Character strings can also contain numbers and if the character string is in the correct format for a number, we can convert it to a number.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> &#39;5.2&#39;</span>
+<span class="kw">str</span>(x)     <span class="co"># x really is a character string</span></code></pre></div>
+<pre><code>##  chr &quot;5.2&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x</code></pre></div>
+<pre><code>## [1] &quot;5.2&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(x)</code></pre></div>
+<pre><code>## [1] 5.2</code></pre>
+<p>If we try an operation that only makes sense on numeric types (like addition) then R complain unless we first convert it. There are places where R will try to coerce an object to another data type but it happens inconsistently and you should just do the conversion yourself</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x<span class="dv">+1</span></code></pre></div>
+<pre><code>## Error in x + 1: non-numeric argument to binary operator</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(x) +<span class="st"> </span><span class="dv">1</span></code></pre></div>
+<pre><code>## [1] 6.2</code></pre>
+</div>
+<div id="factors" class="section level2">
+<h2><span class="header-section-number">3.3</span> Factors</h2>
+<p>Factors are how R keeps track of categorical variables. R does this in a two step pattern. First it figures out how many categories there are and remembers which category an observation belongs two and second, it keeps a vector character strings that correspond to the names of each of the categories.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># A charater vector</span>
+y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;B&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;A&#39;</span>,<span class="st">&#39;A&#39;</span>,<span class="st">&#39;C&#39;</span>)
+y</code></pre></div>
+<pre><code>## [1] &quot;B&quot; &quot;B&quot; &quot;A&quot; &quot;A&quot; &quot;C&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># convert the vector of characters into a vector of factors </span>
+z &lt;-<span class="st"> </span><span class="kw">factor</span>(y)
+<span class="kw">str</span>(z)</code></pre></div>
+<pre><code>##  Factor w/ 3 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;: 2 2 1 1 3</code></pre>
+<p>Notice that the vector <code>z</code> is actually the combination of group assignment vector <code>2,2,1,1,3</code> and the group names vector <code>“A”,”B”,”C”</code>. So we could convert z to a vector of numerics or to a vector of character strings.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(z)</code></pre></div>
+<pre><code>## [1] 2 2 1 1 3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.character</span>(z)</code></pre></div>
+<pre><code>## [1] &quot;B&quot; &quot;B&quot; &quot;A&quot; &quot;A&quot; &quot;C&quot;</code></pre>
+<p>Often we need to know what possible groups there are, and this is done using the <code>levels()</code> command.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(z)</code></pre></div>
+<pre><code>## [1] &quot;A&quot; &quot;B&quot; &quot;C&quot;</code></pre>
+<p>Notice that the order of the group names was done alphabetically, which we did not chose. This ordering of the levels has implications when we do an analysis or make a plot and R will always display information about the factor levels using this order. It would be nice to be able to change the order. Also it would be really nice to give more descriptive names to the groups rather than just the group code in my raw data. I find it is usually easiest to just convert the vector to a character vector, and then convert it back using the <code>levels=</code> argument to define the order of the groups, and labels to define the modified names.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z &lt;-<span class="st"> </span><span class="kw">factor</span>(z,                       <span class="co"># vector of data levels to convert </span>
+            <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;B&#39;</span>,<span class="st">&#39;A&#39;</span>,<span class="st">&#39;C&#39;</span>),   <span class="co"># Order of the levels</span>
+            <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;B Group&quot;</span>, <span class="st">&quot;A Group&quot;</span>, <span class="st">&quot;C Group&quot;</span>)) <span class="co"># Pretty labels to use</span>
+z</code></pre></div>
+<pre><code>## [1] B Group B Group A Group A Group C Group
+## Levels: B Group A Group C Group</code></pre>
+<p>For the Iris data, the species are ordered alphatetically. We might want to re-order how they appear in a graphs to place Versicolor first. The <code>Species</code> names are not capitalized, and perhaps I would like them to begin with a capital letter.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris$Species &lt;-<span class="st"> </span><span class="kw">factor</span>( iris$Species,
+                        <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&#39;versicolor&#39;</span>,<span class="st">&#39;setosa&#39;</span>,<span class="st">&#39;virginica&#39;</span>),
+                        <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;Versicolor&#39;</span>,<span class="st">&#39;Setosa&#39;</span>,<span class="st">&#39;Virginica&#39;</span>))
+<span class="kw">boxplot</span>( Sepal.Length ~<span class="st"> </span>Species, <span class="dt">data=</span>iris)</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p>Often we wish to take a continuous numerical vector and transform it into a factor. The function cut() takes a vector of numerical data and creates a factor based on your give cut-points.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define a continuous vector to convert to a factor</span>
+x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
+
+<span class="co"># divide range of x into three groups of equal length</span>
+<span class="kw">cut</span>(x, <span class="dt">breaks=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>##  [1] (0.991,4] (0.991,4] (0.991,4] (0.991,4] (4,7]     (4,7]     (4,7]    
+##  [8] (7,10]    (7,10]    (7,10]   
+## Levels: (0.991,4] (4,7] (7,10]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># divide x into four groups, where I specify all 5 break points</span>
+<span class="co"># Notice that the the outside breakpoints must include all the data points.</span>
+<span class="co"># That is, the smallest break must be smaller than all the data, and the largest</span>
+<span class="co"># must be larger (or equal) to all the data.</span>
+<span class="kw">cut</span>(x, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">2.5</span>, <span class="fl">5.0</span>, <span class="fl">7.5</span>, <span class="dv">10</span>))</code></pre></div>
+<pre><code>##  [1] (0,2.5]  (0,2.5]  (2.5,5]  (2.5,5]  (2.5,5]  (5,7.5]  (5,7.5] 
+##  [8] (7.5,10] (7.5,10] (7.5,10]
+## Levels: (0,2.5] (2.5,5] (5,7.5] (7.5,10]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># divide x into 3 groups, but give them a nicer</span>
+<span class="co"># set of group names</span>
+<span class="kw">cut</span>(x, <span class="dt">breaks=</span><span class="dv">3</span>, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;Low&#39;</span>,<span class="st">&#39;Medium&#39;</span>,<span class="st">&#39;High&#39;</span>))</code></pre></div>
+<pre><code>##  [1] Low    Low    Low    Low    Medium Medium Medium High   High   High  
+## Levels: Low Medium High</code></pre>
+</div>
+<div id="logicals" class="section level2">
+<h2><span class="header-section-number">3.4</span> Logicals</h2>
+<p>Often I wish to know which elements of a vector are equal to some value, or are greater than something. R allows us to make those tests at the vector level.</p>
+<p>Very often we need to make a comparison and test if something is equal to something else, or if one thing is bigger than another. To test these, we will use the <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, <code>&gt;=</code>, <code>&gt;</code>, and <code>!=</code> operators. These can be used similarly to</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> &lt;<span class="st"> </span><span class="dv">10</span>    <span class="co"># 6 less than 10?</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> ==<span class="st"> </span><span class="dv">10</span>   <span class="co"># 6 equal to 10?</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> !=<span class="st"> </span><span class="dv">10</span>   <span class="co"># 6 not equal to 10?</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>where we used 6 and 10 just for clarity. The result of each of these is a logical value (a <code>TRUE</code> or <code>FALSE</code>). In most cases these would be variables you had previously created and were using.</p>
+<p>Suppose I have a vector of numbers and I want to get all the values greater than 16. Using the &gt; comparison, I can create a vector of logical values that tells me if the specified value is greater than 16. The <code>which()</code> takes a vector of logicals and returns the indices that are true.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>-<span class="dv">10</span>:<span class="dv">10</span>     <span class="co"># a vector of 20 values, (11th element is the 0)</span>
+x</code></pre></div>
+<pre><code>##  [1] -10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6
+## [18]   7   8   9  10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &gt;<span class="st"> </span><span class="dv">0</span>           <span class="co"># a vector of 20 logicals</span></code></pre></div>
+<pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [12]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">which</span>( x &gt;<span class="st"> </span><span class="dv">0</span> )  <span class="co"># which vector elements are &gt; 0</span></code></pre></div>
+<pre><code>##  [1] 12 13 14 15 16 17 18 19 20 21</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[ <span class="kw">which</span>(x&gt;<span class="dv">0</span>) ] <span class="co"># Grab the elements &gt; 0 </span></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<p>On function I find to be occasionally useful is the <code>is.element(el, set)' function which allows me to figure out which elements of a vector are one of a set of possibilities. For example, I might want to know which elements of the</code>letters` vector are vowels.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">letters  <span class="co"># this is all 26 english lowercase letters</span></code></pre></div>
+<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot;
+## [18] &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vowels &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;a&#39;</span>,<span class="st">&#39;e&#39;</span>,<span class="st">&#39;i&#39;</span>,<span class="st">&#39;o&#39;</span>,<span class="st">&#39;u&#39;</span>)
+<span class="kw">which</span>( <span class="kw">is.element</span>(letters, vowels) )</code></pre></div>
+<pre><code>## [1]  1  5  9 15 21</code></pre>
+<p>This shows me the vowels occur at the 1st, 5th, 9th, 15th, and 21st elements of the alphabet.</p>
+<p>Often I want to make multiple comparisons. For example given a bunch of students and a vector of their GPAs and another vector of their major, maybe I want to find all undergraduate Forestry majors with a GPA greater than 3.0. Then, given my set of university students, I want ask two questions: Is their major Forestry, and is their GPA greater than 3.0. So I need to combine those two logical results into a single logical that is true if both questions are true.</p>
+<p>The command &amp; means “and” and | means “or”. We can combine two logical values using these two similarly:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  &amp;<span class="st"> </span><span class="ot">TRUE</span>     <span class="co"># both are true so combo so result is true</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  &amp;<span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># one true and one false so result is false</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">FALSE</span> &amp;<span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># both are false so the result is false</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  |<span class="st"> </span><span class="ot">TRUE</span>     <span class="co"># at least one is true -&gt; TRUE</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  |<span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># at least one is true -&gt; TRUE</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">FALSE</span> |<span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># neither is true -&gt; FALSE</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="vectors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exercises-2.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

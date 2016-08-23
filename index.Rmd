@@ -1,0 +1,10 @@
+--- 
+title: "A Sufficient Introduction to R"
+author: "Derek L. Sonderegger"
+date: "`r Sys.Date()`"
+knit: "bookdown::render_book"
+output:
+  bookdown::gitbook:
+documentclass: book
+---
+

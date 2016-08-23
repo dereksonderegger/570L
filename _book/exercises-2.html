@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Sufficient Introduction to R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="A Sufficient Introduction to R">
+  <meta name="generator" content="bookdown 0.1.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Sufficient Introduction to R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Sufficient Introduction to R" />
+  
+  
+  
+
+<meta name="author" content="Derek L. Sonderegger">
+
+<meta name="date" content="2016-08-22">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="data-types.html">
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#r-as-a-simple-calculator"><i class="fa fa-check"></i><b>1.1</b> R as a simple calculator</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#assignment"><i class="fa fa-check"></i><b>1.2</b> Assignment</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#scripts-and-rmarkdown"><i class="fa fa-check"></i><b>1.3</b> Scripts and RMarkdown</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#r-scripts-.r-files"><i class="fa fa-check"></i><b>1.3.1</b> R Scripts (.R files)</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#r-markdown-.rmd-files"><i class="fa fa-check"></i><b>1.3.2</b> R Markdown (.Rmd files)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#exercises"><i class="fa fa-check"></i><b>1.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>2</b> Vectors</a><ul>
+<li class="chapter" data-level="2.1" data-path="vectors.html"><a href="vectors.html#accessing-vector-elements"><i class="fa fa-check"></i><b>2.1</b> Accessing Vector Elements</a></li>
+<li class="chapter" data-level="2.2" data-path="vectors.html"><a href="vectors.html#scalar-functions-applied-to-vectors"><i class="fa fa-check"></i><b>2.2</b> Scalar Functions Applied to Vectors</a></li>
+<li class="chapter" data-level="2.3" data-path="vectors.html"><a href="vectors.html#vector-algebra"><i class="fa fa-check"></i><b>2.3</b> Vector Algebra</a></li>
+<li class="chapter" data-level="2.4" data-path="vectors.html"><a href="vectors.html#commonly-used-vector-functions"><i class="fa fa-check"></i><b>2.4</b> Commonly Used Vector Functions</a></li>
+<li class="chapter" data-level="2.5" data-path="vectors.html"><a href="vectors.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>3</b> Data Types</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-types.html"><a href="data-types.html#integers-and-numerics"><i class="fa fa-check"></i><b>3.1</b> Integers and Numerics</a></li>
+<li class="chapter" data-level="3.2" data-path="data-types.html"><a href="data-types.html#character-strings"><i class="fa fa-check"></i><b>3.2</b> Character Strings</a></li>
+<li class="chapter" data-level="3.3" data-path="data-types.html"><a href="data-types.html#factors"><i class="fa fa-check"></i><b>3.3</b> Factors</a></li>
+<li class="chapter" data-level="3.4" data-path="data-types.html"><a href="data-types.html#logicals"><i class="fa fa-check"></i><b>3.4</b> Logicals</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exercises-2.html"><a href="exercises-2.html"><i class="fa fa-check"></i><b>4</b> Exercises</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Sufficient Introduction to R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="exercises-2" class="section level1">
+<h1><span class="header-section-number">4</span> Exercises</h1>
+<ol style="list-style-type: decimal">
+<li><p>Create a vector of character strings with six elements</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;red&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;yellow&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;green&#39;</span>)</code></pre></div>
+and then
+<ol style="list-style-type: lower-alpha">
+<li>Transform the <code>test</code> vector just you created into a factor.</li>
+<li>Use the <code>levels()</code> command to determine the levels (and order) of the factor you just created.</li>
+<li>Transform the factor you just created into integers. Comment on the relationship between the integers and the order of the levels you found in part (b).</li>
+<li>Use some sort of comparison to create a vector that identifies which factor elements are the red group.</li>
+</ol></li>
+<li><p>Given the vector of ages,</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ages &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">16</span>, <span class="dv">20</span>, <span class="dv">22</span>, <span class="dv">23</span>)</code></pre></div>
+<p>create a factor that has levels <code>Minor</code> or <code>Adult</code> where any observation greater than or equal to 18 qualifies as an adult. Also, make sure that the order of the levels is <code>Minor</code> first and <code>Adult</code> second.</p></li>
+<li><p>Suppose we vectors that give a students name, their GPA, and their major. We want to come up with a list of forestry students with a GPA of greater than 3.0.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Name &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Adam&#39;</span>,<span class="st">&#39;Benjamin&#39;</span>,<span class="st">&#39;Caleb&#39;</span>,<span class="st">&#39;Daniel&#39;</span>,<span class="st">&#39;Ephriam&#39;</span>, <span class="st">&#39;Frank&#39;</span>,<span class="st">&#39;Gideon&#39;</span>)
+GPA &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">3.2</span>, <span class="fl">3.8</span>, <span class="fl">2.6</span>, <span class="fl">2.3</span>, <span class="fl">3.4</span>, <span class="fl">3.7</span>, <span class="fl">4.0</span>)
+Major &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Math&#39;</span>,<span class="st">&#39;Forestry&#39;</span>,<span class="st">&#39;Biology&#39;</span>,<span class="st">&#39;Forestry&#39;</span>,<span class="st">&#39;Forestry&#39;</span>,<span class="st">&#39;Math&#39;</span>,<span class="st">&#39;Forestry&#39;</span>)</code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li>Create a vector of TRUE/FALSE values that indicate whether the students GPA is greater than 3.0.</li>
+<li>Create a vector of TRUE/FALSE values that indicate whether the students’ major is forestry.</li>
+<li>Create a vector of TRUE/FALSE values that indicates if a student has a GPA greater than 3.0 and is a forestry major.</li>
+<li>Convert the vector of TRUE/FALSE values in part (c) to integer values using the <code>as.numeric()</code> function. Which numeric value corresponds to TRUE?</li>
+<li>Sum (using the <code>sum()</code> function) the vector you created to count the number of students with GPA &gt; 3.0 and are a forestry major.</li>
+</ol></li>
+<li>Make two variables, and call them <code>a</code> and <code>b</code> where <code>a=2</code> and <code>b=10</code>. I want to think of these as defining an interval.
+<ol style="list-style-type: lower-alpha">
+<li>Define the vector <code>x &lt;- c(-1, 5, 12)</code></li>
+<li>Using the <code>&amp;</code>, come up with a comparison that will test if the value of <code>x</code> is in the interval <span class="math inline">\([a,b]\)</span>. (We want the test to return <code>TRUE</code> if <span class="math inline">\(a\le x\le b\)</span>). That is, test if <code>a</code> is less than <code>x</code> and if <code>x</code> is less than <code>b</code>. Confirm that for x defined above you get the correct vector of logical values.</li>
+<li>Similarly make a comparison that tests if <code>x</code> is outside the interval <span class="math inline">\([a,b]\)</span> using the <code>|</code> operator. That is, test if <code>x &lt; a</code> or <code>x &gt; b</code>. I want the test to return TRUE is x is less than a or if x is greater than b. Confirm that for x defined above you get the correct vector of logical values.</li>
+</ol></li>
+</ol>
+
+</div>
+
+
+
+
+
+
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-types.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
