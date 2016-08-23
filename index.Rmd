@@ -2,9 +2,13 @@
 title: "A Sufficient Introduction to R"
 author: "Derek L. Sonderegger"
 date: "`r Sys.Date()`"
-knit: "bookdown::render_book"
-output:
-  bookdown::gitbook:
+site: bookdown::bookdown_site
+output: bookdown::gitbook
 documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address."
 ---
 
