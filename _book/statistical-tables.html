@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Sufficient Introduction to R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
+  <meta name="generator" content="bookdown 0.1.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Sufficient Introduction to R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
+  <meta name="github-repo" content="dereksonderegger/STA_570L_Book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Sufficient Introduction to R" />
+  
+  <meta name="twitter:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
+  
+
+<meta name="author" content="Derek L. Sonderegger">
+
+<meta name="date" content="2016-08-24">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="vectors.html">
+<link rel="next" href="data-types.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Sufficient Introduction to R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#r-as-a-simple-calculator"><i class="fa fa-check"></i><b>1.1</b> R as a simple calculator</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#assignment"><i class="fa fa-check"></i><b>1.2</b> Assignment</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#scripts-and-rmarkdown"><i class="fa fa-check"></i><b>1.3</b> Scripts and RMarkdown</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#r-scripts-.r-files"><i class="fa fa-check"></i><b>1.3.1</b> R Scripts (.R files)</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#r-markdown-.rmd-files"><i class="fa fa-check"></i><b>1.3.2</b> R Markdown (.Rmd files)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#exercises"><i class="fa fa-check"></i><b>1.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>2</b> Vectors</a><ul>
+<li class="chapter" data-level="2.1" data-path="vectors.html"><a href="vectors.html#accessing-vector-elements"><i class="fa fa-check"></i><b>2.1</b> Accessing Vector Elements</a></li>
+<li class="chapter" data-level="2.2" data-path="vectors.html"><a href="vectors.html#scalar-functions-applied-to-vectors"><i class="fa fa-check"></i><b>2.2</b> Scalar Functions Applied to Vectors</a></li>
+<li class="chapter" data-level="2.3" data-path="vectors.html"><a href="vectors.html#vector-algebra"><i class="fa fa-check"></i><b>2.3</b> Vector Algebra</a></li>
+<li class="chapter" data-level="2.4" data-path="vectors.html"><a href="vectors.html#commonly-used-vector-functions"><i class="fa fa-check"></i><b>2.4</b> Commonly Used Vector Functions</a></li>
+<li class="chapter" data-level="2.5" data-path="vectors.html"><a href="vectors.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="statistical-tables.html"><a href="statistical-tables.html"><i class="fa fa-check"></i><b>3</b> Statistical Tables</a><ul>
+<li class="chapter" data-level="3.1" data-path="statistical-tables.html"><a href="statistical-tables.html#mosaicplotdist-function"><i class="fa fa-check"></i><b>3.1</b> <code>mosaic::plotDist()</code> function</a></li>
+<li class="chapter" data-level="3.2" data-path="statistical-tables.html"><a href="statistical-tables.html#base-r-functions"><i class="fa fa-check"></i><b>3.2</b> Base R functions</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="statistical-tables.html"><a href="statistical-tables.html#d-function"><i class="fa fa-check"></i><b>3.2.1</b> d-function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="statistical-tables.html"><a href="statistical-tables.html#p-function"><i class="fa fa-check"></i><b>3.2.2</b> p-function</a></li>
+<li class="chapter" data-level="3.2.3" data-path="statistical-tables.html"><a href="statistical-tables.html#q-function"><i class="fa fa-check"></i><b>3.2.3</b> <code>q</code>-function</a></li>
+<li class="chapter" data-level="3.2.4" data-path="statistical-tables.html"><a href="statistical-tables.html#r-function"><i class="fa fa-check"></i><b>3.2.4</b> r-function</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="statistical-tables.html"><a href="statistical-tables.html#exercises-2"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>4</b> Data Types</a><ul>
+<li class="chapter" data-level="4.1" data-path="data-types.html"><a href="data-types.html#integers-and-numerics"><i class="fa fa-check"></i><b>4.1</b> Integers and Numerics</a></li>
+<li class="chapter" data-level="4.2" data-path="data-types.html"><a href="data-types.html#character-strings"><i class="fa fa-check"></i><b>4.2</b> Character Strings</a></li>
+<li class="chapter" data-level="4.3" data-path="data-types.html"><a href="data-types.html#factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="data-types.html"><a href="data-types.html#logicals"><i class="fa fa-check"></i><b>4.4</b> Logicals</a></li>
+<li class="chapter" data-level="4.5" data-path="data-types.html"><a href="data-types.html#exercises-3"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="basic-graphing.html"><a href="basic-graphing.html"><i class="fa fa-check"></i><b>5</b> Basic Graphing</a><ul>
+<li class="chapter" data-level="5.1" data-path="basic-graphing.html"><a href="basic-graphing.html#univariate-graphs"><i class="fa fa-check"></i><b>5.1</b> Univariate Graphs</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="basic-graphing.html"><a href="basic-graphing.html#histograms"><i class="fa fa-check"></i><b>5.1.1</b> Histograms</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="basic-graphing.html"><a href="basic-graphing.html#bivariate-plots"><i class="fa fa-check"></i><b>5.2</b> Bivariate Plots</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="basic-graphing.html"><a href="basic-graphing.html#boxplots"><i class="fa fa-check"></i><b>5.2.1</b> Boxplots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="basic-graphing.html"><a href="basic-graphing.html#scatterplots"><i class="fa fa-check"></i><b>5.2.2</b> Scatterplots</a></li>
+<li class="chapter" data-level="5.2.3" data-path="basic-graphing.html"><a href="basic-graphing.html#arbitrary-curves"><i class="fa fa-check"></i><b>5.2.3</b> Arbitrary Curves</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="basic-graphing.html"><a href="basic-graphing.html#advanced-tricks"><i class="fa fa-check"></i><b>5.3</b> Advanced tricks</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="basic-graphing.html"><a href="basic-graphing.html#blank-plots"><i class="fa fa-check"></i><b>5.3.1</b> Blank plots</a></li>
+<li class="chapter" data-level="5.3.2" data-path="basic-graphing.html"><a href="basic-graphing.html#points"><i class="fa fa-check"></i><b>5.3.2</b> Points</a></li>
+<li class="chapter" data-level="5.3.3" data-path="basic-graphing.html"><a href="basic-graphing.html#lines"><i class="fa fa-check"></i><b>5.3.3</b> Lines</a></li>
+<li class="chapter" data-level="5.3.4" data-path="basic-graphing.html"><a href="basic-graphing.html#contour-plots"><i class="fa fa-check"></i><b>5.3.4</b> Contour Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="matrices-data-frames-and-lists.html"><a href="matrices-data-frames-and-lists.html"><i class="fa fa-check"></i><b>6</b> Matrices, Data Frames, and Lists</a><ul>
+<li class="chapter" data-level="6.1" data-path="matrices-data-frames-and-lists.html"><a href="matrices-data-frames-and-lists.html#matrices"><i class="fa fa-check"></i><b>6.1</b> Matrices</a></li>
+<li class="chapter" data-level="6.2" data-path="matrices-data-frames-and-lists.html"><a href="matrices-data-frames-and-lists.html#data-frames"><i class="fa fa-check"></i><b>6.2</b> Data Frames</a></li>
+<li class="chapter" data-level="6.3" data-path="matrices-data-frames-and-lists.html"><a href="matrices-data-frames-and-lists.html#lists"><i class="fa fa-check"></i><b>6.3</b> Lists</a></li>
+<li class="chapter" data-level="6.4" data-path="matrices-data-frames-and-lists.html"><a href="matrices-data-frames-and-lists.html#exercises-4"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://dereksonderegger.github.io/STA570L/A_Sufficient_Introduction_to_R.pdf" target="blank">PDF version</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Sufficient Introduction to R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="statistical-tables" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Statistical Tables</h1>
+<p>Statistics makes use of a wide variety of distributions and before the days of personal computers, every statistician had books with hundreds and hundreds of pages of tables allowing them to look up particular values. Fortunately in the modern age, we don’t need those books and tables, but we do still need to access those values. To make life easier and consistent for R users, every distribution is accessed in the same manner.</p>
+<div id="mosaicplotdist-function" class="section level2">
+<h2><span class="header-section-number">3.1</span> <code>mosaic::plotDist()</code> function</h2>
+<p>The <code>mosaic</code> package provides a very useful routine for understanding a distribution. The <code>plotDist()</code> function takes the R name of the distribution along with whatever parameters are necessary for that function and show the distribution. For reference below is a list of common distributions and their R name and a list of necessary parameters.</p>
+<table>
+<colgroup>
+<col width="18%" />
+<col width="17%" />
+<col width="19%" />
+<col width="45%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Distribution</th>
+<th>Stem</th>
+<th>Parameters</th>
+<th>Parameter Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>Binomial</p></td>
+<td><p><code>binom</code></p></td>
+<td><p><code>size</code> <code>prob</code></p></td>
+<td><p>Number of Trials Probability of Success (per Trial)</p></td>
+</tr>
+<tr class="even">
+<td><p>Exponential</p></td>
+<td><p><code>exp</code></p></td>
+<td><p><code>lambda</code></p></td>
+<td><p>Mean of the distribution</p></td>
+</tr>
+<tr class="odd">
+<td><p>Normal</p></td>
+<td><p><code>norm</code></p></td>
+<td><p><code>mean=0</code> <code>sd=1</code></p></td>
+<td><p>Center of the distribution Standard deviation</p></td>
+</tr>
+<tr class="even">
+<td><p>Uniform</p></td>
+<td><p><code>unif</code></p></td>
+<td><p><code>min=0</code> <code>max=1</code></p></td>
+<td><p>Minimum of the distribution Maximum of the distribution</p></td>
+</tr>
+</tbody>
+</table>
+<p>For example, to see the normal distribution with mean <span class="math inline">\(mu=10\)</span> and standard deviation <span class="math inline">\(\sigma=2\)</span>, we use</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mosaic)</code></pre></div>
+<pre><code>## Loading required package: dplyr</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.2.5</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.2.4</code></pre>
+<pre><code>## Loading required package: car</code></pre>
+<pre><code>## Warning: package &#39;car&#39; was built under R version 3.2.4</code></pre>
+<pre><code>## 
+## Attaching package: &#39;car&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     recode</code></pre>
+<pre><code>## Loading required package: mosaicData</code></pre>
+<pre><code>## 
+## Attaching package: &#39;mosaic&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:car&#39;:
+## 
+##     logit</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     count, do, tally</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     binom.test, cor, cov, D, fivenum, IQR, median, prop.test,
+##     quantile, sd, t.test, var</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     max, mean, min, prod, range, sample, sum</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotDist</span>(<span class="st">&#39;norm&#39;</span>, <span class="dt">mean=</span><span class="dv">10</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>This function works for discrete distributions as well.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotDist</span>(<span class="st">&#39;binom&#39;</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">3</span>)</code></pre></div>
+<pre><code>## Warning in FUN(X[[i]], ...): failed to assign NativeSymbolInfo for lhs
+## since lhs is already defined in the &#39;lazyeval&#39; namespace</code></pre>
+<pre><code>## Warning in FUN(X[[i]], ...): failed to assign NativeSymbolInfo for rhs
+## since rhs is already defined in the &#39;lazyeval&#39; namespace</code></pre>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+</div>
+<div id="base-r-functions" class="section level2">
+<h2><span class="header-section-number">3.2</span> Base R functions</h2>
+<p>All the probability distributions available in R are accessed in exactly the same way, using a <code>d</code>-function, <code>p</code>-function, <code>q</code>-function, and <code>r</code>-function. For the rest of this section suppose that <span class="math inline">\(X\)</span> is a random variable from the distribution of interest and <span class="math inline">\(x\)</span> is some possible value that <span class="math inline">\(X\)</span> could take on. Notice that the <code>p</code>-function is the inverse of the <code>q</code>-function.</p>
+<p>+——————–+———————————————————–+ | Function | Result | +====================+===========================================================| | <code>d</code>-function(x) | The height of the probability distribution/density at <span class="math inline">\(x\)</span> | +——————–+———————————————————–+ | <code>p</code>-function(x) | <span class="math inline">\(P\left(X\le x\right)\)</span> | +——————–+———————————————————–+ | <code>q</code>-function(q) | <span class="math inline">\(x\)</span> such that <span class="math inline">\(P\left(X\le x\right) = q\)</span> | +——————–+———————————————————–+ | <code>r</code>-function(n) | <span class="math inline">\(n\)</span> random observations from the distribution | +——————–+———————————————————–+</p>
+<p>For each distribution in R, there will be be this set of functions but we replace the “-function” with the distribution name or a shortened version. <code>norm</code>, <code>exp</code>, <code>binom</code>, <code>t</code>, <code>f</code> are the names for the normal, exponential, binomial, T and F distributions. Furthermore, most distributions have additional parameters that define the distribution and will also be passed as arguments to these functions, although, if a reasonable default value for the parameter exists, there will be a default.</p>
+<div id="d-function" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> d-function</h3>
+<p>The purpose of the d-function is to calculate the height of a probability mass function or a density function (The “d” actually stands for density). Notice that for discrete distributions, this is the probability of observing that particular value, while for continuous distributions, the height doesn’t have a nice physical interpretation.</p>
+<p>We start with an example of the Binomial distribution. For <span class="math inline">\(X\sim Binomial\left(n=10,\pi=.2\right)\)</span> suppose we wanted to know <span class="math inline">\(P(X=0)\)</span>? We know the probability mass function is <span class="math display">\[P\left(X=x\right)={n \choose x}\pi^{x}\left(1-\pi\right)^{n-x}\]</span> thus <span class="math display">\[P\left(X=0\right) =   {10 \choose 0}\,0.2^{0}\left(0.8\right)^{10} =  1\cdot1\cdot0.8^{10} \approx    0.107\]</span> but that calculation is fairly tedious. To get R to do the same calculation, we just need the height of the probability mass function at <span class="math inline">\(0\)</span>. To do this calculation, we need to know the x value we are interested in along with the distribution parameters <span class="math inline">\(n\)</span> and <span class="math inline">\(\pi\)</span>.</p>
+<p>The first thing we should do is check the help file for the binomial distribution functions to see what parameters are needed and what they are named.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?dbinom</code></pre></div>
+<p>The help file shows us the parameters <span class="math inline">\(n\)</span> and <span class="math inline">\(\pi\)</span> are called size and prob respectively. So to calculate the probability that <span class="math inline">\(X=0\)</span> we would use the following command:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbinom</span>(<span class="dv">0</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 0.1073742</code></pre>
+</div>
+<div id="p-function" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> p-function</h3>
+<p>Often we are interested in the probability of observing some value or anything less (In probability theory, we call this the cumulative density function or CDF). P-values will be calculated this way, so we want a nice easy way to do this.</p>
+<p>To start our example with the binomial distribution, again let <span class="math inline">\(X\sim Binomial\left(n=10,\pi=0.2\right)\)</span>. Suppose I want to know what the probability of observing a 0, 1, or 2? That is, what is <span class="math inline">\(P\left(X\le2\right)\)</span>? I could just find the probability of each and add them up.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbinom</span>(<span class="dv">0</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">2</span>)   +<span class="st">       </span><span class="co">#   P(X==0) +</span>
+<span class="st">  </span><span class="kw">dbinom</span>(<span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">2</span>) +<span class="st">       </span><span class="co">#     P(X==1) +</span>
+<span class="st">  </span><span class="kw">dbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">2</span>)         <span class="co">#     P(X==2)</span></code></pre></div>
+<pre><code>## [1] 0.6777995</code></pre>
+<p>but this would get tedious for binomial distributions with a large number of trials. The shortcut is to use the <code>pbinom()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 0.6777995</code></pre>
+<p>For discrete distributions, you must be careful because R will give you the probability of less than or equal to 2. If you wanted less than two, you should use <code>dbinom(1,10,.2)</code>.</p>
+<p>The normal distribution works similarly. Suppose for <span class="math inline">\(Z\sim N\left(0,1\right)\)</span> and we wanted to know <span class="math inline">\(P\left(Z\le-1\right)\)</span>? <img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p>The answer is easily found via <code>pnorm()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pnorm</span>(-<span class="dv">1</span>)</code></pre></div>
+<pre><code>## [1] 0.1586553</code></pre>
+<p>Notice for continuous random variables, the probability <span class="math inline">\(P\left(Z=-1\right)=0\)</span> so we can ignore the issue of “less than” vs “less than or equal to”.</p>
+<p>Often times we will want to know the probability of greater than some value. That is, we might want to find <span class="math inline">\(P\left(Z\ge1\right)\)</span>. For the normal distribution, there are a number of tricks we could use. Notably <span class="math display">\[P\left(Z\ge-1\right)  =   P\left(Z\le1\right)=1-P\left(Z&lt;-1\right)\]</span> but sometimes I’m lazy and would like to tell R to give me the area to the right instead of area to the left (which is the default). This can be done by setting the argument <span class="math inline">\(lower.tail=FALSE\)</span>.</p>
+<p>The <code>mosaic</code> package includes an augmented version of the <code>pnorm()</code> function called <code>xpnorm()</code> that calculates the same number but includes some extra information and produces a pretty graph to help us understand what we just calculated and do the tedious “1 minus” calculation to find the upper area. Fortunately this x-variant exists for the Normal, Chi-squared, F, Gamma continuous distributions and the discrete Poisson, Geometric, and Binomial distributions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mosaic)
+<span class="kw">xpnorm</span>(-<span class="dv">1</span>)</code></pre></div>
+<pre><code>## 
+## If X ~ N(0,1), then 
+## 
+##  P(X &lt;= -1) = P(Z &lt;= -1) = 0.1587
+##  P(X &gt;  -1) = P(Z &gt;  -1) = 0.8413</code></pre>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<pre><code>## [1] 0.1586553</code></pre>
+</div>
+<div id="q-function" class="section level3">
+<h3><span class="header-section-number">3.2.3</span> <code>q</code>-function</h3>
+<p>In class, we will also find ourselves asking for the quantiles of a distribution. Percentiles are by definition 1/100, 2/100, etc but if I am interested in something that isn’t and even division of 100, we get fancy can call them quantiles. This is a small semantic quibble, but we ought to be precise. That being said, I won’t correct somebody if they call these percentiles. For example, I might want to find the 0.30 quantile, which is the value such that 30% of the distribution is less than it, and 70% is greater. Mathematically, I wish to find the value <span class="math inline">\(z\)</span> such that <span class="math inline">\(P(Z&lt;z)=0.30\)</span>.</p>
+<p>To find this value in the tables in a book, we use the table in reverse. R gives us a handy way to do this with the <code>qnorm()</code> function and the mosaic package provides a nice visuallization using the augmented <code>xqnorm()</code>. Below, I specify that I’m using a function in the <code>mosaic</code> package by specifying it via <code>PackageName::FunctionName()</code> but that isn’t strictly necessary but can improve readability of your code.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mosaic::<span class="kw">xqnorm</span>(<span class="fl">0.30</span>)   <span class="co"># Give me the value along with a pretty picture</span></code></pre></div>
+<pre><code>##  P(X &lt;= -0.524400512708041) = 0.3
+##  P(X &gt;  -0.524400512708041) = 0.7</code></pre>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<pre><code>## [1] -0.5244005</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qnorm</span>(.<span class="dv">30</span>)             <span class="co"># No pretty picture, just the value</span></code></pre></div>
+<pre><code>## [1] -0.5244005</code></pre>
+</div>
+<div id="r-function" class="section level3">
+<h3><span class="header-section-number">3.2.4</span> r-function</h3>
+<p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 19.10117 24.96963 20.56072 23.67124 24.23395</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
+<pre><code>## [1] 4 9 8 7</code></pre>
+</div>
+</div>
+<div id="exercises-2" class="section level2">
+<h2><span class="header-section-number">3.3</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li><p>We will examine how to use the probability mass functions (a.k.a. d-functions) and cumulative probability function (a.k.a. p-function) for the Poisson distribution.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Create a graph of the distribution of a Poisson random variable with rate parameter <span class="math inline">\(\lambda=2\)</span> using the mosaic function <code>plotDist()</code>.</p></li>
+<li><p>Calculate the probability that a Poisson random variable (with rate parameter <span class="math inline">\(\lambda=2\)</span> ) is exactly equal to 3 using the <code>dpois()</code> function. Be sure that this value matches the graphed distribution in part (a).</p></li>
+<li><p>For a Poisson random variable with rate parameter <span class="math inline">\(\lambda=2\)</span>, calculate the probability it is less than or equal to 3, by summing the four values returned by the Poisson <code>d</code>-function.</p></li>
+<li><p>Perform the same calculation as the previous question but using the cumulative probability function <code>ppois()</code> or the mosaic function <code>xppois()</code>.</p></li>
+</ol></li>
+<li><p>We will examine how to use the cumulative probability functions (a.k.a. p-functions) for the normal distributions.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Use the mosaic function <code>plotDist()</code> to produce a graph of the standard normal distribution (that is a normal distribution with mean <span class="math inline">\(mu=0\)</span> and standard deviation <span class="math inline">\(\sigma=1\)</span>.</p></li>
+<li><p>For a standard normal, use the <code>pnorm()</code> function or its <code>mosaic</code> augmented version <code>xpnorm()</code> to calculate</p>
+<ol style="list-style-type: lower-roman">
+<li><span class="math inline">\(P\left(Z&lt;-1\right)\)</span></li>
+<li><span class="math inline">\(P\left(Z\ge1.5\right)\)</span></li>
+</ol></li>
+<li><p>Use the mosaic function <code>plotDist()</code> to produce a graph of an exponential distribution with rate parameter 2.</p></li>
+<li><p>Suppose that <span class="math inline">\(Y\sim Exp\left(2\right)\)</span>, as above, use the pexp() function to calculate <span class="math inline">\(P\left(Y \le 1 \right)\)</span>. (Unfortunately there isn’t a mosaic augmented <code>xpexp()</code> function.</p></li>
+</ol></li>
+<li><p>We next examine how to use the quantile functions for the normal and exponential distributions using R’s q-functions.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Find the value of a standard normal distribution (<span class="math inline">\(\mu=0\)</span>, <span class="math inline">\(\sigma=1\)</span>) such that 5% of the distribution is to the left of the value using the <code>qnorm()</code> function or the mosaic augmented version <code>xqnorm()</code>.</p></li>
+<li><p>Find the value of an exponential distribution with rate 2 such that 60% of the distribution is less than it using the <code>qexp()</code> function.</p></li>
+</ol></li>
+<li>Finally we will look at generating random deviates from a distribution.
+<ol style="list-style-type: lower-alpha">
+<li><p>Generate a value of 1 from a uniform distribution with minimum 0, and maximum 1 using the <code>runif()</code> function. Repeat this step several times and confirm you are getting different values each time.</p></li>
+<li><p>Generate a sample of size 20 from the same uniform distribution and save it as the vector <code>x</code> using the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">20</span>, <span class="dt">min=</span><span class="dv">0</span>, <span class="dt">max=</span><span class="dv">1</span>)</code></pre></div>
+<p>Then produce a histogram of the sample using the function <code>hist()</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(x)</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p></li>
+<li><p>Generate a sample of 2000 from a normal distribution with <code>mean=10</code> and standard deviation <code>sd=2</code> using the <code>rnorm()</code> function. Create a histogram the the resulting sample.</p></li>
+</ol></li>
+</ol>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="vectors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-types.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/dereksonderegger/STA_570L_Book/",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

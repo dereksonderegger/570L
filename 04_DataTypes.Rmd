@@ -14,7 +14,7 @@ There are some basic data types that are commonly used.
 
 Depending on the command, R will coerce your data if necessary, but it is a good habit to do the coercion yourself. If a variable is a number, R will automatically assume that it is continuous numerical variable. If it is a character string, then R will assume it is a factor when doing any statistical analysis. 
 
-To find the type of an object, the str() command gives the type, and if the type is complicated, it describes the structure of the object.
+To find the type of an object, the `str()` command gives the type, and if the type is complicated, it describes the structure of the object.
 
 ## Integers and Numerics
 
@@ -172,7 +172,7 @@ TRUE  | FALSE    # at least one is true -> TRUE
 FALSE | FALSE    # neither is true -> FALSE
 ```
 
-# Exercises
+## Exercises
 1. Create a vector of character strings with six elements
     ```{r}
     test <- c('red','red','blue','yellow','blue','green')

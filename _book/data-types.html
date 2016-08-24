@@ -15,7 +15,7 @@
   
   
   <meta property="og:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
+  <meta name="github-repo" content="dereksonderegger/STA_570L_Book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="A Sufficient Introduction to R" />
@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-08-23">
+<meta name="date" content="2016-08-24">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -38,8 +38,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="vectors.html">
-<link rel="next" href="exercises-2.html">
+<link rel="prev" href="statistical-tables.html">
+<link rel="next" href="basic-graphing.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -109,14 +109,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="./">A Sufficient Introduction to R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#r-as-a-simple-calculator"><i class="fa fa-check"></i><b>1.1</b> R as a simple calculator</a></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#assignment"><i class="fa fa-check"></i><b>1.2</b> Assignment</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#scripts-and-rmarkdown"><i class="fa fa-check"></i><b>1.3</b> Scripts and RMarkdown</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#r-scripts-.r-files"><i class="fa fa-check"></i><b>1.3.1</b> R Scripts (.R files)</a></li>
-<li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#r-markdown-.rmd-files"><i class="fa fa-check"></i><b>1.3.2</b> R Markdown (.Rmd files)</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#r-as-a-simple-calculator"><i class="fa fa-check"></i><b>1.1</b> R as a simple calculator</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#assignment"><i class="fa fa-check"></i><b>1.2</b> Assignment</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#scripts-and-rmarkdown"><i class="fa fa-check"></i><b>1.3</b> Scripts and RMarkdown</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#r-scripts-.r-files"><i class="fa fa-check"></i><b>1.3.1</b> R Scripts (.R files)</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#r-markdown-.rmd-files"><i class="fa fa-check"></i><b>1.3.2</b> R Markdown (.Rmd files)</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#exercises"><i class="fa fa-check"></i><b>1.4</b> Exercises</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#exercises"><i class="fa fa-check"></i><b>1.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>2</b> Vectors</a><ul>
 <li class="chapter" data-level="2.1" data-path="vectors.html"><a href="vectors.html#accessing-vector-elements"><i class="fa fa-check"></i><b>2.1</b> Accessing Vector Elements</a></li>
@@ -125,15 +125,47 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.4" data-path="vectors.html"><a href="vectors.html#commonly-used-vector-functions"><i class="fa fa-check"></i><b>2.4</b> Commonly Used Vector Functions</a></li>
 <li class="chapter" data-level="2.5" data-path="vectors.html"><a href="vectors.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>3</b> Data Types</a><ul>
-<li class="chapter" data-level="3.1" data-path="data-types.html"><a href="data-types.html#integers-and-numerics"><i class="fa fa-check"></i><b>3.1</b> Integers and Numerics</a></li>
-<li class="chapter" data-level="3.2" data-path="data-types.html"><a href="data-types.html#character-strings"><i class="fa fa-check"></i><b>3.2</b> Character Strings</a></li>
-<li class="chapter" data-level="3.3" data-path="data-types.html"><a href="data-types.html#factors"><i class="fa fa-check"></i><b>3.3</b> Factors</a></li>
-<li class="chapter" data-level="3.4" data-path="data-types.html"><a href="data-types.html#logicals"><i class="fa fa-check"></i><b>3.4</b> Logicals</a></li>
+<li class="chapter" data-level="3" data-path="statistical-tables.html"><a href="statistical-tables.html"><i class="fa fa-check"></i><b>3</b> Statistical Tables</a><ul>
+<li class="chapter" data-level="3.1" data-path="statistical-tables.html"><a href="statistical-tables.html#mosaicplotdist-function"><i class="fa fa-check"></i><b>3.1</b> <code>mosaic::plotDist()</code> function</a></li>
+<li class="chapter" data-level="3.2" data-path="statistical-tables.html"><a href="statistical-tables.html#base-r-functions"><i class="fa fa-check"></i><b>3.2</b> Base R functions</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="statistical-tables.html"><a href="statistical-tables.html#d-function"><i class="fa fa-check"></i><b>3.2.1</b> d-function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="statistical-tables.html"><a href="statistical-tables.html#p-function"><i class="fa fa-check"></i><b>3.2.2</b> p-function</a></li>
+<li class="chapter" data-level="3.2.3" data-path="statistical-tables.html"><a href="statistical-tables.html#q-function"><i class="fa fa-check"></i><b>3.2.3</b> <code>q</code>-function</a></li>
+<li class="chapter" data-level="3.2.4" data-path="statistical-tables.html"><a href="statistical-tables.html#r-function"><i class="fa fa-check"></i><b>3.2.4</b> r-function</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="exercises-2.html"><a href="exercises-2.html"><i class="fa fa-check"></i><b>4</b> Exercises</a></li>
+<li class="chapter" data-level="3.3" data-path="statistical-tables.html"><a href="statistical-tables.html#exercises-2"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>4</b> Data Types</a><ul>
+<li class="chapter" data-level="4.1" data-path="data-types.html"><a href="data-types.html#integers-and-numerics"><i class="fa fa-check"></i><b>4.1</b> Integers and Numerics</a></li>
+<li class="chapter" data-level="4.2" data-path="data-types.html"><a href="data-types.html#character-strings"><i class="fa fa-check"></i><b>4.2</b> Character Strings</a></li>
+<li class="chapter" data-level="4.3" data-path="data-types.html"><a href="data-types.html#factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="data-types.html"><a href="data-types.html#logicals"><i class="fa fa-check"></i><b>4.4</b> Logicals</a></li>
+<li class="chapter" data-level="4.5" data-path="data-types.html"><a href="data-types.html#exercises-3"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="basic-graphing.html"><a href="basic-graphing.html"><i class="fa fa-check"></i><b>5</b> Basic Graphing</a><ul>
+<li class="chapter" data-level="5.1" data-path="basic-graphing.html"><a href="basic-graphing.html#univariate-graphs"><i class="fa fa-check"></i><b>5.1</b> Univariate Graphs</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="basic-graphing.html"><a href="basic-graphing.html#histograms"><i class="fa fa-check"></i><b>5.1.1</b> Histograms</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="basic-graphing.html"><a href="basic-graphing.html#bivariate-plots"><i class="fa fa-check"></i><b>5.2</b> Bivariate Plots</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="basic-graphing.html"><a href="basic-graphing.html#boxplots"><i class="fa fa-check"></i><b>5.2.1</b> Boxplots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="basic-graphing.html"><a href="basic-graphing.html#scatterplots"><i class="fa fa-check"></i><b>5.2.2</b> Scatterplots</a></li>
+<li class="chapter" data-level="5.2.3" data-path="basic-graphing.html"><a href="basic-graphing.html#arbitrary-curves"><i class="fa fa-check"></i><b>5.2.3</b> Arbitrary Curves</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="basic-graphing.html"><a href="basic-graphing.html#advanced-tricks"><i class="fa fa-check"></i><b>5.3</b> Advanced tricks</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="basic-graphing.html"><a href="basic-graphing.html#blank-plots"><i class="fa fa-check"></i><b>5.3.1</b> Blank plots</a></li>
+<li class="chapter" data-level="5.3.2" data-path="basic-graphing.html"><a href="basic-graphing.html#points"><i class="fa fa-check"></i><b>5.3.2</b> Points</a></li>
+<li class="chapter" data-level="5.3.3" data-path="basic-graphing.html"><a href="basic-graphing.html#lines"><i class="fa fa-check"></i><b>5.3.3</b> Lines</a></li>
+<li class="chapter" data-level="5.3.4" data-path="basic-graphing.html"><a href="basic-graphing.html#contour-plots"><i class="fa fa-check"></i><b>5.3.4</b> Contour Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="matrices-data-frames-and-lists.html"><a href="matrices-data-frames-and-lists.html"><i class="fa fa-check"></i><b>6</b> Matrices, Data Frames, and Lists</a><ul>
+<li class="chapter" data-level="6.1" data-path="matrices-data-frames-and-lists.html"><a href="matrices-data-frames-and-lists.html#matrices"><i class="fa fa-check"></i><b>6.1</b> Matrices</a></li>
+<li class="chapter" data-level="6.2" data-path="matrices-data-frames-and-lists.html"><a href="matrices-data-frames-and-lists.html#data-frames"><i class="fa fa-check"></i><b>6.2</b> Data Frames</a></li>
+<li class="chapter" data-level="6.3" data-path="matrices-data-frames-and-lists.html"><a href="matrices-data-frames-and-lists.html#lists"><i class="fa fa-check"></i><b>6.3</b> Lists</a></li>
+<li class="chapter" data-level="6.4" data-path="matrices-data-frames-and-lists.html"><a href="matrices-data-frames-and-lists.html#exercises-4"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
+</ul></li>
 <li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+<li><a href="https://dereksonderegger.github.io/STA570L/A_Sufficient_Introduction_to_R.pdf" target="blank">PDF version</a></li>
 
 </ul>
 
@@ -153,7 +185,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="data-types" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Data Types</h1>
+<h1><span class="header-section-number">Chapter 4</span> Data Types</h1>
 <p>There are some basic data types that are commonly used.</p>
 <ol style="list-style-type: decimal">
 <li><p>Integers - These are the integer numbers <span class="math inline">\(\left(\dots,-2,-1,0,1,2,\dots\right)\)</span>. To convert a numeric value to an integer you may use the function <code>as.integer()</code>.</p></li>
@@ -163,9 +195,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><p>Logicals - This is a special case of a factor that can only take on the values <code>TRUE</code> and <code>FALSE</code>. (Be careful to always capitalize <code>TRUE</code> and <code>FALSE</code>. Because R is case-sensitive, TRUE is not the same as true. Using the function <code>as.logical()</code> you can convert numeric values to <code>TRUE</code> and <code>FALSE</code> where <code>0</code> is <code>FALSE</code> and anything else is <code>TRUE</code>.</p></li>
 </ol>
 <p>Depending on the command, R will coerce your data if necessary, but it is a good habit to do the coercion yourself. If a variable is a number, R will automatically assume that it is continuous numerical variable. If it is a character string, then R will assume it is a factor when doing any statistical analysis.</p>
-<p>To find the type of an object, the str() command gives the type, and if the type is complicated, it describes the structure of the object.</p>
+<p>To find the type of an object, the <code>str()</code> command gives the type, and if the type is complicated, it describes the structure of the object.</p>
 <div id="integers-and-numerics" class="section level2">
-<h2><span class="header-section-number">3.1</span> Integers and Numerics</h2>
+<h2><span class="header-section-number">4.1</span> Integers and Numerics</h2>
 <p>Integers and numerics are exactly what they sound like. Integers can take on whole number values, while numerics can take on any decimal value. The reason that there are two separate data types is that integers require less memory to store than numerics. For most users, the distinction can be ignored.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>)
 <span class="co"># show that x is of type &#39;numeric&#39;</span>
@@ -173,7 +205,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>##  num [1:5] 1 2 1 2 1</code></pre>
 </div>
 <div id="character-strings" class="section level2">
-<h2><span class="header-section-number">3.2</span> Character Strings</h2>
+<h2><span class="header-section-number">4.2</span> Character Strings</h2>
 <p>In R, we can think of collections of letters and numbers as a single entity called a string. Other programming languages think of strings as vectors of letters, but R does not so you can’t just pull off the first character using vector tricks. In practice, there are no limits as to how long string can be.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> &quot;Goodnight Moon&quot;</span>
 
@@ -203,7 +235,7 @@ Books</code></pre></div>
 <pre><code>## [1] 6.2</code></pre>
 </div>
 <div id="factors" class="section level2">
-<h2><span class="header-section-number">3.3</span> Factors</h2>
+<h2><span class="header-section-number">4.3</span> Factors</h2>
 <p>Factors are how R keeps track of categorical variables. R does this in a two step pattern. First it figures out how many categories there are and remembers which category an observation belongs two and second, it keeps a vector character strings that correspond to the names of each of the categories.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># A charater vector</span>
 y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;B&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;A&#39;</span>,<span class="st">&#39;A&#39;</span>,<span class="st">&#39;C&#39;</span>)
@@ -233,7 +265,7 @@ z</code></pre></div>
                         <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&#39;versicolor&#39;</span>,<span class="st">&#39;setosa&#39;</span>,<span class="st">&#39;virginica&#39;</span>),
                         <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;Versicolor&#39;</span>,<span class="st">&#39;Setosa&#39;</span>,<span class="st">&#39;Virginica&#39;</span>))
 <span class="kw">boxplot</span>( Sepal.Length ~<span class="st"> </span>Species, <span class="dt">data=</span>iris)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <p>Often we wish to take a continuous numerical vector and transform it into a factor. The function cut() takes a vector of numerical data and creates a factor based on your give cut-points.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define a continuous vector to convert to a factor</span>
 x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
@@ -258,7 +290,7 @@ x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</s
 ## Levels: Low Medium High</code></pre>
 </div>
 <div id="logicals" class="section level2">
-<h2><span class="header-section-number">3.4</span> Logicals</h2>
+<h2><span class="header-section-number">4.4</span> Logicals</h2>
 <p>Often I wish to know which elements of a vector are equal to some value, or are greater than something. R allows us to make those tests at the vector level.</p>
 <p>Very often we need to make a comparison and test if something is equal to something else, or if one thing is bigger than another. To test these, we will use the <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, <code>&gt;=</code>, <code>&gt;</code>, and <code>!=</code> operators. These can be used similarly to</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> &lt;<span class="st"> </span><span class="dv">10</span>    <span class="co"># 6 less than 10?</span></code></pre></div>
@@ -303,14 +335,49 @@ x</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">FALSE</span> |<span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># neither is true -&gt; FALSE</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 </div>
+<div id="exercises-3" class="section level2">
+<h2><span class="header-section-number">4.5</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li><p>Create a vector of character strings with six elements</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;red&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;yellow&#39;</span>,<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;green&#39;</span>)</code></pre></div>
+and then
+<ol style="list-style-type: lower-alpha">
+<li>Transform the <code>test</code> vector just you created into a factor.</li>
+<li>Use the <code>levels()</code> command to determine the levels (and order) of the factor you just created.</li>
+<li>Transform the factor you just created into integers. Comment on the relationship between the integers and the order of the levels you found in part (b).</li>
+<li>Use some sort of comparison to create a vector that identifies which factor elements are the red group.</li>
+</ol></li>
+<li><p>Given the vector of ages,</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ages &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">16</span>, <span class="dv">20</span>, <span class="dv">22</span>, <span class="dv">23</span>)</code></pre></div>
+<p>create a factor that has levels <code>Minor</code> or <code>Adult</code> where any observation greater than or equal to 18 qualifies as an adult. Also, make sure that the order of the levels is <code>Minor</code> first and <code>Adult</code> second.</p></li>
+<li><p>Suppose we vectors that give a students name, their GPA, and their major. We want to come up with a list of forestry students with a GPA of greater than 3.0.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Name &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Adam&#39;</span>,<span class="st">&#39;Benjamin&#39;</span>,<span class="st">&#39;Caleb&#39;</span>,<span class="st">&#39;Daniel&#39;</span>,<span class="st">&#39;Ephriam&#39;</span>, <span class="st">&#39;Frank&#39;</span>,<span class="st">&#39;Gideon&#39;</span>)
+GPA &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">3.2</span>, <span class="fl">3.8</span>, <span class="fl">2.6</span>, <span class="fl">2.3</span>, <span class="fl">3.4</span>, <span class="fl">3.7</span>, <span class="fl">4.0</span>)
+Major &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Math&#39;</span>,<span class="st">&#39;Forestry&#39;</span>,<span class="st">&#39;Biology&#39;</span>,<span class="st">&#39;Forestry&#39;</span>,<span class="st">&#39;Forestry&#39;</span>,<span class="st">&#39;Math&#39;</span>,<span class="st">&#39;Forestry&#39;</span>)</code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li>Create a vector of TRUE/FALSE values that indicate whether the students GPA is greater than 3.0.</li>
+<li>Create a vector of TRUE/FALSE values that indicate whether the students’ major is forestry.</li>
+<li>Create a vector of TRUE/FALSE values that indicates if a student has a GPA greater than 3.0 and is a forestry major.</li>
+<li>Convert the vector of TRUE/FALSE values in part (c) to integer values using the <code>as.numeric()</code> function. Which numeric value corresponds to TRUE?</li>
+<li>Sum (using the <code>sum()</code> function) the vector you created to count the number of students with GPA &gt; 3.0 and are a forestry major.</li>
+</ol></li>
+<li>Make two variables, and call them <code>a</code> and <code>b</code> where <code>a=2</code> and <code>b=10</code>. I want to think of these as defining an interval.
+<ol style="list-style-type: lower-alpha">
+<li>Define the vector <code>x &lt;- c(-1, 5, 12)</code></li>
+<li>Using the <code>&amp;</code>, come up with a comparison that will test if the value of <code>x</code> is in the interval <span class="math inline">\([a,b]\)</span>. (We want the test to return <code>TRUE</code> if <span class="math inline">\(a\le x\le b\)</span>). That is, test if <code>a</code> is less than <code>x</code> and if <code>x</code> is less than <code>b</code>. Confirm that for x defined above you get the correct vector of logical values.</li>
+<li>Similarly make a comparison that tests if <code>x</code> is outside the interval <span class="math inline">\([a,b]\)</span> using the <code>|</code> operator. That is, test if <code>x &lt; a</code> or <code>x &gt; b</code>. I want the test to return TRUE is x is less than a or if x is greater than b. Confirm that for x defined above you get the correct vector of logical values.</li>
+</ol></li>
+</ol>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="vectors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="exercises-2.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="statistical-tables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="basic-graphing.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -337,7 +404,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/03_DataTypes.Rmd",
+"link": "https://github.com/dereksonderegger/STA_570L_Book/",
 "text": null
 },
 "download": null,
