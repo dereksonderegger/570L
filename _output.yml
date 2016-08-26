@@ -4,8 +4,8 @@ bookdown::gitbook:
     toc:
       before: |
         <li><a href="./">A Sufficient Introduction to R</a></li>
+        <li><a href="https://dereksonderegger.github.io/570L/A_Sufficient_Introduction_to_R.pdf" target="blank">PDF version</a></li>
       after: |
-        <li><a href="https://dereksonderegger.github.io/STA570L/A_Sufficient_Introduction_to_R.pdf" target="blank">PDF version</a></li>
     edit:
       link: https://github.com/dereksonderegger/STA_570L_Book/
 bookdown::pdf_book:

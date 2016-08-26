@@ -107,6 +107,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <ul class="summary">
 <li><a href="./">A Sufficient Introduction to R</a></li>
+<li><a href="https://dereksonderegger.github.io/570L/A_Sufficient_Introduction_to_R.pdf" target="blank">PDF version</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
@@ -164,9 +165,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.3" data-path="matrices-data-frames-and-lists.html"><a href="matrices-data-frames-and-lists.html#lists"><i class="fa fa-check"></i><b>6.3</b> Lists</a></li>
 <li class="chapter" data-level="6.4" data-path="matrices-data-frames-and-lists.html"><a href="matrices-data-frames-and-lists.html#exercises-4"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
 </ul></li>
-<li class="divider"></li>
-<li><a href="https://dereksonderegger.github.io/STA570L/A_Sufficient_Introduction_to_R.pdf" target="blank">PDF version</a></li>
-
 </ul>
 
       </nav>
@@ -233,44 +231,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tbody>
 </table>
 <p>For example, to see the normal distribution with mean <span class="math inline">\(mu=10\)</span> and standard deviation <span class="math inline">\(\sigma=2\)</span>, we use</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mosaic)</code></pre></div>
-<pre><code>## Loading required package: dplyr</code></pre>
-<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.2.5</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## Loading required package: ggplot2</code></pre>
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.2.4</code></pre>
-<pre><code>## Loading required package: car</code></pre>
-<pre><code>## Warning: package &#39;car&#39; was built under R version 3.2.4</code></pre>
-<pre><code>## 
-## Attaching package: &#39;car&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     recode</code></pre>
-<pre><code>## Loading required package: mosaicData</code></pre>
-<pre><code>## 
-## Attaching package: &#39;mosaic&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:car&#39;:
-## 
-##     logit</code></pre>
-<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
-## 
-##     count, do, tally</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     binom.test, cor, cov, D, fivenum, IQR, median, prop.test,
-##     quantile, sd, t.test, var</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     max, mean, min, prod, range, sample, sum</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotDist</span>(<span class="st">&#39;norm&#39;</span>, <span class="dt">mean=</span><span class="dv">10</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mosaic)
+<span class="kw">plotDist</span>(<span class="st">&#39;norm&#39;</span>, <span class="dt">mean=</span><span class="dv">10</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <p>This function works for discrete distributions as well.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotDist</span>(<span class="st">&#39;binom&#39;</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">3</span>)</code></pre></div>
@@ -340,9 +302,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.4</span> r-function</h3>
 <p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 19.10117 24.96963 20.56072 23.67124 24.23395</code></pre>
+<pre><code>## [1] 17.25719 18.42495 19.19751 21.15694 19.77534</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1] 4 9 8 7</code></pre>
+<pre><code>## [1] 7 8 7 6</code></pre>
 </div>
 </div>
 <div id="exercises-2" class="section level2">
