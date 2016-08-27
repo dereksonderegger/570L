@@ -1,8 +1,8 @@
 bookdown::gitbook:
   css: style.css
-  config:
+  config: 
     toc:
-      collapse: section
+      collapse: chapter
       scroll_highlight: true
       before: |
         <li><a href="./">A Sufficient Introduction to R</a></li>

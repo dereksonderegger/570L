@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-08-24">
+<meta name="date" content="2016-08-26">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -302,9 +302,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.4</span> r-function</h3>
 <p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 17.25719 18.42495 19.19751 21.15694 19.77534</code></pre>
+<pre><code>## [1] 20.31234 21.77299 20.73170 22.64702 21.46583</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1] 7 8 7 6</code></pre>
+<pre><code>## [1] 7 8 7 8</code></pre>
 </div>
 </div>
 <div id="exercises-2" class="section level2">
@@ -380,12 +380,13 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/dereksonderegger/STA_570L_Book/",
+"link": "https://github.com/dereksonderegger/STA_570L_Book/edit/master/03_StatisticalTables.Rmd",
 "text": null
 },
 "download": null,
 "toc": {
-"collapse": "subsection"
+"collapse": "section",
+"scroll_highlight": true
 }
 });
 });
