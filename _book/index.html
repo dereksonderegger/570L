@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-08-26">
+<meta name="date" content="2016-08-29">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -39,7 +39,7 @@ MathJax.Hub.Config({
   
   
 
-<link rel="next" href="vectors.html">
+<link rel="next" href="2-vectors.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -117,13 +117,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#r-scripts-.r-files"><i class="fa fa-check"></i><b>1.3.1</b> R Scripts (.R files)</a></li>
 <li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#r-markdown-.rmd-files"><i class="fa fa-check"></i><b>1.3.2</b> R Markdown (.Rmd files)</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#exercises"><i class="fa fa-check"></i><b>1.4</b> Exercises</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.4</b> Packages</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#exercises"><i class="fa fa-check"></i><b>1.5</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>2</b> Vectors</a></li>
-<li class="chapter" data-level="3" data-path="statistical-tables.html"><a href="statistical-tables.html"><i class="fa fa-check"></i><b>3</b> Statistical Tables</a></li>
-<li class="chapter" data-level="4" data-path="data-types.html"><a href="data-types.html"><i class="fa fa-check"></i><b>4</b> Data Types</a></li>
-<li class="chapter" data-level="5" data-path="basic-graphing.html"><a href="basic-graphing.html"><i class="fa fa-check"></i><b>5</b> Basic Graphing</a></li>
-<li class="chapter" data-level="6" data-path="matrices-data-frames-and-lists.html"><a href="matrices-data-frames-and-lists.html"><i class="fa fa-check"></i><b>6</b> Matrices, Data Frames, and Lists</a></li>
+<li class="chapter" data-level="2" data-path="2-vectors.html"><a href="2-vectors.html"><i class="fa fa-check"></i><b>2</b> Vectors</a></li>
+<li class="chapter" data-level="3" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html"><i class="fa fa-check"></i><b>3</b> Statistical Tables</a></li>
+<li class="chapter" data-level="4" data-path="4-data-types.html"><a href="4-data-types.html"><i class="fa fa-check"></i><b>4</b> Data Types</a></li>
+<li class="chapter" data-level="5" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html"><i class="fa fa-check"></i><b>5</b> Basic Graphing</a></li>
+<li class="chapter" data-level="6" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html"><i class="fa fa-check"></i><b>6</b> Matrices, Data Frames, and Lists</a></li>
 </ul>
 
       </nav>
@@ -144,7 +145,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="header">
 <h1 class="title">A Sufficient Introduction to R</h1>
 <h4 class="author"><em>Derek L. Sonderegger</em></h4>
-<h4 class="date"><em>2016-08-26</em></h4>
+<h4 class="date"><em>2016-08-29</em></h4>
 </div>
 <div id="introduction" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
@@ -248,12 +249,30 @@ x &lt;-<span class="st"> </span><span class="kw">seq</span>(-<span class="dv">2<
 <p>The R code in my document is nicely separated from my regular text using the three backticks and an instruction that it is R code that needs to be evaluated. The output of this document looks good as a HTML, PDF, or MS Word document. I have actually created this entire document using RMarkdown.</p>
 </div>
 </div>
+<div id="packages" class="section level2">
+<h2><span class="header-section-number">1.4</span> Packages</h2>
+<p>One of the greatest strengths about R is that so many people have devloped add-on packages to do some additional function. For example, plant community ecologists have a large number of multivariate methods that are useful but were not part of R. So Jari Oksanen got together with some other folks and put together a package of functions that they found useful. The result is the package <code>vegan</code>.</p>
+<p>To download and install the package from the Comprehensive R Archive Network (CRAN), you just need to ask RStudio it to install it via the menu <code>Tools</code> -&gt; <code>Install Packages...</code></p>
+<p>Many major analysis types are available via downloaded packages as well as problem sets from various books (e.g. <code>Sleuth3</code> or <code>faraway</code>) and can be easily downloaded and installed via the menu.</p>
+<p>Once a package is downloaded and installed on your computer, it is available, but it is not loaded into your current R session by default. The reason it isn’t loaded is that there are thousands of packages, some of which are quite large and only used occasionally. So to improve overall performance only a few packages are loaded by default and the you must explicitly load packages whenever you want to use them. You only need to load them once per session/script.</p>
+<p>For a similar performance reason, many packages do not automatically load their datasets unless explicitly asked. Therefore when loading datasets from a package, you might need to do a <em>two-step</em> process of loading the package and then loading the dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(faraway)      <span class="co"># load the package into memory</span>
+<span class="kw">data</span>(<span class="st">&quot;babyfood&quot;</span>)      <span class="co"># load the dataset into memory</span></code></pre></div>
+<p>To get information about a package, you can use either of the following afer the library has been loaded:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="dt">help=</span><span class="st">&#39;faraway&#39;</span>)</code></pre></div>
+</div>
 <div id="exercises" class="section level2">
-<h2><span class="header-section-number">1.4</span> Exercises</h2>
+<h2><span class="header-section-number">1.5</span> Exercises</h2>
 <p>Create an RMarkdown file that solves the following exercises.</p>
 <ol style="list-style-type: decimal">
 <li><p>Calculate <span class="math inline">\(\log\left(6.2\right)\)</span> first using base <span class="math inline">\(e\)</span> and second using base <span class="math inline">\(10\)</span>. To figure out how to do different bases, it might be helpful to look at the help page for the <code>log</code> function.</p></li>
 <li><p>Calculate the square root of 2 and save the result as the variable named sqrt2. Have R display the decimal value of sqrt2. <em>Hint: use Google to find the square root function. Perhaps search on the keywords “R square root function”.</em></p></li>
+<li>This exercise walks you through installing a package with all the datasets used in the textbook <em>The Statistical Sleuth</em>.
+<ol style="list-style-type: lower-alpha">
+<li>Install the package <code>Sleuth3</code> on your computer using RStudio.</li>
+<li>Load the package using the <code>library()</code> command.</li>
+<li>Print out the dataset <code>case0101</code></li>
+</ol></li>
 </ol>
 
 </div>
@@ -272,7 +291,7 @@ x &lt;-<span class="st"> </span><span class="kw">seq</span>(-<span class="dv">2<
         </div>
       </div>
 
-<a href="vectors.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="2-vectors.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -299,12 +318,12 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/dereksonderegger/STA_570L_Book/edit/master/index.Rmd",
+"link": "https://github.com/dereksonderegger/STA_570L_Book/raw/master/index.Rmd",
 "text": null
 },
 "download": null,
 "toc": {
-"collapse": "chapter",
+"collapse": "section",
 "scroll_highlight": true
 }
 });

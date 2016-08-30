@@ -143,6 +143,29 @@ The R Markdown is an implementation of the Markdown syntax that makes it extreme
 
 The R code in my document is nicely separated from my regular text using the three backticks and an instruction that it is R code that needs to be evaluated. The output of this document looks good as a HTML, PDF, or MS Word document. I have actually created this entire document using RMarkdown.
 
+## Packages
+
+One of the greatest strengths about R is that so many people have devloped add-on packages to do some additional function. For example, plant community ecologists have a large number of multivariate methods that are useful but were not part of R.  So Jari Oksanen got together with some other folks and put together a package of functions that they found useful.  The result is the package `vegan`. 
+
+To download and install the package from the Comprehensive R Archive Network (CRAN), you just need to ask RStudio it to install it via the menu `Tools` -> `Install Packages...` 
+
+Many major analysis types are available via downloaded packages as well as problem sets from various books (e.g. `Sleuth3` or `faraway`) and can be easily downloaded and installed via the menu.
+
+Once a package is downloaded and installed on your computer, it is available, but it is not loaded into your current R session by default. The reason it isn't loaded is that there are thousands of packages, some of which are quite large and only used occasionally. So to improve overall performance only a few packages are loaded by default and the you must explicitly load packages whenever you want to use them. You only need to load them once per session/script.
+
+For a similar performance reason, many packages do not automatically load their datasets unless explicitly asked. Therefore when loading datasets from a package, you might need to do a *two-step* process of loading the package and then loading the dataset.
+
+```{r}
+library(faraway)      # load the package into memory
+data("babyfood")      # load the dataset into memory
+```
+
+To get information about a package, you can use either of the following afer the library has been loaded:
+```{r}
+library(help='faraway')
+```
+
+
 
 ## Exercises
 
@@ -151,3 +174,8 @@ Create an RMarkdown file that solves the following exercises.
 1. Calculate $\log\left(6.2\right)$ first using base $e$ and second using base $10$. To figure out how to do different bases, it might be helpful to look at the help page for the `log` function.
 
 2. Calculate the square root of 2 and save the result as the variable named sqrt2. Have R display the decimal value of sqrt2. *Hint: use Google to find the square root function. Perhaps search on the keywords  "R square root function".*
+
+3. This exercise walks you through installing a package with all the datasets used in the textbook *The Statistical Sleuth*.
+    a) Install the package `Sleuth3` on your computer using RStudio. 
+    b) Load the package using the `library()` command.
+    c) Print out the dataset `case0101`
