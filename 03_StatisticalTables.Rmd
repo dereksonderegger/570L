@@ -37,18 +37,18 @@ plotDist('binom', size=10, prob=.3)
 
 All the probability distributions available in R are accessed in exactly the same way, using a `d`-function, `p`-function, `q`-function, and `r`-function. For the rest of this section suppose that $X$ is a random variable from the distribution of interest and $x$ is some possible value that $X$ could take on. Notice that the `p`-function is the inverse of the `q`-function. 
 
+
 +--------------------+-----------------------------------------------------------+
 | Function           |    Result                                                 |
-+====================+===========================================================|
++====================+===========================================================+
 | `d`-function(x)    | The height of the probability distribution/density at $x$ |
 +--------------------+-----------------------------------------------------------+
 | `p`-function(x)    |  $P\left(X\le x\right)$                                   |
 +--------------------+-----------------------------------------------------------+
-| `q`-function(q)    |  $x$ such that $P\left(X\le x\right) = q$                 |  +--------------------+-----------------------------------------------------------+
+| `q`-function(q)    |  $x$ such that $P\left(X\le x\right) = q$                 |
++--------------------+-----------------------------------------------------------+
 | `r`-function(n)    | $n$ random observations from the distribution             |
 +--------------------+-----------------------------------------------------------+
-
-
 
 For each distribution in R, there will be be this set of functions but we replace the “-function” with the distribution name or a shortened version. `norm`, `exp`, `binom`, `t`, `f` are the names for the normal, exponential, binomial, T and F distributions. Furthermore, most distributions have additional parameters that define the distribution and will also be passed as arguments to these functions, although, if a reasonable default value for the parameter exists, there will be a default.
 

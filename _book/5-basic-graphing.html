@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-08-29">
+<meta name="date" content="2016-08-30">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -192,7 +192,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>This is chart that is intended to show the relative differences between a number of groups. To create this graph, all we need is the heights of the individual bars.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">4</span>     <span class="co"># The vector 1,2,3,4</span>
 <span class="kw">barplot</span>(x)   <span class="co"># First bar has height 1, next is 2, etc</span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
 <p>This is extremely basic, but is a bit ugly. We’ll add a x and y labels and names for each bar.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">4</span>
 <span class="kw">barplot</span>(x, 
@@ -201,21 +201,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
         <span class="dt">main=</span><span class="st">&#39;Main Title&#39;</span>, 
           <span class="dt">names.arg=</span><span class="kw">c</span>(<span class="st">&#39;Coho&#39;</span>,<span class="st">&#39;Chinook&#39;</span>,<span class="st">&#39;Pink&#39;</span>,<span class="st">&#39;Sockeye&#39;</span>)
         )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
 <div id="histograms" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> Histograms</h3>
 <p>Histograms are way of summarizing a large number of observations. It allows the reader to see what values are very common and along with the range of the data. The primary aspects of this plot that you might want to change are the number of histogram bins and where the breaks between bins occurs.</p>
 <p>To generate data for the histogram, we’ll use the function <code>rnorm(n, mean=0, sd=1)</code> which generates n random variables from a normal distribution with mean <code>mean</code> and standard deviation <code>sd</code>. Notice that rnorm will default to giving random variables from a standard normal distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10000</span>)
 <span class="kw">hist</span>(data)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
 <p>R does a decent job of picking reasonable defaults for the number of bins and breakpoints, but with <span class="math inline">\(10,000\)</span> observations, I think we should have more bins. To do this, I’ll use the optional breaks argument to specify where to split the bins.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(data, <span class="dt">breaks=</span><span class="dv">30</span>)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
 <p>Finally I might want the y-axis to not be the number of observations within a bin, but rather the density of an observation. Density is calculated by taking the number of observations in a bin and then dividing by the total number of observations and then dividing by width of the bin. This forces the sum of the area in all of the bins to be 1. To do this, we’ll use the freq argument and set it to be FALSE.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(data, <span class="dt">breaks=</span><span class="dv">30</span>, <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">xlab=</span><span class="st">&#39;x&#39;</span>, 
      <span class="dt">main=</span><span class="st">&#39;Histogram of the Standard Normal Distribution&#39;</span> )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
 </div>
 </div>
 <div id="bivariate-plots" class="section level2">
@@ -228,7 +228,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
         <span class="kw">rnorm</span>(<span class="dv">50</span>, <span class="dt">mean=</span><span class="dv">0</span>))    <span class="co"># Group C is centered at 0</span>
 group &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="kw">rep</span>(<span class="st">&#39;A&#39;</span>, <span class="dv">50</span>), <span class="kw">rep</span>(<span class="st">&#39;B&#39;</span>,<span class="dv">50</span>), <span class="kw">rep</span>(<span class="st">&#39;C&#39;</span>,<span class="dv">50</span>) )
 <span class="kw">boxplot</span>(y ~<span class="st"> </span>group)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
 <p>When calling boxplot() the main argument is a formula that describes a relationship between two variables. Formulas in R are always in the format <code>y.variable ~ x.variable</code> where I think of this as saying my y-variable is a function of the x-variable.</p>
 </div>
 <div id="scatterplots" class="section level3">
@@ -239,14 +239,14 @@ y &lt;-<span class="st"> </span><span class="dv">2</span> +<span class="st"> </s
 <pre><code>## Warning in 2 + 3 * x + rnorm(10, sd = 4): longer object length is not a
 ## multiple of shorter object length</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(x, y)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
 </div>
 <div id="arbitrary-curves" class="section level3">
 <h3><span class="header-section-number">5.2.3</span> Arbitrary Curves</h3>
 <p>Often I want to plot a curve. To do that, I’ll make a scatterplot, but tell R that I don’t want points, but rather I want it to connect the dots into a curve. To do this I will change the type argument to plot and tell it to make a line.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dt">by=</span>.<span class="dv">01</span>)
 <span class="kw">plot</span>(x, <span class="kw">sin</span>(x), <span class="dt">type=</span><span class="st">&#39;l&#39;</span>)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
 </div>
 </div>
 <div id="advanced-tricks" class="section level2">
@@ -285,7 +285,7 @@ y &lt;-<span class="st"> </span><span class="dv">2</span> +<span class="st"> </s
 <p>Another useful option to plot is the arguments xlim and ylim which take vectors that define the extent of the two axes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">2</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">type=</span><span class="st">&#39;n&#39;</span>, 
     <span class="dt">xlab=</span><span class="st">&#39;X Label&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Y Label&#39;</span>, <span class="dt">main=</span><span class="st">&#39;Main Title&#39;</span>)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
 </div>
 <div id="points" class="section level3">
 <h3><span class="header-section-number">5.3.2</span> Points</h3>
@@ -302,7 +302,7 @@ y &lt;-<span class="st"> </span><span class="dv">2</span> +<span class="st"> </s
 <span class="kw">points</span>(.<span class="dv">50</span>, .<span class="dv">50</span>, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">col=</span><span class="st">&#39;red&#39;</span>)  <span class="co"># open red square</span>
 <span class="kw">points</span>(<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="dt">col=</span><span class="dv">2</span>, <span class="dt">lwd=</span><span class="dv">3</span>)       <span class="co"># thick open red circle </span>
 <span class="kw">points</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="fl">1.5</span>,<span class="dv">2</span>), <span class="kw">c</span>(<span class="dv">0</span>,.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">col=</span><span class="dv">3</span>) <span class="co"># green circles</span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
 <p>For more details about the different point types, refer to the help page for points().</p>
 </div>
 <div id="lines" class="section level3">
@@ -319,20 +319,20 @@ y &lt;-<span class="st"> </span><span class="dv">2</span> +<span class="st"> </s
 <span class="kw">abline</span>(<span class="dv">1</span>, -<span class="dv">1</span>/<span class="dv">2</span>)                   <span class="co"># Black line y-intercept=1, slope=-1/2</span>
 <span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">1</span>, <span class="dt">col=</span><span class="dv">2</span>, <span class="dt">lwd=</span><span class="dv">3</span>)         <span class="co"># Vertical solid red line</span>
 <span class="kw">abline</span>(<span class="dt">h=</span>.<span class="dv">5</span>, <span class="dt">col=</span><span class="dv">3</span>, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">lwd=</span><span class="dv">5</span>) <span class="co"># Horizonal green dashed line</span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
 <p>The way that <code>abline()</code> is defined, it is very convenient to add the least-squares regression line to a plot of data points.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="dt">length.out=</span><span class="dv">30</span>)
 y &lt;-<span class="st"> </span><span class="dv">3</span> +<span class="st"> </span><span class="dv">2</span>*x +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">30</span>)
 <span class="kw">plot</span>(x,y)
 <span class="kw">abline</span>( <span class="kw">coef</span>(<span class="kw">lm</span>(y~x)) )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
 <p>The second way to add a line to a plot is using the <code>lines()</code> function which allows you to draw an arbitrary curve. It requires vectors of <code>x</code> and <code>y</code> values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">7</span>), <span class="dt">ylim=</span><span class="kw">c</span>(-<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">type=</span><span class="st">&#39;n&#39;</span>,   <span class="co"># again a blank plot</span>
     <span class="dt">xlab=</span><span class="st">&#39;X&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Y&#39;</span>, <span class="dt">main=</span><span class="st">&#39;sin(x)&#39;</span>)
 x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">7</span>, <span class="dt">length=</span><span class="dv">201</span>)                           <span class="co"># 201 values from 0 to 7</span>
 <span class="kw">lines</span>(x, <span class="kw">sin</span>(x))                                    <span class="co"># sin(x)</span>
 <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)                                         <span class="co"># Horizontal line at 0</span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
 </div>
 <div id="contour-plots" class="section level3">
 <h3><span class="header-section-number">5.3.4</span> Contour Plots</h3>
@@ -346,7 +346,7 @@ for(i in <span class="dv">1</span>:<span class="dv">101</span>){
     }
 }
 <span class="kw">contour</span>(x,y,z, <span class="dt">xlab=</span><span class="st">&#39;x&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;y&#39;</span>, <span class="dt">main=</span><span class="st">&#39;Example Contour Plot&#39;</span>)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
 
 </div>
 </div>
