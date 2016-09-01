@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Sufficient Introduction to R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
+  <meta name="generator" content="bookdown 0.1.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Sufficient Introduction to R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
+  <meta name="github-repo" content="dereksonderegger/STA_570L_Book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Sufficient Introduction to R" />
+  
+  <meta name="twitter:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
+  
+
+<meta name="author" content="Derek L. Sonderegger">
+
+<meta name="date" content="2016-09-01">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="6-matrices-data-frames-and-lists.html">
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Sufficient Introduction to R</a></li>
+<li><a href="https://dereksonderegger.github.io/570L/A_Sufficient_Introduction_to_R.pdf" target="blank">PDF version</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="2-vectors.html"><a href="2-vectors.html"><i class="fa fa-check"></i><b>2</b> Vectors</a></li>
+<li class="chapter" data-level="3" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html"><i class="fa fa-check"></i><b>3</b> Statistical Tables</a></li>
+<li class="chapter" data-level="4" data-path="4-data-types.html"><a href="4-data-types.html"><i class="fa fa-check"></i><b>4</b> Data Types</a></li>
+<li class="chapter" data-level="5" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html"><i class="fa fa-check"></i><b>5</b> Basic Graphing</a></li>
+<li class="chapter" data-level="6" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html"><i class="fa fa-check"></i><b>6</b> Matrices, Data Frames, and Lists</a></li>
+<li class="chapter" data-level="7" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html"><i class="fa fa-check"></i><b>7</b> Data Manipulation</a><ul>
+<li class="chapter" data-level="7.1" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#classical-functions-for-summarizing-rows-and-columns"><i class="fa fa-check"></i><b>7.1</b> Classical functions for summarizing rows and columns</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#summary"><i class="fa fa-check"></i><b>7.1.1</b> <code>summary()</code></a></li>
+<li class="chapter" data-level="7.1.2" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#apply"><i class="fa fa-check"></i><b>7.1.2</b> <code>apply()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#package-dplyr"><i class="fa fa-check"></i><b>7.2</b> Package <code>dplyr</code></a><ul>
+<li class="chapter" data-level="7.2.1" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#verbs"><i class="fa fa-check"></i><b>7.2.1</b> Verbs</a></li>
+<li class="chapter" data-level="7.2.2" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#split-apply-combine"><i class="fa fa-check"></i><b>7.2.2</b> Split, apply, combine</a></li>
+<li class="chapter" data-level="7.2.3" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#chaining-commands-together"><i class="fa fa-check"></i><b>7.2.3</b> Chaining commands together</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#exercises"><i class="fa fa-check"></i><b>7.3</b> Exercises</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Sufficient Introduction to R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-manipulation" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Data Manipulation</h1>
+<p>Most of the time, our data is in the form of a data frame and we are interested in exploring the relationships. This chapter explores how to manipulate data frames and methods.</p>
+<div id="classical-functions-for-summarizing-rows-and-columns" class="section level2">
+<h2><span class="header-section-number">7.1</span> Classical functions for summarizing rows and columns</h2>
+<div id="summary" class="section level3">
+<h3><span class="header-section-number">7.1.1</span> <code>summary()</code></h3>
+<p>The first method is to calculate some basic summary statistics (minimum, 25th, 50th, 75th percentiles, maximum and mean) of each column. If a column is categorical, the summary function will return the number of observations in each category.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use the iris data set which has both numerical and categorical variables</span>
+<span class="kw">data</span>( iris )
+<span class="kw">str</span>(iris)    <span class="co"># recall what columns we have </span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    150 obs. of  5 variables:
+##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># display the summary for each column</span>
+<span class="kw">summary</span>( iris )</code></pre></div>
+<pre><code>##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+##        Species  
+##  setosa    :50  
+##  versicolor:50  
+##  virginica :50  
+##                 
+##                 
+## </code></pre>
+</div>
+<div id="apply" class="section level3">
+<h3><span class="header-section-number">7.1.2</span> <code>apply()</code></h3>
+<p>The summary function is convenient, but we want the ability to pick another function to apply to each column and possibly to each row. To demonstrate this, suppose we have data frame that contains students grades over the semester.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make up some data</span>
+grades &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">l.name =</span> <span class="kw">c</span>(<span class="st">&#39;Cox&#39;</span>, <span class="st">&#39;Dorian&#39;</span>, <span class="st">&#39;Kelso&#39;</span>, <span class="st">&#39;Turk&#39;</span>),
+  <span class="dt">Exam1 =</span> <span class="kw">c</span>(<span class="dv">93</span>, <span class="dv">89</span>, <span class="dv">80</span>, <span class="dv">70</span>),
+  <span class="dt">Exam2 =</span> <span class="kw">c</span>(<span class="dv">98</span>, <span class="dv">70</span>, <span class="dv">82</span>, <span class="dv">85</span>),
+  <span class="dt">Final =</span> <span class="kw">c</span>(<span class="dv">96</span>, <span class="dv">85</span>, <span class="dv">81</span>, <span class="dv">92</span>) )</code></pre></div>
+<p>The <code>apply()</code> function will apply an arbitrary function to each row (or column) of a matrix or a data frame and then aggregate the results into a vector.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Because I can&#39;t take the mean of the last names column,</span>
+<span class="co"># remove the name column</span>
+scores &lt;-<span class="st"> </span>grades[,-<span class="dv">1</span>]
+scores</code></pre></div>
+<pre><code>##   Exam1 Exam2 Final
+## 1    93    98    96
+## 2    89    70    85
+## 3    80    82    81
+## 4    70    85    92</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Summarize each column by calculating the mean.</span>
+<span class="kw">apply</span>( scores,      <span class="co"># what object do I want to apply the function to</span>
+       <span class="dt">MARGIN=</span><span class="dv">2</span>,    <span class="co"># rows = 1, columns = 2, (same order as [rows, cols]</span>
+       <span class="dt">FUN=</span>mean     <span class="co"># what function do we want to apply     </span>
+     )</code></pre></div>
+<pre><code>## Exam1 Exam2 Final 
+## 83.00 83.75 88.50</code></pre>
+<p>To apply a function to the rows, we just change which margin we want. We might want to calculate the average exam score for person.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">apply</span>( scores,      <span class="co"># what object do I want to apply the function to</span>
+       <span class="dt">MARGIN=</span><span class="dv">1</span>,    <span class="co"># rows = 1, columns = 2, (same order as [rows, cols]</span>
+       <span class="dt">FUN=</span>mean     <span class="co"># what function do we want to apply</span>
+     )</code></pre></div>
+<pre><code>## [1] 95.66667 81.33333 81.00000 82.33333</code></pre>
+<p>This is useful, but it would be more useful to concatenate this as a new column in my grades data frame.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">average &lt;-<span class="st"> </span><span class="kw">apply</span>( 
+  scores,      <span class="co"># what object do I want to apply the function to</span>
+  <span class="dt">MARGIN=</span><span class="dv">1</span>,    <span class="co"># rows = 1, columns = 2, (same order as [rows, cols]</span>
+  <span class="dt">FUN=</span>mean     <span class="co"># what function do we want to apply</span>
+)
+grades &lt;-<span class="st"> </span><span class="kw">cbind</span>( grades, average ) <span class="co"># squish together </span>
+grades</code></pre></div>
+<pre><code>##   l.name Exam1 Exam2 Final  average
+## 1    Cox    93    98    96 95.66667
+## 2 Dorian    89    70    85 81.33333
+## 3  Kelso    80    82    81 81.00000
+## 4   Turk    70    85    92 82.33333</code></pre>
+<p>There are several variants of the <code>apply()</code> function, and the variant I use most often is the function <code>sapply()</code>, which will apply a function to each element of a list or vector and returns a corresponding list or vector of results.</p>
+</div>
+</div>
+<div id="package-dplyr" class="section level2">
+<h2><span class="header-section-number">7.2</span> Package <code>dplyr</code></h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)   <span class="co"># load the dplyr package!</span></code></pre></div>
+<p>Many of the tools to manipulate data frames in R were written without a consistent syntax and are difficult use together. To remedy this, Hadley Wickham (the writer of <code>ggplot2</code>) introduced a package called plyr which was quite useful. As with many projects, his first version was good but not great and he introduced an improved version that works exclusively with data.frames called <code>dplyr</code> which we will investigate. The package <code>dplyr</code> strives to provide a convenient and consistent set of functions to handle the most common data frame manipulations and a mechanism for chaining these operations together to perform complex tasks.</p>
+<p>The Dr Wickham has put together a very nice introduction to the package that explains in more detail how the various pieces work and I encourage you to read it at some point. [<a href="http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html" class="uri">http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html</a>].</p>
+<p>One of the aspects about the <code>data.frame</code> object is that R does some simplification for you, but it does not do it in a consistent manner. Somewhat obnoxiously character strings are always converted to factors and subsetting might return a <code>data.frame</code> or a <code>vector</code> or a <code>scalar</code>. This is fine at the command line, but can be problematic when programming. Furthermore, many operations are pretty slow using <code>data.frame</code>. To get around this, Dr Wickham introduced a modified version of the <code>data.frame</code> called a <code>tibble</code>. A <code>tibble</code> is a <code>data.frame</code> but with a few extra bits. For now we can ignore the differences.</p>
+<p>The pipe command <code>%&gt;%</code> allows for very readable code. The idea is that the <code>%&gt;%</code> operator works by translating the command <code>a %&gt;% f(b)</code> to the expression <code>f(a,b)</code>. This operator works on any function and was introduced in the <code>magrittr</code> package. The beauty of this comes when you have a suite of functions that takes input arguments of the same type as their output.</p>
+<p>For example if we wanted to start with <code>x</code>, and first apply function <code>f()</code>, then <code>g()</code>, and then <code>h()</code>, the usual R command would be <code>h(g(f(x)))</code> which is hard to read because you have to start reading at the innermost set of parentheses. Using the pipe command <code>%&gt;%</code>, this sequence of operations becomes <code>x %&gt;% f() %&gt;% g() %&gt;% h()</code>.</p>
+<p>Dr Wickham gave the following example of readability:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bopping</span>(
+  <span class="kw">scooping_up</span>(
+    <span class="kw">hopping_through</span>(foo_foo),
+    field_mice),
+  head)</code></pre></div>
+<p>is more readably written:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foo_foo %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">hopping_through</span>(forest) %&gt;%
+<span class="st">  </span><span class="kw">scooping_up</span>( field_mice) %&gt;%
+<span class="st">  </span><span class="kw">bopping</span>( head )</code></pre></div>
+<p>In <code>dplyr</code>, all the functions below take a data set as its first argument and outputs an appropriately modified data set. This will allow me to chain together commands in a readable fashion.</p>
+<div id="verbs" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Verbs</h3>
+<p>The foundational operations to perform on a data set are:</p>
+<ul>
+<li><p>Subsetting - Returns a with only particular columns or rows</p>
+<p>– <code>select</code> - Selecting a subset of columns by name or column number.</p>
+<p>– <code>filter</code> - Selecting a subset of rows from a data frame based on logical expressions.</p>
+<p>– <code>slice</code> - Selecting a subset of rows by row number.</p></li>
+<li><p><code>arrange</code> - Re-ordering the rows of a data frame.</p></li>
+<li><p><code>mutate</code> - Add a new column that is some function of other columns.</p></li>
+<li><p><code>summarise</code> - calculate some summary statistic of a column of data. This collapses a set of rows into a single row.</p></li>
+</ul>
+<p>Each of these operations is a function in the package <code>dplyr</code>. These functions all have a similar calling syntax, the first argument is a data set, subsequent arguments describe what to do with the input data frame and you can refer to the columns without using the <code>df$column</code> notation. All of these functions will return a data set.</p>
+<div id="subsetting-with-select-filter-and-slice" class="section level4">
+<h4><span class="header-section-number">7.2.1.1</span> Subsetting with <code>select</code>, <code>filter</code>, and <code>slice</code></h4>
+<p>These function allows you select certain columns and rows of a data frame.</p>
+<div id="select" class="section level5">
+<h5><span class="header-section-number">7.2.1.1.1</span> <code>select()</code></h5>
+<p>Often you only want to work with a small number of columns of a data frame. It is relatively easy to do this using the standard <code>[,col.name]</code> notation, but is often pretty tedious.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># recall what the grades are</span>
+grades</code></pre></div>
+<pre><code>##   l.name Exam1 Exam2 Final  average
+## 1    Cox    93    98    96 95.66667
+## 2 Dorian    89    70    85 81.33333
+## 3  Kelso    80    82    81 81.00000
+## 4   Turk    70    85    92 82.33333</code></pre>
+<p>I could select the columns Exam columns by hand, or by using an extension of the <code>:</code> operator</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>( Exam1, Exam2 )   <span class="co"># Exam1 and Exam2</span></code></pre></div>
+<pre><code>##   Exam1 Exam2
+## 1    93    98
+## 2    89    70
+## 3    80    82
+## 4    70    85</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>( Exam1:Final )    <span class="co"># Columns Exam1 through Final</span></code></pre></div>
+<pre><code>##   Exam1 Exam2 Final
+## 1    93    98    96
+## 2    89    70    85
+## 3    80    82    81
+## 4    70    85    92</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>( -Exam1 )         <span class="co"># Negative indexing by name works</span></code></pre></div>
+<pre><code>##   l.name Exam2 Final  average
+## 1    Cox    98    96 95.66667
+## 2 Dorian    70    85 81.33333
+## 3  Kelso    82    81 81.00000
+## 4   Turk    85    92 82.33333</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>( <span class="dv">1</span>:<span class="dv">2</span> )            <span class="co"># Can select column by column position</span></code></pre></div>
+<pre><code>##   l.name Exam1
+## 1    Cox    93
+## 2 Dorian    89
+## 3  Kelso    80
+## 4   Turk    70</code></pre>
+<p>The <code>select()</code> command has a few other tricks. There are functional calls that describe the columns you wish to select that take advantage of pattern matching. I generally can get by with <code>starts_with()</code>, <code>ends_with()</code>, and <code>contains()</code>, but there is a final operator <code>matches()</code> that takes a regular expression.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>( <span class="kw">starts_with</span>(<span class="st">&#39;Exam&#39;</span>) )   <span class="co"># Exam1 and Exam2</span></code></pre></div>
+<pre><code>##   Exam1 Exam2
+## 1    93    98
+## 2    89    70
+## 3    80    82
+## 4    70    85</code></pre>
+</div>
+<div id="filter" class="section level5">
+<h5><span class="header-section-number">7.2.1.1.2</span> <code>filter()</code></h5>
+<p>It is common to want to select particular rows where we have some logically expression to pick the rows.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select students with Final grades greater than 90</span>
+grades %&gt;%<span class="st"> </span><span class="kw">filter</span>(Final &gt;<span class="st"> </span><span class="dv">90</span>)</code></pre></div>
+<pre><code>##   l.name Exam1 Exam2 Final  average
+## 1    Cox    93    98    96 95.66667
+## 2   Turk    70    85    92 82.33333</code></pre>
+<p>You can have multiple logical expressions to select rows and they will be logically combined so that only rows that satisfy all of the conditions are selected. The logicals are joined together using <code>&amp;</code> (and) operator or the <code>|</code> (or) operator and you may explicitly use other logicals. For example a factor column type might be used to select rows where type is either one or two via the following: <code>type==1 | type==2</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select students with Final grades above 90 and</span>
+<span class="co"># average score also above 90</span>
+grades %&gt;%<span class="st"> </span><span class="kw">filter</span>(Final &gt;<span class="st"> </span><span class="dv">90</span>, average &gt;<span class="st"> </span><span class="dv">90</span>)</code></pre></div>
+<pre><code>##   l.name Exam1 Exam2 Final  average
+## 1    Cox    93    98    96 95.66667</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># we could also use an &quot;and&quot; condition</span>
+grades %&gt;%<span class="st"> </span><span class="kw">filter</span>(Final &gt;<span class="st"> </span><span class="dv">90</span> &amp;<span class="st"> </span>average &gt;<span class="st"> </span><span class="dv">90</span>)</code></pre></div>
+<pre><code>##   l.name Exam1 Exam2 Final  average
+## 1    Cox    93    98    96 95.66667</code></pre>
+</div>
+<div id="slice" class="section level5">
+<h5><span class="header-section-number">7.2.1.1.3</span> <code>slice()</code></h5>
+<p>When you want to filter rows based on row number, this is called slicing.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># grab the first 2 rows</span>
+grades %&gt;%<span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span>:<span class="dv">2</span>)</code></pre></div>
+<pre><code>##   l.name Exam1 Exam2 Final  average
+## 1    Cox    93    98    96 95.66667
+## 2 Dorian    89    70    85 81.33333</code></pre>
+</div>
+</div>
+<div id="arrange" class="section level4">
+<h4><span class="header-section-number">7.2.1.2</span> <code>arrange()</code></h4>
+<p>We often need to re-order the rows of a data frame. For example, we might wish to take our grade book and sort the rows by the average score, or perhaps alphabetically. The <code>arrange()</code> function does exactly that. The first argument is the data frame to re-order, and the subsequent arguments are the columns to sort on. The order of the sorting column determines the precedent… the first sorting column is first used and the second sorting column is only used to break ties.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">arrange</span>(l.name)</code></pre></div>
+<pre><code>##   l.name Exam1 Exam2 Final  average
+## 1    Cox    93    98    96 95.66667
+## 2 Dorian    89    70    85 81.33333
+## 3  Kelso    80    82    81 81.00000
+## 4   Turk    70    85    92 82.33333</code></pre>
+<p>The default sorting is in ascending order, so to sort the grades with the highest scoring person in the first row, we must tell arrange to do it in descending order using <code>desc(column.name)</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Final))</code></pre></div>
+<pre><code>##   l.name Exam1 Exam2 Final  average
+## 1    Cox    93    98    96 95.66667
+## 2   Turk    70    85    92 82.33333
+## 3 Dorian    89    70    85 81.33333
+## 4  Kelso    80    82    81 81.00000</code></pre>
+<p>In a more complicated example, consider the following data and we want to order it first by Treatment Level and secondarily by the y-value. I want the Treatment level in the default ascending order (Low, Medium, High), but the y variable in descending order.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make some data</span>
+dd &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">Trt =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;High&quot;</span>, <span class="st">&quot;Med&quot;</span>, <span class="st">&quot;High&quot;</span>, <span class="st">&quot;Low&quot;</span>),        
+               <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Low&quot;</span>, <span class="st">&quot;Med&quot;</span>, <span class="st">&quot;High&quot;</span>)),
+  <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">9</span>),      
+  <span class="dt">z =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)) 
+dd</code></pre></div>
+<pre><code>##    Trt y z
+## 1 High 8 1
+## 2  Med 3 1
+## 3 High 9 1
+## 4  Low 9 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># arrange the rows first by treatment, and then by y (y in descending order)</span>
+dd %&gt;%<span class="st"> </span><span class="kw">arrange</span>(Trt, <span class="kw">desc</span>(y))</code></pre></div>
+<pre><code>##    Trt y z
+## 1  Low 9 2
+## 2  Med 3 1
+## 3 High 9 1
+## 4 High 8 1</code></pre>
+</div>
+<div id="mutate" class="section level4">
+<h4><span class="header-section-number">7.2.1.3</span> mutate()</h4>
+<p>I often need to create a new column that is some function of the old columns. This was often cumbersome. Consider code to calculate the average grade in my grade book example.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades$average &lt;-<span class="st"> </span>(grades$Exam1 +<span class="st"> </span>grades$Exam2 +<span class="st"> </span>grades$Final) /<span class="st"> </span><span class="dv">3</span></code></pre></div>
+<p>Instead, we could use the <code>mutate()</code> function and avoid all the <code>grades$</code> nonsense.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">mutate</span>( <span class="dt">average =</span> (Exam1 +<span class="st"> </span>Exam2 +<span class="st"> </span>Final)/<span class="dv">3</span> )</code></pre></div>
+<pre><code>##   l.name Exam1 Exam2 Final  average
+## 1    Cox    93    98    96 95.66667
+## 2 Dorian    89    70    85 81.33333
+## 3  Kelso    80    82    81 81.00000
+## 4   Turk    70    85    92 82.33333</code></pre>
+<p>You can do multiple calculations within the same <code>mutate()</code> command, and you can even refer to columns that were created in the same <code>mutate()</code> command.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">mutate</span>( 
+  <span class="dt">average =</span> (Exam1 +<span class="st"> </span>Exam2 +<span class="st"> </span>Final)/<span class="dv">3</span>,
+  <span class="dt">grade =</span> <span class="kw">cut</span>(average, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">100</span>),  <span class="co"># cut takes numeric variable</span>
+                       <span class="kw">c</span>( <span class="st">&#39;F&#39;</span>,<span class="st">&#39;D&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;A&#39;</span>)) )  <span class="co"># and makes a factor</span></code></pre></div>
+<pre><code>##   l.name Exam1 Exam2 Final  average grade
+## 1    Cox    93    98    96 95.66667     A
+## 2 Dorian    89    70    85 81.33333     B
+## 3  Kelso    80    82    81 81.00000     B
+## 4   Turk    70    85    92 82.33333     B</code></pre>
+</div>
+<div id="summarise" class="section level4">
+<h4><span class="header-section-number">7.2.1.4</span> summarise()</h4>
+<p>By itself, this function is quite boring, but will become useful later on. Its purpose is to calculate summary statistics using any or all of the data columns. Notice that we get to chose the name of the new column. The way to think about this is that we are collapsing information stored in multiple rows into a single row of values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the mean of exam 1</span>
+<span class="kw">summarise</span>( grades, <span class="dt">mean.E1=</span><span class="kw">mean</span>(Exam1))</code></pre></div>
+<pre><code>##   mean.E1
+## 1      83</code></pre>
+<p>We could calculate multiple summary statistics if we like.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the mean and standard deviation </span>
+grades %&gt;%<span class="st"> </span><span class="kw">summarise</span>( <span class="dt">mean.E1=</span><span class="kw">mean</span>(Exam1), <span class="dt">stddev.E1=</span><span class="kw">sd</span>(Exam2) )</code></pre></div>
+<pre><code>##   mean.E1 stddev.E1
+## 1      83      11.5</code></pre>
+<p>If we want to apply the same statistic to each column, we use the <code>summarise_each()</code> command. We have to be a little careful here because the function you use has to work on every column (that isn’t part of the grouping structure (see <code>group_by()</code>)).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the mean and stddev of each column - Cannot do this to Names!</span>
+grades %&gt;%<span class="st"> </span>
+<span class="st">  </span>dplyr::<span class="kw">select</span>( Exam1:Final ) %&gt;%
+<span class="st">  </span><span class="kw">summarise_each</span>( <span class="kw">funs</span>(mean, sd) )</code></pre></div>
+<pre><code>##   Exam1_mean Exam2_mean Final_mean Exam1_sd Exam2_sd Final_sd
+## 1         83      83.75       88.5 10.23067     11.5 6.757712</code></pre>
+</div>
+<div id="miscellaneous-functions" class="section level4">
+<h4><span class="header-section-number">7.2.1.5</span> Miscellaneous functions</h4>
+<p>There are some more function that are useful but aren’t as commonly used. For sampling the functions <code>sample_n()</code> and <code>sample_frac()</code> will take a subsample of either n rows or of a fraction of the data set. The function <code>n()</code> returns the number of rows in the data set. Finally <code>rename()</code> will rename a selected column.</p>
+</div>
+</div>
+<div id="split-apply-combine" class="section level3">
+<h3><span class="header-section-number">7.2.2</span> Split, apply, combine</h3>
+<p>Aside from unifying the syntax behind the common operations, the major strength of the <code>dplyr</code> package is the ability to split a data frame into a bunch of sub-dataframes, apply a sequence of one or more of the operations we just described, and then combine results back together. We’ll consider data from an experiment from spinning wool into yarn. This experiment considered two different types of wool (A or B) and three different levels of tension on the thread. The response variable is the number of breaks in the resulting yarn. For each of the 6 <code>wool:tension</code> combinations, there are 9 replicated observations per <code>wool:tension</code> level.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(warpbreaks)
+<span class="kw">str</span>(warpbreaks)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    54 obs. of  3 variables:
+##  $ breaks : num  26 30 54 25 70 52 51 26 67 18 ...
+##  $ wool   : Factor w/ 2 levels &quot;A&quot;,&quot;B&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ tension: Factor w/ 3 levels &quot;L&quot;,&quot;M&quot;,&quot;H&quot;: 1 1 1 1 1 1 1 1 1 2 ...</code></pre>
+<p>The first we must do is to create a data frame with additional information about how to break the data into sub-dataframes. In this case, I want to break the data up into the 6 wool-by-tension combinations. Initially we will just figure out how many rows are in each wool-by-tension combination.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># group_by:  what variable(s) shall we group one</span>
+<span class="co"># n() is a function that returns how many rows are in the </span>
+<span class="co">#   currently selected sub-dataframe</span>
+warpbreaks %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>( wool, tension) %&gt;%<span class="st">    </span><span class="co"># grouping</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>() )             <span class="co"># how many in each group</span></code></pre></div>
+<pre><code>## Source: local data frame [6 x 3]
+## Groups: wool [?]
+## 
+##     wool tension     n
+##   &lt;fctr&gt;  &lt;fctr&gt; &lt;int&gt;
+## 1      A       L     9
+## 2      A       M     9
+## 3      A       H     9
+## 4      B       L     9
+## 5      B       M     9
+## 6      B       H     9</code></pre>
+<p>Using the same summarise function, we could calculate the group mean and standard deviation for each wool-by-tension group.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">warpbreaks %&gt;%<span class="st"> </span><span class="kw">group_by</span>(wool, tension) %&gt;%
+<span class="st">  </span><span class="kw">summarise</span>( <span class="dt">n           =</span> <span class="kw">n</span>(),             <span class="co"># I added some formatting to tell the</span>
+             <span class="dt">mean.breaks =</span> <span class="kw">mean</span>(breaks),    <span class="co"># reader I am calculating several</span>
+             <span class="dt">sd.breaks   =</span> <span class="kw">sd</span>(breaks))      <span class="co"># statistics.</span></code></pre></div>
+<pre><code>## Source: local data frame [6 x 5]
+## Groups: wool [?]
+## 
+##     wool tension     n mean.breaks sd.breaks
+##   &lt;fctr&gt;  &lt;fctr&gt; &lt;int&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+## 1      A       L     9    44.55556 18.097729
+## 2      A       M     9    24.00000  8.660254
+## 3      A       H     9    24.55556 10.272671
+## 4      B       L     9    28.22222  9.858724
+## 5      B       M     9    28.77778  9.431036
+## 6      B       H     9    18.77778  4.893306</code></pre>
+<p>If instead of summarizing each split, we might want to just do some calculation and the output should have the same number of rows as the input data frame. In this case I’ll tell <code>dplyr</code> that we are mutating the data frame instead of summarizing it. For example, suppose that I want to calculate the residual value <span class="math display">\[e_{ijk}=y_{ijk}-\bar{y}_{ij\cdot}\]</span> where <span class="math inline">\(\bar{y}_{ij\cdot}\)</span> is the mean of each <code>wool:tension</code> combination.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp &lt;-<span class="st"> </span>warpbreaks %&gt;%<span class="st"> </span>
+<span class="st">   </span><span class="kw">group_by</span>(wool, tension) %&gt;%<span class="st">            </span><span class="co"># group by wool:tension</span>
+<span class="st">   </span><span class="kw">mutate</span>(<span class="dt">resid =</span> breaks -<span class="st"> </span><span class="kw">mean</span>(breaks))  <span class="co"># mean(breaks) of the group!</span>
+<span class="kw">head</span>( temp )  <span class="co"># show the first couple of rows of the result</span></code></pre></div>
+<pre><code>## Source: local data frame [6 x 4]
+## Groups: wool, tension [1]
+## 
+##   breaks   wool tension      resid
+##    &lt;dbl&gt; &lt;fctr&gt;  &lt;fctr&gt;      &lt;dbl&gt;
+## 1     26      A       L -18.555556
+## 2     30      A       L -14.555556
+## 3     54      A       L   9.444444
+## 4     25      A       L -19.555556
+## 5     70      A       L  25.444444
+## 6     52      A       L   7.444444</code></pre>
+</div>
+<div id="chaining-commands-together" class="section level3">
+<h3><span class="header-section-number">7.2.3</span> Chaining commands together</h3>
+<p>In the previous examples we have used the <code>%&gt;%</code> operator to make the code more readable but to really appreciate this, we should examine the alternative.</p>
+<p>Suppose we have the results of a small 5K race. The data given to us is in the order that the runners signed up but we want to calculate the results for each gender, calculate the placings, and the sort the data frame by gender and then place. We can think of this process as having three steps:</p>
+<ol style="list-style-type: decimal">
+<li>Splitting</li>
+<li>Ranking</li>
+<li>Re-arranging.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># input the initial data</span>
+race.results &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">name=</span><span class="kw">c</span>(<span class="st">&#39;Bob&#39;</span>, <span class="st">&#39;Jeff&#39;</span>, <span class="st">&#39;Rachel&#39;</span>, <span class="st">&#39;Bonnie&#39;</span>, <span class="st">&#39;Derek&#39;</span>, <span class="st">&#39;April&#39;</span>,<span class="st">&#39;Elise&#39;</span>,<span class="st">&#39;David&#39;</span>),
+  <span class="dt">time=</span><span class="kw">c</span>(<span class="fl">21.23</span>, <span class="fl">19.51</span>, <span class="fl">19.82</span>, <span class="fl">23.45</span>, <span class="fl">20.23</span>, <span class="fl">24.22</span>, <span class="fl">28.83</span>, <span class="fl">15.73</span>),
+  <span class="dt">gender=</span><span class="kw">c</span>(<span class="st">&#39;M&#39;</span>,<span class="st">&#39;M&#39;</span>,<span class="st">&#39;F&#39;</span>,<span class="st">&#39;F&#39;</span>,<span class="st">&#39;M&#39;</span>,<span class="st">&#39;F&#39;</span>,<span class="st">&#39;F&#39;</span>,<span class="st">&#39;M&#39;</span>))</code></pre></div>
+<p>We could run all the commands together using the following code:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">arrange</span>( 
+  <span class="kw">mutate</span>(
+    <span class="kw">group_by</span>( 
+      race.results,         <span class="co"># using race.results</span>
+      gender),              <span class="co"># group by gender     </span>
+    <span class="dt">place =</span> <span class="kw">rank</span>( time )),  <span class="co"># mutate to calculate the place column</span>
+  gender, place)            <span class="co"># arrange the result by gender and place</span></code></pre></div>
+<pre><code>## Source: local data frame [8 x 4]
+## Groups: gender [2]
+## 
+##     name  time gender place
+##   &lt;fctr&gt; &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;
+## 1 Rachel 19.82      F     1
+## 2 Bonnie 23.45      F     2
+## 3  April 24.22      F     3
+## 4  Elise 28.83      F     4
+## 5  David 15.73      M     1
+## 6   Jeff 19.51      M     2
+## 7  Derek 20.23      M     3
+## 8    Bob 21.23      M     4</code></pre>
+<p>This is very difficult to read because you have to read the code <em>from the inside out</em>.</p>
+<p>Other (and slightly more readable) way to complete our task is to save the intermediate value of each step:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># how should I group?</span>
+temp.df0 &lt;-<span class="st"> </span>race.results %&gt;%<span class="st"> </span><span class="kw">group_by</span>( gender)
+temp.df1 &lt;-<span class="st"> </span>temp.df0 %&gt;%<span class="st"> </span><span class="kw">mutate</span>( <span class="dt">place =</span> <span class="kw">rank</span>(time) )
+temp.df2 &lt;-<span class="st"> </span>temp.df1 %&gt;%<span class="st"> </span><span class="kw">arrange</span>( gender, place )</code></pre></div>
+<p>It would be nice if I didn’t have to save all these intermediate results because keeping track of temp1 and temp2 gets pretty annoying if I keep changing the order of how things or calculated or add/subtract steps.</p>
+<p>The way this is typically handled in R is to to just nest one command inside the next. The same set of commands could be run as follows:&lt;&lt;&gt;&gt;=This is extremely hard to read because the commands are separated from the arguments (e.g. the arrange function call was at the top, but the columns to arrange by are on the last line).</p>
+<p>To get around this, the author of dplyr gives us an operator to combine these simple operations smoothly. The composition operation %&gt;% takes the following A %&gt;% f(B) and converts it to the statement f(A, B). This allows us to write the following code that does exactly what the above two code chunks did. &lt;&lt;&gt;&gt;=If I only wanted the top three finishers in each gender, we could simply add a filter command after the place column was calculated.&lt;&lt;&gt;&gt;=</p>
+</div>
+</div>
+<div id="exercises" class="section level2">
+<h2><span class="header-section-number">7.3</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li>The dataset <code>ChickWeight</code> tracks the weights of 48 baby chickens (chicks) feed four different diets.
+<ol style="list-style-type: lower-alpha">
+<li><p>Load the dataset using</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(ChickWeight)</code></pre></div></li>
+<li>Look at the help files for the description of the columns.</li>
+</ol>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Remove all the observations except for the weights on day 10 and day 20.</li>
+<li>Calculate the mean and standard deviation for each diet group on days 10 and 20.</li>
+</ol></li>
+<li>The OpenIntro textbook on statistics includes a data set on body dimensions.
+<ol style="list-style-type: lower-alpha">
+<li><p>Load the file using</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Body &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;http://www.openintro.org/stat/data/bdims.csv&#39;</span>)</code></pre></div></li>
+<li>The column sex is coded as a 1 if the individual is male and 0 if female. This is a non-intuitive labeling system. Create a new column <code>sex.MF</code> that uses labels Male and Female.</li>
+<li><p>The columns wgt and hgt measure weight and height in kilograms and centimeters (respectively). Use these to calculate the Body Mass Index (BMI) for each individual where <span class="math display">\[BMI=\frac{Weight\,(kg)}{\left[Height\,(m)\right]^{2}}\]</span></p></li>
+<li><p>Double check that your calculated BMI column is correct by examining the summary statistics of the column. BMI values should be between 18 to 40 or so. Did you make an error in your calculation?</p></li>
+<li><p>The function <code>cut</code> takes a vector of continuous numerical data and creates a factor based on your give cut-points.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define a continuous vector to convert to a factor</span>
+x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
+
+<span class="co"># divide range of x into three groups of equal length</span>
+<span class="kw">cut</span>(x, <span class="dt">breaks=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>##  [1] (0.991,4] (0.991,4] (0.991,4] (0.991,4] (4,7]     (4,7]     (4,7]    
+##  [8] (7,10]    (7,10]    (7,10]   
+## Levels: (0.991,4] (4,7] (7,10]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># divide x into four groups, where I specify all 5 break points </span>
+<span class="kw">cut</span>(x, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">2.5</span>, <span class="fl">5.0</span>, <span class="fl">7.5</span>, <span class="dv">10</span>))</code></pre></div>
+<pre><code>##  [1] (0,2.5]  (0,2.5]  (2.5,5]  (2.5,5]  (2.5,5]  (5,7.5]  (5,7.5] 
+##  [8] (7.5,10] (7.5,10] (7.5,10]
+## Levels: (0,2.5] (2.5,5] (5,7.5] (7.5,10]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># (0,2.5] (2.5,5] means 2.5 is included in first group</span>
+<span class="co"># right=FALSE changes this to make 2.5 included in the second  </span>
+
+<span class="co"># divide x into 3 groups, but give them a nicer</span>
+<span class="co"># set of group names</span>
+<span class="kw">cut</span>(x, <span class="dt">breaks=</span><span class="dv">3</span>, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;Low&#39;</span>,<span class="st">&#39;Medium&#39;</span>,<span class="st">&#39;High&#39;</span>))</code></pre></div>
+<pre><code>##  [1] Low    Low    Low    Low    Medium Medium Medium High   High   High  
+## Levels: Low Medium High</code></pre>
+<p>Create a new column of in the data frame that divides the age into decades (10-19, 20-29, 30-39, etc). Notice the oldest person in the study is 67.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Body &lt;-<span class="st"> </span>Body %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>( <span class="dt">Age.Grp =</span> <span class="kw">cut</span>(age,
+                        <span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">70</span>),
+                        <span class="dt">right=</span><span class="ot">FALSE</span>))</code></pre></div></li>
+<li><p>Find the average BMI for each Sex and Age group.</p></li>
+</ol></li>
+</ol>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="6-matrices-data-frames-and-lists.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/dereksonderegger/STA_570L_Book/raw/master/07_DataManipulation.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

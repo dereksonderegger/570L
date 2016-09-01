@@ -75,6 +75,8 @@ boxplot(y ~ group)
 
 When calling boxplot() the main argument is a formula that describes a relationship between two variables. Formulas in R are always in the format `y.variable ~ x.variable` where I think of this as saying my y-variable is a function of the x-variable.
 
+You can get the boxplot to separate on more than one variable by using `y.variable ~ x1.variable + x2.variable`.
+
 ### Scatterplots
 
 Scatterplots are a way to explore the relationship between two continuous variables.
@@ -125,18 +127,18 @@ plot(NA, NA, xlim=c(0,2), ylim=c(0,1), type='n',
 
 Adding points to a graph is done by the function `points(x, y)` which takes arguments x and y which are numerical vectors of equal length. Arguments that affect the display of points are given below. 
 
-* `pch` - point character. This can either be a single character or an integer code for one of a set of graphics symbols.
+* `pch` - point character. This can either be a single character or an integer code for one of a set of graphics symbols. Unfortunately the integer codes start at 19. For a description of which code maps to what character, see the help documention `?points`.
 
 * `col` - Color of point. This can be a character string or an integer code. The default is black which is also #1. #2 is red and #3 is green.
 
 * `lwd` - Line width for drawing the symbols
 
 ```{r}
-plot(NA, NA, xlim=c(0,2), ylim=c(0,1), type='n', 
+plot(x=c(0,2),y=c(0,1), #type='n', 
 	xlab='X Label', ylab='Y Label', main='Main Title')
 points( 0, 0 )            # open circle
 points(.25, .25, pch=19)  # closed black dot
-points(.50, .50, pch=19, col='red')  # open red square
+points(.50, .50, pch=22, col='red')  # open red square
 points(1.0, 1.0, col=2, lwd=3)       # thick open red circle 
 points(c(1,1.5,2), c(0,.5,1), col=3) # green circles
 ```
@@ -170,7 +172,7 @@ The way that `abline()` is defined, it is very convenient to add the least-squar
 x <- seq(0,1, length.out=30)
 y <- 3 + 2*x + rnorm(30)
 plot(x,y)
-abline( coef(lm(y~x)) )
+abline( coef(lm(y~x)) )    # add the regression line to the plot
 ```
 
 The second way to add a line to a plot is using the `lines()` function which allows you to draw an arbitrary curve. It requires vectors of `x` and `y` values.
@@ -199,3 +201,35 @@ for(i in 1:101){
 contour(x,y,z, xlab='x', ylab='y', main='Example Contour Plot')
 ```
 
+## Exercises
+For this set of exercises, we'll use a dataset that contains information about the birthweight of infants and how it relates to the mother's characteristics. First we'll load the package the data lives in and update two factor variables to have more intelligent labels.
+```{r, warning=FALSE, message=FALSE}
+library(MASS)
+library(dplyr)
+birthwt <- birthwt %>% mutate(
+  race  = factor(race,  labels=c('White','Black','Other')),
+  smoke = factor(smoke, labels=c('No Smoke', 'Smoke')))
+```
+
+1. Create a histogram of the birthweights (The column is `bwt`). 
+
+2. Make a set of boxplots of `bwt` relative to the mothers `race`. 
+
+3. Modify the boxplot command so that the we include both `race` and `smoke` by using the formula `bwt~race+smoke`.
+
+4. Create a scatterplot of the baby's `bwt` relative to the mother's weight `lwt`.
+    a. First create the simple scatterplot using the `plot` command. You could using either of the following commands to do this.
+    ```{r, eval=FALSE}
+    plot( birthwt$lwt, birthwt$bwt )
+    plot( bwt ~ lwt, data=birthwt)
+    ```
+
+    b. Add the mothers race by adding `col=birthwt$race` or `col=race` argument to the plot command.
+
+    c. Similarly add the mothers smoking status to the plot by using the character type argument `pch=`. Unfortunately, we cannot just say `pch=smoke` because the factor has two levels (coded as 1 and 2), but we need to use point types that are 19 or above.  So I want these to be point type 21 (a filled circle) and point type 22 (a filled square).  So annoyingly I need to add 20 to the integer value of the `smoke` variable.
+    
+        ```{r, eval=FALSE}
+        plot( bwt ~ lwt, data=birthwt,
+              col=race,
+              pch=as.integer(smoke)+20)
+        ```
