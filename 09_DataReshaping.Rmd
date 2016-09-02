@@ -1,0 +1,66 @@
+# Data Reshaping
+
+Most of the time, our data is in the form of a data frame and we are interested in exploring the relationships. However most procedures in R expect the data to show up in a 'long' format where each row is an observation and each column is a covariate. In practice, the data is often not stored like that and the data comes to us with repeated observations included on a single row. This is often done as a memory saving technique or because there is some structure in the data that makes the 'wide' format attractive. As a result, we need a way to convert data from 'wide' to 'long' and vice-versa.
+
+## `tidyr`
+
+There is a common issue with obtaining data with many columns that you wish were organized as rows. For example, I might have data in a grade book that has several homework scores and I'd like to produce a nice graph that has assignment number on the x-axis and score on the y-axis. Unfortunately this is incredibly hard to do when the data is arranged in the following way:
+
+```{r}
+grade.book <- rbind(
+  data.frame(name='Alison',  HW.1=8, HW.2=5, HW.3=8),
+  data.frame(name='Brandon', HW.1=5, HW.2=3, HW.3=6),
+  data.frame(name='Charles', HW.1=9, HW.2=7, HW.3=9))
+grade.book
+
+```
+
+
+What we want to do is turn this data frame from a *wide* data frame into a *long* data frame. In MS Excel this is called pivoting. Essentially I'd like to create a data frame with three columns: `name`, `assignment`, and `score`. That is to say that each homework datum really has three pieces of information: who it came from, which homework it was, and what the score was. It doesn't conceptually matter if I store it as 3 columns or 3 rows so long as there is a way to identify how a student scored on a particular homework. So we want to reshape the HW1 to HW3 columns into two columns (assignment and score). 
+
+This package was built by the sample people that created dplyr and ggplot2 and there is a nice introduction at: [http://blog.rstudio.org/2014/07/22/introducing-tidyr/]
+
+### Verbs 
+As with the dplyr package, there are two main verbs to remember:
+
+1. `gather` - Gather multiple columns that are related into two columns that contain the original column name and the value. For example for columns HW1, HW2, HW3 we would gather them into two column HomeworkNumber and Score. In this case, we refer to HomeworkNumber as the key column and Score as the value column. So for any key:value pair you know everything you need.
+
+2. `spread` - This is the opposite of gather. This takes a key column (or columns) and a results column and forms a new column for each level of the key column(s).
+
+```{r}
+library(tidyr)
+# first we gather the score columns into columns we'll name Assesment and Score
+tidy.scores <- grade.book %>% 
+  gather( key=Assessement,  # What should I call the key column
+          value=Score,      # What should I call the values column
+          HW.1:HW.3         # which columns to apply this to
+          )
+tidy.scores
+```
+
+To spread the key:value pairs out into a matrix, we use the spread() command. 
+
+```{r}
+# score columns into columns we'll name Assesment and Score
+tidy.scores %>% spread( key=Assessement, value=Score )
+```
+
+
+One way to keep straight which is the key column is that the key is the category, while value is the numerical value or response. 
+
+## Exercises
+
+1. Suppose we are given information about the maximum daily temperature from a weather station in Flagstaff, AZ. The file is available at the GitHub site that this book is hosted on.
+
+    ```{r}
+    FlagTemp <-  read.csv(
+      'https://github.com/dereksonderegger/STA_570L_Book/raw/master/data-raw/FlagMaxTemp.csv',
+       header=TRUE, sep=',')
+    ```
+    This file is in a wide format, where each row represents a month and the columns X1, X2, ..., X31 represent the day of the month the observation was made. 
+
+    a. Convert data set to the long format where the data has only four columns: `Year`, `Month`, `Day`, `Tmax`.
+
+    b. Calculate the average monthly maximum temperature for each Month in the dataset (So there will be 360 mean maximum temperatures).
+
+    c. Convert the average month maximums back to a wide data format where each line represents a year and there are 12 columns of temperature data (one for each month) along with a column for the year.

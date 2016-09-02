@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Sufficient Introduction to R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
+  <meta name="generator" content="bookdown 0.1.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Sufficient Introduction to R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
+  <meta name="github-repo" content="dereksonderegger/STA_570L_Book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Sufficient Introduction to R" />
+  
+  <meta name="twitter:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
+  
+
+<meta name="author" content="Derek L. Sonderegger">
+
+<meta name="date" content="2016-09-01">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="10-graphing-using-ggplot2.html">
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Sufficient Introduction to R</a></li>
+<li><a href="https://dereksonderegger.github.io/570L/A_Sufficient_Introduction_to_R.pdf" target="blank">PDF version</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#r-as-a-simple-calculator"><i class="fa fa-check"></i><b>1.1</b> R as a simple calculator</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#assignment"><i class="fa fa-check"></i><b>1.2</b> Assignment</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#scripts-and-rmarkdown"><i class="fa fa-check"></i><b>1.3</b> Scripts and RMarkdown</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#r-scripts-.r-files"><i class="fa fa-check"></i><b>1.3.1</b> R Scripts (.R files)</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#r-markdown-.rmd-files"><i class="fa fa-check"></i><b>1.3.2</b> R Markdown (.Rmd files)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.4</b> Packages</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#exercises"><i class="fa fa-check"></i><b>1.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="2-vectors.html"><a href="2-vectors.html"><i class="fa fa-check"></i><b>2</b> Vectors</a><ul>
+<li class="chapter" data-level="2.1" data-path="2-vectors.html"><a href="2-vectors.html#accessing-vector-elements"><i class="fa fa-check"></i><b>2.1</b> Accessing Vector Elements</a></li>
+<li class="chapter" data-level="2.2" data-path="2-vectors.html"><a href="2-vectors.html#scalar-functions-applied-to-vectors"><i class="fa fa-check"></i><b>2.2</b> Scalar Functions Applied to Vectors</a></li>
+<li class="chapter" data-level="2.3" data-path="2-vectors.html"><a href="2-vectors.html#vector-algebra"><i class="fa fa-check"></i><b>2.3</b> Vector Algebra</a></li>
+<li class="chapter" data-level="2.4" data-path="2-vectors.html"><a href="2-vectors.html#commonly-used-vector-functions"><i class="fa fa-check"></i><b>2.4</b> Commonly Used Vector Functions</a></li>
+<li class="chapter" data-level="2.5" data-path="2-vectors.html"><a href="2-vectors.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html"><i class="fa fa-check"></i><b>3</b> Statistical Tables</a><ul>
+<li class="chapter" data-level="3.1" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#mosaicplotdist-function"><i class="fa fa-check"></i><b>3.1</b> <code>mosaic::plotDist()</code> function</a></li>
+<li class="chapter" data-level="3.2" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#base-r-functions"><i class="fa fa-check"></i><b>3.2</b> Base R functions</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#d-function"><i class="fa fa-check"></i><b>3.2.1</b> d-function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#p-function"><i class="fa fa-check"></i><b>3.2.2</b> p-function</a></li>
+<li class="chapter" data-level="3.2.3" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#q-function"><i class="fa fa-check"></i><b>3.2.3</b> <code>q</code>-function</a></li>
+<li class="chapter" data-level="3.2.4" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#r-function"><i class="fa fa-check"></i><b>3.2.4</b> r-function</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#exercises-2"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="4-data-types.html"><a href="4-data-types.html"><i class="fa fa-check"></i><b>4</b> Data Types</a><ul>
+<li class="chapter" data-level="4.1" data-path="4-data-types.html"><a href="4-data-types.html#integers-and-numerics"><i class="fa fa-check"></i><b>4.1</b> Integers and Numerics</a></li>
+<li class="chapter" data-level="4.2" data-path="4-data-types.html"><a href="4-data-types.html#character-strings"><i class="fa fa-check"></i><b>4.2</b> Character Strings</a></li>
+<li class="chapter" data-level="4.3" data-path="4-data-types.html"><a href="4-data-types.html#factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="4-data-types.html"><a href="4-data-types.html#logicals"><i class="fa fa-check"></i><b>4.4</b> Logicals</a></li>
+<li class="chapter" data-level="4.5" data-path="4-data-types.html"><a href="4-data-types.html#exercises-3"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html"><i class="fa fa-check"></i><b>5</b> Basic Graphing</a><ul>
+<li class="chapter" data-level="5.1" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#univariate-graphs"><i class="fa fa-check"></i><b>5.1</b> Univariate Graphs</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#histograms"><i class="fa fa-check"></i><b>5.1.1</b> Histograms</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#bivariate-plots"><i class="fa fa-check"></i><b>5.2</b> Bivariate Plots</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#boxplots"><i class="fa fa-check"></i><b>5.2.1</b> Boxplots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#scatterplots"><i class="fa fa-check"></i><b>5.2.2</b> Scatterplots</a></li>
+<li class="chapter" data-level="5.2.3" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#arbitrary-curves"><i class="fa fa-check"></i><b>5.2.3</b> Arbitrary Curves</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#advanced-tricks"><i class="fa fa-check"></i><b>5.3</b> Advanced tricks</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#blank-plots"><i class="fa fa-check"></i><b>5.3.1</b> Blank plots</a></li>
+<li class="chapter" data-level="5.3.2" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#points"><i class="fa fa-check"></i><b>5.3.2</b> Points</a></li>
+<li class="chapter" data-level="5.3.3" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#lines"><i class="fa fa-check"></i><b>5.3.3</b> Lines</a></li>
+<li class="chapter" data-level="5.3.4" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#contour-plots"><i class="fa fa-check"></i><b>5.3.4</b> Contour Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#exercises-4"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html"><i class="fa fa-check"></i><b>6</b> Matrices, Data Frames, and Lists</a><ul>
+<li class="chapter" data-level="6.1" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#matrices"><i class="fa fa-check"></i><b>6.1</b> Matrices</a></li>
+<li class="chapter" data-level="6.2" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#data-frames"><i class="fa fa-check"></i><b>6.2</b> Data Frames</a></li>
+<li class="chapter" data-level="6.3" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#lists"><i class="fa fa-check"></i><b>6.3</b> Lists</a></li>
+<li class="chapter" data-level="6.4" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#exercises-5"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="7-importing-data.html"><a href="7-importing-data.html"><i class="fa fa-check"></i><b>7</b> Importing Data</a><ul>
+<li class="chapter" data-level="7.1" data-path="7-importing-data.html"><a href="7-importing-data.html#comma-separated-data"><i class="fa fa-check"></i><b>7.1</b> Comma Separated Data</a></li>
+<li class="chapter" data-level="7.2" data-path="7-importing-data.html"><a href="7-importing-data.html#ms-excel"><i class="fa fa-check"></i><b>7.2</b> MS Excel</a></li>
+<li class="chapter" data-level="7.3" data-path="7-importing-data.html"><a href="7-importing-data.html#exercises-6"><i class="fa fa-check"></i><b>7.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="8-data-manipulation.html"><a href="8-data-manipulation.html"><i class="fa fa-check"></i><b>8</b> Data Manipulation</a><ul>
+<li class="chapter" data-level="8.1" data-path="8-data-manipulation.html"><a href="8-data-manipulation.html#classical-functions-for-summarizing-rows-and-columns"><i class="fa fa-check"></i><b>8.1</b> Classical functions for summarizing rows and columns</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="8-data-manipulation.html"><a href="8-data-manipulation.html#summary"><i class="fa fa-check"></i><b>8.1.1</b> <code>summary()</code></a></li>
+<li class="chapter" data-level="8.1.2" data-path="8-data-manipulation.html"><a href="8-data-manipulation.html#apply"><i class="fa fa-check"></i><b>8.1.2</b> <code>apply()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="8-data-manipulation.html"><a href="8-data-manipulation.html#package-dplyr"><i class="fa fa-check"></i><b>8.2</b> Package <code>dplyr</code></a><ul>
+<li class="chapter" data-level="8.2.1" data-path="8-data-manipulation.html"><a href="8-data-manipulation.html#verbs"><i class="fa fa-check"></i><b>8.2.1</b> Verbs</a></li>
+<li class="chapter" data-level="8.2.2" data-path="8-data-manipulation.html"><a href="8-data-manipulation.html#split-apply-combine"><i class="fa fa-check"></i><b>8.2.2</b> Split, apply, combine</a></li>
+<li class="chapter" data-level="8.2.3" data-path="8-data-manipulation.html"><a href="8-data-manipulation.html#chaining-commands-together"><i class="fa fa-check"></i><b>8.2.3</b> Chaining commands together</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="8-data-manipulation.html"><a href="8-data-manipulation.html#exercises-7"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html"><i class="fa fa-check"></i><b>9</b> Data Reshaping</a><ul>
+<li class="chapter" data-level="9.1" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html#tidyr"><i class="fa fa-check"></i><b>9.1</b> <code>tidyr</code></a><ul>
+<li class="chapter" data-level="9.1.1" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html#verbs-1"><i class="fa fa-check"></i><b>9.1.1</b> Verbs</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html#exercises-8"><i class="fa fa-check"></i><b>9.2</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html"><i class="fa fa-check"></i><b>10</b> Graphing using <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="10.1" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html#basic-graphs"><i class="fa fa-check"></i><b>10.1</b> Basic Graphs</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html#scatterplots-1"><i class="fa fa-check"></i><b>10.1.1</b> Scatterplots</a></li>
+<li class="chapter" data-level="10.1.2" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html#bar-charts"><i class="fa fa-check"></i><b>10.1.2</b> Bar Charts</a></li>
+<li class="chapter" data-level="10.1.3" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>10.1.3</b> Box Plots</a></li>
+<li class="chapter" data-level="10.1.4" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html#geometries-and-layers"><i class="fa fa-check"></i><b>10.1.4</b> Geometries and Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html#getting-fancy"><i class="fa fa-check"></i><b>10.2</b> Getting Fancy</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html#bar-plot"><i class="fa fa-check"></i><b>10.2.1</b> Bar Plot</a></li>
+<li class="chapter" data-level="10.2.2" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html#histograms-1"><i class="fa fa-check"></i><b>10.2.2</b> Histograms</a></li>
+<li class="chapter" data-level="10.2.3" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html#adjusting-labels"><i class="fa fa-check"></i><b>10.2.3</b> Adjusting labels</a></li>
+<li class="chapter" data-level="10.2.4" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html#plotting-distributions"><i class="fa fa-check"></i><b>10.2.4</b> Plotting distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html#exercises-9"><i class="fa fa-check"></i><b>10.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="11-more-ggplot2.html"><a href="11-more-ggplot2.html"><i class="fa fa-check"></i><b>11</b> More <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="11.1" data-path="11-more-ggplot2.html"><a href="11-more-ggplot2.html#faceting"><i class="fa fa-check"></i><b>11.1</b> Faceting</a></li>
+<li class="chapter" data-level="11.2" data-path="11-more-ggplot2.html"><a href="11-more-ggplot2.html#modifying-scales"><i class="fa fa-check"></i><b>11.2</b> Modifying Scales</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="11-more-ggplot2.html"><a href="11-more-ggplot2.html#log-scales"><i class="fa fa-check"></i><b>11.2.1</b> Log scales</a></li>
+<li class="chapter" data-level="11.2.2" data-path="11-more-ggplot2.html"><a href="11-more-ggplot2.html#arbitrary-transformations"><i class="fa fa-check"></i><b>11.2.2</b> Arbitrary transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="11-more-ggplot2.html"><a href="11-more-ggplot2.html#multi-plot"><i class="fa fa-check"></i><b>11.3</b> Multi-plot</a></li>
+<li class="chapter" data-level="11.4" data-path="11-more-ggplot2.html"><a href="11-more-ggplot2.html#themes"><i class="fa fa-check"></i><b>11.4</b> Themes</a></li>
+<li class="chapter" data-level="11.5" data-path="11-more-ggplot2.html"><a href="11-more-ggplot2.html#exercises-10"><i class="fa fa-check"></i><b>11.5</b> Exercises</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Sufficient Introduction to R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="more-ggplot2" class="section level1">
+<h1><span class="header-section-number">Chapter 11</span> More <code>ggplot2</code></h1>
+<div id="faceting" class="section level2">
+<h2><span class="header-section-number">11.1</span> Faceting</h2>
+<p>The goal with faceting is to make many panels of graphics where each panel represents the same relationship between variables, but something changes between each panel. For example using the <code>iris</code> dataset we could look at the relationship between <code>Sepal.Length</code> and <code>Petal.Length</code> either with all the data in one graph, or one panel per species.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Sepal.Width)) +
+<span class="st">  </span><span class="kw">geom_point</span>() +
+<span class="st">  </span><span class="kw">facet_grid</span>( . ~<span class="st"> </span>Species )</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-161-1.png" width="672" /></p>
+<p>The line <code>facet_grid( formula )</code> tells <code>ggplot2</code> to make panels, and the formula tells how to orient the panels. Recall that a formula is always in the order <code>y ~ x</code> and because I want the species to change as we go across the page, but don’t have anything I want to change vertically we use <code>. ~ Species</code> to represent that. If we had wanted three graphs stacked then we could use <code>Species ~ .</code>.</p>
+<p>For a second example, we look at a dataset that examines the amount a waiter was tipped by 244 parties. Covariates that were measured include the day of the week, size of the party, total amount of the bill, amount tipped, whether there were smokers in the group and the gender of the person paying the bill</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reshape) <span class="co"># for the dataset &#39;tips&#39;</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;reshape&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     expand</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     rename</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(tips)
+<span class="kw">head</span>(tips)</code></pre></div>
+<pre><code>##   total_bill  tip    sex smoker day   time size
+## 1      16.99 1.01 Female     No Sun Dinner    2
+## 2      10.34 1.66   Male     No Sun Dinner    3
+## 3      21.01 3.50   Male     No Sun Dinner    3
+## 4      23.68 3.31   Male     No Sun Dinner    2
+## 5      24.59 3.61 Female     No Sun Dinner    4
+## 6      25.29 4.71   Male     No Sun Dinner    4</code></pre>
+<p>It is easy to look at the relationship between the size of the bill and the percent tipped.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tips, <span class="kw">aes</span>(<span class="dt">x =</span> total_bill, <span class="dt">y =</span> tip /<span class="st"> </span>total_bill )) +
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-163-1.png" width="672" /></p>
+<p>Next we ask if there is a difference in tipping percent based on gender or day of the week by plotting this relationship for each combination of gender and day.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tips, <span class="kw">aes</span>(<span class="dt">x =</span> total_bill, <span class="dt">y =</span> tip /<span class="st"> </span>total_bill )) +
+<span class="st">  </span><span class="kw">geom_point</span>() +
+<span class="st">  </span><span class="kw">facet_grid</span>( sex ~<span class="st"> </span>day )</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-164-1.png" width="672" /></p>
+<p>Sometimes we want multiple rows and columns of facets, but there is only one categorical variable with many levels. In that case we use facet_wrap which takes a one-sided formula.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tips, <span class="kw">aes</span>(<span class="dt">x =</span> total_bill, <span class="dt">y =</span> tip /<span class="st"> </span>total_bill )) +
+<span class="st">  </span><span class="kw">geom_point</span>() +
+<span class="st">  </span><span class="kw">facet_wrap</span>( ~<span class="st"> </span>day )</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-165-1.png" width="672" /></p>
+<p>Finally we can allow the x and y scales to vary between the panels by setting “free”, “free_x”, or “free_y”. In the following code, the y-axis scale changes between the gender groups.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tips, <span class="kw">aes</span>(<span class="dt">x =</span> total_bill, <span class="dt">y =</span> tip /<span class="st"> </span>total_bill )) +
+<span class="st">  </span><span class="kw">geom_point</span>() +
+<span class="st">  </span><span class="kw">facet_grid</span>( sex ~<span class="st"> </span>day, <span class="dt">scales=</span><span class="st">&quot;free_y&quot;</span> )</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-166-1.png" width="672" /></p>
+</div>
+<div id="modifying-scales" class="section level2">
+<h2><span class="header-section-number">11.2</span> Modifying Scales</h2>
+<p>Often it is useful to modify the scales that we have on the x or y axis. In particular we might want to display some modified version of a variable.</p>
+<div id="log-scales" class="section level3">
+<h3><span class="header-section-number">11.2.1</span> Log scales</h3>
+<p>For this example, we’ll use the <code>ACS</code> data from the <code>Lock5Data</code> package that has information about <code>Income</code> (in thousands of dollars) and <code>Age</code>. Lets make a scatterplot of the data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Lock5Data)
+<span class="kw">data</span>(ACS)
+<span class="kw">ggplot</span>(ACS, <span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span>Income)) +
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<pre><code>## Warning: Removed 175 rows containing missing values (geom_point).</code></pre>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-167-1.png" width="672" /></p>
+<p>This is an ugly graph because six observations dominate the graph and the bulk of the data (income &lt; $100,000) is squished together. One solution is to plot income on the <span class="math inline">\(\log_{10}\)</span> scale. There are a couple ways to do this. The simplest way is to just do a transformation on the column of data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ACS, <span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span><span class="kw">log10</span>(Income))) +
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<pre><code>## Warning: Removed 175 rows containing missing values (geom_point).</code></pre>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-168-1.png" width="672" /></p>
+<p>This works quite well to see the trend of peak earning happening in a persons 40s and 50s, but the scale is difficult for me to understand (what does <span class="math inline">\(\log_{10}\left(X\right)=1\)</span> mean here? Oh right, that is <span class="math inline">\(10^{1}=X\)</span> so that is the $10,000 line). It would be really nice if we could do the transformation but have the labels on the original scale.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ACS, <span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span>Income)) +
+<span class="st">  </span><span class="kw">geom_point</span>() +
+<span class="st">  </span><span class="kw">scale_y_log10</span>()</code></pre></div>
+<pre><code>## Warning: Removed 175 rows containing missing values (geom_point).</code></pre>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-169-1.png" width="672" /></p>
+<p>Now the y-axis is in the original units (thousands of dollars) but obnoxiously we only have two labeled values. Lets define the major break points (the white lines that have numerical labels) to be at 1,10,100 thousand dollars in salary. Likewise we will tell <code>ggplot2</code> to set minor break points at 1 to 10 thousand dollars (with steps of 1 thousand dollars) and then 10 thousand to 100 thousand but with step sizes of 10 thousand, and finally minor breaks above 100 thousand being in steps of 100 thousand.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ACS, <span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span>Income)) +
+<span class="st">  </span><span class="kw">geom_point</span>() +
+<span class="st">  </span><span class="kw">scale_y_log10</span>(<span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">100</span>),
+                <span class="dt">minor=</span><span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">10</span>,
+                        <span class="kw">seq</span>( <span class="dv">10</span>, <span class="dv">100</span>,<span class="dt">by=</span><span class="dv">10</span> ),
+                        <span class="kw">seq</span>(<span class="dv">100</span>,<span class="dv">1000</span>,<span class="dt">by=</span><span class="dv">100</span>))) +
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&#39;Income (1000s of dollars)&#39;</span>)</code></pre></div>
+<pre><code>## Warning: Removed 175 rows containing missing values (geom_point).</code></pre>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-170-1.png" width="672" /></p>
+</div>
+<div id="arbitrary-transformations" class="section level3">
+<h3><span class="header-section-number">11.2.2</span> Arbitrary transformations</h3>
+<p>The function <code>scale_y_log10()</code> is actually just a wrapper to the <code>scale_y_continuous()</code> function with a predefined transformation. If you want to rescale function using some other function (say the inverse, or square-root, or <span class="math inline">\(\log_{2}\)</span> ) you can use the <code>scale_y_continuous()</code> function (for the x-axis there is a corresponding <code>scale_x_????</code>) family of functions. There is a whole list of transformations built into ggplot2 that work (transformations include “asn”, “atanh”, “boxcox”, “exp”, “identity”, “log”, “log10”, “log1p”, “log2”, “logit”, “probability”, “probit”, “reciprocal”, “reverse” and “sqrt”). If you need a custom function, that can be done by defining a new transformation via the trans_new() function.</p>
+</div>
+</div>
+<div id="multi-plot" class="section level2">
+<h2><span class="header-section-number">11.3</span> Multi-plot</h2>
+<p>There are times that you must create a graphic that is composed of several sub-graphs and think of it as one object. Unfortunately the mechanism that <code>ggplot2</code> gives for this is cumbersome and it is usually easier to use a function called <code>multiplot</code>. The explaination I’ve heard about why this function wasn’t included in ggplot2 is that you should think about faceting first and only resort to <code>multiplot</code> if you have to. The function <code>multiplot</code> is included in a couple of packages, e.g. <code>Rmisc</code>, but I always just google ‘ggplot2 multiplot’ to get to the webpage [<a href="http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/" class="uri">http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/</a>]</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This example uses the ChickWeight dataset, which comes with ggplot2 </span>
+<span class="co"># First plot </span>
+p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x=</span>Time, <span class="dt">y=</span>weight, <span class="dt">colour=</span>Diet, <span class="dt">group=</span>Chick)) +
+<span class="st">    </span><span class="kw">geom_line</span>() +
+<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Growth curve for individual chicks&quot;</span>)
+
+<span class="co"># Second plot</span>
+p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x=</span>Time, <span class="dt">y=</span>weight, <span class="dt">colour=</span>Diet)) +
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span>.<span class="dv">3</span>) +
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">alpha=</span>.<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">1</span>) +
+<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Fitted growth curve per diet&quot;</span>)
+
+<span class="co"># Third plot </span>
+p3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">subset</span>(ChickWeight, Time==<span class="dv">21</span>), <span class="kw">aes</span>(<span class="dt">x=</span>weight, <span class="dt">colour=</span>Diet)) +
+<span class="st">    </span><span class="kw">geom_density</span>() +
+<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Final weight, by diet&quot;</span>)</code></pre></div>
+<p>Suppose that I want to layout these three plots in an arrangement like so:</p>
+<p><span class="math display">\[\textrm{layout}=\left[\begin{array}{ccc}
+1 &amp; 2 &amp; 2\\
+1 &amp; 2 &amp; 2\\
+1 &amp; 3 &amp; 3
+\end{array}\right]\]</span></p>
+<p>where plot 1 is a tall, skinny plot on the left, plot 2 is more squarish, and plot 3 is short on the bottom right. This sort of table arrangement can be quite flexible if you have many rows and many columns, but generally we can get by with something with only a couple rows/columns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Rmisc)  <span class="co"># for the multiplot function</span></code></pre></div>
+<pre><code>## Loading required package: plyr</code></pre>
+<pre><code>## -------------------------------------------------------------------------</code></pre>
+<pre><code>## You have loaded plyr after dplyr - this is likely to cause problems.
+## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+## library(plyr); library(dplyr)</code></pre>
+<pre><code>## -------------------------------------------------------------------------</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:reshape&#39;:
+## 
+##     rename, round_any</code></pre>
+<pre><code>## The following object is masked from &#39;package:mosaic&#39;:
+## 
+##     count</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize</code></pre>
+<pre><code>## The following object is masked from &#39;package:faraway&#39;:
+## 
+##     ozone</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.layout =<span class="st"> </span><span class="kw">cbind</span>( <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>) )
+<span class="kw">multiplot</span>( p1, p2, p3, <span class="dt">layout=</span>my.layout)</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-172-1.png" width="672" /></p>
+</div>
+<div id="themes" class="section level2">
+<h2><span class="header-section-number">11.4</span> Themes</h2>
+<p>A great deal of thought went into the default settings of ggplot2 to maximize the visual clarity of the graphs. However some people believe the defaults for many of the tiny graphical settings are poor. You can modify each of these but it is often easier to modify them all at once by selecting a different theme. The ggplot2 package includes several, <code>theme_bw()</code>, and <code>theme_minimal()</code> being the two that I use most often. Below are a few to examples:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multiplot</span>( p1 +<span class="st"> </span><span class="kw">theme_bw</span>(),          <span class="co"># Black and white</span>
+           p1 +<span class="st"> </span><span class="kw">theme_minimal</span>(),   
+           p1 +<span class="st"> </span><span class="kw">theme_dark</span>(),        
+           p1 +<span class="st"> </span><span class="kw">theme_light</span>(),
+    <span class="dt">cols=</span><span class="dv">2</span> )                         <span class="co"># two columns of graphs   </span></code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-173-1.png" width="672" /></p>
+<p>There are more themes in the package <code>ggthemes</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggthemes)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;ggthemes&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:mosaic&#39;:
+## 
+##     theme_map</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multiplot</span>( p1 +<span class="st"> </span><span class="kw">theme_stata</span>(),          <span class="co"># Black and white</span>
+           p1 +<span class="st"> </span><span class="kw">theme_economist</span>(),   
+           p1 +<span class="st"> </span><span class="kw">theme_fivethirtyeight</span>(),        
+           p1 +<span class="st"> </span><span class="kw">theme_excel</span>(),
+    <span class="dt">cols=</span><span class="dv">2</span> )                         <span class="co"># two columns of graphs     </span></code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-174-1.png" width="672" /></p>
+<p>Almost everything you want to modify can be modified within the theme and you should check out the <code>ggplot2</code> documentation for more information and examples of how to modify different elements. [<a href="http://docs.ggplot2.org/current/theme.html" class="uri">http://docs.ggplot2.org/current/theme.html</a>]</p>
+</div>
+<div id="exercises-10" class="section level2">
+<h2><span class="header-section-number">11.5</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li><p>We’ll next make some density plots that relate several factors towards the birthweight of a child.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Load the <code>MASS</code> library, which includes the dataset <code>birthwt</code> which contains information about 189 babies and their mothers.</li>
+<li><p>Add better labels to the race and smoke variables using the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)
+<span class="kw">library</span>(dplyr)
+birthwt &lt;-<span class="st"> </span>birthwt %&gt;%<span class="st"> </span><span class="kw">mutate</span>(
+  <span class="dt">race  =</span> <span class="kw">factor</span>(race,  <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;White&#39;</span>,<span class="st">&#39;Black&#39;</span>,<span class="st">&#39;Other&#39;</span>)),
+  <span class="dt">smoke =</span> <span class="kw">factor</span>(smoke, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;No Smoke&#39;</span>, <span class="st">&#39;Smoke&#39;</span>)))</code></pre></div></li>
+<li>Graph a histogram of the birthweights bwt using <code>ggplot(birthwt, aes(x=bwt)) + geom_histogram()</code>.</li>
+<li>Make separate graphs that denote whether a mother smoked during pregnancy using the facet_grid() command.</li>
+<li><p>Perhaps race matters in relation to smoking. Make our grid of graphs vary with smoking status changing vertically, and race changing horizontally (that is the formula in <code>facet_grid()</code> should have smoking be the y variable and race as the x).</p></li>
+<li><p>Remove race from the facet grid, (so go back to the graph you had in part d). I’d like to next add an estimated density line to the graphs, but to do that, I need to first change the y-axis to be density (instead of counts), which we do by using <code>aes(y=..density..)</code> in the ggplot() aesthetics command.</p></li>
+<li><p>Next we can add the estimated smooth density using the geom_density()</p></li>
+<li><p>To really make this look nice, lets change the fill color of the histograms to be something less dark, lets use fill=‘cornsilk’ and color=‘grey60’. To play with different colors that have names, check out the following: [<a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf" class="uri">http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf</a>].</p></li>
+<li><p>Change the order in which the histogram and the density line are added to the plot. Does it matter and which do you prefer?</p></li>
+</ol></li>
+<li><p>Load the dataset <code>ChickWeight</code> and remind yourself what the data was using ?ChickWeight. Using <code>facet_wrap()</code>, produce a scatter plot of weight vs age for each chick. Use color to distinguish the four different <code>Diet</code> treatments.</p></li>
+</ol>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="10-graphing-using-ggplot2.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/dereksonderegger/STA_570L_Book/raw/master/11_ggplot2_lab2.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
