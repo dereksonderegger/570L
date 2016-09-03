@@ -1,5 +1,18 @@
 # Graphing using `ggplot2`
 
+```{r, echo=FALSE}
+# Unattach any packages that happen to already be loaded. In general this is unecessary
+# but is important for the creation of the book to not have package namespaces
+# fighting unexpectedly.
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
 There are three major “systems” of making graphs in R. The basic plotting commands in R are quite effective but the commands do not have a way of being combined in easy ways. Lattice graphics (which the `mosaic` package uses) makes it possible to create some quite complicated graphs but it is very difficult to do make non-standard graphs. The last package, `ggplot2` tries to not anticipate what the user wants to do, but rather provide the mechanisms for pulling together different graphical concepts and the user gets to decide elements to combine. 
 
 To make the most of ggplot2 it is important to wrap your mind around “The Grammar of Graphics”. The act of building a graph can be broken down into three steps. 
@@ -20,7 +33,7 @@ These notes are sufficient for graphing simple graphing, but are not intended to
 
 To start with, we'll make a very simple scatterplot using the `iris` dataset that will make a scatterplot of `Sepal.Length` versus `Petal.Length`, which are two columns in my dataset.
 
-```{r, fig.height=3}
+```{r, fig.height=3, warning=FALSE, message=FALSE}
 library(ggplot2)
 ggplot( data=iris, aes(x=Sepal.Length, y=Petal.Length) ) +  
 	geom_point(  )
@@ -299,6 +312,7 @@ The key trick here was to set the `ymin` value to always be zero.
     f) The color of the ribbon fill is ugly. Use google to find a list of named colors available to `ggplot2`. For example, I googled “ggplot2 named colors” and found the following link: [http://sape.inf.usi.ch/quick-reference/ggplot2/colour]. Choose a color for the fill that is pleasing to you.
 
     g) Add labels for the x-axis and y-axis that are appropriate along with a main title.
+
 
 3. The R package `babynames` contains a single dataset that lists the number of children registered with Social Security with a particular name along with the proportion out of all children born in a given year. The dataset covers the from 1880 to the present. We want to plot the relative popularity of the names 'Elise' and 'Casey'.
 

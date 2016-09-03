@@ -1,5 +1,18 @@
 # Basic Graphing
 
+```{r, echo=FALSE}
+# Unattach any packages that happen to already be loaded. In general this is unecessary
+# but is important for the creation of the book to not have package namespaces
+# fighting unexpectedly.
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
 One of the most important things we can do in exploratory statistics is to just look at the data in graphical form so that we can more easily see trends. Most of the graph functions have similar options for setting the main title, x-label, y-labels, etc.
 
 ## Univariate Graphs
@@ -233,3 +246,5 @@ birthwt <- birthwt %>% mutate(
               col=race,
               pch=as.integer(smoke)+20)
         ```
+
+

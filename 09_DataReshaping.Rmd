@@ -1,5 +1,18 @@
 # Data Reshaping
 
+```{r, echo=FALSE}
+# Unattach any packages that happen to already be loaded. In general this is unecessary
+# but is important for the creation of the book to not have package namespaces
+# fighting unexpectedly.
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
 Most of the time, our data is in the form of a data frame and we are interested in exploring the relationships. However most procedures in R expect the data to show up in a 'long' format where each row is an observation and each column is a covariate. In practice, the data is often not stored like that and the data comes to us with repeated observations included on a single row. This is often done as a memory saving technique or because there is some structure in the data that makes the 'wide' format attractive. As a result, we need a way to convert data from 'wide' to 'long' and vice-versa.
 
 ## `tidyr`
@@ -64,3 +77,18 @@ One way to keep straight which is the key column is that the key is the category
     b. Calculate the average monthly maximum temperature for each Month in the dataset (So there will be 360 mean maximum temperatures).
 
     c. Convert the average month maximums back to a wide data format where each line represents a year and there are 12 columns of temperature data (one for each month) along with a column for the year.
+    
+2. A common task is to take a set of data that has multiple categorical variables and create a table of the number of cases for each combination. An introductory statistics textbook contains a dataset summarizing student surveys from several sections of an intro class. The two variables of interest for us are `Gender` and `Year` which are the students gender and year in college.
+    a. Download the dataset using the following:
+        ```{r, eval=FALSE}
+        Survey <- read.csv('http://www.lock5stat.com/datasets/StudentSurvey.csv')
+        ```
+    b. Using some combination of `dplyr` functions, produce a data set with eight rows that contains the number of responses for each gender:year combination.
+    c. Using `tidyr` commands, produce a table of the number of responses in the following form:
+    
+           Gender    |  First Year  |  Sophmore  |  Junior   |  Senior
+        -------------|--------------|------------|-----------|------------
+          **Female** |              |            |           |            
+          **Male**   |              |            |           |            
+    
+    

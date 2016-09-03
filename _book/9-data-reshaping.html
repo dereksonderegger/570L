@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-09-01">
+<meta name="date" content="2016-09-02">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -291,15 +291,45 @@ tidy.scores %&gt;%<span class="st"> </span><span class="kw">spread</span>( <span
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FlagTemp &lt;-<span class="st">  </span><span class="kw">read.csv</span>(
   <span class="st">&#39;https://github.com/dereksonderegger/STA_570L_Book/raw/master/data-raw/FlagMaxTemp.csv&#39;</span>,
    <span class="dt">header=</span><span class="ot">TRUE</span>, <span class="dt">sep=</span><span class="st">&#39;,&#39;</span>)</code></pre></div>
-<pre><code>## Warning in read.table(file = file, header = header, sep = sep, quote
-## = quote, : incomplete final line found by readTableHeader on &#39;https://
-## github.com/dereksonderegger/STA_570L_Book/raw/master/data-raw/
-## FlagMaxTemp.csv&#39;</code></pre>
 <p>This file is in a wide format, where each row represents a month and the columns X1, X2, …, X31 represent the day of the month the observation was made.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Convert data set to the long format where the data has only four columns: <code>Year</code>, <code>Month</code>, <code>Day</code>, <code>Tmax</code>.</p></li>
 <li><p>Calculate the average monthly maximum temperature for each Month in the dataset (So there will be 360 mean maximum temperatures).</p></li>
 <li><p>Convert the average month maximums back to a wide data format where each line represents a year and there are 12 columns of temperature data (one for each month) along with a column for the year.</p></li>
+</ol></li>
+<li>A common task is to take a set of data that has multiple categorical variables and create a table of the number of cases for each combination. An introductory statistics textbook contains a dataset summarizing student surveys from several sections of an intro class. The two variables of interest for us are <code>Gender</code> and <code>Year</code> which are the students gender and year in college.
+<ol style="list-style-type: lower-alpha">
+<li><p>Download the dataset using the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Survey &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;http://www.lock5stat.com/datasets/StudentSurvey.csv&#39;</span>)</code></pre></div></li>
+<li>Using some combination of <code>dplyr</code> functions, produce a data set with eight rows that contains the number of responses for each gender:year combination.</li>
+<li><p>Using <code>tidyr</code> commands, produce a table of the number of responses in the following form:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Gender</th>
+<th>First Year</th>
+<th>Sophmore</th>
+<th>Junior</th>
+<th>Senior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Female</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Male</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></li>
 </ol></li>
 </ol>
 

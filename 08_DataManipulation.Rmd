@@ -1,5 +1,19 @@
 # Data Manipulation
 
+```{r, echo=FALSE}
+# Unattach any packages that happen to already be loaded. In general this is unecessary
+# but is important for the creation of the book to not have package namespaces
+# fighting unexpectedly.
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
 Most of the time, our data is in the form of a data frame and we are interested in exploring the relationships. This chapter explores how to manipulate data frames and methods. 
 
 ## Classical functions for summarizing rows and columns
@@ -135,15 +149,15 @@ grades
 
 I could select the columns Exam columns by hand, or by using an extension of the `:` operator
 ```{r}
-grades %>% dplyr::select( Exam1, Exam2 )   # Exam1 and Exam2
-grades %>% dplyr::select( Exam1:Final )    # Columns Exam1 through Final
-grades %>% dplyr::select( -Exam1 )         # Negative indexing by name works
-grades %>% dplyr::select( 1:2 )            # Can select column by column position
+grades %>% select( Exam1, Exam2 )   # Exam1 and Exam2
+grades %>% select( Exam1:Final )    # Columns Exam1 through Final
+grades %>% select( -Exam1 )         # Negative indexing by name works
+grades %>% select( 1:2 )            # Can select column by column position
 ```
 
 The `select()` command has a few other tricks. There are functional calls that describe the columns you wish to select that take advantage of pattern matching. I generally can get by with `starts_with()`, `ends_with()`, and `contains()`, but there is a final operator `matches()` that takes a regular expression.
 ```{r}
-grades %>% dplyr::select( starts_with('Exam') )   # Exam1 and Exam2
+grades %>% select( starts_with('Exam') )   # Exam1 and Exam2
 ```
 
 
@@ -237,7 +251,7 @@ If we want to apply the same statistic to each column, we use the `summarise_eac
 ```{r}
 # calculate the mean and stddev of each column - Cannot do this to Names!
 grades %>% 
-  dplyr::select( Exam1:Final ) %>%
+  select( Exam1:Final ) %>%
   summarise_each( funs(mean, sd) )
 ```
 
@@ -310,19 +324,22 @@ arrange(
 ```
 This is very difficult to read because you have to read the code *from the inside out*.
 
-Other (and slightly more readable) way to complete our task is to save the intermediate value of each step:
+Another (and slightly more readable) way to complete our task is to save each intermediate step of our process and then use that in the next step:
 ```{r}
-# how should I group?
 temp.df0 <- race.results %>% group_by( gender)
 temp.df1 <- temp.df0 %>% mutate( place = rank(time) )
 temp.df2 <- temp.df1 %>% arrange( gender, place )
 ```
 
-It would be nice if I didn't have to save all these intermediate results because keeping track of temp1 and temp2 gets pretty annoying if I keep changing the order of how things or calculated or add/subtract steps. 
+It would be nice if I didn't have to save all these intermediate results because keeping track of temp1 and temp2 gets pretty annoying if I keep changing the order of how things or calculated or add/subtract steps. This is exactly what `%>%` does for me.
 
-The way this is typically handled in R is to to just nest one command inside the next. The same set of commands could be run as follows:<<>>=This is extremely hard to read because the commands are separated from the arguments (e.g. the arrange function call was at the top, but the columns to arrange by are on the last line). 
+```{r}
+race.results %>%
+  group_by( gender ) %>%
+  mutate( place = rank(time)) %>%
+  arrange( gender, place )
+```
 
-To get around this, the author of dplyr gives us an operator to combine these simple operations smoothly. The composition operation %>% takes the following A %>% f(B) and converts it to the statement f(A, B). This allows us to write the following code that does exactly what the above two code chunks did. <<>>=If I only wanted the top three finishers in each gender, we could simply add a filter command after the place column was calculated.<<>>=
 
 ## Exercises
 
@@ -373,3 +390,5 @@ To get around this, the author of dplyr gives us an operator to combine these si
         ```
 
     f) Find the average BMI for each Sex and Age group.
+    
+    

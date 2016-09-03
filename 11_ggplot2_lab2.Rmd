@@ -1,5 +1,17 @@
 # More `ggplot2` 
 
+```{r, echo=FALSE}
+# Unattach any packages that happen to already be loaded. In general this is unecessary
+# but is important for the creation of the book to not have package namespaces
+# fighting unexpectedly.
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
 
 ## Faceting
 
@@ -187,3 +199,6 @@ Almost everything you want to modify can be modified within the theme and you sh
     i) Change the order in which the histogram and the density line are added to the plot. Does it matter and which do you prefer?
 
 2. Load the dataset `ChickWeight` and remind yourself what the data was using ?ChickWeight. Using `facet_wrap()`, produce a scatter plot of weight vs age for each chick. Use color to distinguish the four different `Diet` treatments.
+
+
+

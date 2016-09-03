@@ -1,5 +1,19 @@
 # Data Types
 
+```{r, echo=FALSE}
+# Unattach any packages that happen to already be loaded. In general this is unecessary
+# but is important for the creation of the book to not have package namespaces
+# fighting unexpectedly.
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
 There are some basic data types that are commonly used. 
 
 1. Integers - These are the integer numbers $\left(\dots,-2,-1,0,1,2,\dots\right)$. To convert a numeric value to an integer you may use the function `as.integer()`.
@@ -205,3 +219,5 @@ FALSE | FALSE    # neither is true -> FALSE
     a. Define the vector `x <- c(-1, 5, 12)`
     b. Using the `&`, come up with a comparison that will test if the value of `x` is in the interval $[a,b]$. (We want the test to return `TRUE` if $a\le x\le b$). That is, test if `a` is less than `x` and if `x` is less than `b`. Confirm that for x defined above you get the correct vector of logical values. 
     c. Similarly make a comparison that tests if `x` is outside the interval $[a,b]$ using the `|` operator. That is, test if `x < a` or `x > b`. I want the test to return TRUE is x is less than a or if x is greater than b. Confirm that for x defined above you get the correct vector of logical values. 
+    
+    

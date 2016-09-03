@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-09-01">
+<meta name="date" content="2016-09-02">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -283,14 +283,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>For example, to see the normal distribution with mean <span class="math inline">\(mu=10\)</span> and standard deviation <span class="math inline">\(\sigma=2\)</span>, we use</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mosaic)
 <span class="kw">plotDist</span>(<span class="st">&#39;norm&#39;</span>, <span class="dt">mean=</span><span class="dv">10</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 <p>This function works for discrete distributions as well.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotDist</span>(<span class="st">&#39;binom&#39;</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">3</span>)</code></pre></div>
 <pre><code>## Warning in FUN(X[[i]], ...): failed to assign NativeSymbolInfo for lhs
 ## since lhs is already defined in the &#39;lazyeval&#39; namespace</code></pre>
 <pre><code>## Warning in FUN(X[[i]], ...): failed to assign NativeSymbolInfo for rhs
 ## since rhs is already defined in the &#39;lazyeval&#39; namespace</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 </div>
 <div id="base-r-functions" class="section level2">
 <h2><span class="header-section-number">3.2</span> Base R functions</h2>
@@ -348,7 +348,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">2</span>)</code></pre></div>
 <pre><code>## [1] 0.6777995</code></pre>
 <p>For discrete distributions, you must be careful because R will give you the probability of less than or equal to 2. If you wanted less than two, you should use <code>dbinom(1,10,.2)</code>.</p>
-<p>The normal distribution works similarly. Suppose for <span class="math inline">\(Z\sim N\left(0,1\right)\)</span> and we wanted to know <span class="math inline">\(P\left(Z\le-1\right)\)</span>? <img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p>The normal distribution works similarly. Suppose for <span class="math inline">\(Z\sim N\left(0,1\right)\)</span> and we wanted to know <span class="math inline">\(P\left(Z\le-1\right)\)</span>? <img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 <p>The answer is easily found via <code>pnorm()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pnorm</span>(-<span class="dv">1</span>)</code></pre></div>
 <pre><code>## [1] 0.1586553</code></pre>
@@ -362,7 +362,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## 
 ##  P(X &lt;= -1) = P(Z &lt;= -1) = 0.1587
 ##  P(X &gt;  -1) = P(Z &gt;  -1) = 0.8413</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
 <pre><code>## [1] 0.1586553</code></pre>
 </div>
 <div id="q-function" class="section level3">
@@ -372,7 +372,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mosaic::<span class="kw">xqnorm</span>(<span class="fl">0.30</span>)   <span class="co"># Give me the value along with a pretty picture</span></code></pre></div>
 <pre><code>##  P(X &lt;= -0.524400512708041) = 0.3
 ##  P(X &gt;  -0.524400512708041) = 0.7</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 <pre><code>## [1] -0.5244005</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qnorm</span>(.<span class="dv">30</span>)             <span class="co"># No pretty picture, just the value</span></code></pre></div>
 <pre><code>## [1] -0.5244005</code></pre>
@@ -381,9 +381,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.4</span> r-function</h3>
 <p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 17.75671 21.10025 17.34195 22.50046 21.65562</code></pre>
+<pre><code>## [1] 18.34915 20.48785 18.75496 18.95764 20.09583</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1] 7 8 8 7</code></pre>
+<pre><code>## [1] 9 7 8 7</code></pre>
 </div>
 </div>
 <div id="exercises-2" class="section level2">
@@ -419,7 +419,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">20</span>, <span class="dt">min=</span><span class="dv">0</span>, <span class="dt">max=</span><span class="dv">1</span>)</code></pre></div>
 <p>Then produce a histogram of the sample using the function <code>hist()</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(x)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p></li>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p></li>
 <li><p>Generate a sample of 2000 from a normal distribution with <code>mean=10</code> and standard deviation <code>sd=2</code> using the <code>rnorm()</code> function. Create a histogram the the resulting sample.</p></li>
 </ol></li>
 </ol>

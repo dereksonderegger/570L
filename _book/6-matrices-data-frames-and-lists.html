@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-09-01">
+<meta name="date" content="2016-09-02">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -419,7 +419,7 @@ results &lt;-<span class="st"> </span><span class="kw">t.test</span>(x, <span cl
 ##   ..- attr(*, &quot;names&quot;)= chr &quot;mean&quot;
 ##  $ alternative: chr &quot;less&quot;
 ##  $ method     : chr &quot;One Sample t-test&quot;
-##  $ data.name  : chr &quot;c(5.1, 4.9, 5.6, 4.2, 4.8, 4.5, 5.3, 5.2)&quot;
+##  $ data.name  : chr &quot;x&quot;
 ##  - attr(*, &quot;class&quot;)= chr &quot;htest&quot;</code></pre>
 <p>We see that result is actually a list with 9 elements in it. To access the p-value we could use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results$p.value</code></pre></div>
@@ -429,7 +429,7 @@ results &lt;-<span class="st"> </span><span class="kw">t.test</span>(x, <span cl
 <pre><code>## 
 ##  One Sample t-test
 ## 
-## data:  c(5.1, 4.9, 5.6, 4.2, 4.8, 4.5, 5.3, 5.2)
+## data:  x
 ## t = -0.31399, df = 7, p-value = 0.3813
 ## alternative hypothesis: true mean is less than 5
 ## 95 percent confidence interval:

@@ -14,6 +14,19 @@ description: "These notes serve as an introduction to R, but certainly is not co
 
 # Introduction
 
+```{r, echo=FALSE}
+# Unattach any packages that happen to already be loaded. In general this is unecessary
+# but is important for the creation of the book to not have package namespaces
+# fighting unexpectedly.
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
 R is a open-source program that is commonly used in Statistics. It runs on almost every platform and is completely free and is available at [www.r-project.org](www.r-project.org). Most of the cutting-edge statistical research is first available on R. 
 
 R is a script based language, so there is no point and click interface. (Actually there are packages that attempt to provide a point and click interface, but they are still somewhat primitive.) While the initial learning curve will be steeper, understanding how to write scripts will be valuable because it leaves a clear description of what steps you performed in your data analysis. Typically you will want to write a script in a separate file and then run individual lines. The saves you from having to retype a bunch of commands and speeds up the debugging process.
@@ -161,10 +174,13 @@ data("babyfood")      # load the dataset into memory
 ```
 
 To get information about a package, you can use either of the following afer the library has been loaded:
-```{r}
+```{r, eval=FALSE}
 library(help='faraway')
 ```
 
+```{r,echo=FALSE}
+detach(package:faraway)
+```
 
 
 ## Exercises
@@ -179,3 +195,5 @@ Create an RMarkdown file that solves the following exercises.
     a) Install the package `Sleuth3` on your computer using RStudio. 
     b) Load the package using the `library()` command.
     c) Print out the dataset `case0101`
+
+

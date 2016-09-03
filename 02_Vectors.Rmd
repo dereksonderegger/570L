@@ -1,5 +1,19 @@
 # Vectors 
 
+```{r, echo=FALSE}
+# Unattach any packages that happen to already be loaded. In general this is unecessary
+# but is important for the creation of the book to not have package namespaces
+# fighting unexpectedly.
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
 R operates on vectors where we think of a vector as a collection of objects, usually numbers. The first thing we need to be able to do is define an arbitrary collection using the `c()` function^[The “c” stands for collection.].
 
 ```{r}
@@ -158,3 +172,16 @@ var(x)                  # Same thing using the built-in variance function
     a) Extract the 9th element of the letters vector.
     b) Extract the sub-vector that contains the 9th, 11th, and 19th elements.
     c) Extract the sub-vector that contains everything except the last two elements.
+    
+```{r, echo=FALSE}
+# Unattach any packages that we happen to load. In general this is unecessary
+# but is important for the create of the book to not have package namespaces
+# fighting unexpectedly.
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
