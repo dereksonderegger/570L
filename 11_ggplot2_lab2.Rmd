@@ -143,7 +143,7 @@ Suppose that I want to layout these three plots in an arrangement like so:
 \end{array}\right]\]
 
  where plot 1 is a tall, skinny plot on the left, plot 2 is more squarish, and plot 3 is short on the bottom right. This sort of table arrangement can be quite flexible if you have many rows and many columns, but generally we can get by with something with only a couple rows/columns.
-```{r, fig.height=4, warning=FALSE, messag=FALSE}
+```{r, fig.height=4, warning=FALSE, message=FALSE}
 library(Rmisc)  # for the multiplot function
 my.layout = cbind( c(1,1,1), c(2,2,3), c(2,2,3) )
 multiplot( p1, p2, p3, layout=my.layout)
@@ -179,7 +179,7 @@ Almost everything you want to modify can be modified within the theme and you sh
 
     a) Load the `MASS` library, which includes the dataset `birthwt` which contains information about 189 babies and their mothers.
     b) Add better labels to the race and smoke variables using the following:
-        ```{r}
+        ```{r, warning=FALSE, message=FALSE}
         library(MASS)
         library(dplyr)
         birthwt <- birthwt %>% mutate(

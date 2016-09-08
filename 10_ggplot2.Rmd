@@ -67,13 +67,26 @@ The important part isn't that color and size were defined in the geom_point() bu
 
 2. Anything set outside an `aes()` command will be in the form `attribute=value` and will be fixed. 
 
-Next, I suppose I want to add a regression line (the line that best summarizes the relationship between Sepal.Length and Petal.Length) to each of these groups. We can do this by adding another layer to the graph, in this case, a `smoother` layer. The `geom_smoother` is intended to take a scatterplot of points and draw the best-fitting curve to the data. There are several options for how it choses to do this, but I'll tell it to fit a regression line to each set of data. Below, we have a graph of data points, a regression line, and a confidence region for the line (I typically don't use this method because it has too many limitations as to how I fit the smoother. I prefer to fit a model to the data, calculate the predicted values along with whatever confidence intervals I want, and plot those directly using `geom_line()` and `geom_ribbon()`).
+Next, I suppose I want to add a regression line (the line that best summarizes the relationship between Sepal.Length and Petal.Length) to each of these groups. We can do this by adding another layer to the graph, in this case, a `smoother` layer. The `geom_smoother` is intended to take a scatterplot of points and draw the best-fitting curve to the data. There are several options for how it choses to do this, but I'll tell it to fit a regression line to each set of data. Below, we have a graph of data points, a regression line, and a confidence region for the line.
 
 ```{r, fig.height=3}
 ggplot( data=iris, aes(x=Sepal.Length, y=Petal.Length, color=Species) ) +  
   geom_point( ) +
   geom_smooth( method='lm' ) # fit a regression to each species
 ```
+
+I typically don't use this method because it has too many limitations as to how I fit the smoother. I prefer to fit a model to the data, calculate the predicted values along with whatever confidence intervals I want, and plot those directly using `geom_line()` and `geom_ribbon()`).
+
+```{r, fig.height=3}
+model <- lm( Petal.Length ~ Sepal.Length * Species, data=iris) # fit the model
+iris <- cbind( iris, predict(model, interval='conf') )         # calc yhat, CI
+ggplot(iris, aes(x=Sepal.Length, color=Species, fill=Species)) +
+  geom_ribbon( aes(ymin=lwr, ymax=upr)) +
+  geom_line( aes(y=fit)) +
+  geom_point( aes(y=Petal.Length))
+```
+
+
 
 
 ### Bar Charts
