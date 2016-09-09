@@ -126,7 +126,7 @@ str_pad(first.names, width=8, side='right', pad='*')
 
 ### Trim a string with str_trim()
 
-This removes any leading or trailing whitespace where whitespace is defined as spaces ' ', tabs '\t', or returns '\n'.
+This removes any leading or trailing whitespace where whitespace is defined as spaces ' ', tabs `\t` or returns `\n`.
 ```{r}
 text <- ' Some text. \n  '
 print(text)
