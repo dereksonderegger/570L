@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-09-09">
+<meta name="date" content="2016-09-13">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -315,7 +315,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <tr class="even">
 <td><p>Exponential</p></td>
 <td><p><code>exp</code></p></td>
-<td><p><code>lambda</code></p></td>
+<td><p><code>rate</code></p></td>
 <td><p>Mean of the distribution</p></td>
 </tr>
 <tr class="odd">
@@ -433,9 +433,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.4</span> r-function</h3>
 <p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 18.40441 20.46925 19.19469 18.82612 20.02790</code></pre>
+<pre><code>## [1] 20.07874 24.04143 19.92353 15.59998 21.35209</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1] 7 9 7 9</code></pre>
+<pre><code>## [1] 7 8 8 9</code></pre>
 </div>
 </div>
 <div id="exercises-2" class="section level2">
