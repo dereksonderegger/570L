@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-09-13">
+<meta name="date" content="2016-10-11">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -168,9 +168,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.4" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#exercises-5"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="7-importing-data.html"><a href="7-importing-data.html"><i class="fa fa-check"></i><b>7</b> Importing Data</a><ul>
-<li class="chapter" data-level="7.1" data-path="7-importing-data.html"><a href="7-importing-data.html#comma-separated-data"><i class="fa fa-check"></i><b>7.1</b> Comma Separated Data</a></li>
-<li class="chapter" data-level="7.2" data-path="7-importing-data.html"><a href="7-importing-data.html#ms-excel"><i class="fa fa-check"></i><b>7.2</b> MS Excel</a></li>
-<li class="chapter" data-level="7.3" data-path="7-importing-data.html"><a href="7-importing-data.html#exercises-6"><i class="fa fa-check"></i><b>7.3</b> Exercises</a></li>
+<li class="chapter" data-level="7.1" data-path="7-importing-data.html"><a href="7-importing-data.html#working-directory"><i class="fa fa-check"></i><b>7.1</b> Working directory</a></li>
+<li class="chapter" data-level="7.2" data-path="7-importing-data.html"><a href="7-importing-data.html#comma-separated-data"><i class="fa fa-check"></i><b>7.2</b> Comma Separated Data</a></li>
+<li class="chapter" data-level="7.3" data-path="7-importing-data.html"><a href="7-importing-data.html#ms-excel"><i class="fa fa-check"></i><b>7.3</b> MS Excel</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="7-importing-data.html"><a href="7-importing-data.html#libxls-bug"><i class="fa fa-check"></i><b>7.3.1</b> <code>libxls</code> bug</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="7-importing-data.html"><a href="7-importing-data.html#exercises-6"><i class="fa fa-check"></i><b>7.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="8-data-manipulation.html"><a href="8-data-manipulation.html"><i class="fa fa-check"></i><b>8</b> Data Manipulation</a><ul>
 <li class="chapter" data-level="8.1" data-path="8-data-manipulation.html"><a href="8-data-manipulation.html#classical-functions-for-summarizing-rows-and-columns"><i class="fa fa-check"></i><b>8.1</b> Classical functions for summarizing rows and columns</a><ul>
@@ -286,12 +289,31 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="importing-data" class="section level1">
 <h1><span class="header-section-number">Chapter 7</span> Importing Data</h1>
-<p>Reading data from external sources is necessary. It is most common for data to be in a data-frame like storage, such as a MS Excel workbook, so we will concentrate on reading data into a data.frame.</p>
+<p>Reading data from external sources is necessary. It is most common for data to be in a data-frame like storage, such as a MS Excel workbook, so we will concentrate on reading data into a <code>data.frame</code>.</p>
 <p>In the typical way data is organized, we think of each column of data representing some trait or variable that we might be interested in. In general, we might wish to investigate the relationship between variables. In contrast, the rows of our data represent a single object on which the column traits are measured. For example, in a grade book for recording students scores throughout the semester, their is one row for every student and columns for each assignment. A greenhouse experiment dataset will have a row for every plant and columns for treatment type and biomass.</p>
-<p>One concept that will be important is to recognize that every time you start up RStudio, it picks an appropriate working directory. This is the directory where it will first look for script files or data files. So often I will set the working directory to be the same directory as the Rmarkdown file that I’m working on (because I typically will have a couple of MS Excel files, an Rmarkdown file that does an analysis, and the final output file all stored in the same location). If you click on an Rmarkdown file to open RStudio, then the working directory will automatically be set appropriately. To set the working directory explicitly, you can use the GUI tools <code>Session -&gt; Set Working Directory...</code>.</p>
-<p>When you knit your Rmarkdown file, it always starts up a new version of R with the working directory set to the location of the Rmarkdown file. So whenever you specify a file location, it should be relative to the location of the Rmarkdown file you are working on!</p>
+<div id="working-directory" class="section level2">
+<h2><span class="header-section-number">7.1</span> Working directory</h2>
+<p>One concept that will be important is to recognize that every time you start up RStudio, it picks an appropriate working directory. This is the directory where it will first look for script files or data files. By default when you double click on an R script or Rmarkdown file to launch RStudio, it will set the working directory to be the directory that the file was in. Similarly, when you knit an Rmarkdown file, the working directory will be set to the directory where the Rmarkdown file is. For both of these reasons, I always program my scripts assuming that paths to any data files will be relative to where where my Rmarkdown file is. To set the working directory explicitly, you can use the GUI tools <code>Session -&gt; Set Working Directory...</code>.</p>
+<p>The functions that we will use in this lab all accept a character string that denotes the location of the file. This location could be a web address, it could be an absolute path on your computer, or it could be a path relative to the location of your Rmarkdown file.</p>
+<table>
+<colgroup>
+<col width="32%" />
+<col width="67%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><p><code>'MyFile.csv'</code></p></td>
+<td><p>Look in the working directory for <code>MyFile.csv</code>.</p></td>
+</tr>
+<tr class="even">
+<td><p><code>'MyFolder/Myfile.csv'</code></p></td>
+<td><p>In the working directory, there is a subdirectory called <code>MyFolder</code> and inside that folder there is a filed called <code>MyFile.csv</code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="comma-separated-data" class="section level2">
-<h2><span class="header-section-number">7.1</span> Comma Separated Data</h2>
+<h2><span class="header-section-number">7.2</span> Comma Separated Data</h2>
 <p>To consider how data might be stored, we first consider the simplest file format… the comma separated values file. In this file time, each of the “cells” of data are separated by a comma. For example, the data file storing scores for three students might be as follows:</p>
 <pre><code>Able, Dave, 98, 92, 94
 Bowles, Jason, 85, 89, 91
@@ -383,7 +405,7 @@ Carr, Jasmine, 81, 96, 97</code></pre>
 <p>Looking at the help file for <code>read.table()</code> we see that there are variants such as <code>read.csv()</code> that sets the default arguments to header and sep more intelligently. Also, there are many options to customize how R responds to different input.</p>
 </div>
 <div id="ms-excel" class="section level2">
-<h2><span class="header-section-number">7.2</span> MS Excel</h2>
+<h2><span class="header-section-number">7.3</span> MS Excel</h2>
 <p>Commonly our data is stored as a MS Excel file. There are two approaches you could use to import the data into R.</p>
 <ol style="list-style-type: decimal">
 <li><p>From within Excel, export the worksheet that contains your data as a comma separated values (.csv) file and proceed using the tools in the previous section.</p></li>
@@ -392,26 +414,34 @@ Carr, Jasmine, 81, 96, 97</code></pre>
 <p>I generally prefer using option 2 because all of my collaborators can’t live without Excel and I’ve resigned myself to this. However if you have complicated formulas in your Excel file, it is often times safer to export it as a .csv file to guarantee the data imported into R is correct. Furthermore, other spreadsheet applications (such as Google sheets) requires you to export the data as a .csv file so it is good to know both paths.</p>
 <p>Because R can only import a complete worksheet, the desired data worksheet must be free of notes to yourself about how the data was collected, preliminary graphics, or other stuff that isn’t the data. I find it very helpful to have a worksheet in which I describe the sampling procedure and describe what each column means (and give the units!), then a second worksheet where the actual data is, and finally a third worksheet where my “Excel Only” collaborators have created whatever plots and summary statistics they need.</p>
 <p>The simplest package for importing Excel files seems to be the package <code>readxl</code>. Another package that does this is the XLConnect which does the Excel -&gt; .csv conversion using Java. Another package the works well is the <code>xlsx</code> package, but it also requires Java to be installed. The nice thing about these two packages is that they also allow you to write Excel files as well. The RODBC package allows R to connect to various databases and it is possible to make it consider an Excel file as an extremely crude database.</p>
-<p>The <code>readxl</code> package provides a function <code>read_exel()</code> that allows us to specify which sheet within the Excel file to read and what character specifies missing data (it assumes a blank cell is missing data if you don’t specifying anything).</p>
+<p>The <code>readxl</code> package provides a function <code>read_exel()</code> that allows us to specify which sheet within the Excel file to read and what character specifies missing data (it assumes a blank cell is missing data if you don’t specifying anything). One annoying change between <code>read.table()</code> and <code>read_excel()</code> is that the argument for specifying where the file is is different (<code>path=</code> instead of <code>file=</code>). Another difference between the two is that <code>read_excel()</code> does not yet have the capability of handling a path that is a web address.</p>
 <p>From GitHub, download the files <code>Example_1.xls</code>, <code>Example_2.xls</code>, <code>Example_3.xls</code> and <code>Example_4.xls</code> from the directory [<a href="https://github.com/dereksonderegger/STA_570L_Book/tree/master/data-raw" class="uri">https://github.com/dereksonderegger/STA_570L_Book/tree/master/data-raw</a>]. Place these files in the same directory that you store your course work or make a subdirectory data to store the files in. Make sure that the working directory that RStudio is using is that same directory (Session -&gt; Set Working Directory).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load the library that has the read.xls function. </span>
-<span class="kw">library</span>(readxl)
-
-<span class="co"># Where does the data live relative to my current working location? </span>
+<span class="kw">library</span>(readxl)</code></pre></div>
+<pre><code>## Warning: package &#39;readxl&#39; was built under R version 3.2.4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Where does the data live relative to my current working location? </span>
 <span class="co">#</span>
-<span class="co"># I made a subdirectory named &#39;data-raw&#39; to store all the data files,</span>
-<span class="co">#   so the path to my data files will be &#39;./data-raw/Example_1.xls&#39;</span>
-<span class="co">#   where &quot;.&quot; indicates the current working directory</span>
-<span class="co"># If you stored the files in the same directory as your RMarkdown script,</span>
-<span class="co">#   then you would use &#39;./Example_1.xls&#39; or just &#39;Example_1.xls&#39;</span>
+<span class="co"># In my directory where this Rmarkdown file lives, I have made a subdirectory </span>
+<span class="co">#    named &#39;data-raw&#39; to store all the data files. So the path to my data</span>
+<span class="co">#    file will be &#39;data-raw/Example_1.xls&#39;.</span>
+<span class="co"># If you stored the files in the same directory as your RMarkdown script, you</span>
+<span class="co">#    don&#39;t have to add any additional information and you can just tell it the</span>
+<span class="co">#    file name &#39;Example_1.xls&#39;</span>
+<span class="co"># Alternatively I could give the full path to this file starting at the root</span>
+<span class="co">#    directory which, for me, is &#39;~/GitHub/STA570L_Book/data-raw/Example_1.xls&#39;</span>
+<span class="co">#    but for Windows users it might be &#39;Z:/570L/Lab7/Example_1.xls&#39;. This looks</span>
+<span class="co">#    odd because Windows usually uses a backslash to represent the directory</span>
+<span class="co">#    structure, but a backslash has special meaning in R and so it wants </span>
+<span class="co">#    to separate directories via forwardslashes.</span>
 
 <span class="co"># read the first worksheet of the Example_1 file</span>
-data<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">read_excel</span>(  <span class="st">&#39;./data-raw/Example_1.xls&#39;</span>  )   
+data<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">read_excel</span>( <span class="st">&#39;data-raw/Example_1.xls&#39;</span>  )   <span class="co"># relative to this Rmarkdown file</span>
+data<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&#39;~/GitHub/STA_570L_Book/data-raw/Example_1.xls&#39;</span>)  <span class="co"># absolute path</span>
 
 <span class="co"># read the second worksheet where the second worksheet is named &#39;data&#39;</span>
-data<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&#39;./data-raw/Example_2.xls&#39;</span>, <span class="dt">sheet=</span><span class="dv">2</span>     )   
-data<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&#39;./data-raw/Example_2.xls&#39;</span>, <span class="dt">sheet=</span><span class="st">&#39;data&#39;</span>)   </code></pre></div>
-<p>There is one additional problem that shows up while reading in Excel files. Blank columns often show up in Excel files because at some point there was some text in a cell that got deleted but a space remains and Excel still thinks there is data in the column. To fix this, you could find the cell with the space in it, or you can select a bunch of columns at the edge and delete the entire columns. Alternatively, you could remove the column after it is read into R.</p>
+data<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&#39;data-raw/Example_2.xls&#39;</span>, <span class="dt">sheet=</span><span class="dv">2</span>     )   
+data<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&#39;data-raw/Example_2.xls&#39;</span>, <span class="dt">sheet=</span><span class="st">&#39;data&#39;</span>)   </code></pre></div>
+<p>There is one additional problem that shows up while reading in Excel files. Blank columns often show up in Excel files because at some point there was some text in a cell that got deleted but a space remains and Excel still thinks there is data in the column. To fix this, you could find the cell with the space in it, or you can select a bunch of columns at the edge and delete the entire columns. Alternatively, you could remove the column after it is read into R using tools we’ll learn when we get to the <em>Manipulating Data</em> chapter.</p>
 <p>Open up the file <code>Example_4.xls</code> in Excel and confirm that the data sheet has name columns out to carb. Read in the data frame using the following code:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&#39;./data-raw/Example_4.xls&#39;</span>, <span class="dt">sheet=</span><span class="st">&#39;data&#39;</span>)   <span class="co"># Extra Column Example</span>
 <span class="kw">str</span>(data<span class="fl">.4</span>)</code></pre></div>
@@ -429,12 +459,17 @@ data<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">re
 ##  $ gear : num  4 4 4 3 3 3 3 4 4 4 ...
 ##  $ carb : num  4 4 1 1 2 1 4 2 2 4 ...
 ##  $ NA   : chr  NA NA &quot; &quot; NA ...</code></pre>
-<p>We notice that after reading in the data, there are an additional two columns (labeled <code>X</code> and <code>X.1</code> because R had to make up some column name so it chose that) that just has missing data (the NA stands for not available which means that the data is missing). Go back to the Excel file and go to row 4 column N and notice that the cell isn’t actually blank, there is a space. Delete the space, save the file, and then reload the data into R. You should notice that the extra columns are now gone.</p>
+<p>We notice that after reading in the data, there is an additional column that just has missing data (the NA stands for not available which means that the data is missing) and a row with just a single blank. Go back to the Excel file and go to row 4 column N and notice that the cell isn’t actually blank, there is a space. Delete the space, save the file, and then reload the data into R. You should notice that the extra columns are now gone.</p>
+<div id="libxls-bug" class="section level3">
+<h3><span class="header-section-number">7.3.1</span> <code>libxls</code> bug</h3>
+<p>There appears to be a bug in the R package <code>libxls</code> and a developer debug code is being printed to the screen for people using Windows. This is somewhat annoying and the folks that wrote the <code>libxls</code> package have been slow to fix it. So in the mean time, we’ll use this as an excuse to talk about suppressing output. The easiest way to handle this is to use the R-chunk option <code>results='hide'</code> in the header of your R chunk. This will suppress <em>all</em> of the standard output, so you’ll want to create a code chunk that <em>only</em> loads your data and you don’t care that the output information is suppressed.</p>
+<p>There are many, many different options you could pass to your code chunk. See the Rmarkdown quick reference guide in the RStudio <code>Help -&gt; Cheatsheets -&gt; R Markdown Cheat Sheet</code>.</p>
+</div>
 </div>
 <div id="exercises-6" class="section level2">
-<h2><span class="header-section-number">7.3</span> Exercises</h2>
+<h2><span class="header-section-number">7.4</span> Exercises</h2>
 <ol style="list-style-type: decimal">
-<li>Download from GitHub the data file Example_5.xls. Open it in Excel and figure out which sheet of data we should import into R. At the same time figure out how many initial rows need to be skipped. Import the data set into a data frame and show the structure of the imported data using the str() command. Make sure that your data has <span class="math inline">\(n=31\)</span> observations and the three columns are appropriately named.</li>
+<li>Download from GitHub the data file <code>Example_5.xls</code>. Open it in Excel and figure out which sheet of data we should import into R. At the same time figure out how many initial rows need to be skipped. Import the data set into a data frame and show the structure of the imported data using the <code>str()</code> command. Make sure that your data has <span class="math inline">\(n=31\)</span> observations and the three columns are appropriately named.</li>
 </ol>
 
 </div>

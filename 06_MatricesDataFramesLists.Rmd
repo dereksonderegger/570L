@@ -222,7 +222,10 @@ results
     b) Extract the third observation (i.e. the third row)
     c) Extract the Girth column referring to it by name (don't use whatever order you placed the columns in).
     d) Print out a data frame of all the observations *except* for the fourth observation. (i.e. Remove the fourth observation/row.)
-
+    e) Use the `which()` command to create a vector of row indices that have a `girth` greater than 10. Call that vector `index`.
+    f) Use the `index` vector to create a small data set with just the small girth trees.
+    g) Use the `index` vector to create a small data set with just the large girth trees.
+    
 3. Create and manipulate a list.
     a) Create a list named my.test with elements
         + x = c(4,5,6,7,8,9,10)

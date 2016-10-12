@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-09-13">
+<meta name="date" content="2016-10-11">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -168,9 +168,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.4" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#exercises-5"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="7-importing-data.html"><a href="7-importing-data.html"><i class="fa fa-check"></i><b>7</b> Importing Data</a><ul>
-<li class="chapter" data-level="7.1" data-path="7-importing-data.html"><a href="7-importing-data.html#comma-separated-data"><i class="fa fa-check"></i><b>7.1</b> Comma Separated Data</a></li>
-<li class="chapter" data-level="7.2" data-path="7-importing-data.html"><a href="7-importing-data.html#ms-excel"><i class="fa fa-check"></i><b>7.2</b> MS Excel</a></li>
-<li class="chapter" data-level="7.3" data-path="7-importing-data.html"><a href="7-importing-data.html#exercises-6"><i class="fa fa-check"></i><b>7.3</b> Exercises</a></li>
+<li class="chapter" data-level="7.1" data-path="7-importing-data.html"><a href="7-importing-data.html#working-directory"><i class="fa fa-check"></i><b>7.1</b> Working directory</a></li>
+<li class="chapter" data-level="7.2" data-path="7-importing-data.html"><a href="7-importing-data.html#comma-separated-data"><i class="fa fa-check"></i><b>7.2</b> Comma Separated Data</a></li>
+<li class="chapter" data-level="7.3" data-path="7-importing-data.html"><a href="7-importing-data.html#ms-excel"><i class="fa fa-check"></i><b>7.3</b> MS Excel</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="7-importing-data.html"><a href="7-importing-data.html#libxls-bug"><i class="fa fa-check"></i><b>7.3.1</b> <code>libxls</code> bug</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="7-importing-data.html"><a href="7-importing-data.html#exercises-6"><i class="fa fa-check"></i><b>7.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="8-data-manipulation.html"><a href="8-data-manipulation.html"><i class="fa fa-check"></i><b>8</b> Data Manipulation</a><ul>
 <li class="chapter" data-level="8.1" data-path="8-data-manipulation.html"><a href="8-data-manipulation.html#classical-functions-for-summarizing-rows-and-columns"><i class="fa fa-check"></i><b>8.1</b> Classical functions for summarizing rows and columns</a><ul>
@@ -308,8 +311,9 @@ grade.book</code></pre></div>
 <li><p><code>gather</code> - Gather multiple columns that are related into two columns that contain the original column name and the value. For example for columns HW1, HW2, HW3 we would gather them into two column HomeworkNumber and Score. In this case, we refer to HomeworkNumber as the key column and Score as the value column. So for any key:value pair you know everything you need.</p></li>
 <li><p><code>spread</code> - This is the opposite of gather. This takes a key column (or columns) and a results column and forms a new column for each level of the key column(s).</p></li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)
-<span class="co"># first we gather the score columns into columns we&#39;ll name Assesment and Score</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)</code></pre></div>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 3.2.5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first we gather the score columns into columns we&#39;ll name Assesment and Score</span>
 tidy.scores &lt;-<span class="st"> </span>grade.book %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">gather</span>( <span class="dt">key=</span>Assessement,  <span class="co"># What should I call the key column</span>
           <span class="dt">value=</span>Score,      <span class="co"># What should I call the values column</span>

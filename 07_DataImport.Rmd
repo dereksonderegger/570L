@@ -13,13 +13,24 @@ if( length(pkgs > 0)){
 }
 ```
 
-Reading data from external sources is necessary. It is most common for data to be in a data-frame like storage, such as a MS Excel workbook, so we will concentrate on reading data into a data.frame. 
+Reading data from external sources is necessary. It is most common for data to be in a data-frame like storage, such as a MS Excel workbook, so we will concentrate on reading data into a `data.frame`. 
 
 In the typical way data is organized, we think of each column of data representing some trait or variable that we might be interested in. In general, we might wish to investigate the relationship between variables. In contrast, the rows of our data represent a single object on which the column traits are measured. For example, in a grade book for recording students scores throughout the semester, their is one row for every student and columns for each assignment. A greenhouse experiment dataset will have a row for every plant and columns for treatment type and biomass.
 
-One concept that will be important is to recognize that every time you start up RStudio, it picks an appropriate working directory. This is the directory where it will first look for script files or data files. So often I will set the working directory to be the same directory as the Rmarkdown file that I'm working on (because I typically will have a couple of MS Excel files, an Rmarkdown file that does an analysis, and the final output file all stored in the same location). If you click on an Rmarkdown file to open RStudio, then the working directory will automatically be set appropriately. To set the working directory explicitly, you can use the GUI tools `Session -> Set Working Directory...`.
 
-When you knit your Rmarkdown file, it always starts up a new version of R with the working directory set to the location of the Rmarkdown file. So whenever you specify a file location, it should be relative to the location of the Rmarkdown file you are working on!
+## Working directory
+One concept that will be important is to recognize that every time you start up RStudio, it picks an appropriate working directory. This is the directory where it will first look for script files or data files. By default when you double click on an R script or Rmarkdown file to launch RStudio, it will set the working directory to be the directory that the file was in. Similarly, when you knit an Rmarkdown file, the working directory will be set to the directory where the Rmarkdown file is. For both of these reasons, I always program my scripts assuming that paths to any data files will be relative to where where my Rmarkdown file is. To set the working directory explicitly, you can use the GUI tools `Session -> Set Working Directory...`.
+
+The functions that we will use in this lab all accept a character string that denotes the location of the file. This location could be a web address, it could be an absolute path on your computer, or it could be a path relative to the location of your Rmarkdown file.
+
++-------------------------+----------------------------------------------------+
+| `'MyFile.csv'`          | Look in the working directory for `MyFile.csv`.    |
++-------------------------+----------------------------------------------------+
+| `'MyFolder/Myfile.csv'` | In the working directory, there is a subdirectory  |
+|                         | called `MyFolder` and inside that folder there is  |
+|                         | a filed called `MyFile.csv`.                       |
++-------------------------+----------------------------------------------------+
+
 
 ## Comma Separated Data
 
@@ -108,7 +119,7 @@ Because R can only import a complete worksheet, the desired data worksheet must 
 
 The simplest package for importing Excel files seems to be the package `readxl`. Another package that does this is the XLConnect which does the Excel -> .csv conversion using Java. Another package the works well is the `xlsx` package, but it also requires Java to be installed. The nice thing about these two packages is that they also allow you to write Excel files as well. The RODBC package allows R to connect to various databases and it is possible to make it consider an Excel file as an extremely crude database. 
 
-The `readxl` package provides a function `read_exel()` that allows us to specify which sheet within the Excel file to read and what character specifies missing data (it assumes a blank cell is missing data if you don't specifying anything).
+The `readxl` package provides a function `read_exel()` that allows us to specify which sheet within the Excel file to read and what character specifies missing data (it assumes a blank cell is missing data if you don't specifying anything). One annoying change between `read.table()` and `read_excel()` is that the argument for specifying where the file is is different (`path=` instead of `file=`). Another difference between the two is that `read_excel()` does not yet have the capability of handling a path that is a web address. 
 
 From GitHub, download the files `Example_1.xls`, `Example_2.xls`, `Example_3.xls` and `Example_4.xls` from the directory [https://github.com/dereksonderegger/STA_570L_Book/tree/master/data-raw]. Place these files in the same directory that you store your course work or make a subdirectory data to store the files in. Make sure that the working directory that RStudio is using is that same directory (Session -> Set Working Directory). 
 
@@ -118,22 +129,30 @@ library(readxl)
 
 # Where does the data live relative to my current working location? 
 #
-# I made a subdirectory named 'data-raw' to store all the data files,
-#   so the path to my data files will be './data-raw/Example_1.xls'
-#   where "." indicates the current working directory
-# If you stored the files in the same directory as your RMarkdown script,
-#   then you would use './Example_1.xls' or just 'Example_1.xls'
+# In my directory where this Rmarkdown file lives, I have made a subdirectory 
+#    named 'data-raw' to store all the data files. So the path to my data
+#    file will be 'data-raw/Example_1.xls'.
+# If you stored the files in the same directory as your RMarkdown script, you
+#    don't have to add any additional information and you can just tell it the
+#    file name 'Example_1.xls'
+# Alternatively I could give the full path to this file starting at the root
+#    directory which, for me, is '~/GitHub/STA570L_Book/data-raw/Example_1.xls'
+#    but for Windows users it might be 'Z:/570L/Lab7/Example_1.xls'. This looks
+#    odd because Windows usually uses a backslash to represent the directory
+#    structure, but a backslash has special meaning in R and so it wants 
+#    to separate directories via forwardslashes.
 
 # read the first worksheet of the Example_1 file
-data.1 <- read_excel(  './data-raw/Example_1.xls'  )   
+data.1 <- read_excel( 'data-raw/Example_1.xls'  )   # relative to this Rmarkdown file
+data.1 <- read_excel('~/GitHub/STA_570L_Book/data-raw/Example_1.xls')  # absolute path
 
 # read the second worksheet where the second worksheet is named 'data'
-data.2 <- read_excel('./data-raw/Example_2.xls', sheet=2     )   
-data.2 <- read_excel('./data-raw/Example_2.xls', sheet='data')   
+data.2 <- read_excel('data-raw/Example_2.xls', sheet=2     )   
+data.2 <- read_excel('data-raw/Example_2.xls', sheet='data')   
 ```
 
 
-There is one additional problem that shows up while reading in Excel files. Blank columns often show up in Excel files because at some point there was some text in a cell that got deleted but a space remains and Excel still thinks there is data in the column. To fix this, you could find the cell with the space in it, or you can select a bunch of columns at the edge and delete the entire columns. Alternatively, you could remove the column after it is read into R.
+There is one additional problem that shows up while reading in Excel files. Blank columns often show up in Excel files because at some point there was some text in a cell that got deleted but a space remains and Excel still thinks there is data in the column. To fix this, you could find the cell with the space in it, or you can select a bunch of columns at the edge and delete the entire columns. Alternatively, you could remove the column after it is read into R using tools we'll learn when we get to the *Manipulating Data* chapter.
 
 Open up the file `Example_4.xls` in Excel and confirm that the data sheet has name columns out to carb. Read in the data frame using the following code:
 
@@ -142,11 +161,17 @@ data.4 <- read_excel('./data-raw/Example_4.xls', sheet='data')   # Extra Column 
 str(data.4)
 ```
 
-We notice that after reading in the data, there are an additional two columns (labeled `X` and `X.1` because R had to make up some column name so it chose that) that just has missing data (the NA stands for not available which means that the data is missing). Go back to the Excel file and go to row 4 column N and notice that the cell isn't actually blank, there is a space. Delete the space, save the file, and then reload the data into R. You should notice that the extra columns are now gone.
+We notice that after reading in the data, there is an additional column that just has missing data (the NA stands for not available which means that the data is missing) and a row with just a single blank. Go back to the Excel file and go to row 4 column N and notice that the cell isn't actually blank, there is a space. Delete the space, save the file, and then reload the data into R. You should notice that the extra columns are now gone. 
+
+### `libxls` bug
+There appears to be a bug in the R package `libxls` and a developer debug code is being printed to the screen for people using Windows.  This is somewhat annoying and the folks that wrote the `libxls` package have been slow to fix it.  So in the mean time, we'll use this as an excuse to talk about suppressing output. The easiest way to handle this is to use the R-chunk option `results='hide'` in the header of your R chunk. This will suppress *all* of the standard output, so you'll want to create a code chunk that *only* loads your data and you don't care that the output information is suppressed.
+
+There are many, many different options you could pass to your code chunk. See the Rmarkdown quick reference guide in the RStudio `Help -> Cheatsheets -> R Markdown Cheat Sheet`.
+
 
 ## Exercises
 
-1. Download from GitHub the data file Example_5.xls. Open it in Excel and figure out which sheet of data we should import into R. At the same time figure out how many initial rows need to be skipped. Import the data set into a data frame and show the structure of the imported data using the str() command. Make sure that your data has $n=31$ observations and the three columns are appropriately named. 
+1. Download from GitHub the data file `Example_5.xls`. Open it in Excel and figure out which sheet of data we should import into R. At the same time figure out how many initial rows need to be skipped. Import the data set into a data frame and show the structure of the imported data using the `str()` command. Make sure that your data has $n=31$ observations and the three columns are appropriately named. 
 
 
 
