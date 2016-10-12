@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-10-11">
+<meta name="date" content="2016-10-12">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -236,14 +236,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="14" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html"><i class="fa fa-check"></i><b>14</b> String Manipulation</a><ul>
 <li class="chapter" data-level="14.1" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#base-function"><i class="fa fa-check"></i><b>14.1</b> Base function</a></li>
-<li class="chapter" data-level="14.2" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#package-stringr-basic-operations"><i class="fa fa-check"></i><b>14.2</b> Package stringr: basic operations</a><ul>
-<li class="chapter" data-level="14.2.1" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#concatenating-with-str_c-or-str_join"><i class="fa fa-check"></i><b>14.2.1</b> Concatenating with str_c() or str_join()</a></li>
-<li class="chapter" data-level="14.2.2" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#calculating-string-length-with-str_length"><i class="fa fa-check"></i><b>14.2.2</b> Calculating string length with str_length()</a></li>
-<li class="chapter" data-level="14.2.3" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#extracting-substrings-with-str_sub"><i class="fa fa-check"></i><b>14.2.3</b> Extracting substrings with str_sub()</a></li>
-<li class="chapter" data-level="14.2.4" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#pad-a-string-with-str_pad"><i class="fa fa-check"></i><b>14.2.4</b> Pad a string with str_pad()</a></li>
-<li class="chapter" data-level="14.2.5" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#trim-a-string-with-str_trim"><i class="fa fa-check"></i><b>14.2.5</b> Trim a string with str_trim()</a></li>
+<li class="chapter" data-level="14.2" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#package-stringr-basic-operations"><i class="fa fa-check"></i><b>14.2</b> Package <code>stringr</code>: basic operations</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#concatenating-with-str_c-or-str_join"><i class="fa fa-check"></i><b>14.2.1</b> Concatenating with <code>str_c()</code> or <code>str_join()</code></a></li>
+<li class="chapter" data-level="14.2.2" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#calculating-string-length-with-str_length"><i class="fa fa-check"></i><b>14.2.2</b> Calculating string length with <code>str_length()</code></a></li>
+<li class="chapter" data-level="14.2.3" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#extracting-substrings-with-str_sub"><i class="fa fa-check"></i><b>14.2.3</b> Extracting substrings with <code>str_sub()</code></a></li>
+<li class="chapter" data-level="14.2.4" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#pad-a-string-with-str_pad"><i class="fa fa-check"></i><b>14.2.4</b> Pad a string with <code>str_pad()</code></a></li>
+<li class="chapter" data-level="14.2.5" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#trim-a-string-with-str_trim"><i class="fa fa-check"></i><b>14.2.5</b> Trim a string with <code>str_trim()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="14.3" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#package-stringr-pattern-matching"><i class="fa fa-check"></i><b>14.3</b> Package stringr: Pattern Matching</a><ul>
+<li class="chapter" data-level="14.3" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#package-stringr-pattern-matching"><i class="fa fa-check"></i><b>14.3</b> Package <code>stringr</code>: Pattern Matching</a><ul>
 <li class="chapter" data-level="14.3.1" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#detecting-a-pattern-using-str_detect"><i class="fa fa-check"></i><b>14.3.1</b> Detecting a pattern using str_detect()</a></li>
 <li class="chapter" data-level="14.3.2" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#locating-a-pattern-using-str_locate"><i class="fa fa-check"></i><b>14.3.2</b> Locating a pattern using str_locate()</a></li>
 <li class="chapter" data-level="14.3.3" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#replacing-substrings-using-str_replace"><i class="fa fa-check"></i><b>14.3.3</b> Replacing substrings using <code>str_replace()</code></a></li>
@@ -418,8 +418,40 @@ h &lt;-<span class="st"> </span><span class="kw">hist</span>(y)  <span class="co
 <span class="kw">class</span>(model)</code></pre></div>
 <pre><code>## [1] &quot;lm&quot;</code></pre>
 <p>Many common functions such as <code>plot()</code> are overloaded so that when I call the plot function with an object, it will in turn call <code>plot.lm()</code> or <code>plot.histogram()</code> as appropriate. When building statistical models I am often interested in different quantities and would like to get those regardless of the model I am using. Below are a list of functions that work whether I fit a model via <code>aov()</code>, <code>lm()</code>, <code>glm()</code>, or <code>gam()</code>.</p>
-<pre><code>Quantity          |   Function Name</code></pre>
-<p>———————-|————————- Residuals | <code>resid( obj )</code> Model Coefficients | <code>coef( obj )</code> Summary Table | <code>summary( obj )</code> ANOVA Table | <code>anova( obj )</code> AIC value | <code>AIC( obj )</code></p>
+<table style="width:64%;">
+<colgroup>
+<col width="31%" />
+<col width="31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th>Function Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>Residuals</p></td>
+<td><p><code>resid( obj )</code></p></td>
+</tr>
+<tr class="even">
+<td><p>Model Coefficients</p></td>
+<td><p><code>coef( obj )</code></p></td>
+</tr>
+<tr class="odd">
+<td><p>Summary Table</p></td>
+<td><p><code>summary( obj )</code></p></td>
+</tr>
+<tr class="even">
+<td><p>ANOVA Table</p></td>
+<td><p><code>anova( obj )</code></p></td>
+</tr>
+<tr class="odd">
+<td><p>AIC value</p></td>
+<td><p><code>AIC( obj )</code></p></td>
+</tr>
+</tbody>
+</table>
 <p>For the residual function, there exists a <code>resid.lm()</code> function, and <code>resid.gam()</code> and it is these functions are called when we run the command <code>resid( obj )</code>.</p>
 </div>
 <div id="scope" class="section level2">

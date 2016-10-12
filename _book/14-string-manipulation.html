@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-10-11">
+<meta name="date" content="2016-10-12">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -236,14 +236,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="14" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html"><i class="fa fa-check"></i><b>14</b> String Manipulation</a><ul>
 <li class="chapter" data-level="14.1" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#base-function"><i class="fa fa-check"></i><b>14.1</b> Base function</a></li>
-<li class="chapter" data-level="14.2" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#package-stringr-basic-operations"><i class="fa fa-check"></i><b>14.2</b> Package stringr: basic operations</a><ul>
-<li class="chapter" data-level="14.2.1" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#concatenating-with-str_c-or-str_join"><i class="fa fa-check"></i><b>14.2.1</b> Concatenating with str_c() or str_join()</a></li>
-<li class="chapter" data-level="14.2.2" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#calculating-string-length-with-str_length"><i class="fa fa-check"></i><b>14.2.2</b> Calculating string length with str_length()</a></li>
-<li class="chapter" data-level="14.2.3" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#extracting-substrings-with-str_sub"><i class="fa fa-check"></i><b>14.2.3</b> Extracting substrings with str_sub()</a></li>
-<li class="chapter" data-level="14.2.4" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#pad-a-string-with-str_pad"><i class="fa fa-check"></i><b>14.2.4</b> Pad a string with str_pad()</a></li>
-<li class="chapter" data-level="14.2.5" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#trim-a-string-with-str_trim"><i class="fa fa-check"></i><b>14.2.5</b> Trim a string with str_trim()</a></li>
+<li class="chapter" data-level="14.2" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#package-stringr-basic-operations"><i class="fa fa-check"></i><b>14.2</b> Package <code>stringr</code>: basic operations</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#concatenating-with-str_c-or-str_join"><i class="fa fa-check"></i><b>14.2.1</b> Concatenating with <code>str_c()</code> or <code>str_join()</code></a></li>
+<li class="chapter" data-level="14.2.2" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#calculating-string-length-with-str_length"><i class="fa fa-check"></i><b>14.2.2</b> Calculating string length with <code>str_length()</code></a></li>
+<li class="chapter" data-level="14.2.3" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#extracting-substrings-with-str_sub"><i class="fa fa-check"></i><b>14.2.3</b> Extracting substrings with <code>str_sub()</code></a></li>
+<li class="chapter" data-level="14.2.4" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#pad-a-string-with-str_pad"><i class="fa fa-check"></i><b>14.2.4</b> Pad a string with <code>str_pad()</code></a></li>
+<li class="chapter" data-level="14.2.5" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#trim-a-string-with-str_trim"><i class="fa fa-check"></i><b>14.2.5</b> Trim a string with <code>str_trim()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="14.3" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#package-stringr-pattern-matching"><i class="fa fa-check"></i><b>14.3</b> Package stringr: Pattern Matching</a><ul>
+<li class="chapter" data-level="14.3" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#package-stringr-pattern-matching"><i class="fa fa-check"></i><b>14.3</b> Package <code>stringr</code>: Pattern Matching</a><ul>
 <li class="chapter" data-level="14.3.1" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#detecting-a-pattern-using-str_detect"><i class="fa fa-check"></i><b>14.3.1</b> Detecting a pattern using str_detect()</a></li>
 <li class="chapter" data-level="14.3.2" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#locating-a-pattern-using-str_locate"><i class="fa fa-check"></i><b>14.3.2</b> Locating a pattern using str_locate()</a></li>
 <li class="chapter" data-level="14.3.3" data-path="14-string-manipulation.html"><a href="14-string-manipulation.html#replacing-substrings-using-str_replace"><i class="fa fa-check"></i><b>14.3.3</b> Replacing substrings using <code>str_replace()</code></a></li>
@@ -328,22 +328,54 @@ last.names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="
 <pre><code>## [1] &quot;Robb:Stannis:Daenerys&quot;</code></pre>
 </div>
 <div id="package-stringr-basic-operations" class="section level2">
-<h2><span class="header-section-number">14.2</span> Package stringr: basic operations</h2>
+<h2><span class="header-section-number">14.2</span> Package <code>stringr</code>: basic operations</h2>
 <blockquote>
 <p>The goal of stringr is to make a consistent user interface to a suite of functions to manipulate strings. “(stringr) is a set of simple wrappers that make R’s string functions more consistent, simpler and easier to use. It does this by ensuring that: function and argument names (and positions) are consistent, all functions deal with NA’s and zero length character appropriately, and the output data structures from each function matches the input data structures of other functions.” - Hadley Wickham</p>
 </blockquote>
 <p>We’ll investigate the most commonly used function but there are many we will ignore.</p>
-<pre><code> Function         |     Description</code></pre>
-<p>———————-|———————————————————– <code>str_c()</code> | string concatenation, similar to paste <code>str_length()</code> | number of characters in the string <code>str_sub()</code> | extract a substring <code>str_trim()</code> | remove leading and trailing whitespace <code>str_pad()</code> | pad a string with empty space to make it a certain length</p>
+<table>
+<colgroup>
+<col width="27%" />
+<col width="72%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p><code>str_c()</code></p></td>
+<td><p>string concatenation, similar to paste</p></td>
+</tr>
+<tr class="even">
+<td><p><code>str_length()</code></p></td>
+<td><p>number of characters in the string</p></td>
+</tr>
+<tr class="odd">
+<td><p><code>str_sub()</code></p></td>
+<td><p>extract a substring</p></td>
+</tr>
+<tr class="even">
+<td><p><code>str_trim()</code></p></td>
+<td><p>remove leading and trailing whitespace</p></td>
+</tr>
+<tr class="odd">
+<td><p><code>str_pad()</code></p></td>
+<td><p>pad a string with empty space to make it a certain length</p></td>
+</tr>
+</tbody>
+</table>
 <div id="concatenating-with-str_c-or-str_join" class="section level3">
-<h3><span class="header-section-number">14.2.1</span> Concatenating with str_c() or str_join()</h3>
+<h3><span class="header-section-number">14.2.1</span> Concatenating with <code>str_c()</code> or <code>str_join()</code></h3>
 <p>The first thing we do is to concatenate two strings or two vectors of strings similarly to the <code>paste()</code> command. The <code>str_c()</code> and <code>str_join()</code> functions are a synonym for the exact same function, but str_join() might be a more natural verb to use and remember. The syntax is:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_c</span>( ..., <span class="dt">sep=</span><span class="st">&#39;&#39;</span>, <span class="dt">collapse=</span><span class="ot">NULL</span>)</code></pre></div>
 <p>You can think of the inputs building a matrix of strings, with each input creating a column of the matrix. For each row, <code>str_c()</code> first joins all the columns (using the separator character given in <code>sep</code>) into a single column of strings. If the collapse argument is non-NULL, the function takes the vector and joins each element together using collapse as the separator character.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load the stringr library</span>
-<span class="kw">library</span>(stringr)</code></pre></div>
-<pre><code>## Warning: package &#39;stringr&#39; was built under R version 3.2.5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># envisioning the matrix of strings</span>
+<span class="kw">library</span>(stringr)
+
+<span class="co"># envisioning the matrix of strings</span>
 <span class="kw">cbind</span>(first.names, last.names)</code></pre></div>
 <pre><code>##      first.names last.names 
 ## [1,] &quot;Robb&quot;      &quot;Stark&quot;    
@@ -361,7 +393,7 @@ full.names &lt;-<span class="st"> </span><span class="kw">str_c</span>( first.na
 <pre><code>## [1] &quot;Robb.Stark : Stannis.Baratheon : Daenerys.Targaryen&quot;</code></pre>
 </div>
 <div id="calculating-string-length-with-str_length" class="section level3">
-<h3><span class="header-section-number">14.2.2</span> Calculating string length with str_length()</h3>
+<h3><span class="header-section-number">14.2.2</span> Calculating string length with <code>str_length()</code></h3>
 <p>The <code>str_length()</code> function calculates the length of each string in the vector of strings passed to it.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">text &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;WordTesting&#39;</span>, <span class="st">&#39;With a space&#39;</span>, <span class="ot">NA</span>, <span class="st">&#39;Night&#39;</span>)
 <span class="kw">str_length</span>( text )</code></pre></div>
@@ -369,14 +401,14 @@ full.names &lt;-<span class="st"> </span><span class="kw">str_c</span>( first.na
 <p>Notice that <code>str_length()</code> correctly interprets the missing data as missing and that the length ought to also be missing.</p>
 </div>
 <div id="extracting-substrings-with-str_sub" class="section level3">
-<h3><span class="header-section-number">14.2.3</span> Extracting substrings with str_sub()</h3>
+<h3><span class="header-section-number">14.2.3</span> Extracting substrings with <code>str_sub()</code></h3>
 <p>If we know we want to extract the <span class="math inline">\(3^{rd}\)</span> through <span class="math inline">\(6^{th}\)</span> letters in a string, this function will grab them.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_sub</span>(text, <span class="dt">start=</span><span class="dv">3</span>, <span class="dt">end=</span><span class="dv">6</span>)</code></pre></div>
 <pre><code>## [1] &quot;rdTe&quot; &quot;th a&quot; NA     &quot;ght&quot;</code></pre>
 <p>If a given string isn’t long enough to contain all the necessary indices, <code>str_sub()</code> returns only the letters that where there (as in the above case for “Night”</p>
 </div>
 <div id="pad-a-string-with-str_pad" class="section level3">
-<h3><span class="header-section-number">14.2.4</span> Pad a string with str_pad()</h3>
+<h3><span class="header-section-number">14.2.4</span> Pad a string with <code>str_pad()</code></h3>
 <p>Sometimes we to make every string in a vector the same length to facilitate display or in the creation of a uniform system of assigning ID numbers. The <code>str_pad()</code> function will add spaces at either the beginning or end of the of every string appropriately.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_pad</span>(first.names, <span class="dt">width=</span><span class="dv">8</span>)</code></pre></div>
 <pre><code>## [1] &quot;    Robb&quot; &quot; Stannis&quot; &quot;Daenerys&quot;</code></pre>
@@ -384,7 +416,7 @@ full.names &lt;-<span class="st"> </span><span class="kw">str_c</span>( first.na
 <pre><code>## [1] &quot;Robb****&quot; &quot;Stannis*&quot; &quot;Daenerys&quot;</code></pre>
 </div>
 <div id="trim-a-string-with-str_trim" class="section level3">
-<h3><span class="header-section-number">14.2.5</span> Trim a string with str_trim()</h3>
+<h3><span class="header-section-number">14.2.5</span> Trim a string with <code>str_trim()</code></h3>
 <p>This removes any leading or trailing whitespace where whitespace is defined as spaces ‘’, tabs <code>\t</code> or returns <code>\n</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">text &lt;-<span class="st"> &#39; Some text. </span><span class="ch">\n</span><span class="st">  &#39;</span>
 <span class="kw">print</span>(text)</code></pre></div>
@@ -394,7 +426,7 @@ full.names &lt;-<span class="st"> </span><span class="kw">str_c</span>( first.na
 </div>
 </div>
 <div id="package-stringr-pattern-matching" class="section level2">
-<h2><span class="header-section-number">14.3</span> Package stringr: Pattern Matching</h2>
+<h2><span class="header-section-number">14.3</span> Package <code>stringr</code>: Pattern Matching</h2>
 <p>The previous commands are all quite useful but the most powerful string operation is take a string and match some pattern within it. The following commands are available within <code>stringr</code>.</p>
 <table>
 <colgroup>

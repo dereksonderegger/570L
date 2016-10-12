@@ -191,13 +191,20 @@ class(model)
 
 Many common functions such as `plot()` are overloaded so that when I call the plot function with an object, it will in turn call `plot.lm()` or `plot.histogram()` as appropriate. When building statistical models I am often interested in different quantities and would like to get those regardless of the model I am using. Below are a list of functions that work whether I fit a model via `aov()`, `lm()`, `glm()`, or `gam()`. 
 
-    Quantity          |   Function Name
-----------------------|-------------------------
-  Residuals           |  `resid( obj )`
-  Model Coefficients  |  `coef( obj )`
-  Summary Table       |  `summary( obj )`
-  ANOVA Table         |  `anova( obj )`
-  AIC value           |  `AIC( obj )`
++----------------------+----------------------+
+|    Quantity          |   Function Name      |
++======================+======================+
+|  Residuals           |  `resid( obj )`      |
++----------------------+----------------------+
+|  Model Coefficients  |  `coef( obj )`       |
++----------------------+----------------------+
+|  Summary Table       |  `summary( obj )`    |
++----------------------+----------------------+
+|  ANOVA Table         |  `anova( obj )`      |
++----------------------+----------------------+
+|  AIC value           |  `AIC( obj )`        |
++----------------------+----------------------+
+
   
 For the residual function, there exists a `resid.lm()` function, and `resid.gam()` and it is these functions are called when we run the command `resid( obj )`. 
 

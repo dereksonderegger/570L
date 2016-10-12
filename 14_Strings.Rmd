@@ -59,21 +59,27 @@ Notice we could use the `paste()` command with the collapse option to combine a 
 paste(first.names, collapse=':')
 ```
 
-## Package stringr: basic operations
+## Package `stringr`: basic operations
 
 > The goal of stringr is to make a consistent user interface to a suite of functions to manipulate strings. “(stringr) is a set of simple wrappers that make R’s string functions more consistent, simpler and easier to use. It does this by ensuring that: function and argument names (and positions) are consistent, all functions deal with NA’s and zero length character appropriately, and the output data structures from each function matches the input data structures of other functions.” - Hadley Wickham
 
 We'll investigate the most commonly used function but there are many we will ignore.
 
-     Function         |     Description
-----------------------|-----------------------------------------------------------
-  `str_c()`           |  string concatenation, similar to paste
-  `str_length()`      |  number of characters in the string
-  `str_sub()`         |  extract a substring
-  `str_trim()`        |  remove leading and trailing whitespace
-  `str_pad()`         |  pad a string with empty space to make it a certain length
++----------------------+------------------------------------------------------------+
+|     Function         |      Description                                           |
++======================+============================================================+
+|  `str_c()`           |  string concatenation, similar to paste                    |
++----------------------+------------------------------------------------------------+
+|  `str_length()`      |  number of characters in the string                        |
++----------------------+------------------------------------------------------------+
+|  `str_sub()`         |  extract a substring                                       |
++----------------------+------------------------------------------------------------+
+|  `str_trim()`        |  remove leading and trailing whitespace                    |
++----------------------+------------------------------------------------------------+
+|  `str_pad()`         |  pad a string with empty space to make it a certain length |
++----------------------+------------------------------------------------------------+
 
-### Concatenating with str_c() or str_join()
+### Concatenating with `str_c()` or `str_join()`
 
 The first thing we do is to concatenate two strings or two vectors of strings similarly to the `paste()` command. The `str_c()` and `str_join()` functions are a synonym for the exact same function, but str_join() might be a more natural verb to use and remember. The syntax is:
 
@@ -82,7 +88,7 @@ str_c( ..., sep='', collapse=NULL)
 ```
 
 You can think of the inputs building a matrix of strings, with each input creating a column of the matrix. For each row, `str_c()` first joins all the columns (using the separator character given in `sep`) into a single column of strings. If the collapse argument is non-NULL, the function takes the vector and joins each element together using collapse as the separator character. 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # load the stringr library
 library(stringr)
 
@@ -97,7 +103,7 @@ cbind( first.names, last.names, full.names)
 str_c( first.names, last.names, sep='.', collapse=' : ')
 ```
 
-### Calculating string length with str_length()
+### Calculating string length with `str_length()`
 
 The `str_length()` function calculates the length of each string in the vector of strings passed to it.
 
@@ -108,7 +114,7 @@ str_length( text )
 
 Notice that `str_length()` correctly interprets the missing data as missing and that the length ought to also be missing.
 
-### Extracting substrings with str_sub()
+### Extracting substrings with `str_sub()`
 
 If we know we want to extract the $3^{rd}$ through $6^{th}$ letters in a string, this function will grab them.
 ```{r}
@@ -116,7 +122,7 @@ str_sub(text, start=3, end=6)
 ```
 If a given string isn't long enough to contain all the necessary indices, `str_sub()` returns only the letters that where there (as in the above case for “Night”
 
-### Pad a string with str_pad()
+### Pad a string with `str_pad()`
 
 Sometimes we to make every string in a vector the same length to facilitate display or in the creation of a uniform system of assigning ID numbers. The `str_pad()` function will add spaces at either the beginning or end of the of every string appropriately.
 ```{r}
@@ -124,7 +130,7 @@ str_pad(first.names, width=8)
 str_pad(first.names, width=8, side='right', pad='*')
 ```
 
-### Trim a string with str_trim()
+### Trim a string with `str_trim()`
 
 This removes any leading or trailing whitespace where whitespace is defined as spaces ' ', tabs `\t` or returns `\n`.
 ```{r}
@@ -133,7 +139,7 @@ print(text)
 str_trim(text)
 ```
 
-## Package stringr: Pattern Matching
+## Package `stringr`: Pattern Matching
 
 The previous commands are all quite useful but the most powerful string operation is take a string and match some pattern within it. The following commands are available within `stringr`.
 
