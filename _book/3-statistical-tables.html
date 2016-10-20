@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-10-12">
+<meta name="date" content="2016-10-19">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -191,7 +191,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="9.1" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html#tidyr"><i class="fa fa-check"></i><b>9.1</b> <code>tidyr</code></a><ul>
 <li class="chapter" data-level="9.1.1" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html#verbs-1"><i class="fa fa-check"></i><b>9.1.1</b> Verbs</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html#exercises-8"><i class="fa fa-check"></i><b>9.2</b> Exercises</a></li>
+<li class="chapter" data-level="9.2" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>9.2</b> Table Joins</a></li>
+<li class="chapter" data-level="9.3" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html#exercises-8"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html"><i class="fa fa-check"></i><b>10</b> Graphing using <code>ggplot2</code></a><ul>
 <li class="chapter" data-level="10.1" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html#basic-graphs"><i class="fa fa-check"></i><b>10.1</b> Basic Graphs</a><ul>
@@ -436,9 +437,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.4</span> r-function</h3>
 <p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 19.97906 20.23322 18.61306 19.81901 18.63905</code></pre>
+<pre><code>## [1] 20.11548 22.32024 18.39870 20.41665 16.31383</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1] 10 10  9  9</code></pre>
+<pre><code>## [1] 8 9 8 9</code></pre>
 </div>
 </div>
 <div id="exercises-2" class="section level2">

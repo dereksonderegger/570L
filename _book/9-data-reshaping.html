@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-10-12">
+<meta name="date" content="2016-10-19">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -191,7 +191,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="9.1" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html#tidyr"><i class="fa fa-check"></i><b>9.1</b> <code>tidyr</code></a><ul>
 <li class="chapter" data-level="9.1.1" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html#verbs-1"><i class="fa fa-check"></i><b>9.1.1</b> Verbs</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html#exercises-8"><i class="fa fa-check"></i><b>9.2</b> Exercises</a></li>
+<li class="chapter" data-level="9.2" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>9.2</b> Table Joins</a></li>
+<li class="chapter" data-level="9.3" data-path="9-data-reshaping.html"><a href="9-data-reshaping.html#exercises-8"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html"><i class="fa fa-check"></i><b>10</b> Graphing using <code>ggplot2</code></a><ul>
 <li class="chapter" data-level="10.1" data-path="10-graphing-using-ggplot2.html"><a href="10-graphing-using-ggplot2.html#basic-graphs"><i class="fa fa-check"></i><b>10.1</b> Basic Graphs</a><ul>
@@ -289,6 +290,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="data-reshaping" class="section level1">
 <h1><span class="header-section-number">Chapter 9</span> Data Reshaping</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)   <span class="co"># for the gather/spread commands</span>
+<span class="kw">library</span>(dplyr)   <span class="co"># for the join stuff</span></code></pre></div>
 <p>Most of the time, our data is in the form of a data frame and we are interested in exploring the relationships. However most procedures in R expect the data to show up in a ‘long’ format where each row is an observation and each column is a covariate. In practice, the data is often not stored like that and the data comes to us with repeated observations included on a single row. This is often done as a memory saving technique or because there is some structure in the data that makes the ‘wide’ format attractive. As a result, we need a way to convert data from ‘wide’ to ‘long’ and vice-versa.</p>
 <div id="tidyr" class="section level2">
 <h2><span class="header-section-number">9.1</span> <code>tidyr</code></h2>
@@ -311,8 +314,6 @@ grade.book</code></pre></div>
 <li><p><code>gather</code> - Gather multiple columns that are related into two columns that contain the original column name and the value. For example for columns HW1, HW2, HW3 we would gather them into two column HomeworkNumber and Score. In this case, we refer to HomeworkNumber as the key column and Score as the value column. So for any key:value pair you know everything you need.</p></li>
 <li><p><code>spread</code> - This is the opposite of gather. This takes a key column (or columns) and a results column and forms a new column for each level of the key column(s).</p></li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)</code></pre></div>
-<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 3.2.5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first we gather the score columns into columns we&#39;ll name Assesment and Score</span>
 tidy.scores &lt;-<span class="st"> </span>grade.book %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">gather</span>( <span class="dt">key=</span>Assessement,  <span class="co"># What should I call the key column</span>
@@ -340,8 +341,70 @@ tidy.scores %&gt;%<span class="st"> </span><span class="kw">spread</span>( <span
 <p>One way to keep straight which is the key column is that the key is the category, while value is the numerical value or response.</p>
 </div>
 </div>
+<div id="table-joins" class="section level2">
+<h2><span class="header-section-number">9.2</span> Table Joins</h2>
+<p>Often we need to squish together two data frames but they do not have the same number of rows. Consider the case where we have a data frame of observations of fish (say 200 fish caught per lake) and a separate data frame that contains information about lake (perhaps surface area, max depth, pH, etc). I want to store them as two separate tables so that when I have to record a lake level observation, I only input it <em>one</em> place. This decreases the chance that I make a copy/paste error.</p>
+<p>To illustrate the different types of table joins, we’ll consider two different tables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fish.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Lake =</span> <span class="kw">c</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;C&#39;</span>), <span class="dt">Fish.Weight=</span><span class="dv">101</span>:<span class="dv">106</span>)
+Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Lake =</span> <span class="kw">c</span>(    <span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;D&#39;</span>),         <span class="dt">pH=</span><span class="kw">c</span>(<span class="fl">6.5</span>, <span class="fl">6.3</span>, <span class="fl">6.1</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fish.Data</code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##    Lake Fish.Weight
+##   &lt;chr&gt;       &lt;int&gt;
+## 1     A         101
+## 2     A         102
+## 3     B         103
+## 4     B         104
+## 5     C         105
+## 6     C         106</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Lake.Data</code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+##    Lake    pH
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1     B   6.5
+## 2     C   6.3
+## 3     D   6.1</code></pre>
+<p>Notice that each of these tables has a column labled <code>Lake</code>. When we join these two tables, the row that describes <code>Lake A</code> should be duplicated for each row in the <code>Fish.Data</code> that corresponds with fish caught from <code>Lake A</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">full_join</span>(Fish.Data, Lake.Data)</code></pre></div>
+<pre><code>## Joining, by = &quot;Lake&quot;</code></pre>
+<pre><code>## # A tibble: 7 x 3
+##    Lake Fish.Weight    pH
+##   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
+## 1     A         101    NA
+## 2     A         102    NA
+## 3     B         103   6.5
+## 4     B         104   6.5
+## 5     C         105   6.3
+## 6     C         106   6.3
+## 7     D          NA   6.1</code></pre>
+<p>Notice that because we didn’t have any fish caught in lake <code>D</code> and we don’t have any Lake information about lake <code>A</code>, when we join these two tables, we end up introducing missing observations into the resulting data frame.</p>
+<p>The other types of joins govern the behavor or these missing data.</p>
+<p><strong><code>left_join(A, B)</code></strong> For each row in A, match with a row in B, but don’t create any more rows than what was already in A.</p>
+<p><strong><code>inner_join(A,B)</code></strong> Only match row values where both data frames have a value.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">left_join</span>(Fish.Data, Lake.Data)</code></pre></div>
+<pre><code>## Joining, by = &quot;Lake&quot;</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##    Lake Fish.Weight    pH
+##   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
+## 1     A         101    NA
+## 2     A         102    NA
+## 3     B         103   6.5
+## 4     B         104   6.5
+## 5     C         105   6.3
+## 6     C         106   6.3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inner_join</span>(Fish.Data, Lake.Data)</code></pre></div>
+<pre><code>## Joining, by = &quot;Lake&quot;</code></pre>
+<pre><code>## # A tibble: 4 x 3
+##    Lake Fish.Weight    pH
+##   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
+## 1     B         103   6.5
+## 2     B         104   6.5
+## 3     C         105   6.3
+## 4     C         106   6.3</code></pre>
+<p>The above examples assumed that the column used to join the two tables was named the same in both tables. This is good practice to try to do, but sometimes you have to work with data where that isn’t the case. In that situation you can use the <code>by=&quot;ColName.A&quot;=&quot;ColName.B&quot;</code> syntax where <code>ColName.A</code> represents the name of the column in the first data frame and <code>ColName.B</code> is the equivalent column in the second data frame.</p>
+</div>
 <div id="exercises-8" class="section level2">
-<h2><span class="header-section-number">9.2</span> Exercises</h2>
+<h2><span class="header-section-number">9.3</span> Exercises</h2>
 <ol style="list-style-type: decimal">
 <li><p>Suppose we are given information about the maximum daily temperature from a weather station in Flagstaff, AZ. The file is available at the GitHub site that this book is hosted on.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FlagTemp &lt;-<span class="st">  </span><span class="kw">read.csv</span>(
@@ -387,6 +450,7 @@ tidy.scores %&gt;%<span class="st"> </span><span class="kw">spread</span>( <span
 </tbody>
 </table></li>
 </ol></li>
+<li><p>The package <code>nycflights</code> contains information about all the flights that arrived in or left from New York City in 2013. This package contains five data tables, but there are three data tables we will work with. The data table <code>flights</code> gives information about a particular flight, <code>airports</code> gives information about a particular airport, and <code>airlines</code> gives information about each airline. Create a table of all the flights on February 14th by Virgin America that has columns for the carrier, origin, destination, departure time, and flight duration. For the origin and destination, display the airport name, <strong>not the airport code</strong>. Notice that because the column for the airport code doesn’t match up between <code>flights</code> and <code>airports</code>, you’ll have to use the <code>by=</code> argument.</p></li>
 </ol>
 
 </div>

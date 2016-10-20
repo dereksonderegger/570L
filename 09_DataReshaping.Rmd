@@ -13,6 +13,12 @@ if( length(pkgs > 0)){
 }
 ```
 
+```{r, warning=FALSE, message=FALSE}
+library(tidyr)   # for the gather/spread commands
+library(dplyr)   # for the join stuff
+```
+
+
 Most of the time, our data is in the form of a data frame and we are interested in exploring the relationships. However most procedures in R expect the data to show up in a 'long' format where each row is an observation and each column is a covariate. In practice, the data is often not stored like that and the data comes to us with repeated observations included on a single row. This is often done as a memory saving technique or because there is some structure in the data that makes the 'wide' format attractive. As a result, we need a way to convert data from 'wide' to 'long' and vice-versa.
 
 ## `tidyr`
@@ -41,7 +47,6 @@ As with the dplyr package, there are two main verbs to remember:
 2. `spread` - This is the opposite of gather. This takes a key column (or columns) and a results column and forms a new column for each level of the key column(s).
 
 ```{r}
-library(tidyr)
 # first we gather the score columns into columns we'll name Assesment and Score
 tidy.scores <- grade.book %>% 
   gather( key=Assessement,  # What should I call the key column
@@ -58,8 +63,45 @@ To spread the key:value pairs out into a matrix, we use the spread() command.
 tidy.scores %>% spread( key=Assessement, value=Score )
 ```
 
-
 One way to keep straight which is the key column is that the key is the category, while value is the numerical value or response. 
+
+## Table Joins
+Often we need to squish together two data frames but they do not have the same number of rows. Consider the case where we have a data frame of observations of fish (say 200 fish caught per lake) and a separate data frame that contains information about lake (perhaps surface area, max depth, pH, etc). I want to store them as two separate tables so that when I have to record a lake level observation, I only input it *one* place. This decreases the chance that I make a copy/paste error. 
+
+To illustrate the different types of table joins, we'll consider two different tables.
+```{r}
+Fish.Data <- tibble(Lake = c('A','A','B','B','C','C'), Fish.Weight=101:106)
+Lake.Data <- tibble(Lake = c(    'B','C','D'),         pH=c(6.5, 6.3, 6.1))
+```
+
+```{r}
+Fish.Data
+Lake.Data
+```
+
+Notice that each of these tables has a column labled `Lake`. When we join these two tables, the row that describes `Lake A` should be duplicated for each row in the `Fish.Data` that corresponds with fish caught from `Lake A`.
+
+```{r}
+full_join(Fish.Data, Lake.Data)
+```
+
+Notice that because we didn't have any fish caught in lake `D` and we don't have any Lake information about lake `A`, when we join these two tables, we end up introducing missing observations into the resulting data frame.
+
+The other types of joins govern the behavor or these missing data.
+
+**`left_join(A, B)`** For each row in A, match with a row in B, but don't create any more rows than what was already in A.
+
+**`inner_join(A,B)`** Only match row values where both data frames have a value.
+
+```{r}
+left_join(Fish.Data, Lake.Data)
+```
+
+```{r}
+inner_join(Fish.Data, Lake.Data)
+```
+
+The above examples assumed that the column used to join the two tables was named the same in both tables.  This is good practice to try to do, but sometimes you have to work with data where that isn't the case.  In that situation you can use the `by="ColName.A"="ColName.B"` syntax where `ColName.A` represents the name of the column in the first data frame and `ColName.B` is the equivalent column in the second data frame.
 
 ## Exercises
 
@@ -91,4 +133,6 @@ One way to keep straight which is the key column is that the key is the category
           **Female** |              |            |           |            
           **Male**   |              |            |           |            
     
-    
+  
+3. The package `nycflights` contains information about all the flights that arrived in or left from New York City in 2013. This package contains five data tables, but there are three data tables we will work with. The data table `flights` gives information about a particular flight, `airports` gives information about a particular airport, and `airlines` gives information about each airline. Create a table of all the flights on February 14th by Virgin America that has columns for the carrier, origin, destination, departure time, and flight duration. For the origin and destination, display the airport name, **not the airport code**. Notice that because the column for the airport code doesn't match up between `flights` and `airports`, you'll have to use the `by=` argument.
+
