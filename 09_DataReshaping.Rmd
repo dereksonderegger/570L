@@ -115,17 +115,18 @@ The above examples assumed that the column used to join the two tables was named
     This file is in a wide format, where each row represents a month and the columns X1, X2, ..., X31 represent the day of the month the observation was made. 
 
     a. Convert data set to the long format where the data has only four columns: `Year`, `Month`, `Day`, `Tmax`.
+    
+    c. Calculate the average monthly maximum temperature for each Month in the dataset (So there will be 365 mean maximum temperatures). *You'll probably have some issues taking the mean because there are a number of values that are missing and by default R refuses to take means and sums when there is missing data. The argument `na.rm=TRUE` to `mean()` allows you to force R to remove the missing observations before calculating the mean.* 
 
-    b. Calculate the average monthly maximum temperature for each Month in the dataset (So there will be 360 mean maximum temperatures).
-
-    c. Convert the average month maximums back to a wide data format where each line represents a year and there are 12 columns of temperature data (one for each month) along with a column for the year.
+    d. Convert the average month maximums back to a wide data format where each line represents a year and there are 12 columns of temperature data (one for each month) along with a column for the year. *There will be a couple of months that still have missing data because the weather station was out of commision for those months and there was NO data for the entire month.*
     
 2. A common task is to take a set of data that has multiple categorical variables and create a table of the number of cases for each combination. An introductory statistics textbook contains a dataset summarizing student surveys from several sections of an intro class. The two variables of interest for us are `Gender` and `Year` which are the students gender and year in college.
-    a. Download the dataset using the following:
+    a. Download the dataset and correctly order the `Year` variable using the following:
         ```{r, eval=FALSE}
-        Survey <- read.csv('http://www.lock5stat.com/datasets/StudentSurvey.csv')
+        Survey <- read.csv('http://www.lock5stat.com/datasets/StudentSurvey.csv', na.strings=c('',' ')) %>%
+           mutate(Year = factor(Year, levels=c('FirstYear','Sophomore','Junior','Senior')))
         ```
-    b. Using some combination of `dplyr` functions, produce a data set with eight rows that contains the number of responses for each gender:year combination.
+    b. Using some combination of `dplyr` functions, produce a data set with eight rows that contains the number of responses for each gender:year combination. *Notice there are two females that neglected to give their Year and you should remove them first. The function `is.na(Year)` will return logical values indicating if the Year value was missing and you can flip those values using the negation operator `!`. So you might consider using `!is.na(Year)` as the argument to a filter() command.  Alternatively you sort on Year and remove the first two rows using `slice(-2:-1)`. Next you'll want to summarize each Year/Gender group using the `n()` function which gives the number of rows in a data set.* 
     c. Using `tidyr` commands, produce a table of the number of responses in the following form:
     
            Gender    |  First Year  |  Sophmore  |  Junior   |  Senior
@@ -134,5 +135,6 @@ The above examples assumed that the column used to join the two tables was named
           **Male**   |              |            |           |            
     
   
-3. The package `nycflights` contains information about all the flights that arrived in or left from New York City in 2013. This package contains five data tables, but there are three data tables we will work with. The data table `flights` gives information about a particular flight, `airports` gives information about a particular airport, and `airlines` gives information about each airline. Create a table of all the flights on February 14th by Virgin America that has columns for the carrier, origin, destination, departure time, and flight duration. For the origin and destination, display the airport name, **not the airport code**. Notice that because the column for the airport code doesn't match up between `flights` and `airports`, you'll have to use the `by=` argument.
+3. The package `nycflights` contains information about all the flights that arrived in or left from New York City in 2013. This package contains five data tables, but there are three data tables we will work with. The data table `flights` gives information about a particular flight, `airports` gives information about a particular airport, and `airlines` gives information about each airline. Create a table of all the flights on February 14th by Virgin America that has columns for the carrier, destination, departure time, and flight duration. Join this table with the airports information for the destination. Notice that because the column for the destination airport code doesn't match up between `flights` and `airports`, you'll have to use the `by=c("TableA.Col"="TableB.Col")` argument where you insert the correct names for `TableA.Col` and `TableB.Col`.
+
 

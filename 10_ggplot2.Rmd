@@ -19,7 +19,7 @@ To make the most of ggplot2 it is important to wrap your mind around “The Gram
 
 1. Define what data we are using. 
 
-2. What is the major relationship we wish to exam. 
+2. What is the major relationship we wish to examine. 
 
 3. In what way should we present that relationship. These relationships can be presented in multiple ways, and the process of creating a good graph relies on building layers upon layers of information. For example, we might start with printing the raw data and then overlay a regression line over the top. 
 
