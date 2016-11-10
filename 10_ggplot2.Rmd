@@ -330,6 +330,10 @@ The key trick here was to set the `ymin` value to always be zero.
 3. The R package `babynames` contains a single dataset that lists the number of children registered with Social Security with a particular name along with the proportion out of all children born in a given year. The dataset covers the from 1880 to the present. We want to plot the relative popularity of the names 'Elise' and 'Casey'.
 
     a) Load the package. If it is not found on your computer, download the package from CRAN.
+        ```{r, eval=FALSE}
+        library(babynames)
+        data("babynames")
+        ```
     b) Read the help file for the data set `babynames` to get a sense of the columns 
     c) Create a small dataset that only has the names 'Elise' and 'Casey'.
     d) Make a plot where the x-axis is the year and the y-axis is the proportion of babies given the names. Use a line to display this relationship and distinguish the two names by color. Notice this graph is a bit ugly because there is a lot of year-to-year variability that we should smooth over.
@@ -343,10 +347,7 @@ The key trick here was to set the `ymin` value to always be zero.
           summarise( prop = mean(prop),
                      year = min(year)) 
         ```
-        
-
     f) Now draw the same graph you had in part (d).
-
     g) Next we'll create an area plot where the height is the total proportion of the both names and the colors split up the proportion.
 
     ```{r, eval=FALSE}
@@ -354,4 +355,4 @@ The key trick here was to set the `ymin` value to always be zero.
        geom_area()
     ```
     
-    This is a pretty neat graph as it show the relative popularity of the name over time and can easily be expanded to many many names. In fact, there is a wonderful website that takes this same data and allows you select the names quite nicely: [http://www.babynamewizard.com/voyager#prefix=&sw=both&exact=false]. My wife and I used this a lot while figuring out what to name our children. Notice that this site really uses the same graph type we just built but there are a few extra neat tricks.
+    This is a pretty neat graph as it show the relative popularity of the name over time and can easily be expanded to many many names. In fact, there is a wonderful website that takes this same data and allows you select the names quite nicely: [http://www.babynamewizard.com/voyager#prefix=&sw=both&exact=false]. My wife and I used this a lot while figuring out what to name our children. Notice that this site really uses the same graph type we just built but there are a few extra neat interactivity tricks.
