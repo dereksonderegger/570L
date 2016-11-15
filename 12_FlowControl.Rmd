@@ -272,11 +272,12 @@ ggplot(SampDist, aes(x=xbar)) +
         i. 
             ```{r, eval=FALSE}
             x <- runif(n=1, 0,10)  # one random value between 0 and 10 
-            if( (a<=x) ??? (x<=b) ){
+            if( (a<=x) & (x<=b) ){
               result <- 1/(b-a)
             }else{
               result <- 0
             }
+            print(paste('x=',round(x,digits=3), '  result=', round(result,digits=3)))
             ```
         ii. 
             ```{r, eval=FALSE}
@@ -286,11 +287,13 @@ ggplot(SampDist, aes(x=xbar)) +
             }else{
               result <- 1/(b-a)
             }
+            print(paste('x=',round(x,digits=3), '  result=', round(result,digits=3)))
             ```
         iii.
             ```{r, eval=FALSE}
             x <- runif(n=1, 0,10)  # one random value between 0 and 10 
-            ifelse( a<x & x<b, ???, ??? )
+            result <- ifelse( a<x & x<b, ???, ??? )
+            print(paste('x=',round(x,digits=3), '  result=', round(result,digits=3)))
             ```
 
 
@@ -315,8 +318,6 @@ ggplot(SampDist, aes(x=xbar)) +
     print(myplot) 
     ```
 
-
-
     a) Use a for loop to create similar graphs for degrees of freedom $2,3,4,\dots,29,30$. 
 
     b) In retrospect, perhaps we didn't need to produce all of those. Rewrite your loop so that we only produce graphs for $\left\{ 2,3,4,5,10,15,20,25,30\right\}$ degrees of freedom. *Hint: you can just modify the vector in the `for` statement to include the desired degrees of freedom.*
@@ -324,9 +325,9 @@ ggplot(SampDist, aes(x=xbar)) +
 3. The `for` loop usually is the most natural one to use, but occasionally we have occasions where it is too cumbersome and a different sort of loop is appropriate. One example is taking a random sample from a truncated distribution. For example, I might want to take a sample from a normal distribution with mean $\mu$ and standard deviation $\sigma$ but for some reason need the answer to be larger than zero. One solution is to just sample from the given normal distribution until I get a value that is bigger than zero. 
 
     ```{r}
-    mu    <- 0
+    mu    <- 0 
     sigma <- 1
-    x <- rnorm(1, mean=mu, sd=sigma)
+    x <- rnorm(1, mean=mu, sd=sigma)         
     # start the while loop checking if x < 0
     #    generate a new x value
     # end the while loop
