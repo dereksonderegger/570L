@@ -279,7 +279,7 @@ When executing a function, R will have access to all the variables defined in th
     ggplot(data, aes(x=x, y=y)) +
       geom_line() +
       scale_x_continuous( breaks=c(0,1), labels=c('a','b') ) +
-      scale_y_continuous( breaks=c(0,1), labels=c(0,expression(1 / (a+b) )) ) +
+      scale_y_continuous( breaks=c(0,1), labels=c(0,expression(1 / (b-a) )) ) +
       labs(y='density') + theme_bw()
     ```
 
