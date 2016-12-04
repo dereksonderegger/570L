@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-10-25">
+<meta name="date" content="2016-12-04">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -505,19 +505,22 @@ if( x &lt;<span class="st"> </span>a ){
 <li><p>We could perform the logical comparison all in one comparison. Recall that we can use <code>&amp;</code> to mean “and” and <code>|</code> to mean “or”. In the following two code chunks, replace the <code>???</code> with either <code>&amp;</code> or <code>|</code> to make the appropriate result.</p>
 <ol style="list-style-type: lower-roman">
 <li><div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n=</span><span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">10</span>)  <span class="co"># one random value between 0 and 10 </span>
-if( (a&lt;=x) ??? (x&lt;=b) ){
+if( (a&lt;=x) &amp;<span class="st"> </span>(x&lt;=b) ){
   result &lt;-<span class="st"> </span><span class="dv">1</span>/(b-a)
 }else{
   result &lt;-<span class="st"> </span><span class="dv">0</span>
-}</code></pre></div></li>
+}
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;x=&#39;</span>,<span class="kw">round</span>(x,<span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39;  result=&#39;</span>, <span class="kw">round</span>(result,<span class="dt">digits=</span><span class="dv">3</span>)))</code></pre></div></li>
 <li><div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n=</span><span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">10</span>)  <span class="co"># one random value between 0 and 10 </span>
 if( (x&lt;a) ??? (b&lt;x) ){
   result &lt;-<span class="st"> </span><span class="dv">0</span>
 }else{
   result &lt;-<span class="st"> </span><span class="dv">1</span>/(b-a)
-}</code></pre></div></li>
+}
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;x=&#39;</span>,<span class="kw">round</span>(x,<span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39;  result=&#39;</span>, <span class="kw">round</span>(result,<span class="dt">digits=</span><span class="dv">3</span>)))</code></pre></div></li>
 <li><div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n=</span><span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">10</span>)  <span class="co"># one random value between 0 and 10 </span>
-<span class="kw">ifelse</span>( a&lt;x &amp;<span class="st"> </span>x&lt;b, ???, ??? )</code></pre></div></li>
+result &lt;-<span class="st"> </span><span class="kw">ifelse</span>( a&lt;x &amp;<span class="st"> </span>x&lt;b, ???, ??? )
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;x=&#39;</span>,<span class="kw">round</span>(x,<span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39;  result=&#39;</span>, <span class="kw">round</span>(result,<span class="dt">digits=</span><span class="dv">3</span>)))</code></pre></div></li>
 </ol></li>
 </ol></li>
 <li><p>I often want to repeat some section of code some number of times. For example, I might want to create a bunch plots that compare the density of a t-distribution with specified degrees of freedom to a standard normal distribution.</p>
@@ -537,15 +540,15 @@ myplot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data, <span 
 
 <span class="co"># actually print the nice graph we made</span>
 <span class="kw">print</span>(myplot) </code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-216-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-217-1.png" width="672" /></p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Use a for loop to create similar graphs for degrees of freedom <span class="math inline">\(2,3,4,\dots,29,30\)</span>.</p></li>
 <li><p>In retrospect, perhaps we didn’t need to produce all of those. Rewrite your loop so that we only produce graphs for <span class="math inline">\(\left\{ 2,3,4,5,10,15,20,25,30\right\}\)</span> degrees of freedom. <em>Hint: you can just modify the vector in the <code>for</code> statement to include the desired degrees of freedom.</em></p></li>
 </ol></li>
 <li><p>The <code>for</code> loop usually is the most natural one to use, but occasionally we have occasions where it is too cumbersome and a different sort of loop is appropriate. One example is taking a random sample from a truncated distribution. For example, I might want to take a sample from a normal distribution with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span> but for some reason need the answer to be larger than zero. One solution is to just sample from the given normal distribution until I get a value that is bigger than zero.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu    &lt;-<span class="st"> </span><span class="dv">0</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu    &lt;-<span class="st"> </span><span class="dv">0</span> 
 sigma &lt;-<span class="st"> </span><span class="dv">1</span>
-x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span>mu, <span class="dt">sd=</span>sigma)
+x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span>mu, <span class="dt">sd=</span>sigma)         
 <span class="co"># start the while loop checking if x &lt; 0</span>
 <span class="co">#    generate a new x value</span>
 <span class="co"># end the while loop</span></code></pre></div>

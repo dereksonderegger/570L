@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-10-25">
+<meta name="date" content="2016-12-04">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -294,7 +294,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>To make the most of ggplot2 it is important to wrap your mind around “The Grammar of Graphics”. The act of building a graph can be broken down into three steps.</p>
 <ol style="list-style-type: decimal">
 <li><p>Define what data we are using.</p></li>
-<li><p>What is the major relationship we wish to exam.</p></li>
+<li><p>What is the major relationship we wish to examine.</p></li>
 <li><p>In what way should we present that relationship. These relationships can be presented in multiple ways, and the process of creating a good graph relies on building layers upon layers of information. For example, we might start with printing the raw data and then overlay a regression line over the top.</p></li>
 </ol>
 <p>Next, it should be noted that <code>ggplot2</code> is designed to act on data frames. It is actually hard to just draw three data points and for simple graphs it might be easier to use the base graphing system in R. However for any real data analysis project, the data will already be in a data frame and this is not an annoyance.</p>
@@ -599,7 +599,9 @@ plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <spa
 </ol></li>
 <li><p>The R package <code>babynames</code> contains a single dataset that lists the number of children registered with Social Security with a particular name along with the proportion out of all children born in a given year. The dataset covers the from 1880 to the present. We want to plot the relative popularity of the names ‘Elise’ and ‘Casey’.</p>
 <ol style="list-style-type: lower-alpha">
-<li>Load the package. If it is not found on your computer, download the package from CRAN.</li>
+<li><p>Load the package. If it is not found on your computer, download the package from CRAN.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(babynames)
+<span class="kw">data</span>(<span class="st">&quot;babynames&quot;</span>)</code></pre></div></li>
 <li>Read the help file for the data set <code>babynames</code> to get a sense of the columns</li>
 <li>Create a small dataset that only has the names ‘Elise’ and ‘Casey’.</li>
 <li><p>Make a plot where the x-axis is the year and the y-axis is the proportion of babies given the names. Use a line to display this relationship and distinguish the two names by color. Notice this graph is a bit ugly because there is a lot of year-to-year variability that we should smooth over.</p></li>
@@ -610,12 +612,12 @@ plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <spa
 <span class="st">  </span><span class="kw">group_by</span>(name, decade) %&gt;%
 <span class="st">  </span><span class="kw">summarise</span>( <span class="dt">prop =</span> <span class="kw">mean</span>(prop),
              <span class="dt">year =</span> <span class="kw">min</span>(year)) </code></pre></div></li>
-<li><p>Now draw the same graph you had in part (d).</p></li>
+<li>Now draw the same graph you had in part (d).</li>
 <li><p>Next we’ll create an area plot where the height is the total proportion of the both names and the colors split up the proportion.</p></li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(small, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>prop, <span class="dt">fill=</span>name)) +<span class="st"> </span>
 <span class="st">   </span><span class="kw">geom_area</span>()</code></pre></div>
-<p>This is a pretty neat graph as it show the relative popularity of the name over time and can easily be expanded to many many names. In fact, there is a wonderful website that takes this same data and allows you select the names quite nicely: [<a href="http://www.babynamewizard.com/voyager#prefix" class="uri">http://www.babynamewizard.com/voyager#prefix</a>=&amp;sw=both&amp;exact=false]. My wife and I used this a lot while figuring out what to name our children. Notice that this site really uses the same graph type we just built but there are a few extra neat tricks.</p></li>
+<p>This is a pretty neat graph as it show the relative popularity of the name over time and can easily be expanded to many many names. In fact, there is a wonderful website that takes this same data and allows you select the names quite nicely: [<a href="http://www.babynamewizard.com/voyager#prefix" class="uri">http://www.babynamewizard.com/voyager#prefix</a>=&amp;sw=both&amp;exact=false]. My wife and I used this a lot while figuring out what to name our children. Notice that this site really uses the same graph type we just built but there are a few extra neat interactivity tricks.</p></li>
 </ol>
 
 </div>

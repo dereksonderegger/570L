@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-10-25">
+<meta name="date" content="2016-12-04">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -298,7 +298,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Sepal.Width)) +
 <span class="st">  </span><span class="kw">geom_point</span>() +
 <span class="st">  </span><span class="kw">facet_grid</span>( . ~<span class="st"> </span>Species )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-183-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
 <p>The line <code>facet_grid( formula )</code> tells <code>ggplot2</code> to make panels, and the formula tells how to orient the panels. Recall that a formula is always in the order <code>y ~ x</code> and because I want the species to change as we go across the page, but don’t have anything I want to change vertically we use <code>. ~ Species</code> to represent that. If we had wanted three graphs stacked then we could use <code>Species ~ .</code>.</p>
 <p>For a second example, we look at a dataset that examines the amount a waiter was tipped by 244 parties. Covariates that were measured include the day of the week, size of the party, total amount of the bill, amount tipped, whether there were smokers in the group and the gender of the person paying the bill</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reshape) <span class="co"># for the dataset &#39;tips&#39;</span>
@@ -314,22 +314,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>It is easy to look at the relationship between the size of the bill and the percent tipped.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tips, <span class="kw">aes</span>(<span class="dt">x =</span> total_bill, <span class="dt">y =</span> tip /<span class="st"> </span>total_bill )) +
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
 <p>Next we ask if there is a difference in tipping percent based on gender or day of the week by plotting this relationship for each combination of gender and day.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tips, <span class="kw">aes</span>(<span class="dt">x =</span> total_bill, <span class="dt">y =</span> tip /<span class="st"> </span>total_bill )) +
 <span class="st">  </span><span class="kw">geom_point</span>() +
 <span class="st">  </span><span class="kw">facet_grid</span>( sex ~<span class="st"> </span>day )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-187-1.png" width="672" /></p>
 <p>Sometimes we want multiple rows and columns of facets, but there is only one categorical variable with many levels. In that case we use facet_wrap which takes a one-sided formula.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tips, <span class="kw">aes</span>(<span class="dt">x =</span> total_bill, <span class="dt">y =</span> tip /<span class="st"> </span>total_bill )) +
 <span class="st">  </span><span class="kw">geom_point</span>() +
 <span class="st">  </span><span class="kw">facet_wrap</span>( ~<span class="st"> </span>day )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-187-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
 <p>Finally we can allow the x and y scales to vary between the panels by setting “free”, “free_x”, or “free_y”. In the following code, the y-axis scale changes between the gender groups.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tips, <span class="kw">aes</span>(<span class="dt">x =</span> total_bill, <span class="dt">y =</span> tip /<span class="st"> </span>total_bill )) +
 <span class="st">  </span><span class="kw">geom_point</span>() +
 <span class="st">  </span><span class="kw">facet_grid</span>( sex ~<span class="st"> </span>day, <span class="dt">scales=</span><span class="st">&quot;free_y&quot;</span> )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-189-1.png" width="672" /></p>
 </div>
 <div id="modifying-scales" class="section level2">
 <h2><span class="header-section-number">11.2</span> Modifying Scales</h2>
@@ -342,18 +342,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">ggplot</span>(ACS, <span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span>Income)) +
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
 <pre><code>## Warning: Removed 175 rows containing missing values (geom_point).</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-189-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
 <p>This is an ugly graph because six observations dominate the graph and the bulk of the data (income &lt; $100,000) is squished together. One solution is to plot income on the <span class="math inline">\(\log_{10}\)</span> scale. There are a couple ways to do this. The simplest way is to just do a transformation on the column of data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ACS, <span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span><span class="kw">log10</span>(Income))) +
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
 <pre><code>## Warning: Removed 175 rows containing missing values (geom_point).</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-191-1.png" width="672" /></p>
 <p>This works quite well to see the trend of peak earning happening in a persons 40s and 50s, but the scale is difficult for me to understand (what does <span class="math inline">\(\log_{10}\left(X\right)=1\)</span> mean here? Oh right, that is <span class="math inline">\(10^{1}=X\)</span> so that is the $10,000 line). It would be really nice if we could do the transformation but have the labels on the original scale.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ACS, <span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span>Income)) +
 <span class="st">  </span><span class="kw">geom_point</span>() +
 <span class="st">  </span><span class="kw">scale_y_log10</span>()</code></pre></div>
 <pre><code>## Warning: Removed 175 rows containing missing values (geom_point).</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-191-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-192-1.png" width="672" /></p>
 <p>Now the y-axis is in the original units (thousands of dollars) but obnoxiously we only have two labeled values. Lets define the major break points (the white lines that have numerical labels) to be at 1,10,100 thousand dollars in salary. Likewise we will tell <code>ggplot2</code> to set minor break points at 1 to 10 thousand dollars (with steps of 1 thousand dollars) and then 10 thousand to 100 thousand but with step sizes of 10 thousand, and finally minor breaks above 100 thousand being in steps of 100 thousand.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ACS, <span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span>Income)) +
 <span class="st">  </span><span class="kw">geom_point</span>() +
@@ -363,7 +363,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
                         <span class="kw">seq</span>(<span class="dv">100</span>,<span class="dv">1000</span>,<span class="dt">by=</span><span class="dv">100</span>))) +
 <span class="st">  </span><span class="kw">ylab</span>(<span class="st">&#39;Income (1000s of dollars)&#39;</span>)</code></pre></div>
 <pre><code>## Warning: Removed 175 rows containing missing values (geom_point).</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-192-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-193-1.png" width="672" /></p>
 </div>
 <div id="arbitrary-transformations" class="section level3">
 <h3><span class="header-section-number">11.2.2</span> Arbitrary transformations</h3>
@@ -399,7 +399,7 @@ p3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw"
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Rmisc)  <span class="co"># for the multiplot function</span>
 my.layout =<span class="st"> </span><span class="kw">cbind</span>( <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>) )
 <span class="kw">multiplot</span>( p1, p2, p3, <span class="dt">layout=</span>my.layout)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-194-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
 </div>
 <div id="themes" class="section level2">
 <h2><span class="header-section-number">11.4</span> Themes</h2>
@@ -409,7 +409,7 @@ my.layout =<span class="st"> </span><span class="kw">cbind</span>( <span class="
            p1 +<span class="st"> </span><span class="kw">theme_dark</span>(),        
            p1 +<span class="st"> </span><span class="kw">theme_light</span>(),
     <span class="dt">cols=</span><span class="dv">2</span> )                         <span class="co"># two columns of graphs   </span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
 <p>There are more themes in the package <code>ggthemes</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggthemes)
 <span class="kw">multiplot</span>( p1 +<span class="st"> </span><span class="kw">theme_stata</span>(),          <span class="co"># Black and white</span>
@@ -417,7 +417,7 @@ my.layout =<span class="st"> </span><span class="kw">cbind</span>( <span class="
            p1 +<span class="st"> </span><span class="kw">theme_fivethirtyeight</span>(),        
            p1 +<span class="st"> </span><span class="kw">theme_excel</span>(),
     <span class="dt">cols=</span><span class="dv">2</span> )                         <span class="co"># two columns of graphs     </span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-197-1.png" width="672" /></p>
 <p>Almost everything you want to modify can be modified within the theme and you should check out the <code>ggplot2</code> documentation for more information and examples of how to modify different elements. [<a href="http://docs.ggplot2.org/current/theme.html" class="uri">http://docs.ggplot2.org/current/theme.html</a>]</p>
 </div>
 <div id="exercises-10" class="section level2">
