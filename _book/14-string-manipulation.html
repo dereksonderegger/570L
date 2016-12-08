@@ -25,7 +25,7 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-12-04">
+<meta name="date" content="2016-12-08">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -291,8 +291,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="string-manipulation" class="section level1">
 <h1><span class="header-section-number">Chapter 14</span> String Manipulation</h1>
 <p>Strings make up a very important class of data. Data being read into R often come in the form of character strings where different parts might mean different things. For example a sample ID of “R1_P2_C1_2012_05_28” might represent data from Region 1, Park 2, Camera 1, taken on May 28, 2012. It is important that we have a set of utilities that allow us to split and combine character strings in a easy and consistent fashion.</p>
+<p>Unfortunately, the utilities included in the base version of R are somewhat inconsistent and were not designed to work nicely together. Hadley Wickham, the developer of <code>ggplot2</code> and <code>dplyr</code> has this to say:</p>
 <blockquote>
-<p>Unfortunately, the utilities included in the base version of R are somewhat inconsistent and were not designed to work nicely together. Hadley Wickham, the developer of <code>ggplot2</code> and <code>dplyr</code> has this to say: “R provides a solid set of string operations, but because they have grown organically over time, they can be inconsistent and a little hard to learn. Additionally, they lag behind the string operations in other programming languages, so that some things that are easy to do in languages like Ruby or Python are rather hard to do in R.” – Hadley Wickham</p>
+<p>“R provides a solid set of string operations, but because they have grown organically over time, they can be inconsistent and a little hard to learn. Additionally, they lag behind the string operations in other programming languages, so that some things that are easy to do in languages like Ruby or Python are rather hard to do in R.” – Hadley Wickham</p>
 </blockquote>
 <p>For this chapter we will introduce the most commonly used functions from the base version of R that you might use or see in other people’s code. Second, we introduce Dr Wickham’s <code>stringr</code> package that provides many useful functions that operate in a consistent manner.</p>
 <div id="base-function" class="section level2">
@@ -539,8 +540,7 @@ full.names &lt;-<span class="st"> </span><span class="kw">str_c</span>( first.na
 <div id="exercises-13" class="section level2">
 <h2><span class="header-section-number">14.5</span> Exercises</h2>
 <ol style="list-style-type: decimal">
-<li><p>Using the <code>test.vector</code> of dates given in the text, create a vector of the years using stringr functions.</p></li>
-<li><p>The following file names were used in a camera trap study. The S number represents the site, P is the plot within a site, C is the camera number within the plot, the first string of numbers is the YearMonthDay and the second string of numbers is the HourMinuteSecond.</p></li>
+<li>The following file names were used in a camera trap study. The S number represents the site, P is the plot within a site, C is the camera number within the plot, the first string of numbers is the YearMonthDay and the second string of numbers is the HourMinuteSecond.</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file.names &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="st">&#39;S123.P2.C10_20120621_213422.jpg&#39;</span>,
                  <span class="st">&#39;S10.P1.C1_20120622_050148.jpg&#39;</span>,
@@ -550,7 +550,7 @@ full.names &lt;-<span class="st"> </span><span class="kw">str_c</span>( first.na
  S123   P2    C10 <span class="dv">2012</span>    <span class="dv">06</span>  <span class="dv">21</span>   <span class="dv">21</span>     <span class="dv">34</span>     <span class="dv">22</span>
   S10   P1     C1 <span class="dv">2012</span>    <span class="dv">06</span>  <span class="dv">22</span>   <span class="dv">05</span>     <span class="dv">01</span>     <span class="dv">48</span>
  S187   P2     C2 <span class="dv">2012</span>    <span class="dv">07</span>  <span class="dv">02</span>   <span class="dv">02</span>     <span class="dv">35</span>     <span class="dv">01</span></code></pre></div>
-<p><em>Hint: Split the file names first by the underscore, and save the resulting three pieces as SiteInfo, DateInfo and TimeInfo and then further break each of those apart in whatever way is appropriate.</em></p>
+<p><em>Hint: Convert all the dashes to periods and then split on the dots. After that you’ll have to further tear apart the date and time columns using str_sub().</em></p>
 
 </div>
 </div>
