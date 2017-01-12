@@ -8,7 +8,7 @@
   <title>A Sufficient Introduction to R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.1.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -25,13 +25,8 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-09-01">
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
-</script>
+<meta name="date" content="2017-01-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -39,7 +34,7 @@ MathJax.Hub.Config({
   
   
 <link rel="prev" href="7-data-manipulation.html">
-
+<link rel="next" href="9-graphing-using-ggplot2.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -144,30 +139,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.4" data-path="4-data-types.html"><a href="4-data-types.html#logicals"><i class="fa fa-check"></i><b>4.4</b> Logicals</a></li>
 <li class="chapter" data-level="4.5" data-path="4-data-types.html"><a href="4-data-types.html#exercises-3"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html"><i class="fa fa-check"></i><b>5</b> Basic Graphing</a><ul>
-<li class="chapter" data-level="5.1" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#univariate-graphs"><i class="fa fa-check"></i><b>5.1</b> Univariate Graphs</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#histograms"><i class="fa fa-check"></i><b>5.1.1</b> Histograms</a></li>
+<li class="chapter" data-level="5" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html"><i class="fa fa-check"></i><b>5</b> Matrices, Data Frames, and Lists</a><ul>
+<li class="chapter" data-level="5.1" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#matrices"><i class="fa fa-check"></i><b>5.1</b> Matrices</a></li>
+<li class="chapter" data-level="5.2" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#data-frames"><i class="fa fa-check"></i><b>5.2</b> Data Frames</a></li>
+<li class="chapter" data-level="5.3" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#lists"><i class="fa fa-check"></i><b>5.3</b> Lists</a></li>
+<li class="chapter" data-level="5.4" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#exercises-4"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#bivariate-plots"><i class="fa fa-check"></i><b>5.2</b> Bivariate Plots</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#boxplots"><i class="fa fa-check"></i><b>5.2.1</b> Boxplots</a></li>
-<li class="chapter" data-level="5.2.2" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#scatterplots"><i class="fa fa-check"></i><b>5.2.2</b> Scatterplots</a></li>
-<li class="chapter" data-level="5.2.3" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#arbitrary-curves"><i class="fa fa-check"></i><b>5.2.3</b> Arbitrary Curves</a></li>
+<li class="chapter" data-level="6" data-path="6-importing-data.html"><a href="6-importing-data.html"><i class="fa fa-check"></i><b>6</b> Importing Data</a><ul>
+<li class="chapter" data-level="6.1" data-path="6-importing-data.html"><a href="6-importing-data.html#working-directory"><i class="fa fa-check"></i><b>6.1</b> Working directory</a></li>
+<li class="chapter" data-level="6.2" data-path="6-importing-data.html"><a href="6-importing-data.html#comma-separated-data"><i class="fa fa-check"></i><b>6.2</b> Comma Separated Data</a></li>
+<li class="chapter" data-level="6.3" data-path="6-importing-data.html"><a href="6-importing-data.html#ms-excel"><i class="fa fa-check"></i><b>6.3</b> MS Excel</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="6-importing-data.html"><a href="6-importing-data.html#libxls-bug"><i class="fa fa-check"></i><b>6.3.1</b> <code>libxls</code> bug</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#advanced-tricks"><i class="fa fa-check"></i><b>5.3</b> Advanced tricks</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#blank-plots"><i class="fa fa-check"></i><b>5.3.1</b> Blank plots</a></li>
-<li class="chapter" data-level="5.3.2" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#points"><i class="fa fa-check"></i><b>5.3.2</b> Points</a></li>
-<li class="chapter" data-level="5.3.3" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#lines"><i class="fa fa-check"></i><b>5.3.3</b> Lines</a></li>
-<li class="chapter" data-level="5.3.4" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#contour-plots"><i class="fa fa-check"></i><b>5.3.4</b> Contour Plots</a></li>
-</ul></li>
-<li class="chapter" data-level="5.4" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#exercises-4"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html"><i class="fa fa-check"></i><b>6</b> Matrices, Data Frames, and Lists</a><ul>
-<li class="chapter" data-level="6.1" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#matrices"><i class="fa fa-check"></i><b>6.1</b> Matrices</a></li>
-<li class="chapter" data-level="6.2" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#data-frames"><i class="fa fa-check"></i><b>6.2</b> Data Frames</a></li>
-<li class="chapter" data-level="6.3" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#lists"><i class="fa fa-check"></i><b>6.3</b> Lists</a></li>
-<li class="chapter" data-level="6.4" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#exercises-5"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
-<li class="chapter" data-level="6.5" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#importing-data"><i class="fa fa-check"></i><b>6.5</b> Importing Data</a></li>
-<li class="chapter" data-level="6.6" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#comma-separated-data"><i class="fa fa-check"></i><b>6.6</b> Comma Separated Data</a></li>
+<li class="chapter" data-level="6.4" data-path="6-importing-data.html"><a href="6-importing-data.html#exercises-5"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html"><i class="fa fa-check"></i><b>7</b> Data Manipulation</a><ul>
 <li class="chapter" data-level="7.1" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#classical-functions-for-summarizing-rows-and-columns"><i class="fa fa-check"></i><b>7.1</b> Classical functions for summarizing rows and columns</a><ul>
@@ -185,9 +169,85 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#tidyr"><i class="fa fa-check"></i><b>8.1</b> <code>tidyr</code></a><ul>
 <li class="chapter" data-level="8.1.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#verbs-1"><i class="fa fa-check"></i><b>8.1.1</b> Verbs</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.2</b> Exercises</a></li>
-<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#importing-data-1"><i class="fa fa-check"></i><b>8.3</b> Importing Data</a></li>
-<li class="chapter" data-level="8.4" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#comma-separated-data-1"><i class="fa fa-check"></i><b>8.4</b> Comma Separated Data</a></li>
+<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.2</b> Table Joins</a></li>
+<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html"><i class="fa fa-check"></i><b>9</b> Graphing using <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="9.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#basic-graphs"><i class="fa fa-check"></i><b>9.1</b> Basic Graphs</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#scatterplots"><i class="fa fa-check"></i><b>9.1.1</b> Scatterplots</a></li>
+<li class="chapter" data-level="9.1.2" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#bar-charts"><i class="fa fa-check"></i><b>9.1.2</b> Bar Charts</a></li>
+<li class="chapter" data-level="9.1.3" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>9.1.3</b> Box Plots</a></li>
+<li class="chapter" data-level="9.1.4" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#geometries-and-layers"><i class="fa fa-check"></i><b>9.1.4</b> Geometries and Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#getting-fancy"><i class="fa fa-check"></i><b>9.2</b> Getting Fancy</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#bar-plot"><i class="fa fa-check"></i><b>9.2.1</b> Bar Plot</a></li>
+<li class="chapter" data-level="9.2.2" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#histograms"><i class="fa fa-check"></i><b>9.2.2</b> Histograms</a></li>
+<li class="chapter" data-level="9.2.3" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#adjusting-labels"><i class="fa fa-check"></i><b>9.2.3</b> Adjusting labels</a></li>
+<li class="chapter" data-level="9.2.4" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#plotting-distributions"><i class="fa fa-check"></i><b>9.2.4</b> Plotting distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#exercises-8"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html"><i class="fa fa-check"></i><b>10</b> More <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="10.1" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#faceting"><i class="fa fa-check"></i><b>10.1</b> Faceting</a></li>
+<li class="chapter" data-level="10.2" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#modifying-scales"><i class="fa fa-check"></i><b>10.2</b> Modifying Scales</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#log-scales"><i class="fa fa-check"></i><b>10.2.1</b> Log scales</a></li>
+<li class="chapter" data-level="10.2.2" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#arbitrary-transformations"><i class="fa fa-check"></i><b>10.2.2</b> Arbitrary transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#multi-plot"><i class="fa fa-check"></i><b>10.3</b> Multi-plot</a></li>
+<li class="chapter" data-level="10.4" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#themes"><i class="fa fa-check"></i><b>10.4</b> Themes</a></li>
+<li class="chapter" data-level="10.5" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#exercises-9"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="11-flow-control.html"><a href="11-flow-control.html"><i class="fa fa-check"></i><b>11</b> Flow Control</a><ul>
+<li class="chapter" data-level="11.1" data-path="11-flow-control.html"><a href="11-flow-control.html#decision-statements"><i class="fa fa-check"></i><b>11.1</b> Decision statements</a></li>
+<li class="chapter" data-level="11.2" data-path="11-flow-control.html"><a href="11-flow-control.html#loops"><i class="fa fa-check"></i><b>11.2</b> Loops</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="11-flow-control.html"><a href="11-flow-control.html#while-loops"><i class="fa fa-check"></i><b>11.2.1</b> <code>while</code> Loops</a></li>
+<li class="chapter" data-level="11.2.2" data-path="11-flow-control.html"><a href="11-flow-control.html#for-loops"><i class="fa fa-check"></i><b>11.2.2</b> <code>for</code> Loops</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="11-flow-control.html"><a href="11-flow-control.html#exercises-10"><i class="fa fa-check"></i><b>11.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html"><i class="fa fa-check"></i><b>12</b> User Defined Functions</a><ul>
+<li class="chapter" data-level="12.1" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#basic-function-definition"><i class="fa fa-check"></i><b>12.1</b> Basic function definition</a></li>
+<li class="chapter" data-level="12.2" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#parameter-defaults"><i class="fa fa-check"></i><b>12.2</b> Parameter Defaults</a></li>
+<li class="chapter" data-level="12.3" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#ellipses"><i class="fa fa-check"></i><b>12.3</b> Ellipses</a></li>
+<li class="chapter" data-level="12.4" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#function-overloading"><i class="fa fa-check"></i><b>12.4</b> Function Overloading</a></li>
+<li class="chapter" data-level="12.5" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#scope"><i class="fa fa-check"></i><b>12.5</b> Scope</a></li>
+<li class="chapter" data-level="12.6" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#exercises-11"><i class="fa fa-check"></i><b>12.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html"><i class="fa fa-check"></i><b>13</b> String Manipulation</a><ul>
+<li class="chapter" data-level="13.1" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#base-function"><i class="fa fa-check"></i><b>13.1</b> Base function</a></li>
+<li class="chapter" data-level="13.2" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#package-stringr-basic-operations"><i class="fa fa-check"></i><b>13.2</b> Package <code>stringr</code>: basic operations</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#concatenating-with-str_c-or-str_join"><i class="fa fa-check"></i><b>13.2.1</b> Concatenating with <code>str_c()</code> or <code>str_join()</code></a></li>
+<li class="chapter" data-level="13.2.2" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#calculating-string-length-with-str_length"><i class="fa fa-check"></i><b>13.2.2</b> Calculating string length with <code>str_length()</code></a></li>
+<li class="chapter" data-level="13.2.3" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#extracting-substrings-with-str_sub"><i class="fa fa-check"></i><b>13.2.3</b> Extracting substrings with <code>str_sub()</code></a></li>
+<li class="chapter" data-level="13.2.4" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#pad-a-string-with-str_pad"><i class="fa fa-check"></i><b>13.2.4</b> Pad a string with <code>str_pad()</code></a></li>
+<li class="chapter" data-level="13.2.5" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#trim-a-string-with-str_trim"><i class="fa fa-check"></i><b>13.2.5</b> Trim a string with <code>str_trim()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#package-stringr-pattern-matching"><i class="fa fa-check"></i><b>13.3</b> Package <code>stringr</code>: Pattern Matching</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#detecting-a-pattern-using-str_detect"><i class="fa fa-check"></i><b>13.3.1</b> Detecting a pattern using str_detect()</a></li>
+<li class="chapter" data-level="13.3.2" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#locating-a-pattern-using-str_locate"><i class="fa fa-check"></i><b>13.3.2</b> Locating a pattern using str_locate()</a></li>
+<li class="chapter" data-level="13.3.3" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#replacing-substrings-using-str_replace"><i class="fa fa-check"></i><b>13.3.3</b> Replacing substrings using <code>str_replace()</code></a></li>
+<li class="chapter" data-level="13.3.4" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#splitting-into-substrings-using-str_split"><i class="fa fa-check"></i><b>13.3.4</b> Splitting into substrings using <code>str_split()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#regular-expressions"><i class="fa fa-check"></i><b>13.4</b> Regular Expressions</a></li>
+<li class="chapter" data-level="13.5" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#exercises-12"><i class="fa fa-check"></i><b>13.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html"><i class="fa fa-check"></i><b>14</b> Dates and Times</a><ul>
+<li class="chapter" data-level="14.1" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#creating-date-and-time-objects"><i class="fa fa-check"></i><b>14.1</b> Creating Date and Time objects</a></li>
+<li class="chapter" data-level="14.2" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#extracting-information"><i class="fa fa-check"></i><b>14.2</b> Extracting information</a></li>
+<li class="chapter" data-level="14.3" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#arithmetic-on-dates"><i class="fa fa-check"></i><b>14.3</b> Arithmetic on Dates</a></li>
+<li class="chapter" data-level="14.4" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#exercises-13"><i class="fa fa-check"></i><b>14.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html"><i class="fa fa-check"></i><b>15</b> Rmarkdown Tricks</a><ul>
+<li class="chapter" data-level="15.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#mathematical-expressions"><i class="fa fa-check"></i><b>15.1</b> Mathematical expressions</a></li>
+<li class="chapter" data-level="15.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#tables"><i class="fa fa-check"></i><b>15.2</b> Tables</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#simple-tables"><i class="fa fa-check"></i><b>15.2.1</b> Simple Tables</a></li>
+<li class="chapter" data-level="15.2.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#grid-tables"><i class="fa fa-check"></i><b>15.2.2</b> Grid Tables</a></li>
+<li class="chapter" data-level="15.2.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#pipe-tables"><i class="fa fa-check"></i><b>15.2.3</b> Pipe Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#r-functions-to-produce-table-code."><i class="fa fa-check"></i><b>15.3</b> R functions to produce table code.</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#knitrkable"><i class="fa fa-check"></i><b>15.3.1</b> <code>knitr::kable</code></a></li>
+<li class="chapter" data-level="15.3.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#package-pander"><i class="fa fa-check"></i><b>15.3.2</b> Package <code>pander</code></a></li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -208,6 +268,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="data-reshaping" class="section level1">
 <h1><span class="header-section-number">Chapter 8</span> Data Reshaping</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)   <span class="co"># for the gather/spread commands</span>
+<span class="kw">library</span>(dplyr)   <span class="co"># for the join stuff</span></code></pre></div>
 <p>Most of the time, our data is in the form of a data frame and we are interested in exploring the relationships. However most procedures in R expect the data to show up in a ‘long’ format where each row is an observation and each column is a covariate. In practice, the data is often not stored like that and the data comes to us with repeated observations included on a single row. This is often done as a memory saving technique or because there is some structure in the data that makes the ‘wide’ format attractive. As a result, we need a way to convert data from ‘wide’ to ‘long’ and vice-versa.</p>
 <div id="tidyr" class="section level2">
 <h2><span class="header-section-number">8.1</span> <code>tidyr</code></h2>
@@ -230,8 +292,7 @@ grade.book</code></pre></div>
 <li><p><code>gather</code> - Gather multiple columns that are related into two columns that contain the original column name and the value. For example for columns HW1, HW2, HW3 we would gather them into two column HomeworkNumber and Score. In this case, we refer to HomeworkNumber as the key column and Score as the value column. So for any key:value pair you know everything you need.</p></li>
 <li><p><code>spread</code> - This is the opposite of gather. This takes a key column (or columns) and a results column and forms a new column for each level of the key column(s).</p></li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)
-<span class="co"># first we gather the score columns into columns we&#39;ll name Assesment and Score</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first we gather the score columns into columns we&#39;ll name Assesment and Score</span>
 tidy.scores &lt;-<span class="st"> </span>grade.book %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">gather</span>( <span class="dt">key=</span>Assessement,  <span class="co"># What should I call the key column</span>
           <span class="dt">value=</span>Score,      <span class="co"># What should I call the values column</span>
@@ -258,141 +319,128 @@ tidy.scores %&gt;%<span class="st"> </span><span class="kw">spread</span>( <span
 <p>One way to keep straight which is the key column is that the key is the category, while value is the numerical value or response.</p>
 </div>
 </div>
+<div id="table-joins" class="section level2">
+<h2><span class="header-section-number">8.2</span> Table Joins</h2>
+<p>Often we need to squish together two data frames but they do not have the same number of rows. Consider the case where we have a data frame of observations of fish (say 200 fish caught per lake) and a separate data frame that contains information about lake (perhaps surface area, max depth, pH, etc). I want to store them as two separate tables so that when I have to record a lake level observation, I only input it <em>one</em> place. This decreases the chance that I make a copy/paste error.</p>
+<p>To illustrate the different types of table joins, we’ll consider two different tables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fish.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Lake =</span> <span class="kw">c</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;C&#39;</span>), <span class="dt">Fish.Weight=</span><span class="dv">101</span>:<span class="dv">106</span>)
+Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Lake =</span> <span class="kw">c</span>(    <span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;D&#39;</span>),         <span class="dt">pH=</span><span class="kw">c</span>(<span class="fl">6.5</span>, <span class="fl">6.3</span>, <span class="fl">6.1</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fish.Data</code></pre></div>
+<pre><code>## # A tibble: 6 × 2
+##    Lake Fish.Weight
+##   &lt;chr&gt;       &lt;int&gt;
+## 1     A         101
+## 2     A         102
+## 3     B         103
+## 4     B         104
+## 5     C         105
+## 6     C         106</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Lake.Data</code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+##    Lake    pH
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1     B   6.5
+## 2     C   6.3
+## 3     D   6.1</code></pre>
+<p>Notice that each of these tables has a column labled <code>Lake</code>. When we join these two tables, the row that describes <code>Lake A</code> should be duplicated for each row in the <code>Fish.Data</code> that corresponds with fish caught from <code>Lake A</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">full_join</span>(Fish.Data, Lake.Data)</code></pre></div>
+<pre><code>## Joining, by = &quot;Lake&quot;</code></pre>
+<pre><code>## # A tibble: 7 × 3
+##    Lake Fish.Weight    pH
+##   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
+## 1     A         101    NA
+## 2     A         102    NA
+## 3     B         103   6.5
+## 4     B         104   6.5
+## 5     C         105   6.3
+## 6     C         106   6.3
+## 7     D          NA   6.1</code></pre>
+<p>Notice that because we didn’t have any fish caught in lake <code>D</code> and we don’t have any Lake information about lake <code>A</code>, when we join these two tables, we end up introducing missing observations into the resulting data frame.</p>
+<p>The other types of joins govern the behavor or these missing data.</p>
+<p><strong><code>left_join(A, B)</code></strong> For each row in A, match with a row in B, but don’t create any more rows than what was already in A.</p>
+<p><strong><code>inner_join(A,B)</code></strong> Only match row values where both data frames have a value.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">left_join</span>(Fish.Data, Lake.Data)</code></pre></div>
+<pre><code>## Joining, by = &quot;Lake&quot;</code></pre>
+<pre><code>## # A tibble: 6 × 3
+##    Lake Fish.Weight    pH
+##   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
+## 1     A         101    NA
+## 2     A         102    NA
+## 3     B         103   6.5
+## 4     B         104   6.5
+## 5     C         105   6.3
+## 6     C         106   6.3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inner_join</span>(Fish.Data, Lake.Data)</code></pre></div>
+<pre><code>## Joining, by = &quot;Lake&quot;</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##    Lake Fish.Weight    pH
+##   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
+## 1     B         103   6.5
+## 2     B         104   6.5
+## 3     C         105   6.3
+## 4     C         106   6.3</code></pre>
+<p>The above examples assumed that the column used to join the two tables was named the same in both tables. This is good practice to try to do, but sometimes you have to work with data where that isn’t the case. In that situation you can use the <code>by=c(&quot;ColName.A&quot;=&quot;ColName.B&quot;)</code> syntax where <code>ColName.A</code> represents the name of the column in the first data frame and <code>ColName.B</code> is the equivalent column in the second data frame.</p>
+</div>
 <div id="exercises-7" class="section level2">
-<h2><span class="header-section-number">8.2</span> Exercises</h2>
+<h2><span class="header-section-number">8.3</span> Exercises</h2>
 <ol style="list-style-type: decimal">
 <li><p>Suppose we are given information about the maximum daily temperature from a weather station in Flagstaff, AZ. The file is available at the GitHub site that this book is hosted on.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FlagTemp &lt;-<span class="st">  </span><span class="kw">read.csv</span>(
   <span class="st">&#39;https://github.com/dereksonderegger/STA_570L_Book/raw/master/data-raw/FlagMaxTemp.csv&#39;</span>,
    <span class="dt">header=</span><span class="ot">TRUE</span>, <span class="dt">sep=</span><span class="st">&#39;,&#39;</span>)</code></pre></div>
-<pre><code>## Warning in read.table(file = file, header = header, sep = sep, quote
-## = quote, : incomplete final line found by readTableHeader on &#39;https://
-## github.com/dereksonderegger/STA_570L_Book/raw/master/data-raw/
-## FlagMaxTemp.csv&#39;</code></pre>
 <p>This file is in a wide format, where each row represents a month and the columns X1, X2, …, X31 represent the day of the month the observation was made.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Convert data set to the long format where the data has only four columns: <code>Year</code>, <code>Month</code>, <code>Day</code>, <code>Tmax</code>.</p></li>
-<li><p>Calculate the average monthly maximum temperature for each Month in the dataset (So there will be 360 mean maximum temperatures).</p></li>
-<li><p>Convert the average month maximums back to a wide data format where each line represents a year and there are 12 columns of temperature data (one for each month) along with a column for the year.</p></li>
+<li><p>Calculate the average monthly maximum temperature for each Month in the dataset (So there will be 365 mean maximum temperatures). <em>You’ll probably have some issues taking the mean because there are a number of values that are missing and by default R refuses to take means and sums when there is missing data. The argument <code>na.rm=TRUE</code> to <code>mean()</code> allows you to force R to remove the missing observations before calculating the mean.</em></p></li>
+<li><p>Convert the average month maximums back to a wide data format where each line represents a year and there are 12 columns of temperature data (one for each month) along with a column for the year. <em>There will be a couple of months that still have missing data because the weather station was out of commision for those months and there was NO data for the entire month.</em></p></li>
 </ol></li>
-</ol>
-
-</div>
-<div id="importing-data-1" class="section level2">
-<h2><span class="header-section-number">8.3</span> Importing Data</h2>
-<p>Reading data from external sources is necessary. It is most common for data to be in a data-frame like storage, such as a MS Excel workbook, so we will concentrate on reading data into a data.frame.</p>
-<p>In the typical way data is organized, we think of each column of data representing some trait or variable that we might be interested in. In general, we might wish to investigate the relationship between variables. In contrast, the rows of our data represent a single object on which the column traits are measured. For example, in a grade book for recording students scores throughout the semester, their is one row for every student and columns for each assignment. A greenhouse experiment dataset will have a row for every plant and columns for treatment type and biomass.</p>
-<p>One concept that will be important is to recognize that every time you start up RStudio, it picks an appropriate working directory. This is the directory where it will first look for script files or data files. So often I will set the working directory to be the same directory as the Rmarkdown file that I’m working on (because I typically will have a couple of MS Excel files, an Rmarkdown file that does an analysis, and the final output file all stored in the same location). If you click on an Rmarkdown file to open RStudio, then the working directory will automatically be set appropriately. To set the working directory explicitly, you can use the GUI tools <code>Session -&gt; Set Working Directory...</code>.</p>
-<p>When you knit your Rmarkdown file, it always starts up a new version of R with the working directory set to the location of the Rmarkdown file. So whenever you specify a file location, it should be relative to the location of the Rmarkdown file you are working on!</p>
-</div>
-<div id="comma-separated-data-1" class="section level2">
-<h2><span class="header-section-number">8.4</span> Comma Separated Data</h2>
-<p>To consider how data might be stored, we first consider the simplest file format… the comma separated values file. In this file time, each of the “cells” of data are separated by a comma. For example, the data file storing scores for three students might be as follows:</p>
-<pre><code>Able, Dave, 98, 92, 94
-Bowles, Jason, 85, 89, 91
-Carr, Jasmine, 81, 96, 97</code></pre>
-<p>Typically when you open up such a file on a computer with Microsoft Excel installed, Excel will open up the file assuming it is a spreadsheet and put each element in its own cell. However, you can also open the file using a more primitive program (say Notepad in Windows, TextEdit on a Mac) you’ll see the raw form of the data.</p>
-<p>Having just the raw data without any sort of column header is problematic (which of the three exams was the final??). Ideally we would have column headers that store the name of the column.</p>
-<pre><code>LastName, FirstName, Exam1, Exam2, FinalExam
-Able, Dave, 98, 92, 94
-Bowles, Jason, 85, 89, 91
-Carr, Jasmine, 81, 96, 97</code></pre>
-<p>To see another example, open the “Body Fat” dataset from the Lock<span class="math inline">\(^{5}\)</span> introductory text book at the website [<a href="http://www.lock5stat.com/datasets/BodyFat.csv" class="uri">http://www.lock5stat.com/datasets/BodyFat.csv</a>]. The first few rows of the file are as follows:</p>
-<pre><code>Bodyfat,Age,Weight,Height,Neck,Chest,Abdomen,Ankle,Biceps,Wrist
-32.3,41,247.25,73.5,42.1,117,115.6,26.3,37.3,19.7
-22.5,31,177.25,71.5,36.2,101.1,92.4,24.6,30.1,18.2
-22,42,156.25,69,35.5,97.8,86,24,31.2,17.4
-12.3,23,154.25,67.75,36.2,93.1,85.2,21.9,32,17.1
-20.5,46,177,70,37.2,99.7,95.6,22.5,29.1,17.7</code></pre>
-<p>To make R read in the data arranged in this format, we need to tell R three things:</p>
-<ol style="list-style-type: decimal">
-<li><p>Where does the data live? Often this will be the name of a file on your computer, but the file could just as easily live on the internet (provided your computer has internet access).</p></li>
-<li><p>Is the first row data or is it the column names?</p></li>
-<li><p>What character separates the data? Some programs store data using tabs to distinguish between elements, some others use white space. R’s mechanism for reading in data is flexible enough to allow you to specify what the separator is.</p></li>
-</ol>
-<p>The primary function that we’ll use to read data from a file and into R is the function <code>read.table()</code>. This function has many optional arguments but the most commonly used ones are outlined in the table below.</p>
+<li>A common task is to take a set of data that has multiple categorical variables and create a table of the number of cases for each combination. An introductory statistics textbook contains a dataset summarizing student surveys from several sections of an intro class. The two variables of interest for us are <code>Gender</code> and <code>Year</code> which are the students gender and year in college.
+<ol style="list-style-type: lower-alpha">
+<li><p>Download the dataset and correctly order the <code>Year</code> variable using the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Survey &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;http://www.lock5stat.com/datasets/StudentSurvey.csv&#39;</span>, <span class="dt">na.strings=</span><span class="kw">c</span>(<span class="st">&#39;&#39;</span>,<span class="st">&#39; &#39;</span>)) %&gt;%
+<span class="st">   </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">factor</span>(Year, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;FirstYear&#39;</span>,<span class="st">&#39;Sophomore&#39;</span>,<span class="st">&#39;Junior&#39;</span>,<span class="st">&#39;Senior&#39;</span>)))</code></pre></div></li>
+<li>Using some combination of <code>dplyr</code> functions, produce a data set with eight rows that contains the number of responses for each gender:year combination. <em>Notice there are two females that neglected to give their Year and you should remove them first. The function <code>is.na(Year)</code> will return logical values indicating if the Year value was missing and you can flip those values using the negation operator <code>!</code>. So you might consider using <code>!is.na(Year)</code> as the argument to a filter() command. Alternatively you sort on Year and remove the first two rows using <code>slice(-2:-1)</code>. Next you’ll want to summarize each Year/Gender group using the <code>n()</code> function which gives the number of rows in a data set.</em></li>
+<li><p>Using <code>tidyr</code> commands, produce a table of the number of responses in the following form:</p>
 <table>
-<colgroup>
-<col width="17%" />
-<col width="22%" />
-<col width="59%" />
-</colgroup>
 <thead>
 <tr class="header">
-<th>Argument</th>
-<th>Default</th>
-<th>What it does</th>
+<th>Gender</th>
+<th>First Year</th>
+<th>Sophmore</th>
+<th>Junior</th>
+<th>Senior</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><p><code>file</code></p></td>
+<td><strong>Female</strong></td>
 <td></td>
-<td><p>A character string denoting the file location</p></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr class="even">
-<td><p><code>header</code></p></td>
-<td><p>FALSE</p></td>
-<td><p>Is the first line column headers?</p></td>
-</tr>
-<tr class="odd">
-<td><p><code>sep</code></p></td>
-<td><p>&quot; &quot;</p></td>
-<td><p>What character separates columns. &quot; &quot; == any whitespace</p></td>
-</tr>
-<tr class="even">
-<td><p><code>skip</code></p></td>
-<td><pre><code>0</code></pre></td>
-<td><p>The number of lines to skip before reading data. This is useful when there are lines of text that describe the data or aren’t actual data</p></td>
-</tr>
-<tr class="odd">
-<td><p><code>na.strings</code></p></td>
-<td><p>‘NA’</p></td>
-<td><p>What values represent missing data. Can have multiple. E.g. <code>c('NA', -9999)</code></p></td>
-</tr>
-<tr class="even">
-<td><p><code>quote</code></p></td>
-<td><p>&quot; and ’</p></td>
-<td><p>For character strings, what characters represent quotes.</p></td>
+<td><strong>Male</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
-</table>
-<p>To read in the “Body Fat” dataset we could run the R command: &lt;&lt;&gt;&gt;=</p>
-<p>Looking at the help file for read.table() we see that there are variants such as read.csv() that sets the default arguments to header and sep more intelligently. Also, there are many options to customize how R responds to different input.</p>
-<p>1.2 MS Excel</p>
-<p>Commonly our data is stored as a MS Excel file. There are two approaches you could use to import the data into R.</p>
-<ol style="list-style-type: decimal">
-<li><p>From within Excel, export the worksheet that contains your data as a comma separated values (.csv) file and proceed using the tools in the previous section.</p></li>
-<li><p>Use functions within R that automatically convert the worksheet into a .csv file and read it in. One package that works nicely for this is the readxl package..</p></li>
-</ol>
-<p>I generally prefer using option 2 because all of my collaborators can’t live without Excel and I’ve resigned myself to this. However if you have complicated formulas in your Excel file, it is often times safer to export it as a .csv file to guarantee the data imported into R is correct. Furthermore, other spreadsheet applications (such as Google docs) requires you to export the data as a .csv file so it is good to know both paths.</p>
-<p>Because R can only import a complete worksheet, the desired data worksheet must be free of notes to yourself about how the data was collected, preliminary graphics, or other stuff that isn’t the data. I find it very helpful to have a worksheet in which I describe the sampling procedure and describe what each column means (and give the units!), then a second worksheet where the actual data is, and finally a third worksheet where my “Excel Only” collaborators have created whatever plots and summary statistics they need.</p>
-<p>The simplest package for importing Excel files seems to be the package readxlAnother package that does this is the XLConnect which does the Excel -&gt; .csv conversion using Java. Another package the works well is the xlsx package, but it also requires Java to be installed. The nice thing about these two packages is that they also allow you to write Excel files as well. The RODBC package allows R to connect to various databases and it is possible to make it consider an Excel file as an extremely crude database. . This library provides a function read_exel() that allows us to specify which sheet within the Excel file to read and what character specifies missing data (it assumes a blank cell is missing data if you don’t specifying anything).</p>
-<p>From GitHub, download the files Example_1.xls, Example_2.xls, Example_3.xls and Example_4.xls from the directory [<a href="https://github.com/dereksonderegger/STA_570L_Book/tree/master/data" class="uri">https://github.com/dereksonderegger/STA_570L_Book/tree/master/data</a>]. Place these files in the same directory that you store your course work or make a subdirectory data to store the files in.. Make sure that the working directory that RStudio is using is that same directory (Session -&gt; Set Working Directory). &lt;<warnings=FALSE, message=FALSE>&gt;=There is one additional problem that shows up while reading in Excel files. Blank columns often show up in Excel files because at some point there was some text in a cell that got deleted but a space remains and Excel still thinks there is data in the column. To fix this, you could find the cell with the space in it, or you can select a bunch of columns at the edge and delete the entire columns. Alternatively, you could remove the column after it is read into R.</p>
-<p>Open up the file Example_4.xls in Excel and confirm that the data sheet has name columns out to carb. Read in the data frame using the following code:&lt;<warnings=FALSE, message=FALSE>&gt;=We notice that after reading in the data, there are an additional two columns (labeled X and X.1 because R had to make up some column name so it chose that) that just has missing data (the NA stands for not available which means that the data is missing). Go back to the Excel file and go to row 4 column N and notice that the cell isn’t actually blank… there is a space. Delete the space, save the file, and then reload the data into R. You should notice that the extra columns are now gone.</p>
-<p>1.3 Exercises</p>
-<ol style="list-style-type: decimal">
-<li>Download from GitHub the data file Example_5.xls. Open it in Excel and figure out which sheet of data we should import into R. At the same time figure out how many initial rows need to be skipped. Import the data set into a data frame and show the structure of the imported data using the str() command. Make sure that your data has n=31 observations and the three columns are appropriately named. &lt;<include=FALSE>&gt;=</li>
+</table></li>
+</ol></li>
+<li><p>The package <code>nycflights</code> contains information about all the flights that arrived in or left from New York City in 2013. This package contains five data tables, but there are three data tables we will work with. The data table <code>flights</code> gives information about a particular flight, <code>airports</code> gives information about a particular airport, and <code>airlines</code> gives information about each airline. Create a table of all the flights on February 14th by Virgin America that has columns for the carrier, destination, departure time, and flight duration. Join this table with the airports information for the destination. Notice that because the column for the destination airport code doesn’t match up between <code>flights</code> and <code>airports</code>, you’ll have to use the <code>by=c(&quot;TableA.Col&quot;=&quot;TableB.Col&quot;)</code> argument where you insert the correct names for <code>TableA.Col</code> and <code>TableB.Col</code>.</p></li>
 </ol>
 
 </div>
 </div>
-
-
-
-
-
-
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="7-data-manipulation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="7-data-manipulation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="9-graphing-using-ggplot2.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -405,6 +453,7 @@ Carr, Jasmine, 81, 96, 97</code></pre>
 require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
+"github": false,
 "facebook": true,
 "twitter": true,
 "google": false,
@@ -420,7 +469,7 @@ gitbook.start({
 },
 "edit": {
 "link": "https://github.com/dereksonderegger/STA_570L_Book/raw/master/09_DataReshaping.Rmd",
-"text": null
+"text": "Edit"
 },
 "download": null,
 "toc": {

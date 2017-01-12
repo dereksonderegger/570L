@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Sufficient Introduction to R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Sufficient Introduction to R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
+  <meta name="github-repo" content="dereksonderegger/STA_570L_Book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Sufficient Introduction to R" />
+  
+  <meta name="twitter:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
+  
+
+<meta name="author" content="Derek L. Sonderegger">
+
+
+<meta name="date" content="2017-01-12">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="8-data-reshaping.html">
+<link rel="next" href="10-more-ggplot2.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Sufficient Introduction to R</a></li>
+<li><a href="https://dereksonderegger.github.io/570L/A_Sufficient_Introduction_to_R.pdf" target="blank">PDF version</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#r-as-a-simple-calculator"><i class="fa fa-check"></i><b>1.1</b> R as a simple calculator</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#assignment"><i class="fa fa-check"></i><b>1.2</b> Assignment</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#scripts-and-rmarkdown"><i class="fa fa-check"></i><b>1.3</b> Scripts and RMarkdown</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#r-scripts-.r-files"><i class="fa fa-check"></i><b>1.3.1</b> R Scripts (.R files)</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#r-markdown-.rmd-files"><i class="fa fa-check"></i><b>1.3.2</b> R Markdown (.Rmd files)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.4</b> Packages</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#exercises"><i class="fa fa-check"></i><b>1.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="2-vectors.html"><a href="2-vectors.html"><i class="fa fa-check"></i><b>2</b> Vectors</a><ul>
+<li class="chapter" data-level="2.1" data-path="2-vectors.html"><a href="2-vectors.html#accessing-vector-elements"><i class="fa fa-check"></i><b>2.1</b> Accessing Vector Elements</a></li>
+<li class="chapter" data-level="2.2" data-path="2-vectors.html"><a href="2-vectors.html#scalar-functions-applied-to-vectors"><i class="fa fa-check"></i><b>2.2</b> Scalar Functions Applied to Vectors</a></li>
+<li class="chapter" data-level="2.3" data-path="2-vectors.html"><a href="2-vectors.html#vector-algebra"><i class="fa fa-check"></i><b>2.3</b> Vector Algebra</a></li>
+<li class="chapter" data-level="2.4" data-path="2-vectors.html"><a href="2-vectors.html#commonly-used-vector-functions"><i class="fa fa-check"></i><b>2.4</b> Commonly Used Vector Functions</a></li>
+<li class="chapter" data-level="2.5" data-path="2-vectors.html"><a href="2-vectors.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html"><i class="fa fa-check"></i><b>3</b> Statistical Tables</a><ul>
+<li class="chapter" data-level="3.1" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#mosaicplotdist-function"><i class="fa fa-check"></i><b>3.1</b> <code>mosaic::plotDist()</code> function</a></li>
+<li class="chapter" data-level="3.2" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#base-r-functions"><i class="fa fa-check"></i><b>3.2</b> Base R functions</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#d-function"><i class="fa fa-check"></i><b>3.2.1</b> d-function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#p-function"><i class="fa fa-check"></i><b>3.2.2</b> p-function</a></li>
+<li class="chapter" data-level="3.2.3" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#q-function"><i class="fa fa-check"></i><b>3.2.3</b> <code>q</code>-function</a></li>
+<li class="chapter" data-level="3.2.4" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#r-function"><i class="fa fa-check"></i><b>3.2.4</b> r-function</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#exercises-2"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="4-data-types.html"><a href="4-data-types.html"><i class="fa fa-check"></i><b>4</b> Data Types</a><ul>
+<li class="chapter" data-level="4.1" data-path="4-data-types.html"><a href="4-data-types.html#integers-and-numerics"><i class="fa fa-check"></i><b>4.1</b> Integers and Numerics</a></li>
+<li class="chapter" data-level="4.2" data-path="4-data-types.html"><a href="4-data-types.html#character-strings"><i class="fa fa-check"></i><b>4.2</b> Character Strings</a></li>
+<li class="chapter" data-level="4.3" data-path="4-data-types.html"><a href="4-data-types.html#factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="4-data-types.html"><a href="4-data-types.html#logicals"><i class="fa fa-check"></i><b>4.4</b> Logicals</a></li>
+<li class="chapter" data-level="4.5" data-path="4-data-types.html"><a href="4-data-types.html#exercises-3"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html"><i class="fa fa-check"></i><b>5</b> Matrices, Data Frames, and Lists</a><ul>
+<li class="chapter" data-level="5.1" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#matrices"><i class="fa fa-check"></i><b>5.1</b> Matrices</a></li>
+<li class="chapter" data-level="5.2" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#data-frames"><i class="fa fa-check"></i><b>5.2</b> Data Frames</a></li>
+<li class="chapter" data-level="5.3" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#lists"><i class="fa fa-check"></i><b>5.3</b> Lists</a></li>
+<li class="chapter" data-level="5.4" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#exercises-4"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="6-importing-data.html"><a href="6-importing-data.html"><i class="fa fa-check"></i><b>6</b> Importing Data</a><ul>
+<li class="chapter" data-level="6.1" data-path="6-importing-data.html"><a href="6-importing-data.html#working-directory"><i class="fa fa-check"></i><b>6.1</b> Working directory</a></li>
+<li class="chapter" data-level="6.2" data-path="6-importing-data.html"><a href="6-importing-data.html#comma-separated-data"><i class="fa fa-check"></i><b>6.2</b> Comma Separated Data</a></li>
+<li class="chapter" data-level="6.3" data-path="6-importing-data.html"><a href="6-importing-data.html#ms-excel"><i class="fa fa-check"></i><b>6.3</b> MS Excel</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="6-importing-data.html"><a href="6-importing-data.html#libxls-bug"><i class="fa fa-check"></i><b>6.3.1</b> <code>libxls</code> bug</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="6-importing-data.html"><a href="6-importing-data.html#exercises-5"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html"><i class="fa fa-check"></i><b>7</b> Data Manipulation</a><ul>
+<li class="chapter" data-level="7.1" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#classical-functions-for-summarizing-rows-and-columns"><i class="fa fa-check"></i><b>7.1</b> Classical functions for summarizing rows and columns</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#summary"><i class="fa fa-check"></i><b>7.1.1</b> <code>summary()</code></a></li>
+<li class="chapter" data-level="7.1.2" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#apply"><i class="fa fa-check"></i><b>7.1.2</b> <code>apply()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#package-dplyr"><i class="fa fa-check"></i><b>7.2</b> Package <code>dplyr</code></a><ul>
+<li class="chapter" data-level="7.2.1" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#verbs"><i class="fa fa-check"></i><b>7.2.1</b> Verbs</a></li>
+<li class="chapter" data-level="7.2.2" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#split-apply-combine"><i class="fa fa-check"></i><b>7.2.2</b> Split, apply, combine</a></li>
+<li class="chapter" data-level="7.2.3" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#chaining-commands-together"><i class="fa fa-check"></i><b>7.2.3</b> Chaining commands together</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#exercises-6"><i class="fa fa-check"></i><b>7.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html"><i class="fa fa-check"></i><b>8</b> Data Reshaping</a><ul>
+<li class="chapter" data-level="8.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#tidyr"><i class="fa fa-check"></i><b>8.1</b> <code>tidyr</code></a><ul>
+<li class="chapter" data-level="8.1.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#verbs-1"><i class="fa fa-check"></i><b>8.1.1</b> Verbs</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.2</b> Table Joins</a></li>
+<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html"><i class="fa fa-check"></i><b>9</b> Graphing using <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="9.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#basic-graphs"><i class="fa fa-check"></i><b>9.1</b> Basic Graphs</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#scatterplots"><i class="fa fa-check"></i><b>9.1.1</b> Scatterplots</a></li>
+<li class="chapter" data-level="9.1.2" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#bar-charts"><i class="fa fa-check"></i><b>9.1.2</b> Bar Charts</a></li>
+<li class="chapter" data-level="9.1.3" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>9.1.3</b> Box Plots</a></li>
+<li class="chapter" data-level="9.1.4" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#geometries-and-layers"><i class="fa fa-check"></i><b>9.1.4</b> Geometries and Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#getting-fancy"><i class="fa fa-check"></i><b>9.2</b> Getting Fancy</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#bar-plot"><i class="fa fa-check"></i><b>9.2.1</b> Bar Plot</a></li>
+<li class="chapter" data-level="9.2.2" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#histograms"><i class="fa fa-check"></i><b>9.2.2</b> Histograms</a></li>
+<li class="chapter" data-level="9.2.3" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#adjusting-labels"><i class="fa fa-check"></i><b>9.2.3</b> Adjusting labels</a></li>
+<li class="chapter" data-level="9.2.4" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#plotting-distributions"><i class="fa fa-check"></i><b>9.2.4</b> Plotting distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#exercises-8"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html"><i class="fa fa-check"></i><b>10</b> More <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="10.1" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#faceting"><i class="fa fa-check"></i><b>10.1</b> Faceting</a></li>
+<li class="chapter" data-level="10.2" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#modifying-scales"><i class="fa fa-check"></i><b>10.2</b> Modifying Scales</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#log-scales"><i class="fa fa-check"></i><b>10.2.1</b> Log scales</a></li>
+<li class="chapter" data-level="10.2.2" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#arbitrary-transformations"><i class="fa fa-check"></i><b>10.2.2</b> Arbitrary transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#multi-plot"><i class="fa fa-check"></i><b>10.3</b> Multi-plot</a></li>
+<li class="chapter" data-level="10.4" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#themes"><i class="fa fa-check"></i><b>10.4</b> Themes</a></li>
+<li class="chapter" data-level="10.5" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#exercises-9"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="11-flow-control.html"><a href="11-flow-control.html"><i class="fa fa-check"></i><b>11</b> Flow Control</a><ul>
+<li class="chapter" data-level="11.1" data-path="11-flow-control.html"><a href="11-flow-control.html#decision-statements"><i class="fa fa-check"></i><b>11.1</b> Decision statements</a></li>
+<li class="chapter" data-level="11.2" data-path="11-flow-control.html"><a href="11-flow-control.html#loops"><i class="fa fa-check"></i><b>11.2</b> Loops</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="11-flow-control.html"><a href="11-flow-control.html#while-loops"><i class="fa fa-check"></i><b>11.2.1</b> <code>while</code> Loops</a></li>
+<li class="chapter" data-level="11.2.2" data-path="11-flow-control.html"><a href="11-flow-control.html#for-loops"><i class="fa fa-check"></i><b>11.2.2</b> <code>for</code> Loops</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="11-flow-control.html"><a href="11-flow-control.html#exercises-10"><i class="fa fa-check"></i><b>11.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html"><i class="fa fa-check"></i><b>12</b> User Defined Functions</a><ul>
+<li class="chapter" data-level="12.1" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#basic-function-definition"><i class="fa fa-check"></i><b>12.1</b> Basic function definition</a></li>
+<li class="chapter" data-level="12.2" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#parameter-defaults"><i class="fa fa-check"></i><b>12.2</b> Parameter Defaults</a></li>
+<li class="chapter" data-level="12.3" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#ellipses"><i class="fa fa-check"></i><b>12.3</b> Ellipses</a></li>
+<li class="chapter" data-level="12.4" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#function-overloading"><i class="fa fa-check"></i><b>12.4</b> Function Overloading</a></li>
+<li class="chapter" data-level="12.5" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#scope"><i class="fa fa-check"></i><b>12.5</b> Scope</a></li>
+<li class="chapter" data-level="12.6" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#exercises-11"><i class="fa fa-check"></i><b>12.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html"><i class="fa fa-check"></i><b>13</b> String Manipulation</a><ul>
+<li class="chapter" data-level="13.1" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#base-function"><i class="fa fa-check"></i><b>13.1</b> Base function</a></li>
+<li class="chapter" data-level="13.2" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#package-stringr-basic-operations"><i class="fa fa-check"></i><b>13.2</b> Package <code>stringr</code>: basic operations</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#concatenating-with-str_c-or-str_join"><i class="fa fa-check"></i><b>13.2.1</b> Concatenating with <code>str_c()</code> or <code>str_join()</code></a></li>
+<li class="chapter" data-level="13.2.2" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#calculating-string-length-with-str_length"><i class="fa fa-check"></i><b>13.2.2</b> Calculating string length with <code>str_length()</code></a></li>
+<li class="chapter" data-level="13.2.3" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#extracting-substrings-with-str_sub"><i class="fa fa-check"></i><b>13.2.3</b> Extracting substrings with <code>str_sub()</code></a></li>
+<li class="chapter" data-level="13.2.4" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#pad-a-string-with-str_pad"><i class="fa fa-check"></i><b>13.2.4</b> Pad a string with <code>str_pad()</code></a></li>
+<li class="chapter" data-level="13.2.5" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#trim-a-string-with-str_trim"><i class="fa fa-check"></i><b>13.2.5</b> Trim a string with <code>str_trim()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#package-stringr-pattern-matching"><i class="fa fa-check"></i><b>13.3</b> Package <code>stringr</code>: Pattern Matching</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#detecting-a-pattern-using-str_detect"><i class="fa fa-check"></i><b>13.3.1</b> Detecting a pattern using str_detect()</a></li>
+<li class="chapter" data-level="13.3.2" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#locating-a-pattern-using-str_locate"><i class="fa fa-check"></i><b>13.3.2</b> Locating a pattern using str_locate()</a></li>
+<li class="chapter" data-level="13.3.3" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#replacing-substrings-using-str_replace"><i class="fa fa-check"></i><b>13.3.3</b> Replacing substrings using <code>str_replace()</code></a></li>
+<li class="chapter" data-level="13.3.4" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#splitting-into-substrings-using-str_split"><i class="fa fa-check"></i><b>13.3.4</b> Splitting into substrings using <code>str_split()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#regular-expressions"><i class="fa fa-check"></i><b>13.4</b> Regular Expressions</a></li>
+<li class="chapter" data-level="13.5" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#exercises-12"><i class="fa fa-check"></i><b>13.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html"><i class="fa fa-check"></i><b>14</b> Dates and Times</a><ul>
+<li class="chapter" data-level="14.1" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#creating-date-and-time-objects"><i class="fa fa-check"></i><b>14.1</b> Creating Date and Time objects</a></li>
+<li class="chapter" data-level="14.2" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#extracting-information"><i class="fa fa-check"></i><b>14.2</b> Extracting information</a></li>
+<li class="chapter" data-level="14.3" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#arithmetic-on-dates"><i class="fa fa-check"></i><b>14.3</b> Arithmetic on Dates</a></li>
+<li class="chapter" data-level="14.4" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#exercises-13"><i class="fa fa-check"></i><b>14.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html"><i class="fa fa-check"></i><b>15</b> Rmarkdown Tricks</a><ul>
+<li class="chapter" data-level="15.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#mathematical-expressions"><i class="fa fa-check"></i><b>15.1</b> Mathematical expressions</a></li>
+<li class="chapter" data-level="15.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#tables"><i class="fa fa-check"></i><b>15.2</b> Tables</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#simple-tables"><i class="fa fa-check"></i><b>15.2.1</b> Simple Tables</a></li>
+<li class="chapter" data-level="15.2.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#grid-tables"><i class="fa fa-check"></i><b>15.2.2</b> Grid Tables</a></li>
+<li class="chapter" data-level="15.2.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#pipe-tables"><i class="fa fa-check"></i><b>15.2.3</b> Pipe Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#r-functions-to-produce-table-code."><i class="fa fa-check"></i><b>15.3</b> R functions to produce table code.</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#knitrkable"><i class="fa fa-check"></i><b>15.3.1</b> <code>knitr::kable</code></a></li>
+<li class="chapter" data-level="15.3.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#package-pander"><i class="fa fa-check"></i><b>15.3.2</b> Package <code>pander</code></a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Sufficient Introduction to R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="graphing-using-ggplot2" class="section level1">
+<h1><span class="header-section-number">Chapter 9</span> Graphing using <code>ggplot2</code></h1>
+<p>There are three major “systems” of making graphs in R. The basic plotting commands in R are quite effective but the commands do not have a way of being combined in easy ways. Lattice graphics (which the <code>mosaic</code> package uses) makes it possible to create some quite complicated graphs but it is very difficult to do make non-standard graphs. The last package, <code>ggplot2</code> tries to not anticipate what the user wants to do, but rather provide the mechanisms for pulling together different graphical concepts and the user gets to decide elements to combine.</p>
+<p>To make the most of ggplot2 it is important to wrap your mind around “The Grammar of Graphics”. The act of building a graph can be broken down into three steps.</p>
+<ol style="list-style-type: decimal">
+<li><p>Define what data we are using.</p></li>
+<li><p>What is the major relationship we wish to examine.</p></li>
+<li><p>In what way should we present that relationship. These relationships can be presented in multiple ways, and the process of creating a good graph relies on building layers upon layers of information. For example, we might start with printing the raw data and then overlay a regression line over the top.</p></li>
+</ol>
+<p>Next, it should be noted that <code>ggplot2</code> is designed to act on data frames. It is actually hard to just draw three data points and for simple graphs it might be easier to use the base graphing system in R. However for any real data analysis project, the data will already be in a data frame and this is not an annoyance.</p>
+<p>These notes are sufficient for graphing simple graphing, but are not intended to be exhaustive. There are many places online to get help with <code>ggplot2</code>. One very nice resource is the website [<a href="http://www.cookbook-r.com/Graphs/" class="uri">http://www.cookbook-r.com/Graphs/</a>] which gives much of the information available in the book R Graphics Cookbook which I highly recommend. Second is just googling your problems and see what you can find on websites such as StackExchange.</p>
+<div id="basic-graphs" class="section level2">
+<h2><span class="header-section-number">9.1</span> Basic Graphs</h2>
+<div id="scatterplots" class="section level3">
+<h3><span class="header-section-number">9.1.1</span> Scatterplots</h3>
+<p>To start with, we’ll make a very simple scatterplot using the <code>iris</code> dataset that will make a scatterplot of <code>Sepal.Length</code> versus <code>Petal.Length</code>, which are two columns in my dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">ggplot</span>( <span class="dt">data=</span>iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Petal.Length) ) +<span class="st">  </span>
+<span class="st">    </span><span class="kw">geom_point</span>(  )</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-138-1.png" width="672" /></p>
+<ol style="list-style-type: decimal">
+<li><p>The data set we wish to use is specified using <code>data=iris</code>.</p></li>
+<li><p>The relationship we want to explore is <code>x=Sepal.Length</code> and <code>y=Petal.Length</code>. This means the x-axis will be the Sepal Length and the y-axis will be the Petal Length.</p></li>
+<li><p>The way we want to display this relationship is through graphing 1 point for every observation.</p></li>
+</ol>
+<p>We can define other attributes that might reflect other aspects of the data. For example, we might want for the of the data point to change dynamically based on the species of iris.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( <span class="dt">data=</span>iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Petal.Length, <span class="dt">color=</span>Species) ) +<span class="st">  </span>
+<span class="st">    </span><span class="kw">geom_point</span>(  )</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-139-1.png" width="672" /></p>
+<p>The <code>aes()</code> command inside the previous section of code is quite mysterious. The way to think about the <code>aes()</code> is that it gives you a way to define relationships that are data dependent. In the previous graph, the x-value and y-value for each point was defined dynamically by the data, as was the color. If we just wanted all the data points to be colored blue and larger, then the following code would do that</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( <span class="dt">data=</span>iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Petal.Length) ) +<span class="st">  </span>
+<span class="st">    </span><span class="kw">geom_point</span>( <span class="dt">color=</span><span class="st">&#39;blue&#39;</span>, <span class="dt">size=</span><span class="dv">4</span> )</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
+<p>The important part isn’t that color and size were defined in the geom_point() but that they were defined outside of an aes() function!</p>
+<ol style="list-style-type: decimal">
+<li><p>Anything set inside an <code>aes()</code> command will be of the form <code>attribute=Column_Name</code> and will change based on the data.</p></li>
+<li><p>Anything set outside an <code>aes()</code> command will be in the form <code>attribute=value</code> and will be fixed.</p></li>
+</ol>
+<p>Next, I suppose I want to add a regression line (the line that best summarizes the relationship between Sepal.Length and Petal.Length) to each of these groups. We can do this by adding another layer to the graph, in this case, a <code>smoother</code> layer. The <code>geom_smoother</code> is intended to take a scatterplot of points and draw the best-fitting curve to the data. There are several options for how it choses to do this, but I’ll tell it to fit a regression line to each set of data. Below, we have a graph of data points, a regression line, and a confidence region for the line.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( <span class="dt">data=</span>iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Petal.Length, <span class="dt">color=</span>Species) ) +<span class="st">  </span>
+<span class="st">  </span><span class="kw">geom_point</span>( ) +
+<span class="st">  </span><span class="kw">geom_smooth</span>( <span class="dt">method=</span><span class="st">&#39;lm&#39;</span> ) <span class="co"># fit a regression to each species</span></code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
+<p>I typically don’t use this method because it has too many limitations as to how I fit the smoother. I prefer to fit a model to the data, calculate the predicted values along with whatever confidence intervals I want, and plot those directly using <code>geom_line()</code> and <code>geom_ribbon()</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>( Petal.Length ~<span class="st"> </span>Sepal.Length *<span class="st"> </span>Species, <span class="dt">data=</span>iris) <span class="co"># fit the model</span>
+iris &lt;-<span class="st"> </span><span class="kw">cbind</span>( iris, <span class="kw">predict</span>(model, <span class="dt">interval=</span><span class="st">&#39;conf&#39;</span>) )         <span class="co"># calc yhat, CI</span>
+<span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">color=</span>Species, <span class="dt">fill=</span>Species)) +
+<span class="st">  </span><span class="kw">geom_ribbon</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>lwr, <span class="dt">ymax=</span>upr)) +
+<span class="st">  </span><span class="kw">geom_line</span>( <span class="kw">aes</span>(<span class="dt">y=</span>fit)) +
+<span class="st">  </span><span class="kw">geom_point</span>( <span class="kw">aes</span>(<span class="dt">y=</span>Petal.Length))</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-142-1.png" width="672" /></p>
+</div>
+<div id="bar-charts" class="section level3">
+<h3><span class="header-section-number">9.1.2</span> Bar Charts</h3>
+<p>For displaying a categorical variable on the x-axis and a continuous variable on the y-axis, a bar chart is a good option. Here we consider a data set that gives the fuel efficiency of different classes of vehicles in two different years. This is a subset of data that the EPA makes available on [<a href="http://fueleconomy.gov" class="uri">http://fueleconomy.gov</a>]. It contains only model which had a new release every year between 1999 and 2008 and therefore represents the most popular cars sold in the US. It includes information for each model for years 1999 and 2008. The dataset is included in the <code>ggplot2</code> package as <code>mpg</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(mpg)</code></pre></div>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    234 obs. of  11 variables:
+##  $ manufacturer: chr  &quot;audi&quot; &quot;audi&quot; &quot;audi&quot; &quot;audi&quot; ...
+##  $ model       : chr  &quot;a4&quot; &quot;a4&quot; &quot;a4&quot; &quot;a4&quot; ...
+##  $ displ       : num  1.8 1.8 2 2 2.8 2.8 3.1 1.8 1.8 2 ...
+##  $ year        : int  1999 1999 2008 2008 1999 1999 2008 1999 1999 2008 ...
+##  $ cyl         : int  4 4 4 4 6 6 6 4 4 4 ...
+##  $ trans       : chr  &quot;auto(l5)&quot; &quot;manual(m5)&quot; &quot;manual(m6)&quot; &quot;auto(av)&quot; ...
+##  $ drv         : chr  &quot;f&quot; &quot;f&quot; &quot;f&quot; &quot;f&quot; ...
+##  $ cty         : int  18 21 20 21 16 18 18 18 16 20 ...
+##  $ hwy         : int  29 29 31 30 26 26 27 26 25 28 ...
+##  $ fl          : chr  &quot;p&quot; &quot;p&quot; &quot;p&quot; &quot;p&quot; ...
+##  $ class       : chr  &quot;compact&quot; &quot;compact&quot; &quot;compact&quot; &quot;compact&quot; ...</code></pre>
+<p>First we could summarize the data by how many of each model there are in the different classes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x=</span>class)) +
+<span class="st">  </span><span class="kw">geom_bar</span>()</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-144-1.png" width="672" /></p>
+<p>By default, the <code>geom_box()</code> just counts the number of cases and displays how many observations were in each class. If we were interested in knowing the mean highway fuel efficiency, we would have to summarize the data and calculate the mean for each class. Fortunately that is pretty easy to do.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)  <span class="co"># for calculating the summary statistics</span>
+mpg.small &lt;-<span class="st"> </span>mpg %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(class) %&gt;%
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean.hwy =</span> <span class="kw">mean</span>(hwy),
+            <span class="dt">sd.hwy   =</span> <span class="kw">sd</span>(hwy))
+
+<span class="kw">ggplot</span>(mpg.small, <span class="kw">aes</span>(<span class="dt">x=</span>class, <span class="dt">y=</span>mean.hwy)) +
+<span class="st">  </span><span class="kw">geom_bar</span>( <span class="dt">stat =</span> <span class="st">&#39;identity&#39;</span> )              <span class="co"># no further summarization!</span></code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-145-1.png" width="672" /></p>
+<p>The stat=‘identity’ part is necessary to keep geom_bar() from doing any default summarization. We can add some error bars to show the standard deviation as well.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg.small, <span class="kw">aes</span>(<span class="dt">x=</span>class, <span class="dt">y=</span>mean.hwy,
+                      <span class="dt">ymin =</span> mean.hwy-sd.hwy, 
+                      <span class="dt">ymax =</span> mean.hwy+sd.hwy)) +
+<span class="st">  </span><span class="kw">geom_bar</span>( <span class="dt">stat =</span> <span class="st">&#39;identity&#39;</span> ) +
+<span class="st">  </span><span class="kw">geom_linerange</span>()</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-146-1.png" width="672" /></p>
+</div>
+<div id="box-plots" class="section level3">
+<h3><span class="header-section-number">9.1.3</span> Box Plots</h3>
+<p>Boxplots are a common way to show a categorical variable on the x-axis and continuous on the y-axis. I actually prefer these over the barchart we did prior.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x=</span>class, <span class="dt">y=</span>hwy)) +
+<span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-147-1.png" width="672" /></p>
+</div>
+<div id="geometries-and-layers" class="section level3">
+<h3><span class="header-section-number">9.1.4</span> Geometries and Layers</h3>
+<p>One way that <code>ggplot2</code> makes it easy to form very complicated graphs is that it provides a large number of basic building blocks that, when stacked upon each other, can produce extremely complicated graphs. A full list is available at [<a href="http://docs.ggplot2.org/current/" class="uri">http://docs.ggplot2.org/current/</a>] but the following list gives some idea of different building blocks.</p>
+<p>These different geometries are different ways to display the relationship between variables and can be combined in many interesting ways.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Geom</th>
+<th>Description</th>
+<th>Required Aesthetics</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>geom_bar</code></td>
+<td>A barplot</td>
+<td><code>x</code></td>
+</tr>
+<tr class="even">
+<td><code>geom_boxplot</code></td>
+<td>Boxplots</td>
+<td><code>x</code></td>
+</tr>
+<tr class="odd">
+<td><code>geom_density</code></td>
+<td>A smoothed histogram</td>
+<td><code>x</code></td>
+</tr>
+<tr class="even">
+<td><code>geom_errorbar</code></td>
+<td>Error bars</td>
+<td><code>ymin, ymax</code></td>
+</tr>
+<tr class="odd">
+<td><code>geom_histogram</code></td>
+<td>A histogram</td>
+<td><code>x</code></td>
+</tr>
+<tr class="even">
+<td><code>geom_line</code></td>
+<td>Draw a line (after sorting x-values)</td>
+<td><code>x, y</code></td>
+</tr>
+<tr class="odd">
+<td><code>geom_path</code></td>
+<td>Draw a line (without sorting x-values)</td>
+<td><code>x, y</code></td>
+</tr>
+<tr class="even">
+<td><code>geom_point</code></td>
+<td>Draw points (for a scatterplot)</td>
+<td><code>x, y</code></td>
+</tr>
+<tr class="odd">
+<td><code>geom_ribbon</code></td>
+<td>Enclose a region, and color the interior</td>
+<td><code>ymin, ymax</code></td>
+</tr>
+<tr class="even">
+<td><code>geom_smooth</code></td>
+<td>Add a ribbon that summarizes a scatterplot</td>
+<td><code>x, y</code></td>
+</tr>
+<tr class="odd">
+<td><code>geom_text</code></td>
+<td>Add text to a graph</td>
+<td><code>x, y, label</code></td>
+</tr>
+</tbody>
+</table>
+<p>A graph can be built up layer by layer, where:</p>
+<ul>
+<li><p>Each layer corresponds to a <code>geom</code>, each of which requires a dataset and a mapping between an aesthetic and a column of the data set.</p>
+<p>– If you don’t specify either, then the layer inherits everything defined in the ggplot() command. – You can have different datasets for each layer!</p></li>
+<li><p>Can add layers with a +, or you can define two plots and add them together (second one over-writes anything that conflicts).</p></li>
+</ul>
+</div>
+</div>
+<div id="getting-fancy" class="section level2">
+<h2><span class="header-section-number">9.2</span> Getting Fancy</h2>
+<div id="bar-plot" class="section level3">
+<h3><span class="header-section-number">9.2.1</span> Bar Plot</h3>
+<p>Suppose that you just want make some barplots and add <span class="math inline">\(\pm\)</span> S.E. bars. This should be really easy to do, but in the base graphics in R, it is a pain. Fortunately in <code>ggplot2</code> this is easy. First, define a data frame with the bar heights you want to graph and the <span class="math inline">\(\pm\)</span> values you wish to use.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Calculate the mean and sd of the Petal Widths for each species</span>
+<span class="kw">library</span>(dplyr)
+stats &lt;-<span class="st"> </span>iris %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(Species) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>( <span class="dt">Mean =</span> <span class="kw">mean</span>(Petal.Width),                 <span class="co"># Mean   = ybar</span>
+             <span class="dt">StdErr =</span> <span class="kw">sd</span>(Petal.Width)/<span class="kw">sqrt</span>(<span class="kw">n</span>()) ) %&gt;%<span class="st">  </span><span class="co"># StdErr = s / sqrt(n)</span>
+<span class="st">  </span><span class="kw">mutate</span>( <span class="dt">lwr =</span> Mean -<span class="st"> </span>StdErr,
+          <span class="dt">upr =</span> Mean +<span class="st"> </span>StdErr )
+stats</code></pre></div>
+<pre><code>## # A tibble: 3 × 5
+##      Species  Mean     StdErr       lwr       upr
+##       &lt;fctr&gt; &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1     setosa 0.246 0.01490377 0.2310962 0.2609038
+## 2 versicolor 1.326 0.02796645 1.2980335 1.3539665
+## 3  virginica 2.026 0.03884138 1.9871586 2.0648414</code></pre>
+<p>Next we take these summary statistics and define the following graph which makes a bar graph of the means and error bars that are <span class="math inline">\(\pm\)</span> 1 estimated standard deviation of the mean (usually referred to as the standard errors of the means). By default, <code>geom_bar()</code> tries to draw a bar plot based on how many observations each group has. What I want, though, is to draw bars of the height I specified, so to do that I have to add <code>stat='identity'</code> to specify that it should just use the heights I tell it.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(stats, <span class="kw">aes</span>(<span class="dt">x=</span>Species)) +
+<span class="st">  </span><span class="kw">geom_bar</span>( <span class="kw">aes</span>(<span class="dt">y=</span>Mean), <span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>) +
+<span class="st">  </span><span class="kw">geom_errorbar</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>lwr, <span class="dt">ymax=</span>upr) )</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-149-1.png" width="672" /></p>
+<p>While this isn’t too bad, we would like to make this a bit more pleasing to look at. Each of the bars is a little too wide and the error bars should be a tad narrower than then bar. Also, the fill color for the bars is too dark. So I’ll change all of these, by setting those attributes <em>outside of an <code>aes()</code> command</em>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(stats, <span class="kw">aes</span>(<span class="dt">x=</span>Species)) +
+<span class="st">  </span><span class="kw">geom_bar</span>( <span class="kw">aes</span>(<span class="dt">y=</span>Mean), <span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>, <span class="dt">fill=</span><span class="st">&#39;grey&#39;</span>, <span class="dt">width=</span>.<span class="dv">6</span>) +
+<span class="st">  </span><span class="kw">geom_errorbar</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>lwr, <span class="dt">ymax=</span>upr), <span class="dt">color=</span><span class="st">&#39;red&#39;</span>, <span class="dt">width=</span>.<span class="dv">4</span> )</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-150-1.png" width="672" /></p>
+<p>The last thing to notice is that the <em>order</em> in which the different layers matter. This is similar to photoshop or GIS software where the layers added last can obscure prior layers. In the graph below, the lower part of the error bar is obscured by the grey bar.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(stats, <span class="kw">aes</span>(<span class="dt">x=</span>Species)) +
+<span class="st">  </span><span class="kw">geom_errorbar</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>lwr, <span class="dt">ymax=</span>upr), <span class="dt">color=</span><span class="st">&#39;red&#39;</span>, <span class="dt">width=</span>.<span class="dv">4</span> ) +
+<span class="st">  </span><span class="kw">geom_bar</span>( <span class="kw">aes</span>(<span class="dt">y=</span>Mean), <span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>, <span class="dt">fill=</span><span class="st">&#39;grey&#39;</span>, <span class="dt">width=</span>.<span class="dv">6</span>)</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-151-1.png" width="672" /></p>
+</div>
+<div id="histograms" class="section level3">
+<h3><span class="header-section-number">9.2.2</span> Histograms</h3>
+<p>Creating histograms of continuous data is a very common thing to do. The simplest way to do this in ggplot() is using the geom_histogram function. The simplest form is the the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">rexp</span>(<span class="dv">10000</span>, <span class="dt">rate=</span><span class="dv">1</span>/<span class="dv">5</span>))
+<span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x=</span>x)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>() </code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-152-1.png" width="672" /></p>
+<p>Somewhat annoyingly, <code>ggplot2</code> does not by default use an intelligent choice for the number of bins. Instead we are stuck investigating different bin-widths by hand. To do this, we set the number of bins via the <code>binwidth</code> argument. Notice that the y-axis is the number of observations in each bin. If we want the y-axis to be density (so that the area shaded has area 1), we just need to tell geom_histogram to have <code>y=..density..</code> instead of the default.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>..density..)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span>.<span class="dv">25</span>) </code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-153-1.png" width="672" /></p>
+<p>Often I want to also add some sort of smoothed density plot to my histogram. The geom to do that is <code>geom_density()</code> which takes your x-values and creates a smoothed density function using kernel density algorithm with a normal kernel. To do this, we need both layers of my plot to have a y-axis of density.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>..density..)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span>.<span class="dv">25</span>) +
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">color=</span><span class="st">&#39;red&#39;</span>, <span class="dt">size=</span><span class="fl">1.5</span>)</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-154-1.png" width="672" /></p>
+</div>
+<div id="adjusting-labels" class="section level3">
+<h3><span class="header-section-number">9.2.3</span> Adjusting labels</h3>
+<p>To make a graph more understandable, it is necessary to tweak labels for the axes and add a main title and such. Here we’ll adjust labels in a graph, including the legend labels.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Treat the number of cylinders in a car as a categorical variable (4,6 or 8)</span>
+mtcars$cyl &lt;-<span class="st"> </span><span class="kw">factor</span>(mtcars$cyl) 
+
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x=</span>wt, <span class="dt">y=</span>mpg, <span class="dt">col=</span>cyl)) +
+<span class="st">   </span><span class="kw">geom_point</span>() +
+<span class="st">  </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&#39;Weight vs Miles per Gallon&#39;</span>) +
+<span class="st">  </span><span class="kw">labs</span>( <span class="dt">x=</span><span class="st">&quot;Weight in tons (2000 lbs)&quot;</span> ) +
+<span class="st">  </span><span class="kw">labs</span>( <span class="dt">y=</span><span class="st">&quot;Miles per Gallon (US)&quot;</span>) +
+<span class="st">  </span><span class="kw">labs</span>( <span class="dt">color=</span><span class="st">&quot;Cylinders&quot;</span>)     </code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-155-1.png" width="672" /></p>
+</div>
+<div id="plotting-distributions" class="section level3">
+<h3><span class="header-section-number">9.2.4</span> Plotting distributions</h3>
+<p>Often I need to plot a distribution and perhaps shade some area in. In this section we’ll give a method for plotting continuous and discrete distributions using <code>ggplot2</code>.</p>
+<div id="continuous-distributions" class="section level4">
+<h4><span class="header-section-number">9.2.4.1</span> Continuous distributions</h4>
+<p>First we need to create a data.frame that contains a sequence of (x,y) pairs that we’ll pass to our graphing program to draw the curve by connecting-the-dots, but because the dots will be very close together, the resulting curve looks smooth. For example, lets plot the F-distribution with parameters <span class="math inline">\(\nu_{1}=5\)</span> and <span class="math inline">\(\nu_{2}=30\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define 1000 points to do a &quot;connect-the-dots&quot;</span>
+plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">x=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>, <span class="dt">length=</span><span class="dv">1000</span>) ) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>( <span class="dt">density =</span> <span class="kw">df</span>(x, <span class="dv">5</span>, <span class="dv">30</span>) )
+
+<span class="kw">ggplot</span>(plot.data, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>density)) +
+<span class="st">  </span><span class="kw">geom_line</span>()  +<span class="st">   </span><span class="co"># just a line</span>
+<span class="st">  </span><span class="kw">geom_area</span>()      <span class="co"># shade in the area under the line</span></code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-156-1.png" width="672" /></p>
+<p>This isn’t too bad, but often we want to add some color to two different sections, perhaps we want different colors distinguishing between values <span class="math inline">\(\ge2.5\)</span> vs values <span class="math inline">\(&lt;2.5\)</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">x=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>, <span class="dt">length=</span><span class="dv">1000</span>) ) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>( <span class="dt">density =</span> <span class="kw">df</span>(x, <span class="dv">5</span>, <span class="dv">30</span>),
+          <span class="dt">Group =</span> <span class="kw">ifelse</span>(x &lt;=<span class="st"> </span><span class="fl">2.5</span>, <span class="st">&#39;Less&#39;</span>,<span class="st">&#39;Greater&#39;</span>) )
+
+<span class="kw">ggplot</span>(plot.data, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>density, <span class="dt">fill=</span>Group)) +
+<span class="st">  </span><span class="kw">geom_area</span>() +
+<span class="st">  </span><span class="kw">geom_line</span>() </code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-157-1.png" width="672" /></p>
+</div>
+<div id="discrete-distributions" class="section level4">
+<h4><span class="header-section-number">9.2.4.2</span> Discrete distributions</h4>
+<p>The idea for discrete distributions will be to draw points for the height and then add bars. Lets look at doing this for the poisson distribution with rate parameter <span class="math inline">\(\lambda=2\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">x=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>) ) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>( <span class="dt">probability =</span> <span class="kw">dpois</span>(x, <span class="dt">lambda=</span><span class="dv">2</span>) )
+
+<span class="kw">ggplot</span>(plot.data, <span class="kw">aes</span>(<span class="dt">x=</span>x)) +
+<span class="st">  </span><span class="kw">geom_point</span>( <span class="kw">aes</span>(<span class="dt">y=</span>probability) ) +
+<span class="st">  </span><span class="kw">geom_linerange</span>(<span class="kw">aes</span>(<span class="dt">ymax=</span>probability), <span class="dt">ymin=</span><span class="dv">0</span>) </code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-158-1.png" width="672" /></p>
+<p>The key trick here was to set the <code>ymin</code> value to always be zero.</p>
+</div>
+</div>
+</div>
+<div id="exercises-8" class="section level2">
+<h2><span class="header-section-number">9.3</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li><p>For the dataset trees, which should already be pre-loaded. Look at the help file using <code>?trees</code> for more information about this data set. We wish to build a scatterplot that compares the height and girth of these cherry trees to the volume of lumber that was produced.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Create a graph using ggplot2 with Height on the x-axis, Volume on the y-axis, and Girth as the either the size of the data point or the color of the data point. Which do you think is a more intuitive representation?</li>
+<li>Add appropriate labels for the main title and the x and y axes.</li>
+</ol></li>
+<li><p>Consider the following small dataset that represents the number of times per day my wife played “Ring around the Rosy” with my daughter relative to the number of days since she has learned this game. The column yhat represents the best fitting line through the data, and lwr and upr represent a 95% confidence interval for the predicted value on that day.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Rosy &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">times =</span> <span class="kw">c</span>(<span class="dv">15</span>, <span class="dv">11</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>),
+  <span class="dt">day   =</span> <span class="dv">1</span>:<span class="dv">7</span>,
+  <span class="dt">yhat  =</span> <span class="kw">c</span>(<span class="fl">14.36</span>, <span class="fl">12.29</span>, <span class="fl">10.21</span>, <span class="fl">8.14</span>, <span class="fl">6.07</span>, <span class="fl">4.00</span>,  <span class="fl">1.93</span>),
+  <span class="dt">lwr   =</span> <span class="kw">c</span>( <span class="fl">9.54</span>,  <span class="fl">8.5</span>,   <span class="fl">7.22</span>, <span class="fl">5.47</span>, <span class="fl">3.08</span>, <span class="fl">0.22</span>, -<span class="fl">2.89</span>),
+  <span class="dt">upr   =</span> <span class="kw">c</span>(<span class="fl">19.18</span>, <span class="fl">16.07</span>, <span class="fl">13.2</span>, <span class="fl">10.82</span>, <span class="fl">9.06</span>, <span class="fl">7.78</span>,  <span class="fl">6.75</span>))</code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li><p>Using <code>ggplot()</code> and <code>geom_point()</code>, create a scatterplot with <code>day</code> along the x-axis and <code>times</code> along the y-axis.</p></li>
+<li><p>Add a line to the graph where the x-values are the <code>day</code> values but now the y-values are the predicted values which we’ve called <code>yhat</code>. Notice that you have to set the aesthetic y=times for the points and y=yhat for the line. Because each <code>geom_</code> will accept an <code>aes()</code> command, you can specify the <code>y</code> attribute to be different for different layers of the graph.</p></li>
+<li><p>Add a ribbon that represents the confidence region of the regression line. The <code>geom_ribbon()</code> function requires an <code>x</code>, <code>ymin</code>, and <code>ymax</code> columns to be defined. For examples of using <code>geom_ribbon()</code> see the online documentation: [<a href="http://docs.ggplot2.org/current/geom_ribbon.html" class="uri">http://docs.ggplot2.org/current/geom_ribbon.html</a>].</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(Rosy, <span class="kw">aes</span>(<span class="dt">x=</span>day)) +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y=</span>times)) +
+<span class="st">  </span><span class="kw">geom_line</span>( <span class="kw">aes</span>(<span class="dt">y=</span>yhat)) +
+<span class="st">  </span><span class="kw">geom_ribbon</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>lwr, <span class="dt">ymax=</span>upr), <span class="dt">fill=</span><span class="st">&#39;salmon&#39;</span>)</code></pre></div></li>
+<li><p>What happened when you added the ribbon? Did some points get hidden? If so, why?</p></li>
+<li><p>Reorder the statements that created the graph so that the ribbon is on the bottom and the data points are on top and the regression line is visible.</p></li>
+<li><p>The color of the ribbon fill is ugly. Use google to find a list of named colors available to <code>ggplot2</code>. For example, I googled “ggplot2 named colors” and found the following link: [<a href="http://sape.inf.usi.ch/quick-reference/ggplot2/colour" class="uri">http://sape.inf.usi.ch/quick-reference/ggplot2/colour</a>]. Choose a color for the fill that is pleasing to you.</p></li>
+<li><p>Add labels for the x-axis and y-axis that are appropriate along with a main title.</p></li>
+</ol></li>
+<li><p>The R package <code>babynames</code> contains a single dataset that lists the number of children registered with Social Security with a particular name along with the proportion out of all children born in a given year. The dataset covers the from 1880 to the present. We want to plot the relative popularity of the names ‘Elise’ and ‘Casey’.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Load the package. If it is not found on your computer, download the package from CRAN.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(babynames)
+<span class="kw">data</span>(<span class="st">&quot;babynames&quot;</span>)</code></pre></div></li>
+<li>Read the help file for the data set <code>babynames</code> to get a sense of the columns</li>
+<li>Create a small dataset that only has the names ‘Elise’ and ‘Casey’.</li>
+<li><p>Make a plot where the x-axis is the year and the y-axis is the proportion of babies given the names. Use a line to display this relationship and distinguish the two names by color. Notice this graph is a bit ugly because there is a lot of year-to-year variability that we should smooth over.</p></li>
+<li><p>We’ll use dplyr to collapse the individual years into decades using the following code:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">small &lt;-<span class="st"> </span>babynames %&gt;%
+<span class="st">  </span><span class="kw">filter</span>( name==<span class="st">&#39;Elise&#39;</span> |<span class="st"> </span>name==<span class="st">&#39;Casey&#39;</span>) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>( <span class="dt">decade =</span> <span class="kw">cut</span>(year, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">1869</span>,<span class="dv">2019</span>,<span class="dt">by=</span><span class="dv">10</span>) )) %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(name, decade) %&gt;%
+<span class="st">  </span><span class="kw">summarise</span>( <span class="dt">prop =</span> <span class="kw">mean</span>(prop),
+             <span class="dt">year =</span> <span class="kw">min</span>(year)) </code></pre></div></li>
+<li>Now draw the same graph you had in part (d).</li>
+<li><p>Next we’ll create an area plot where the height is the total proportion of the both names and the colors split up the proportion.</p></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(small, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>prop, <span class="dt">fill=</span>name)) +<span class="st"> </span>
+<span class="st">   </span><span class="kw">geom_area</span>()</code></pre></div>
+<p>This is a pretty neat graph as it show the relative popularity of the name over time and can easily be expanded to many many names. In fact, there is a wonderful website that takes this same data and allows you select the names quite nicely: [<a href="http://www.babynamewizard.com/voyager#prefix" class="uri">http://www.babynamewizard.com/voyager#prefix</a>=&amp;sw=both&amp;exact=false]. My wife and I used this a lot while figuring out what to name our children. Notice that this site really uses the same graph type we just built but there are a few extra neat interactivity tricks.</p></li>
+</ol>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="8-data-reshaping.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="10-more-ggplot2.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/dereksonderegger/STA_570L_Book/raw/master/10_ggplot2.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

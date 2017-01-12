@@ -8,7 +8,7 @@
   <title>A Sufficient Introduction to R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.1.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -25,20 +25,15 @@
 
 <meta name="author" content="Derek L. Sonderegger">
 
-<meta name="date" content="2016-09-01">
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
-</script>
+<meta name="date" content="2017-01-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="6-matrices-data-frames-and-lists.html">
+<link rel="prev" href="6-importing-data.html">
 <link rel="next" href="8-data-reshaping.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -144,30 +139,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.4" data-path="4-data-types.html"><a href="4-data-types.html#logicals"><i class="fa fa-check"></i><b>4.4</b> Logicals</a></li>
 <li class="chapter" data-level="4.5" data-path="4-data-types.html"><a href="4-data-types.html#exercises-3"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html"><i class="fa fa-check"></i><b>5</b> Basic Graphing</a><ul>
-<li class="chapter" data-level="5.1" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#univariate-graphs"><i class="fa fa-check"></i><b>5.1</b> Univariate Graphs</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#histograms"><i class="fa fa-check"></i><b>5.1.1</b> Histograms</a></li>
+<li class="chapter" data-level="5" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html"><i class="fa fa-check"></i><b>5</b> Matrices, Data Frames, and Lists</a><ul>
+<li class="chapter" data-level="5.1" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#matrices"><i class="fa fa-check"></i><b>5.1</b> Matrices</a></li>
+<li class="chapter" data-level="5.2" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#data-frames"><i class="fa fa-check"></i><b>5.2</b> Data Frames</a></li>
+<li class="chapter" data-level="5.3" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#lists"><i class="fa fa-check"></i><b>5.3</b> Lists</a></li>
+<li class="chapter" data-level="5.4" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#exercises-4"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#bivariate-plots"><i class="fa fa-check"></i><b>5.2</b> Bivariate Plots</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#boxplots"><i class="fa fa-check"></i><b>5.2.1</b> Boxplots</a></li>
-<li class="chapter" data-level="5.2.2" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#scatterplots"><i class="fa fa-check"></i><b>5.2.2</b> Scatterplots</a></li>
-<li class="chapter" data-level="5.2.3" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#arbitrary-curves"><i class="fa fa-check"></i><b>5.2.3</b> Arbitrary Curves</a></li>
+<li class="chapter" data-level="6" data-path="6-importing-data.html"><a href="6-importing-data.html"><i class="fa fa-check"></i><b>6</b> Importing Data</a><ul>
+<li class="chapter" data-level="6.1" data-path="6-importing-data.html"><a href="6-importing-data.html#working-directory"><i class="fa fa-check"></i><b>6.1</b> Working directory</a></li>
+<li class="chapter" data-level="6.2" data-path="6-importing-data.html"><a href="6-importing-data.html#comma-separated-data"><i class="fa fa-check"></i><b>6.2</b> Comma Separated Data</a></li>
+<li class="chapter" data-level="6.3" data-path="6-importing-data.html"><a href="6-importing-data.html#ms-excel"><i class="fa fa-check"></i><b>6.3</b> MS Excel</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="6-importing-data.html"><a href="6-importing-data.html#libxls-bug"><i class="fa fa-check"></i><b>6.3.1</b> <code>libxls</code> bug</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#advanced-tricks"><i class="fa fa-check"></i><b>5.3</b> Advanced tricks</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#blank-plots"><i class="fa fa-check"></i><b>5.3.1</b> Blank plots</a></li>
-<li class="chapter" data-level="5.3.2" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#points"><i class="fa fa-check"></i><b>5.3.2</b> Points</a></li>
-<li class="chapter" data-level="5.3.3" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#lines"><i class="fa fa-check"></i><b>5.3.3</b> Lines</a></li>
-<li class="chapter" data-level="5.3.4" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#contour-plots"><i class="fa fa-check"></i><b>5.3.4</b> Contour Plots</a></li>
-</ul></li>
-<li class="chapter" data-level="5.4" data-path="5-basic-graphing.html"><a href="5-basic-graphing.html#exercises-4"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html"><i class="fa fa-check"></i><b>6</b> Matrices, Data Frames, and Lists</a><ul>
-<li class="chapter" data-level="6.1" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#matrices"><i class="fa fa-check"></i><b>6.1</b> Matrices</a></li>
-<li class="chapter" data-level="6.2" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#data-frames"><i class="fa fa-check"></i><b>6.2</b> Data Frames</a></li>
-<li class="chapter" data-level="6.3" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#lists"><i class="fa fa-check"></i><b>6.3</b> Lists</a></li>
-<li class="chapter" data-level="6.4" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#exercises-5"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
-<li class="chapter" data-level="6.5" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#importing-data"><i class="fa fa-check"></i><b>6.5</b> Importing Data</a></li>
-<li class="chapter" data-level="6.6" data-path="6-matrices-data-frames-and-lists.html"><a href="6-matrices-data-frames-and-lists.html#comma-separated-data"><i class="fa fa-check"></i><b>6.6</b> Comma Separated Data</a></li>
+<li class="chapter" data-level="6.4" data-path="6-importing-data.html"><a href="6-importing-data.html#exercises-5"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html"><i class="fa fa-check"></i><b>7</b> Data Manipulation</a><ul>
 <li class="chapter" data-level="7.1" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#classical-functions-for-summarizing-rows-and-columns"><i class="fa fa-check"></i><b>7.1</b> Classical functions for summarizing rows and columns</a><ul>
@@ -185,9 +169,85 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#tidyr"><i class="fa fa-check"></i><b>8.1</b> <code>tidyr</code></a><ul>
 <li class="chapter" data-level="8.1.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#verbs-1"><i class="fa fa-check"></i><b>8.1.1</b> Verbs</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.2</b> Exercises</a></li>
-<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#importing-data-1"><i class="fa fa-check"></i><b>8.3</b> Importing Data</a></li>
-<li class="chapter" data-level="8.4" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#comma-separated-data-1"><i class="fa fa-check"></i><b>8.4</b> Comma Separated Data</a></li>
+<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.2</b> Table Joins</a></li>
+<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html"><i class="fa fa-check"></i><b>9</b> Graphing using <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="9.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#basic-graphs"><i class="fa fa-check"></i><b>9.1</b> Basic Graphs</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#scatterplots"><i class="fa fa-check"></i><b>9.1.1</b> Scatterplots</a></li>
+<li class="chapter" data-level="9.1.2" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#bar-charts"><i class="fa fa-check"></i><b>9.1.2</b> Bar Charts</a></li>
+<li class="chapter" data-level="9.1.3" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>9.1.3</b> Box Plots</a></li>
+<li class="chapter" data-level="9.1.4" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#geometries-and-layers"><i class="fa fa-check"></i><b>9.1.4</b> Geometries and Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#getting-fancy"><i class="fa fa-check"></i><b>9.2</b> Getting Fancy</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#bar-plot"><i class="fa fa-check"></i><b>9.2.1</b> Bar Plot</a></li>
+<li class="chapter" data-level="9.2.2" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#histograms"><i class="fa fa-check"></i><b>9.2.2</b> Histograms</a></li>
+<li class="chapter" data-level="9.2.3" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#adjusting-labels"><i class="fa fa-check"></i><b>9.2.3</b> Adjusting labels</a></li>
+<li class="chapter" data-level="9.2.4" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#plotting-distributions"><i class="fa fa-check"></i><b>9.2.4</b> Plotting distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#exercises-8"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html"><i class="fa fa-check"></i><b>10</b> More <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="10.1" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#faceting"><i class="fa fa-check"></i><b>10.1</b> Faceting</a></li>
+<li class="chapter" data-level="10.2" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#modifying-scales"><i class="fa fa-check"></i><b>10.2</b> Modifying Scales</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#log-scales"><i class="fa fa-check"></i><b>10.2.1</b> Log scales</a></li>
+<li class="chapter" data-level="10.2.2" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#arbitrary-transformations"><i class="fa fa-check"></i><b>10.2.2</b> Arbitrary transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#multi-plot"><i class="fa fa-check"></i><b>10.3</b> Multi-plot</a></li>
+<li class="chapter" data-level="10.4" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#themes"><i class="fa fa-check"></i><b>10.4</b> Themes</a></li>
+<li class="chapter" data-level="10.5" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#exercises-9"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="11-flow-control.html"><a href="11-flow-control.html"><i class="fa fa-check"></i><b>11</b> Flow Control</a><ul>
+<li class="chapter" data-level="11.1" data-path="11-flow-control.html"><a href="11-flow-control.html#decision-statements"><i class="fa fa-check"></i><b>11.1</b> Decision statements</a></li>
+<li class="chapter" data-level="11.2" data-path="11-flow-control.html"><a href="11-flow-control.html#loops"><i class="fa fa-check"></i><b>11.2</b> Loops</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="11-flow-control.html"><a href="11-flow-control.html#while-loops"><i class="fa fa-check"></i><b>11.2.1</b> <code>while</code> Loops</a></li>
+<li class="chapter" data-level="11.2.2" data-path="11-flow-control.html"><a href="11-flow-control.html#for-loops"><i class="fa fa-check"></i><b>11.2.2</b> <code>for</code> Loops</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="11-flow-control.html"><a href="11-flow-control.html#exercises-10"><i class="fa fa-check"></i><b>11.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html"><i class="fa fa-check"></i><b>12</b> User Defined Functions</a><ul>
+<li class="chapter" data-level="12.1" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#basic-function-definition"><i class="fa fa-check"></i><b>12.1</b> Basic function definition</a></li>
+<li class="chapter" data-level="12.2" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#parameter-defaults"><i class="fa fa-check"></i><b>12.2</b> Parameter Defaults</a></li>
+<li class="chapter" data-level="12.3" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#ellipses"><i class="fa fa-check"></i><b>12.3</b> Ellipses</a></li>
+<li class="chapter" data-level="12.4" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#function-overloading"><i class="fa fa-check"></i><b>12.4</b> Function Overloading</a></li>
+<li class="chapter" data-level="12.5" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#scope"><i class="fa fa-check"></i><b>12.5</b> Scope</a></li>
+<li class="chapter" data-level="12.6" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#exercises-11"><i class="fa fa-check"></i><b>12.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html"><i class="fa fa-check"></i><b>13</b> String Manipulation</a><ul>
+<li class="chapter" data-level="13.1" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#base-function"><i class="fa fa-check"></i><b>13.1</b> Base function</a></li>
+<li class="chapter" data-level="13.2" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#package-stringr-basic-operations"><i class="fa fa-check"></i><b>13.2</b> Package <code>stringr</code>: basic operations</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#concatenating-with-str_c-or-str_join"><i class="fa fa-check"></i><b>13.2.1</b> Concatenating with <code>str_c()</code> or <code>str_join()</code></a></li>
+<li class="chapter" data-level="13.2.2" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#calculating-string-length-with-str_length"><i class="fa fa-check"></i><b>13.2.2</b> Calculating string length with <code>str_length()</code></a></li>
+<li class="chapter" data-level="13.2.3" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#extracting-substrings-with-str_sub"><i class="fa fa-check"></i><b>13.2.3</b> Extracting substrings with <code>str_sub()</code></a></li>
+<li class="chapter" data-level="13.2.4" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#pad-a-string-with-str_pad"><i class="fa fa-check"></i><b>13.2.4</b> Pad a string with <code>str_pad()</code></a></li>
+<li class="chapter" data-level="13.2.5" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#trim-a-string-with-str_trim"><i class="fa fa-check"></i><b>13.2.5</b> Trim a string with <code>str_trim()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#package-stringr-pattern-matching"><i class="fa fa-check"></i><b>13.3</b> Package <code>stringr</code>: Pattern Matching</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#detecting-a-pattern-using-str_detect"><i class="fa fa-check"></i><b>13.3.1</b> Detecting a pattern using str_detect()</a></li>
+<li class="chapter" data-level="13.3.2" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#locating-a-pattern-using-str_locate"><i class="fa fa-check"></i><b>13.3.2</b> Locating a pattern using str_locate()</a></li>
+<li class="chapter" data-level="13.3.3" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#replacing-substrings-using-str_replace"><i class="fa fa-check"></i><b>13.3.3</b> Replacing substrings using <code>str_replace()</code></a></li>
+<li class="chapter" data-level="13.3.4" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#splitting-into-substrings-using-str_split"><i class="fa fa-check"></i><b>13.3.4</b> Splitting into substrings using <code>str_split()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#regular-expressions"><i class="fa fa-check"></i><b>13.4</b> Regular Expressions</a></li>
+<li class="chapter" data-level="13.5" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#exercises-12"><i class="fa fa-check"></i><b>13.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html"><i class="fa fa-check"></i><b>14</b> Dates and Times</a><ul>
+<li class="chapter" data-level="14.1" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#creating-date-and-time-objects"><i class="fa fa-check"></i><b>14.1</b> Creating Date and Time objects</a></li>
+<li class="chapter" data-level="14.2" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#extracting-information"><i class="fa fa-check"></i><b>14.2</b> Extracting information</a></li>
+<li class="chapter" data-level="14.3" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#arithmetic-on-dates"><i class="fa fa-check"></i><b>14.3</b> Arithmetic on Dates</a></li>
+<li class="chapter" data-level="14.4" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#exercises-13"><i class="fa fa-check"></i><b>14.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html"><i class="fa fa-check"></i><b>15</b> Rmarkdown Tricks</a><ul>
+<li class="chapter" data-level="15.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#mathematical-expressions"><i class="fa fa-check"></i><b>15.1</b> Mathematical expressions</a></li>
+<li class="chapter" data-level="15.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#tables"><i class="fa fa-check"></i><b>15.2</b> Tables</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#simple-tables"><i class="fa fa-check"></i><b>15.2.1</b> Simple Tables</a></li>
+<li class="chapter" data-level="15.2.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#grid-tables"><i class="fa fa-check"></i><b>15.2.2</b> Grid Tables</a></li>
+<li class="chapter" data-level="15.2.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#pipe-tables"><i class="fa fa-check"></i><b>15.2.3</b> Pipe Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#r-functions-to-produce-table-code."><i class="fa fa-check"></i><b>15.3</b> R functions to produce table code.</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#knitrkable"><i class="fa fa-check"></i><b>15.3.1</b> <code>knitr::kable</code></a></li>
+<li class="chapter" data-level="15.3.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#package-pander"><i class="fa fa-check"></i><b>15.3.2</b> Package <code>pander</code></a></li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -335,32 +395,32 @@ grades</code></pre></div>
 ## 3  Kelso    80    82    81 81.00000
 ## 4   Turk    70    85    92 82.33333</code></pre>
 <p>I could select the columns Exam columns by hand, or by using an extension of the <code>:</code> operator</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>( Exam1, Exam2 )   <span class="co"># Exam1 and Exam2</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">select</span>( Exam1, Exam2 )   <span class="co"># Exam1 and Exam2</span></code></pre></div>
 <pre><code>##   Exam1 Exam2
 ## 1    93    98
 ## 2    89    70
 ## 3    80    82
 ## 4    70    85</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>( Exam1:Final )    <span class="co"># Columns Exam1 through Final</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">select</span>( Exam1:Final )    <span class="co"># Columns Exam1 through Final</span></code></pre></div>
 <pre><code>##   Exam1 Exam2 Final
 ## 1    93    98    96
 ## 2    89    70    85
 ## 3    80    82    81
 ## 4    70    85    92</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>( -Exam1 )         <span class="co"># Negative indexing by name works</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">select</span>( -Exam1 )         <span class="co"># Negative indexing by name works</span></code></pre></div>
 <pre><code>##   l.name Exam2 Final  average
 ## 1    Cox    98    96 95.66667
 ## 2 Dorian    70    85 81.33333
 ## 3  Kelso    82    81 81.00000
 ## 4   Turk    85    92 82.33333</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>( <span class="dv">1</span>:<span class="dv">2</span> )            <span class="co"># Can select column by column position</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">select</span>( <span class="dv">1</span>:<span class="dv">2</span> )            <span class="co"># Can select column by column position</span></code></pre></div>
 <pre><code>##   l.name Exam1
 ## 1    Cox    93
 ## 2 Dorian    89
 ## 3  Kelso    80
 ## 4   Turk    70</code></pre>
 <p>The <code>select()</code> command has a few other tricks. There are functional calls that describe the columns you wish to select that take advantage of pattern matching. I generally can get by with <code>starts_with()</code>, <code>ends_with()</code>, and <code>contains()</code>, but there is a final operator <code>matches()</code> that takes a regular expression.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>( <span class="kw">starts_with</span>(<span class="st">&#39;Exam&#39;</span>) )   <span class="co"># Exam1 and Exam2</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">select</span>( <span class="kw">starts_with</span>(<span class="st">&#39;Exam&#39;</span>) )   <span class="co"># Exam1 and Exam2</span></code></pre></div>
 <pre><code>##   Exam1 Exam2
 ## 1    93    98
 ## 2    89    70
@@ -470,7 +530,7 @@ grades %&gt;%<span class="st"> </span><span class="kw">summarise</span>( <span c
 <p>If we want to apply the same statistic to each column, we use the <code>summarise_each()</code> command. We have to be a little careful here because the function you use has to work on every column (that isn’t part of the grouping structure (see <code>group_by()</code>)).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the mean and stddev of each column - Cannot do this to Names!</span>
 grades %&gt;%<span class="st"> </span>
-<span class="st">  </span>dplyr::<span class="kw">select</span>( Exam1:Final ) %&gt;%
+<span class="st">  </span><span class="kw">select</span>( Exam1:Final ) %&gt;%
 <span class="st">  </span><span class="kw">summarise_each</span>( <span class="kw">funs</span>(mean, sd) )</code></pre></div>
 <pre><code>##   Exam1_mean Exam2_mean Final_mean Exam1_sd Exam2_sd Final_sd
 ## 1         83      83.75       88.5 10.23067     11.5 6.757712</code></pre>
@@ -576,14 +636,28 @@ race.results &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
 ## 7  Derek 20.23      M     3
 ## 8    Bob 21.23      M     4</code></pre>
 <p>This is very difficult to read because you have to read the code <em>from the inside out</em>.</p>
-<p>Other (and slightly more readable) way to complete our task is to save the intermediate value of each step:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># how should I group?</span>
-temp.df0 &lt;-<span class="st"> </span>race.results %&gt;%<span class="st"> </span><span class="kw">group_by</span>( gender)
+<p>Another (and slightly more readable) way to complete our task is to save each intermediate step of our process and then use that in the next step:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp.df0 &lt;-<span class="st"> </span>race.results %&gt;%<span class="st"> </span><span class="kw">group_by</span>( gender)
 temp.df1 &lt;-<span class="st"> </span>temp.df0 %&gt;%<span class="st"> </span><span class="kw">mutate</span>( <span class="dt">place =</span> <span class="kw">rank</span>(time) )
 temp.df2 &lt;-<span class="st"> </span>temp.df1 %&gt;%<span class="st"> </span><span class="kw">arrange</span>( gender, place )</code></pre></div>
-<p>It would be nice if I didn’t have to save all these intermediate results because keeping track of temp1 and temp2 gets pretty annoying if I keep changing the order of how things or calculated or add/subtract steps.</p>
-<p>The way this is typically handled in R is to to just nest one command inside the next. The same set of commands could be run as follows:&lt;&lt;&gt;&gt;=This is extremely hard to read because the commands are separated from the arguments (e.g. the arrange function call was at the top, but the columns to arrange by are on the last line).</p>
-<p>To get around this, the author of dplyr gives us an operator to combine these simple operations smoothly. The composition operation %&gt;% takes the following A %&gt;% f(B) and converts it to the statement f(A, B). This allows us to write the following code that does exactly what the above two code chunks did. &lt;&lt;&gt;&gt;=If I only wanted the top three finishers in each gender, we could simply add a filter command after the place column was calculated.&lt;&lt;&gt;&gt;=</p>
+<p>It would be nice if I didn’t have to save all these intermediate results because keeping track of temp1 and temp2 gets pretty annoying if I keep changing the order of how things or calculated or add/subtract steps. This is exactly what <code>%&gt;%</code> does for me.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">race.results %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>( gender ) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>( <span class="dt">place =</span> <span class="kw">rank</span>(time)) %&gt;%
+<span class="st">  </span><span class="kw">arrange</span>( gender, place )</code></pre></div>
+<pre><code>## Source: local data frame [8 x 4]
+## Groups: gender [2]
+## 
+##     name  time gender place
+##   &lt;fctr&gt; &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;
+## 1 Rachel 19.82      F     1
+## 2 Bonnie 23.45      F     2
+## 3  April 24.22      F     3
+## 4  Elise 28.83      F     4
+## 5  David 15.73      M     1
+## 6   Jeff 19.51      M     2
+## 7  Derek 20.23      M     3
+## 8    Bob 21.23      M     4</code></pre>
 </div>
 </div>
 <div id="exercises-6" class="section level2">
@@ -644,7 +718,7 @@ x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</s
           </div>
         </div>
       </div>
-<a href="6-matrices-data-frames-and-lists.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="6-importing-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="8-data-reshaping.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -658,6 +732,7 @@ x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</s
 require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
+"github": false,
 "facebook": true,
 "twitter": true,
 "google": false,
@@ -673,7 +748,7 @@ gitbook.start({
 },
 "edit": {
 "link": "https://github.com/dereksonderegger/STA_570L_Book/raw/master/08_DataManipulation.Rmd",
-"text": null
+"text": "Edit"
 },
 "download": null,
 "toc": {
