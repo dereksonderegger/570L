@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Sufficient Introduction to R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Sufficient Introduction to R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
+  <meta name="github-repo" content="dereksonderegger/570L" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Sufficient Introduction to R" />
+  
+  <meta name="twitter:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
+  
+
+<meta name="author" content="Derek L. Sonderegger">
+
+
+<meta name="date" content="2017-01-31">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="7-data-manipulation.html">
+<link rel="next" href="9-graphing-using-ggplot2.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Sufficient Introduction to R</a></li>
+<li><a href="https://dereksonderegger.github.io/570L/A_Sufficient_Introduction_to_R.pdf" target="blank">PDF version</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#r-as-a-simple-calculator"><i class="fa fa-check"></i><b>1.1</b> R as a simple calculator</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#assignment"><i class="fa fa-check"></i><b>1.2</b> Assignment</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#scripts-and-rmarkdown"><i class="fa fa-check"></i><b>1.3</b> Scripts and RMarkdown</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#r-scripts-.r-files"><i class="fa fa-check"></i><b>1.3.1</b> R Scripts (.R files)</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#r-markdown-.rmd-files"><i class="fa fa-check"></i><b>1.3.2</b> R Markdown (.Rmd files)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.4</b> Packages</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#exercises"><i class="fa fa-check"></i><b>1.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="2-vectors.html"><a href="2-vectors.html"><i class="fa fa-check"></i><b>2</b> Vectors</a><ul>
+<li class="chapter" data-level="2.1" data-path="2-vectors.html"><a href="2-vectors.html#accessing-vector-elements"><i class="fa fa-check"></i><b>2.1</b> Accessing Vector Elements</a></li>
+<li class="chapter" data-level="2.2" data-path="2-vectors.html"><a href="2-vectors.html#scalar-functions-applied-to-vectors"><i class="fa fa-check"></i><b>2.2</b> Scalar Functions Applied to Vectors</a></li>
+<li class="chapter" data-level="2.3" data-path="2-vectors.html"><a href="2-vectors.html#vector-algebra"><i class="fa fa-check"></i><b>2.3</b> Vector Algebra</a></li>
+<li class="chapter" data-level="2.4" data-path="2-vectors.html"><a href="2-vectors.html#commonly-used-vector-functions"><i class="fa fa-check"></i><b>2.4</b> Commonly Used Vector Functions</a></li>
+<li class="chapter" data-level="2.5" data-path="2-vectors.html"><a href="2-vectors.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html"><i class="fa fa-check"></i><b>3</b> Statistical Tables</a><ul>
+<li class="chapter" data-level="3.1" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#mosaicplotdist-function"><i class="fa fa-check"></i><b>3.1</b> <code>mosaic::plotDist()</code> function</a></li>
+<li class="chapter" data-level="3.2" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#base-r-functions"><i class="fa fa-check"></i><b>3.2</b> Base R functions</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#d-function"><i class="fa fa-check"></i><b>3.2.1</b> d-function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#p-function"><i class="fa fa-check"></i><b>3.2.2</b> p-function</a></li>
+<li class="chapter" data-level="3.2.3" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#q-function"><i class="fa fa-check"></i><b>3.2.3</b> <code>q</code>-function</a></li>
+<li class="chapter" data-level="3.2.4" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#r-function"><i class="fa fa-check"></i><b>3.2.4</b> r-function</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="3-statistical-tables.html"><a href="3-statistical-tables.html#exercises-2"><i class="fa fa-check"></i><b>3.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="4-data-types.html"><a href="4-data-types.html"><i class="fa fa-check"></i><b>4</b> Data Types</a><ul>
+<li class="chapter" data-level="4.1" data-path="4-data-types.html"><a href="4-data-types.html#integers-and-numerics"><i class="fa fa-check"></i><b>4.1</b> Integers and Numerics</a></li>
+<li class="chapter" data-level="4.2" data-path="4-data-types.html"><a href="4-data-types.html#character-strings"><i class="fa fa-check"></i><b>4.2</b> Character Strings</a></li>
+<li class="chapter" data-level="4.3" data-path="4-data-types.html"><a href="4-data-types.html#factors"><i class="fa fa-check"></i><b>4.3</b> Factors</a></li>
+<li class="chapter" data-level="4.4" data-path="4-data-types.html"><a href="4-data-types.html#logicals"><i class="fa fa-check"></i><b>4.4</b> Logicals</a></li>
+<li class="chapter" data-level="4.5" data-path="4-data-types.html"><a href="4-data-types.html#exercises-3"><i class="fa fa-check"></i><b>4.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html"><i class="fa fa-check"></i><b>5</b> Matrices, Data Frames, and Lists</a><ul>
+<li class="chapter" data-level="5.1" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#matrices"><i class="fa fa-check"></i><b>5.1</b> Matrices</a></li>
+<li class="chapter" data-level="5.2" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#data-frames"><i class="fa fa-check"></i><b>5.2</b> Data Frames</a></li>
+<li class="chapter" data-level="5.3" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#lists"><i class="fa fa-check"></i><b>5.3</b> Lists</a></li>
+<li class="chapter" data-level="5.4" data-path="5-matrices-data-frames-and-lists.html"><a href="5-matrices-data-frames-and-lists.html#exercises-4"><i class="fa fa-check"></i><b>5.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="6-importing-data.html"><a href="6-importing-data.html"><i class="fa fa-check"></i><b>6</b> Importing Data</a><ul>
+<li class="chapter" data-level="6.1" data-path="6-importing-data.html"><a href="6-importing-data.html#working-directory"><i class="fa fa-check"></i><b>6.1</b> Working directory</a></li>
+<li class="chapter" data-level="6.2" data-path="6-importing-data.html"><a href="6-importing-data.html#comma-separated-data"><i class="fa fa-check"></i><b>6.2</b> Comma Separated Data</a></li>
+<li class="chapter" data-level="6.3" data-path="6-importing-data.html"><a href="6-importing-data.html#ms-excel"><i class="fa fa-check"></i><b>6.3</b> MS Excel</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="6-importing-data.html"><a href="6-importing-data.html#libxls-bug"><i class="fa fa-check"></i><b>6.3.1</b> <code>libxls</code> bug</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="6-importing-data.html"><a href="6-importing-data.html#exercises-5"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html"><i class="fa fa-check"></i><b>7</b> Data Manipulation</a><ul>
+<li class="chapter" data-level="7.1" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#classical-functions-for-summarizing-rows-and-columns"><i class="fa fa-check"></i><b>7.1</b> Classical functions for summarizing rows and columns</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#summary"><i class="fa fa-check"></i><b>7.1.1</b> <code>summary()</code></a></li>
+<li class="chapter" data-level="7.1.2" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#apply"><i class="fa fa-check"></i><b>7.1.2</b> <code>apply()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#package-dplyr"><i class="fa fa-check"></i><b>7.2</b> Package <code>dplyr</code></a><ul>
+<li class="chapter" data-level="7.2.1" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#verbs"><i class="fa fa-check"></i><b>7.2.1</b> Verbs</a></li>
+<li class="chapter" data-level="7.2.2" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#split-apply-combine"><i class="fa fa-check"></i><b>7.2.2</b> Split, apply, combine</a></li>
+<li class="chapter" data-level="7.2.3" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#chaining-commands-together"><i class="fa fa-check"></i><b>7.2.3</b> Chaining commands together</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html#exercises-6"><i class="fa fa-check"></i><b>7.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html"><i class="fa fa-check"></i><b>8</b> Data Reshaping</a><ul>
+<li class="chapter" data-level="8.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#tidyr"><i class="fa fa-check"></i><b>8.1</b> <code>tidyr</code></a><ul>
+<li class="chapter" data-level="8.1.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#verbs-1"><i class="fa fa-check"></i><b>8.1.1</b> Verbs</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.2</b> Table Joins</a></li>
+<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html"><i class="fa fa-check"></i><b>9</b> Graphing using <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="9.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#basic-graphs"><i class="fa fa-check"></i><b>9.1</b> Basic Graphs</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#scatterplots"><i class="fa fa-check"></i><b>9.1.1</b> Scatterplots</a></li>
+<li class="chapter" data-level="9.1.2" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#bar-charts"><i class="fa fa-check"></i><b>9.1.2</b> Bar Charts</a></li>
+<li class="chapter" data-level="9.1.3" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>9.1.3</b> Box Plots</a></li>
+<li class="chapter" data-level="9.1.4" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#geometries-and-layers"><i class="fa fa-check"></i><b>9.1.4</b> Geometries and Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#getting-fancy"><i class="fa fa-check"></i><b>9.2</b> Getting Fancy</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#bar-plot"><i class="fa fa-check"></i><b>9.2.1</b> Bar Plot</a></li>
+<li class="chapter" data-level="9.2.2" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#histograms"><i class="fa fa-check"></i><b>9.2.2</b> Histograms</a></li>
+<li class="chapter" data-level="9.2.3" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#adjusting-labels"><i class="fa fa-check"></i><b>9.2.3</b> Adjusting labels</a></li>
+<li class="chapter" data-level="9.2.4" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#plotting-distributions"><i class="fa fa-check"></i><b>9.2.4</b> Plotting distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#exercises-8"><i class="fa fa-check"></i><b>9.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html"><i class="fa fa-check"></i><b>10</b> More <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="10.1" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#faceting"><i class="fa fa-check"></i><b>10.1</b> Faceting</a></li>
+<li class="chapter" data-level="10.2" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#modifying-scales"><i class="fa fa-check"></i><b>10.2</b> Modifying Scales</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#log-scales"><i class="fa fa-check"></i><b>10.2.1</b> Log scales</a></li>
+<li class="chapter" data-level="10.2.2" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#arbitrary-transformations"><i class="fa fa-check"></i><b>10.2.2</b> Arbitrary transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#multi-plot"><i class="fa fa-check"></i><b>10.3</b> Multi-plot</a></li>
+<li class="chapter" data-level="10.4" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#themes"><i class="fa fa-check"></i><b>10.4</b> Themes</a></li>
+<li class="chapter" data-level="10.5" data-path="10-more-ggplot2.html"><a href="10-more-ggplot2.html#exercises-9"><i class="fa fa-check"></i><b>10.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="11-flow-control.html"><a href="11-flow-control.html"><i class="fa fa-check"></i><b>11</b> Flow Control</a><ul>
+<li class="chapter" data-level="11.1" data-path="11-flow-control.html"><a href="11-flow-control.html#decision-statements"><i class="fa fa-check"></i><b>11.1</b> Decision statements</a></li>
+<li class="chapter" data-level="11.2" data-path="11-flow-control.html"><a href="11-flow-control.html#loops"><i class="fa fa-check"></i><b>11.2</b> Loops</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="11-flow-control.html"><a href="11-flow-control.html#while-loops"><i class="fa fa-check"></i><b>11.2.1</b> <code>while</code> Loops</a></li>
+<li class="chapter" data-level="11.2.2" data-path="11-flow-control.html"><a href="11-flow-control.html#for-loops"><i class="fa fa-check"></i><b>11.2.2</b> <code>for</code> Loops</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="11-flow-control.html"><a href="11-flow-control.html#exercises-10"><i class="fa fa-check"></i><b>11.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html"><i class="fa fa-check"></i><b>12</b> User Defined Functions</a><ul>
+<li class="chapter" data-level="12.1" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#basic-function-definition"><i class="fa fa-check"></i><b>12.1</b> Basic function definition</a></li>
+<li class="chapter" data-level="12.2" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#parameter-defaults"><i class="fa fa-check"></i><b>12.2</b> Parameter Defaults</a></li>
+<li class="chapter" data-level="12.3" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#ellipses"><i class="fa fa-check"></i><b>12.3</b> Ellipses</a></li>
+<li class="chapter" data-level="12.4" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#function-overloading"><i class="fa fa-check"></i><b>12.4</b> Function Overloading</a></li>
+<li class="chapter" data-level="12.5" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#scope"><i class="fa fa-check"></i><b>12.5</b> Scope</a></li>
+<li class="chapter" data-level="12.6" data-path="12-user-defined-functions.html"><a href="12-user-defined-functions.html#exercises-11"><i class="fa fa-check"></i><b>12.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html"><i class="fa fa-check"></i><b>13</b> String Manipulation</a><ul>
+<li class="chapter" data-level="13.1" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#base-function"><i class="fa fa-check"></i><b>13.1</b> Base function</a></li>
+<li class="chapter" data-level="13.2" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#package-stringr-basic-operations"><i class="fa fa-check"></i><b>13.2</b> Package <code>stringr</code>: basic operations</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#concatenating-with-str_c-or-str_join"><i class="fa fa-check"></i><b>13.2.1</b> Concatenating with <code>str_c()</code> or <code>str_join()</code></a></li>
+<li class="chapter" data-level="13.2.2" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#calculating-string-length-with-str_length"><i class="fa fa-check"></i><b>13.2.2</b> Calculating string length with <code>str_length()</code></a></li>
+<li class="chapter" data-level="13.2.3" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#extracting-substrings-with-str_sub"><i class="fa fa-check"></i><b>13.2.3</b> Extracting substrings with <code>str_sub()</code></a></li>
+<li class="chapter" data-level="13.2.4" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#pad-a-string-with-str_pad"><i class="fa fa-check"></i><b>13.2.4</b> Pad a string with <code>str_pad()</code></a></li>
+<li class="chapter" data-level="13.2.5" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#trim-a-string-with-str_trim"><i class="fa fa-check"></i><b>13.2.5</b> Trim a string with <code>str_trim()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#package-stringr-pattern-matching"><i class="fa fa-check"></i><b>13.3</b> Package <code>stringr</code>: Pattern Matching</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#detecting-a-pattern-using-str_detect"><i class="fa fa-check"></i><b>13.3.1</b> Detecting a pattern using str_detect()</a></li>
+<li class="chapter" data-level="13.3.2" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#locating-a-pattern-using-str_locate"><i class="fa fa-check"></i><b>13.3.2</b> Locating a pattern using str_locate()</a></li>
+<li class="chapter" data-level="13.3.3" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#replacing-substrings-using-str_replace"><i class="fa fa-check"></i><b>13.3.3</b> Replacing substrings using <code>str_replace()</code></a></li>
+<li class="chapter" data-level="13.3.4" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#splitting-into-substrings-using-str_split"><i class="fa fa-check"></i><b>13.3.4</b> Splitting into substrings using <code>str_split()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#regular-expressions"><i class="fa fa-check"></i><b>13.4</b> Regular Expressions</a></li>
+<li class="chapter" data-level="13.5" data-path="13-string-manipulation.html"><a href="13-string-manipulation.html#exercises-12"><i class="fa fa-check"></i><b>13.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html"><i class="fa fa-check"></i><b>14</b> Dates and Times</a><ul>
+<li class="chapter" data-level="14.1" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#creating-date-and-time-objects"><i class="fa fa-check"></i><b>14.1</b> Creating Date and Time objects</a></li>
+<li class="chapter" data-level="14.2" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#extracting-information"><i class="fa fa-check"></i><b>14.2</b> Extracting information</a></li>
+<li class="chapter" data-level="14.3" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#arithmetic-on-dates"><i class="fa fa-check"></i><b>14.3</b> Arithmetic on Dates</a></li>
+<li class="chapter" data-level="14.4" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#exercises-13"><i class="fa fa-check"></i><b>14.4</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html"><i class="fa fa-check"></i><b>15</b> Rmarkdown Tricks</a><ul>
+<li class="chapter" data-level="15.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#mathematical-expressions"><i class="fa fa-check"></i><b>15.1</b> Mathematical expressions</a></li>
+<li class="chapter" data-level="15.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#tables"><i class="fa fa-check"></i><b>15.2</b> Tables</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#simple-tables"><i class="fa fa-check"></i><b>15.2.1</b> Simple Tables</a></li>
+<li class="chapter" data-level="15.2.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#grid-tables"><i class="fa fa-check"></i><b>15.2.2</b> Grid Tables</a></li>
+<li class="chapter" data-level="15.2.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#pipe-tables"><i class="fa fa-check"></i><b>15.2.3</b> Pipe Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#r-functions-to-produce-table-code."><i class="fa fa-check"></i><b>15.3</b> R functions to produce table code.</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#knitrkable"><i class="fa fa-check"></i><b>15.3.1</b> <code>knitr::kable</code></a></li>
+<li class="chapter" data-level="15.3.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#package-pander"><i class="fa fa-check"></i><b>15.3.2</b> Package <code>pander</code></a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Sufficient Introduction to R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-reshaping" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> Data Reshaping</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)   <span class="co"># for the gather/spread commands</span>
+<span class="kw">library</span>(dplyr)   <span class="co"># for the join stuff</span></code></pre></div>
+<p>Most of the time, our data is in the form of a data frame and we are interested in exploring the relationships. However most procedures in R expect the data to show up in a ‘long’ format where each row is an observation and each column is a covariate. In practice, the data is often not stored like that and the data comes to us with repeated observations included on a single row. This is often done as a memory saving technique or because there is some structure in the data that makes the ‘wide’ format attractive. As a result, we need a way to convert data from ‘wide’ to ‘long’ and vice-versa.</p>
+<div id="tidyr" class="section level2">
+<h2><span class="header-section-number">8.1</span> <code>tidyr</code></h2>
+<p>There is a common issue with obtaining data with many columns that you wish were organized as rows. For example, I might have data in a grade book that has several homework scores and I’d like to produce a nice graph that has assignment number on the x-axis and score on the y-axis. Unfortunately this is incredibly hard to do when the data is arranged in the following way:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grade.book &lt;-<span class="st"> </span><span class="kw">rbind</span>(
+  <span class="kw">data.frame</span>(<span class="dt">name=</span><span class="st">&#39;Alison&#39;</span>,  <span class="dt">HW.1=</span><span class="dv">8</span>, <span class="dt">HW.2=</span><span class="dv">5</span>, <span class="dt">HW.3=</span><span class="dv">8</span>),
+  <span class="kw">data.frame</span>(<span class="dt">name=</span><span class="st">&#39;Brandon&#39;</span>, <span class="dt">HW.1=</span><span class="dv">5</span>, <span class="dt">HW.2=</span><span class="dv">3</span>, <span class="dt">HW.3=</span><span class="dv">6</span>),
+  <span class="kw">data.frame</span>(<span class="dt">name=</span><span class="st">&#39;Charles&#39;</span>, <span class="dt">HW.1=</span><span class="dv">9</span>, <span class="dt">HW.2=</span><span class="dv">7</span>, <span class="dt">HW.3=</span><span class="dv">9</span>))
+grade.book</code></pre></div>
+<pre><code>##      name HW.1 HW.2 HW.3
+## 1  Alison    8    5    8
+## 2 Brandon    5    3    6
+## 3 Charles    9    7    9</code></pre>
+<p>What we want to do is turn this data frame from a <em>wide</em> data frame into a <em>long</em> data frame. In MS Excel this is called pivoting. Essentially I’d like to create a data frame with three columns: <code>name</code>, <code>assignment</code>, and <code>score</code>. That is to say that each homework datum really has three pieces of information: who it came from, which homework it was, and what the score was. It doesn’t conceptually matter if I store it as 3 columns or 3 rows so long as there is a way to identify how a student scored on a particular homework. So we want to reshape the HW1 to HW3 columns into two columns (assignment and score).</p>
+<p>This package was built by the sample people that created dplyr and ggplot2 and there is a nice introduction at: [<a href="http://blog.rstudio.org/2014/07/22/introducing-tidyr/" class="uri">http://blog.rstudio.org/2014/07/22/introducing-tidyr/</a>]</p>
+<div id="verbs-1" class="section level3">
+<h3><span class="header-section-number">8.1.1</span> Verbs</h3>
+<p>As with the dplyr package, there are two main verbs to remember:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>gather</code> - Gather multiple columns that are related into two columns that contain the original column name and the value. For example for columns HW1, HW2, HW3 we would gather them into two column HomeworkNumber and Score. In this case, we refer to HomeworkNumber as the key column and Score as the value column. So for any key:value pair you know everything you need.</p></li>
+<li><p><code>spread</code> - This is the opposite of gather. This takes a key column (or columns) and a results column and forms a new column for each level of the key column(s).</p></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first we gather the score columns into columns we&#39;ll name Assesment and Score</span>
+tidy.scores &lt;-<span class="st"> </span>grade.book %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">gather</span>( <span class="dt">key=</span>Assessement,  <span class="co"># What should I call the key column</span>
+          <span class="dt">value=</span>Score,      <span class="co"># What should I call the values column</span>
+          HW<span class="fl">.1</span>:HW<span class="fl">.3</span>         <span class="co"># which columns to apply this to</span>
+          )
+tidy.scores</code></pre></div>
+<pre><code>##      name Assessement Score
+## 1  Alison        HW.1     8
+## 2 Brandon        HW.1     5
+## 3 Charles        HW.1     9
+## 4  Alison        HW.2     5
+## 5 Brandon        HW.2     3
+## 6 Charles        HW.2     7
+## 7  Alison        HW.3     8
+## 8 Brandon        HW.3     6
+## 9 Charles        HW.3     9</code></pre>
+<p>To spread the key:value pairs out into a matrix, we use the spread() command.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># score columns into columns we&#39;ll name Assesment and Score</span>
+tidy.scores %&gt;%<span class="st"> </span><span class="kw">spread</span>( <span class="dt">key=</span>Assessement, <span class="dt">value=</span>Score )</code></pre></div>
+<pre><code>##      name HW.1 HW.2 HW.3
+## 1  Alison    8    5    8
+## 2 Brandon    5    3    6
+## 3 Charles    9    7    9</code></pre>
+<p>One way to keep straight which is the key column is that the key is the category, while value is the numerical value or response.</p>
+</div>
+</div>
+<div id="table-joins" class="section level2">
+<h2><span class="header-section-number">8.2</span> Table Joins</h2>
+<p>Often we need to squish together two data frames but they do not have the same number of rows. Consider the case where we have a data frame of observations of fish (say 200 fish caught per lake) and a separate data frame that contains information about lake (perhaps surface area, max depth, pH, etc). I want to store them as two separate tables so that when I have to record a lake level observation, I only input it <em>one</em> place. This decreases the chance that I make a copy/paste error.</p>
+<p>To illustrate the different types of table joins, we’ll consider two different tables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fish.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Lake =</span> <span class="kw">c</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;C&#39;</span>), <span class="dt">Fish.Weight=</span><span class="dv">101</span>:<span class="dv">106</span>)
+Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Lake =</span> <span class="kw">c</span>(    <span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;D&#39;</span>),         <span class="dt">pH=</span><span class="kw">c</span>(<span class="fl">6.5</span>, <span class="fl">6.3</span>, <span class="fl">6.1</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fish.Data</code></pre></div>
+<pre><code>## # A tibble: 6 × 2
+##    Lake Fish.Weight
+##   &lt;chr&gt;       &lt;int&gt;
+## 1     A         101
+## 2     A         102
+## 3     B         103
+## 4     B         104
+## 5     C         105
+## 6     C         106</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Lake.Data</code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+##    Lake    pH
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1     B   6.5
+## 2     C   6.3
+## 3     D   6.1</code></pre>
+<p>Notice that each of these tables has a column labled <code>Lake</code>. When we join these two tables, the row that describes <code>Lake A</code> should be duplicated for each row in the <code>Fish.Data</code> that corresponds with fish caught from <code>Lake A</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">full_join</span>(Fish.Data, Lake.Data)</code></pre></div>
+<pre><code>## Joining, by = &quot;Lake&quot;</code></pre>
+<pre><code>## # A tibble: 7 × 3
+##    Lake Fish.Weight    pH
+##   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
+## 1     A         101    NA
+## 2     A         102    NA
+## 3     B         103   6.5
+## 4     B         104   6.5
+## 5     C         105   6.3
+## 6     C         106   6.3
+## 7     D          NA   6.1</code></pre>
+<p>Notice that because we didn’t have any fish caught in lake <code>D</code> and we don’t have any Lake information about lake <code>A</code>, when we join these two tables, we end up introducing missing observations into the resulting data frame.</p>
+<p>The other types of joins govern the behavor or these missing data.</p>
+<p><strong><code>left_join(A, B)</code></strong> For each row in A, match with a row in B, but don’t create any more rows than what was already in A.</p>
+<p><strong><code>inner_join(A,B)</code></strong> Only match row values where both data frames have a value.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">left_join</span>(Fish.Data, Lake.Data)</code></pre></div>
+<pre><code>## Joining, by = &quot;Lake&quot;</code></pre>
+<pre><code>## # A tibble: 6 × 3
+##    Lake Fish.Weight    pH
+##   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
+## 1     A         101    NA
+## 2     A         102    NA
+## 3     B         103   6.5
+## 4     B         104   6.5
+## 5     C         105   6.3
+## 6     C         106   6.3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inner_join</span>(Fish.Data, Lake.Data)</code></pre></div>
+<pre><code>## Joining, by = &quot;Lake&quot;</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##    Lake Fish.Weight    pH
+##   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
+## 1     B         103   6.5
+## 2     B         104   6.5
+## 3     C         105   6.3
+## 4     C         106   6.3</code></pre>
+<p>The above examples assumed that the column used to join the two tables was named the same in both tables. This is good practice to try to do, but sometimes you have to work with data where that isn’t the case. In that situation you can use the <code>by=c(&quot;ColName.A&quot;=&quot;ColName.B&quot;)</code> syntax where <code>ColName.A</code> represents the name of the column in the first data frame and <code>ColName.B</code> is the equivalent column in the second data frame.</p>
+</div>
+<div id="exercises-7" class="section level2">
+<h2><span class="header-section-number">8.3</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li><p>Suppose we are given information about the maximum daily temperature from a weather station in Flagstaff, AZ. The file is available at the GitHub site that this book is hosted on.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FlagTemp &lt;-<span class="st">  </span><span class="kw">read.csv</span>(
+  <span class="st">&#39;https://github.com/dereksonderegger/STA_570L_Book/raw/master/data-raw/FlagMaxTemp.csv&#39;</span>,
+   <span class="dt">header=</span><span class="ot">TRUE</span>, <span class="dt">sep=</span><span class="st">&#39;,&#39;</span>)</code></pre></div>
+<p>This file is in a wide format, where each row represents a month and the columns X1, X2, …, X31 represent the day of the month the observation was made.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Convert data set to the long format where the data has only four columns: <code>Year</code>, <code>Month</code>, <code>Day</code>, <code>Tmax</code>.</p></li>
+<li><p>Calculate the average monthly maximum temperature for each Month in the dataset (So there will be 365 mean maximum temperatures). <em>You’ll probably have some issues taking the mean because there are a number of values that are missing and by default R refuses to take means and sums when there is missing data. The argument <code>na.rm=TRUE</code> to <code>mean()</code> allows you to force R to remove the missing observations before calculating the mean.</em></p></li>
+<li><p>Convert the average month maximums back to a wide data format where each line represents a year and there are 12 columns of temperature data (one for each month) along with a column for the year. <em>There will be a couple of months that still have missing data because the weather station was out of commision for those months and there was NO data for the entire month.</em></p></li>
+</ol></li>
+<li>A common task is to take a set of data that has multiple categorical variables and create a table of the number of cases for each combination. An introductory statistics textbook contains a dataset summarizing student surveys from several sections of an intro class. The two variables of interest for us are <code>Gender</code> and <code>Year</code> which are the students gender and year in college.
+<ol style="list-style-type: lower-alpha">
+<li><p>Download the dataset and correctly order the <code>Year</code> variable using the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Survey &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;http://www.lock5stat.com/datasets/StudentSurvey.csv&#39;</span>, <span class="dt">na.strings=</span><span class="kw">c</span>(<span class="st">&#39;&#39;</span>,<span class="st">&#39; &#39;</span>)) %&gt;%
+<span class="st">   </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">factor</span>(Year, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;FirstYear&#39;</span>,<span class="st">&#39;Sophomore&#39;</span>,<span class="st">&#39;Junior&#39;</span>,<span class="st">&#39;Senior&#39;</span>)))</code></pre></div></li>
+<li>Using some combination of <code>dplyr</code> functions, produce a data set with eight rows that contains the number of responses for each gender:year combination. <em>Notice there are two females that neglected to give their Year and you should remove them first. The function <code>is.na(Year)</code> will return logical values indicating if the Year value was missing and you can flip those values using the negation operator <code>!</code>. So you might consider using <code>!is.na(Year)</code> as the argument to a filter() command. Alternatively you sort on Year and remove the first two rows using <code>slice(-2:-1)</code>. Next you’ll want to summarize each Year/Gender group using the <code>n()</code> function which gives the number of rows in a data set.</em></li>
+<li><p>Using <code>tidyr</code> commands, produce a table of the number of responses in the following form:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Gender</th>
+<th>First Year</th>
+<th>Sophmore</th>
+<th>Junior</th>
+<th>Senior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Female</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Male</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></li>
+</ol></li>
+<li><p>The package <code>nycflights</code> contains information about all the flights that arrived in or left from New York City in 2013. This package contains five data tables, but there are three data tables we will work with. The data table <code>flights</code> gives information about a particular flight, <code>airports</code> gives information about a particular airport, and <code>airlines</code> gives information about each airline. Create a table of all the flights on February 14th by Virgin America that has columns for the carrier, destination, departure time, and flight duration. Join this table with the airports information for the destination. Notice that because the column for the destination airport code doesn’t match up between <code>flights</code> and <code>airports</code>, you’ll have to use the <code>by=c(&quot;TableA.Col&quot;=&quot;TableB.Col&quot;)</code> argument where you insert the correct names for <code>TableA.Col</code> and <code>TableB.Col</code>.</p></li>
+</ol>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="7-data-manipulation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="9-graphing-using-ggplot2.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/dereksonderegger/570L/raw/master/09_DataReshaping.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
