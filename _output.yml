@@ -10,7 +10,7 @@ bookdown::gitbook:
         <li><a href="https://dereksonderegger.github.io/570L/A_Sufficient_Introduction_to_R.pdf" target="blank">PDF version</a></li>
       after: |
     edit:
-      link: https://github.com/dereksonderegger/570L/raw/master/%s
+      link: https://raw.githubusercontent.com/dereksonderegger/570L/master/%s
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex

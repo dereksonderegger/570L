@@ -7,20 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Sufficient Introduction to R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-  <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
+  <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
   <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
+  <meta property="og:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
   <meta name="github-repo" content="dereksonderegger/570L" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="A Sufficient Introduction to R" />
   
-  <meta name="twitter:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enought to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
+  <meta name="twitter:description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address." />
   
 
 <meta name="author" content="Derek L. Sonderegger">
@@ -386,7 +386,7 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span cla
 <ol style="list-style-type: decimal">
 <li><p>Suppose we are given information about the maximum daily temperature from a weather station in Flagstaff, AZ. The file is available at the GitHub site that this book is hosted on.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FlagTemp &lt;-<span class="st">  </span><span class="kw">read.csv</span>(
-  <span class="st">&#39;https://github.com/dereksonderegger/STA_570L_Book/raw/master/data-raw/FlagMaxTemp.csv&#39;</span>,
+  <span class="st">&#39;https://github.com/dereksonderegger/570L/raw/master/data-raw/FlagMaxTemp.csv&#39;</span>,
    <span class="dt">header=</span><span class="ot">TRUE</span>, <span class="dt">sep=</span><span class="st">&#39;,&#39;</span>)</code></pre></div>
 <p>This file is in a wide format, where each row represents a month and the columns X1, X2, …, X31 represent the day of the month the observation was made.</p>
 <ol style="list-style-type: lower-alpha">
@@ -468,7 +468,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/dereksonderegger/570L/raw/master/09_DataReshaping.Rmd",
+"link": "https://raw.githubusercontent.com/dereksonderegger/570L/master/09_DataReshaping.Rmd",
 "text": "Edit"
 },
 "download": null,

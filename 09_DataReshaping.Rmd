@@ -109,7 +109,7 @@ The above examples assumed that the column used to join the two tables was named
 
     ```{r}
     FlagTemp <-  read.csv(
-      'https://github.com/dereksonderegger/STA_570L_Book/raw/master/data-raw/FlagMaxTemp.csv',
+      'https://github.com/dereksonderegger/570L/raw/master/data-raw/FlagMaxTemp.csv',
        header=TRUE, sep=',')
     ```
     This file is in a wide format, where each row represents a month and the columns X1, X2, ..., X31 represent the day of the month the observation was made. 
