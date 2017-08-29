@@ -29,8 +29,7 @@ The line `facet_grid( formula )` tells `ggplot2` to make panels, and the formula
 For a second example, we look at a dataset that examines the amount a waiter was tipped by 244 parties. Covariates that were measured include the day of the week, size of the party, total amount of the bill, amount tipped, whether there were smokers in the group and the gender of the person paying the bill
 
 ```{r}
-library(reshape) # for the dataset 'tips'
-data(tips)
+data(tips, package='reshape')
 head(tips)
 ```
 
@@ -144,9 +143,8 @@ Suppose that I want to layout these three plots in an arrangement like so:
 
  where plot 1 is a tall, skinny plot on the left, plot 2 is more squarish, and plot 3 is short on the bottom right. This sort of table arrangement can be quite flexible if you have many rows and many columns, but generally we can get by with something with only a couple rows/columns.
 ```{r, fig.height=4, warning=FALSE, message=FALSE}
-library(Rmisc)  # for the multiplot function
 my.layout = cbind( c(1,1,1), c(2,2,3), c(2,2,3) )
-multiplot( p1, p2, p3, layout=my.layout)
+Rmisc::multiplot( p1, p2, p3, layout=my.layout)  # Package::FunctionName
 ```
 
 
@@ -154,21 +152,21 @@ multiplot( p1, p2, p3, layout=my.layout)
 
 A great deal of thought went into the default settings of ggplot2 to maximize the visual clarity of the graphs. However some people believe the defaults for many of the tiny graphical settings are poor. You can modify each of these but it is often easier to modify them all at once by selecting a different theme. The ggplot2 package includes several, `theme_bw()`, and `theme_minimal()` being the two that I use most often. Below are a few to examples:
 ```{r, fig.height=4}
-multiplot( p1 + theme_bw(),          # Black and white
-           p1 + theme_minimal(),   
-           p1 + theme_dark(),        
-           p1 + theme_light(),
-    cols=2 )                         # two columns of graphs   
+Rmisc::multiplot( p1 + theme_bw(),          # Black and white
+                  p1 + theme_minimal(),   
+                  p1 + theme_dark(),        
+                  p1 + theme_light(),
+                  cols=2 )                         # two columns of graphs   
 ```
 
 There are more themes in the package `ggthemes`
 ```{r, fig.height=4}
 library(ggthemes)
-multiplot( p1 + theme_stata(),          # Black and white
-           p1 + theme_economist(),   
-           p1 + theme_fivethirtyeight(),        
-           p1 + theme_excel(),
-    cols=2 )                         # two columns of graphs     
+Rmisc::multiplot( p1 + theme_stata(),          # Black and white
+                  p1 + theme_economist(),   
+                  p1 + theme_fivethirtyeight(),        
+                  p1 + theme_excel(),
+                  cols=2 )                         # two columns of graphs     
 ```
 
 Almost everything you want to modify can be modified within the theme and you should check out the `ggplot2` documentation for more information and examples of how to modify different elements. [http://docs.ggplot2.org/current/theme.html]

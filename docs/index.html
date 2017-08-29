@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Sufficient Introduction to R</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -26,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-01-31">
+<meta name="date" content="2017-08-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,7 +34,6 @@
   
 
 <link rel="next" href="2-vectors.html">
-
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -93,6 +91,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
+
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -169,8 +168,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#tidyr"><i class="fa fa-check"></i><b>8.1</b> <code>tidyr</code></a><ul>
 <li class="chapter" data-level="8.1.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#verbs-1"><i class="fa fa-check"></i><b>8.1.1</b> Verbs</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.2</b> Table Joins</a></li>
-<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#storing-data-in-multiple-tables"><i class="fa fa-check"></i><b>8.2</b> Storing Data in Multiple Tables</a></li>
+<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.3</b> Table Joins</a></li>
+<li class="chapter" data-level="8.4" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html"><i class="fa fa-check"></i><b>9</b> Graphing using <code>ggplot2</code></a><ul>
 <li class="chapter" data-level="9.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#basic-graphs"><i class="fa fa-check"></i><b>9.1</b> Basic Graphs</a><ul>
@@ -269,7 +269,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="header">
 <h1 class="title">A Sufficient Introduction to R</h1>
 <h4 class="author"><em>Derek L. Sonderegger</em></h4>
-<h4 class="date"><em>2017-01-31</em></h4>
+<h4 class="date"><em>2017-08-28</em></h4>
 </div>
 <div id="introduction" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
@@ -323,7 +323,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## [1] 0.69897</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(<span class="dv">10</span>, <span class="dv">5</span>)</code></pre></div>
 <pre><code>## [1] 1.430677</code></pre>
-<p>When I specify the arguments, I have been using the <code>name=value</code> notation and a student might be tempted to use the <code>&lt;-</code> notation hereSee next section.. Don’t do that as the <code>name=value</code> notation is making an association mapping and not a permanent assignment.</p>
+<p>When I specify the arguments, I have been using the <code>name=value</code> notation and a student might be tempted to use the <code>&lt;-</code> notation here. Don’t do that as the <code>name=value</code> notation is making an association mapping and not a permanent assignment.</p>
 </div>
 <div id="assignment" class="section level2">
 <h2><span class="header-section-number">1.2</span> Assignment</h2>
@@ -336,7 +336,7 @@ tau</code></pre></div>
 <pre><code>## [1] 5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tau *<span class="st"> </span>my.test.var</code></pre></div>
 <pre><code>## [1] 31.41593</code></pre>
-<p>As your analysis gets more complicated, you’ll want to save the results to a variable so that you can access the results later<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>. <em>If you don’t assign the result to a variable, you have no way of accessing the result.</em><a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p>As your analysis gets more complicated, you’ll want to save the results to a variable so that you can access the results later. <em>If you don’t assign the result to a variable, you have no way of accessing the result.</em></p>
 </div>
 <div id="scripts-and-rmarkdown" class="section level2">
 <h2><span class="header-section-number">1.3</span> Scripts and RMarkdown</h2>
@@ -367,10 +367,10 @@ x &lt;-<span class="st"> </span><span class="kw">seq</span>(-<span class="dv">2<
 </div>
 <div id="r-markdown-.rmd-files" class="section level3">
 <h3><span class="header-section-number">1.3.2</span> R Markdown (.Rmd files)</h3>
-<p>When I was a graduate student, I had to tediously copy and past tables of output from the R console and figures I had made into my Microsoft Word document. Far too often I would realize I had made a small mistake in part (b) of a problem and would have to go back, correct my mistake, and then redo all the laborious copying. I often wished that I could write both the code for my statistical analysis and the long discussion about the interpretation all in the same document so that I could just re-run the analysis with a click of a button and all the tables and figures would be updated by magic. Fortunately that magic<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> now exists.</p>
+<p>When I was a graduate student, I had to tediously copy and past tables of output from the R console and figures I had made into my Microsoft Word document. Far too often I would realize I had made a small mistake in part (b) of a problem and would have to go back, correct my mistake, and then redo all the laborious copying. I often wished that I could write both the code for my statistical analysis and the long discussion about the interpretation all in the same document so that I could just re-run the analysis with a click of a button and all the tables and figures would be updated by magic. Fortunately that magic now exists.</p>
 <p>To create a new R Markdown document, we use the <code>File -&gt; New File -&gt; R Markdown...</code> dropdown option and a menu will appear asking you for the document title, author, and preferred output type. In order to create a PDF, you’ll need to have LaTeX installed, but the HTML output nearly always works and I’ve had good luck with the MS Word output as well.</p>
 <p>The R Markdown is an implementation of the Markdown syntax that makes it extremely easy to write webpages and give instructions for how to do typesetting sorts of things. This syntax was extended to allow use to embed R commands directly into the document. Perhaps the easiest way to understand the syntax is to look at an at the <a href="http://rmarkdown.rstudio.com">RMarkdown website</a>.</p>
-<p>The R code in my document is nicely separated from my regular text using the three backticks and an instruction that it is R code that needs to be evaluated. The output of this document looks good as a HTML, PDF, or MS Word document. I have actually created this entire document using RMarkdown.</p>
+<p>The R code in my document is nicely separated from my regular text using the three backticks and an instruction that it is R code that needs to be evaluated. The output of this document looks good as a HTML, PDF, or MS Word document. I have actually created this entire book using RMarkdown.</p>
 </div>
 </div>
 <div id="packages" class="section level2">
@@ -382,6 +382,8 @@ x &lt;-<span class="st"> </span><span class="kw">seq</span>(-<span class="dv">2<
 <p>For a similar performance reason, many packages do not automatically load their datasets unless explicitly asked. Therefore when loading datasets from a package, you might need to do a <em>two-step</em> process of loading the package and then loading the dataset.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(faraway)      <span class="co"># load the package into memory</span>
 <span class="kw">data</span>(<span class="st">&quot;babyfood&quot;</span>)      <span class="co"># load the dataset into memory</span></code></pre></div>
+<p>If you don’t need to load any functions from a package and you just want the datasets, you can do it in one step.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&#39;babyfood&#39;</span>, <span class="dt">package=</span><span class="st">&#39;faraway&#39;</span>)   <span class="co"># just load the dataset, not anything else</span></code></pre></div>
 <p>To get information about a package, you can use either of the following afer the library has been loaded:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="dt">help=</span><span class="st">&#39;faraway&#39;</span>)</code></pre></div>
 </div>
@@ -401,22 +403,15 @@ x &lt;-<span class="st"> </span><span class="kw">seq</span>(-<span class="dv">2<
 
 </div>
 </div>
-<div class="footnotes">
-<hr />
-<ol start="1">
-<li id="fn1"><p>To paraphrase Beyonce, “Cause if you liked it, then you should have put a name on it.”<a href="index.html#fnref1">↩</a></p></li>
-<li id="fn2"><p>This isn’t strictly true, the variable <code>.Last.value</code> always has the result of the last expression evaluated, but you can’t go any farther back.<a href="index.html#fnref2">↩</a></p></li>
-<li id="fn3"><p>Clark’s third law states “Any sufficiently advanced technology is indistinguishable from magic.”<a href="index.html#fnref3">↩</a></p></li>
-</ol>
-</div>
             </section>
 
           </div>
         </div>
       </div>
 
-<a href="2-vectors.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+<a href="2-vectors.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
@@ -460,7 +455,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

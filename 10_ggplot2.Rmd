@@ -13,6 +13,12 @@ if( length(pkgs > 0)){
 }
 ```
 
+
+```{r}
+library(ggplot2)  # my favorite graphing system
+library(dplyr)    # data frame manipulations
+```
+
 There are three major “systems” of making graphs in R. The basic plotting commands in R are quite effective but the commands do not have a way of being combined in easy ways. Lattice graphics (which the `mosaic` package uses) makes it possible to create some quite complicated graphs but it is very difficult to do make non-standard graphs. The last package, `ggplot2` tries to not anticipate what the user wants to do, but rather provide the mechanisms for pulling together different graphical concepts and the user gets to decide elements to combine. 
 
 To make the most of ggplot2 it is important to wrap your mind around “The Grammar of Graphics”. The act of building a graph can be broken down into three steps. 
@@ -25,7 +31,7 @@ To make the most of ggplot2 it is important to wrap your mind around “The Gram
 
 Next, it should be noted that `ggplot2` is designed to act on data frames. It is actually hard to just draw three data points and for simple graphs it might be easier to use the base graphing system in R. However for any real data analysis project, the data will already be in a data frame and this is not an annoyance.
 
-These notes are sufficient for graphing simple graphing, but are not intended to be exhaustive. There are many places online to get help with `ggplot2`. One very nice resource is the website [http://www.cookbook-r.com/Graphs/] which gives much of the information available in the book R Graphics Cookbook which I highly recommend. Second is just googling your problems and see what you can find on websites such as StackExchange.
+These notes are sufficient for creating simple graphs using `ggplot2`, but are not intended to be exhaustive. There are many places online to get help with `ggplot2`. One very nice resource is the website [http://www.cookbook-r.com/Graphs/] which gives much of the information available in the book R Graphics Cookbook which I highly recommend. Second is just googling your problems and see what you can find on websites such as StackExchange.
 
 ## Basic Graphs
 
@@ -33,8 +39,13 @@ These notes are sufficient for graphing simple graphing, but are not intended to
 
 To start with, we'll make a very simple scatterplot using the `iris` dataset that will make a scatterplot of `Sepal.Length` versus `Petal.Length`, which are two columns in my dataset.
 
+```{r}
+data(iris)  # load the iris dataset that comes with R
+str(iris)   # what columns do we have to play with...
+```
+
+
 ```{r, fig.height=3, warning=FALSE, message=FALSE}
-library(ggplot2)
 ggplot( data=iris, aes(x=Sepal.Length, y=Petal.Length) ) +  
 	geom_point(  )
 ```
@@ -61,7 +72,7 @@ ggplot( data=iris, aes(x=Sepal.Length, y=Petal.Length) ) +
 ```
 
 
-The important part isn't that color and size were defined in the geom_point() but that they were defined outside of an aes() function! 
+The important part isn't that color and size were defined in the `geom_point()` but that they were defined outside of an `aes()` function! 
 
 1. Anything set inside an `aes()` command will be of the form `attribute=Column_Name` and will change based on the data.
 
@@ -81,7 +92,7 @@ I typically don't use this method because it has too many limitations as to how 
 model <- lm( Petal.Length ~ Sepal.Length * Species, data=iris) # fit the model
 iris <- cbind( iris, predict(model, interval='conf') )         # calc yhat, CI
 ggplot(iris, aes(x=Sepal.Length, color=Species, fill=Species)) +
-  geom_ribbon( aes(ymin=lwr, ymax=upr)) +
+  geom_ribbon( aes(ymin=lwr, ymax=upr), alpha=.4) +  # alpha is the opacity of the ribbon
   geom_line( aes(y=fit)) +
   geom_point( aes(y=Petal.Length))
 ```
@@ -94,6 +105,7 @@ ggplot(iris, aes(x=Sepal.Length, color=Species, fill=Species)) +
 For displaying a categorical variable on the x-axis and a continuous variable on the y-axis, a bar chart is a good option. Here we consider a data set that gives the fuel efficiency of different classes of vehicles in two different years. This is a subset of data that the EPA makes available on [http://fueleconomy.gov]. It contains only model which had a new release every year between 1999 and 2008 and therefore represents the most popular cars sold in the US. It includes information for each model for years 1999 and 2008. The dataset is included in the `ggplot2` package as `mpg`.
 
 ```{r}
+data(mpg, package='ggplot2')  # load the dataset
 str(mpg)
 ```
 
@@ -106,18 +118,18 @@ ggplot(mpg, aes(x=class)) +
 By default, the `geom_box()` just counts the number of cases and displays how many observations were in each class. If we were interested in knowing the mean highway fuel efficiency, we would have to summarize the data and calculate the mean for each class. Fortunately that is pretty easy to do.
 
 ```{r, warning=FALSE, message=FALSE}
-library(dplyr)  # for calculating the summary statistics
 mpg.small <- mpg %>%
   group_by(class) %>%
   summarise(mean.hwy = mean(hwy),
-            sd.hwy   = sd(hwy))
+            sd.hwy   = sd(hwy),
+            num.obs  = n() )
 
 ggplot(mpg.small, aes(x=class, y=mean.hwy)) +
   geom_bar( stat = 'identity' )              # no further summarization!
 ```
 
 
-The stat='identity' part is necessary to keep geom_bar() from doing any default summarization. We can add some error bars to show the standard deviation as well.
+The stat='identity' part is necessary to keep `geom_bar()` from doing any default summarization. We can add some error bars to show the standard deviation as well.
 ```{r, fig.height=3}
 ggplot(mpg.small, aes(x=class, y=mean.hwy,
                       ymin = mean.hwy-sd.hwy, 
@@ -173,7 +185,6 @@ Suppose that you just want make some barplots and add $\pm$ S.E. bars. This shou
 
 ```{r}
 # Calculate the mean and sd of the Petal Widths for each species
-library(dplyr)
 stats <- iris %>% 
   group_by(Species) %>%
   summarize( Mean = mean(Petal.Width),                 # Mean   = ybar

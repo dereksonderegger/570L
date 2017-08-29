@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Sufficient Introduction to R</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -26,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-01-31">
+<meta name="date" content="2017-08-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,7 +34,6 @@
   
 <link rel="prev" href="6-importing-data.html">
 <link rel="next" href="8-data-reshaping.html">
-
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -93,6 +91,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
+
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -169,8 +168,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#tidyr"><i class="fa fa-check"></i><b>8.1</b> <code>tidyr</code></a><ul>
 <li class="chapter" data-level="8.1.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#verbs-1"><i class="fa fa-check"></i><b>8.1.1</b> Verbs</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.2</b> Table Joins</a></li>
-<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#storing-data-in-multiple-tables"><i class="fa fa-check"></i><b>8.2</b> Storing Data in Multiple Tables</a></li>
+<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.3</b> Table Joins</a></li>
+<li class="chapter" data-level="8.4" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html"><i class="fa fa-check"></i><b>9</b> Graphing using <code>ggplot2</code></a><ul>
 <li class="chapter" data-level="9.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#basic-graphs"><i class="fa fa-check"></i><b>9.1</b> Basic Graphs</a><ul>
@@ -519,7 +519,7 @@ dd %&gt;%<span class="st"> </span><span class="kw">arrange</span>(Trt, <span cla
 <h4><span class="header-section-number">7.2.1.4</span> summarise()</h4>
 <p>By itself, this function is quite boring, but will become useful later on. Its purpose is to calculate summary statistics using any or all of the data columns. Notice that we get to chose the name of the new column. The way to think about this is that we are collapsing information stored in multiple rows into a single row of values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the mean of exam 1</span>
-<span class="kw">summarise</span>( grades, <span class="dt">mean.E1=</span><span class="kw">mean</span>(Exam1))</code></pre></div>
+grades %&gt;%<span class="st"> </span><span class="kw">summarise</span>( <span class="dt">mean.E1=</span><span class="kw">mean</span>(Exam1))</code></pre></div>
 <pre><code>##   mean.E1
 ## 1      83</code></pre>
 <p>We could calculate multiple summary statistics if we like.</p>
@@ -559,6 +559,7 @@ warpbreaks %&gt;%<span class="st"> </span>
 <pre><code>## Source: local data frame [6 x 3]
 ## Groups: wool [?]
 ## 
+## # A tibble: 6 x 3
 ##     wool tension     n
 ##   &lt;fctr&gt;  &lt;fctr&gt; &lt;int&gt;
 ## 1      A       L     9
@@ -567,14 +568,17 @@ warpbreaks %&gt;%<span class="st"> </span>
 ## 4      B       L     9
 ## 5      B       M     9
 ## 6      B       H     9</code></pre>
-<p>Using the same summarise function, we could calculate the group mean and standard deviation for each wool-by-tension group.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">warpbreaks %&gt;%<span class="st"> </span><span class="kw">group_by</span>(wool, tension) %&gt;%
-<span class="st">  </span><span class="kw">summarise</span>( <span class="dt">n           =</span> <span class="kw">n</span>(),             <span class="co"># I added some formatting to tell the</span>
+<p>The <code>group_by</code> function takes a data.frame and returns the same data.frame, but with some extra information so that any subsequent function acts on each unique combination defined in the <code>group_by</code>. If you wish to remove this behavior, use <code>group_by()</code> to reset the grouping to have no grouping variable.</p>
+<p>Using the same <code>summarise</code> function, we could calculate the group mean and standard deviation for each wool-by-tension group.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">warpbreaks %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(wool, tension) %&gt;%
+<span class="st">  </span><span class="kw">summarise</span>( <span class="dt">n           =</span> <span class="kw">n</span>(),             <span class="co"># I added some formatting to show the</span>
              <span class="dt">mean.breaks =</span> <span class="kw">mean</span>(breaks),    <span class="co"># reader I am calculating several</span>
              <span class="dt">sd.breaks   =</span> <span class="kw">sd</span>(breaks))      <span class="co"># statistics.</span></code></pre></div>
 <pre><code>## Source: local data frame [6 x 5]
 ## Groups: wool [?]
 ## 
+## # A tibble: 6 x 5
 ##     wool tension     n mean.breaks sd.breaks
 ##   &lt;fctr&gt;  &lt;fctr&gt; &lt;int&gt;       &lt;dbl&gt;     &lt;dbl&gt;
 ## 1      A       L     9    44.55556 18.097729
@@ -584,13 +588,14 @@ warpbreaks %&gt;%<span class="st"> </span>
 ## 5      B       M     9    28.77778  9.431036
 ## 6      B       H     9    18.77778  4.893306</code></pre>
 <p>If instead of summarizing each split, we might want to just do some calculation and the output should have the same number of rows as the input data frame. In this case I’ll tell <code>dplyr</code> that we are mutating the data frame instead of summarizing it. For example, suppose that I want to calculate the residual value <span class="math display">\[e_{ijk}=y_{ijk}-\bar{y}_{ij\cdot}\]</span> where <span class="math inline">\(\bar{y}_{ij\cdot}\)</span> is the mean of each <code>wool:tension</code> combination.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp &lt;-<span class="st"> </span>warpbreaks %&gt;%<span class="st"> </span>
-<span class="st">   </span><span class="kw">group_by</span>(wool, tension) %&gt;%<span class="st">            </span><span class="co"># group by wool:tension</span>
-<span class="st">   </span><span class="kw">mutate</span>(<span class="dt">resid =</span> breaks -<span class="st"> </span><span class="kw">mean</span>(breaks))  <span class="co"># mean(breaks) of the group!</span>
-<span class="kw">head</span>( temp )  <span class="co"># show the first couple of rows of the result</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">warpbreaks %&gt;%<span class="st"> </span>
+<span class="st">   </span><span class="kw">group_by</span>(wool, tension) %&gt;%<span class="st">                 </span><span class="co"># group by wool:tension</span>
+<span class="st">   </span><span class="kw">mutate</span>(<span class="dt">resid =</span> breaks -<span class="st"> </span><span class="kw">mean</span>(breaks)) %&gt;%<span class="st">   </span><span class="co"># mean(breaks) of the group!</span>
+<span class="st">   </span><span class="kw">head</span>(  )                                    <span class="co"># show the first couple of rows</span></code></pre></div>
 <pre><code>## Source: local data frame [6 x 4]
 ## Groups: wool, tension [1]
 ## 
+## # A tibble: 6 x 4
 ##   breaks   wool tension      resid
 ##    &lt;dbl&gt; &lt;fctr&gt;  &lt;fctr&gt;      &lt;dbl&gt;
 ## 1     26      A       L -18.555556
@@ -625,6 +630,7 @@ race.results &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
 <pre><code>## Source: local data frame [8 x 4]
 ## Groups: gender [2]
 ## 
+## # A tibble: 8 x 4
 ##     name  time gender place
 ##   &lt;fctr&gt; &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;
 ## 1 Rachel 19.82      F     1
@@ -648,6 +654,7 @@ temp.df2 &lt;-<span class="st"> </span>temp.df1 %&gt;%<span class="st"> </span><
 <pre><code>## Source: local data frame [8 x 4]
 ## Groups: gender [2]
 ## 
+## # A tibble: 8 x 4
 ##     name  time gender place
 ##   &lt;fctr&gt; &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;
 ## 1 Rachel 19.82      F     1
@@ -719,8 +726,9 @@ x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</s
         </div>
       </div>
 <a href="6-importing-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="8-data-reshaping.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+<a href="8-data-reshaping.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
@@ -764,7 +772,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

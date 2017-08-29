@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Sufficient Introduction to R</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -26,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-01-31">
+<meta name="date" content="2017-08-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,7 +34,6 @@
   
 <link rel="prev" href="5-matrices-data-frames-and-lists.html">
 <link rel="next" href="7-data-manipulation.html">
-
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -93,6 +91,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
+
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -169,8 +168,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#tidyr"><i class="fa fa-check"></i><b>8.1</b> <code>tidyr</code></a><ul>
 <li class="chapter" data-level="8.1.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#verbs-1"><i class="fa fa-check"></i><b>8.1.1</b> Verbs</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.2</b> Table Joins</a></li>
-<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#storing-data-in-multiple-tables"><i class="fa fa-check"></i><b>8.2</b> Storing Data in Multiple Tables</a></li>
+<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.3</b> Table Joins</a></li>
+<li class="chapter" data-level="8.4" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html"><i class="fa fa-check"></i><b>9</b> Graphing using <code>ggplot2</code></a><ul>
 <li class="chapter" data-level="9.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#basic-graphs"><i class="fa fa-check"></i><b>9.1</b> Basic Graphs</a><ul>
@@ -424,7 +424,7 @@ data<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">re
 <p>Open up the file <code>Example_4.xls</code> in Excel and confirm that the data sheet has name columns out to carb. Read in the data frame using the following code:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&#39;./data-raw/Example_4.xls&#39;</span>, <span class="dt">sheet=</span><span class="st">&#39;data&#39;</span>)   <span class="co"># Extra Column Example</span>
 <span class="kw">str</span>(data<span class="fl">.4</span>)</code></pre></div>
-<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    31 obs. of  13 variables:
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    31 obs. of  14 variables:
 ##  $ model: chr  &quot;Mazda RX4&quot; &quot;Mazda RX4 Wag&quot; &quot;Datsun 710&quot; &quot;Hornet 4 Drive&quot; ...
 ##  $ mpg  : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
 ##  $ cyl  : num  6 6 4 6 8 6 8 4 4 6 ...
@@ -437,7 +437,8 @@ data<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">re
 ##  $ am   : num  1 1 1 0 0 0 0 0 0 0 ...
 ##  $ gear : num  4 4 4 3 3 3 3 4 4 4 ...
 ##  $ carb : num  4 4 1 1 2 1 4 2 2 4 ...
-##  $ NA   : chr  NA NA &quot; &quot; NA ...</code></pre>
+##  $ X__1 : logi  NA NA NA NA NA NA ...
+##  $ X__2 : logi  NA NA NA NA NA NA ...</code></pre>
 <p>We notice that after reading in the data, there is an additional column that just has missing data (the NA stands for not available which means that the data is missing) and a row with just a single blank. Go back to the Excel file and go to row 4 column N and notice that the cell isn’t actually blank, there is a space. Delete the space, save the file, and then reload the data into R. You should notice that the extra columns are now gone.</p>
 <div id="libxls-bug" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> <code>libxls</code> bug</h3>
@@ -459,8 +460,9 @@ data<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">re
         </div>
       </div>
 <a href="5-matrices-data-frames-and-lists.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="7-data-manipulation.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+<a href="7-data-manipulation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
@@ -504,7 +506,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

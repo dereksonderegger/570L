@@ -238,7 +238,7 @@ grades %>% mutate(
 By itself, this function is quite boring, but will become useful later on. Its purpose is to calculate summary statistics using any or all of the data columns. Notice that we get to chose the name of the new column. The way to think about this is that we are collapsing information stored in multiple rows into a single row of values.
 ```{r}
 # calculate the mean of exam 1
-summarise( grades, mean.E1=mean(Exam1))
+grades %>% summarise( mean.E1=mean(Exam1))
 ```
 
 We could calculate multiple summary statistics if we like.
@@ -275,23 +275,25 @@ The first we must do is to create a data frame with additional information about
 warpbreaks %>% 
   group_by( wool, tension) %>%    # grouping
   summarise(n = n() )             # how many in each group
-
 ```
 
-Using the same summarise function, we could calculate the group mean and standard deviation for each wool-by-tension group.
+The `group_by` function takes a data.frame and returns the same data.frame, but with some extra information so that any subsequent function acts on each unique combination defined in the `group_by`.  If you wish to remove this behavior, use `group_by()` to reset the grouping to have no grouping variable.
+
+Using the same `summarise` function, we could calculate the group mean and standard deviation for each wool-by-tension group.
 ```{r}
-warpbreaks %>% group_by(wool, tension) %>%
-  summarise( n           = n(),             # I added some formatting to tell the
+warpbreaks %>% 
+  group_by(wool, tension) %>%
+  summarise( n           = n(),             # I added some formatting to show the
              mean.breaks = mean(breaks),    # reader I am calculating several
              sd.breaks   = sd(breaks))      # statistics.
 ```
 
 If instead of summarizing each split, we might want to just do some calculation and the output should have the same number of rows as the input data frame. In this case I'll tell `dplyr` that we are mutating the data frame instead of summarizing it. For example, suppose that I want to calculate the residual value $$e_{ijk}=y_{ijk}-\bar{y}_{ij\cdot}$$ where $\bar{y}_{ij\cdot}$ is the mean of each `wool:tension` combination.
 ```{r}
-temp <- warpbreaks %>% 
-   group_by(wool, tension) %>%            # group by wool:tension
-   mutate(resid = breaks - mean(breaks))  # mean(breaks) of the group!
-head( temp )  # show the first couple of rows of the result
+warpbreaks %>% 
+   group_by(wool, tension) %>%                 # group by wool:tension
+   mutate(resid = breaks - mean(breaks)) %>%   # mean(breaks) of the group!
+   head(  )                                    # show the first couple of rows
 ```
 
 

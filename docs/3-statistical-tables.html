@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Sufficient Introduction to R</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -26,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-01-31">
+<meta name="date" content="2017-08-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,7 +34,6 @@
   
 <link rel="prev" href="2-vectors.html">
 <link rel="next" href="4-data-types.html">
-
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -93,6 +91,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
+
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -169,8 +168,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#tidyr"><i class="fa fa-check"></i><b>8.1</b> <code>tidyr</code></a><ul>
 <li class="chapter" data-level="8.1.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#verbs-1"><i class="fa fa-check"></i><b>8.1.1</b> Verbs</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.2</b> Table Joins</a></li>
-<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#storing-data-in-multiple-tables"><i class="fa fa-check"></i><b>8.2</b> Storing Data in Multiple Tables</a></li>
+<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.3</b> Table Joins</a></li>
+<li class="chapter" data-level="8.4" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html"><i class="fa fa-check"></i><b>9</b> Graphing using <code>ggplot2</code></a><ul>
 <li class="chapter" data-level="9.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#basic-graphs"><i class="fa fa-check"></i><b>9.1</b> Basic Graphs</a><ul>
@@ -317,10 +317,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>For example, to see the normal distribution with mean <span class="math inline">\(mu=10\)</span> and standard deviation <span class="math inline">\(\sigma=2\)</span>, we use</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mosaic)
 <span class="kw">plotDist</span>(<span class="st">&#39;norm&#39;</span>, <span class="dt">mean=</span><span class="dv">10</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <p>This function works for discrete distributions as well.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotDist</span>(<span class="st">&#39;binom&#39;</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">3</span>)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 </div>
 <div id="base-r-functions" class="section level2">
 <h2><span class="header-section-number">3.2</span> Base R functions</h2>
@@ -378,7 +378,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">2</span>)</code></pre></div>
 <pre><code>## [1] 0.6777995</code></pre>
 <p>For discrete distributions, you must be careful because R will give you the probability of less than or equal to 2. If you wanted less than two, you should use <code>dbinom(1,10,.2)</code>.</p>
-<p>The normal distribution works similarly. Suppose for <span class="math inline">\(Z\sim N\left(0,1\right)\)</span> and we wanted to know <span class="math inline">\(P\left(Z\le-1\right)\)</span>? <img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>The normal distribution works similarly. Suppose for <span class="math inline">\(Z\sim N\left(0,1\right)\)</span> and we wanted to know <span class="math inline">\(P\left(Z\le-1\right)\)</span>? <img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <p>The answer is easily found via <code>pnorm()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pnorm</span>(-<span class="dv">1</span>)</code></pre></div>
 <pre><code>## [1] 0.1586553</code></pre>
@@ -392,7 +392,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## 
 ##  P(X &lt;= -1) = P(Z &lt;= -1) = 0.1586553
 ##  P(X &gt;  -1) = P(Z &gt;  -1) = 0.8413447</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 <pre><code>## [1] 0.1586553</code></pre>
 </div>
 <div id="q-function" class="section level3">
@@ -402,7 +402,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mosaic::<span class="kw">xqnorm</span>(<span class="fl">0.30</span>)   <span class="co"># Give me the value along with a pretty picture</span></code></pre></div>
 <pre><code>##  P(X &lt;= -0.524400512708041) = 0.3
 ##  P(X &gt;  -0.524400512708041) = 0.7</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <pre><code>## [1] -0.5244005</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qnorm</span>(.<span class="dv">30</span>)             <span class="co"># No pretty picture, just the value</span></code></pre></div>
 <pre><code>## [1] -0.5244005</code></pre>
@@ -411,9 +411,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.4</span> r-function</h3>
 <p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 19.48874 21.53276 20.88738 18.31934 22.75293</code></pre>
+<pre><code>## [1] 20.16770 15.61684 21.37835 22.24267 21.60523</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1] 7 8 6 9</code></pre>
+<pre><code>## [1]  5  8 10  8</code></pre>
 </div>
 </div>
 <div id="exercises-2" class="section level2">
@@ -449,7 +449,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">20</span>, <span class="dt">min=</span><span class="dv">0</span>, <span class="dt">max=</span><span class="dv">1</span>)</code></pre></div>
 <p>Then produce a histogram of the sample using the function <code>hist()</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(x)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p></li>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p></li>
 <li><p>Generate a sample of 2000 from a normal distribution with <code>mean=10</code> and standard deviation <code>sd=2</code> using the <code>rnorm()</code> function. Create a histogram the the resulting sample.</p></li>
 </ol></li>
 </ol>
@@ -462,8 +462,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
         </div>
       </div>
 <a href="2-vectors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="4-data-types.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+<a href="4-data-types.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
@@ -507,7 +508,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

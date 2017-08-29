@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Sufficient Introduction to R</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -26,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-01-31">
+<meta name="date" content="2017-08-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,7 +34,6 @@
   
 <link rel="prev" href="7-data-manipulation.html">
 <link rel="next" href="9-graphing-using-ggplot2.html">
-
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -93,6 +91,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
+
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -169,8 +168,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#tidyr"><i class="fa fa-check"></i><b>8.1</b> <code>tidyr</code></a><ul>
 <li class="chapter" data-level="8.1.1" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#verbs-1"><i class="fa fa-check"></i><b>8.1.1</b> Verbs</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.2</b> Table Joins</a></li>
-<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.3</b> Exercises</a></li>
+<li class="chapter" data-level="8.2" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#storing-data-in-multiple-tables"><i class="fa fa-check"></i><b>8.2</b> Storing Data in Multiple Tables</a></li>
+<li class="chapter" data-level="8.3" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#table-joins"><i class="fa fa-check"></i><b>8.3</b> Table Joins</a></li>
+<li class="chapter" data-level="8.4" data-path="8-data-reshaping.html"><a href="8-data-reshaping.html#exercises-7"><i class="fa fa-check"></i><b>8.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html"><i class="fa fa-check"></i><b>9</b> Graphing using <code>ggplot2</code></a><ul>
 <li class="chapter" data-level="9.1" data-path="9-graphing-using-ggplot2.html"><a href="9-graphing-using-ggplot2.html#basic-graphs"><i class="fa fa-check"></i><b>9.1</b> Basic Graphs</a><ul>
@@ -309,80 +309,138 @@ tidy.scores</code></pre></div>
 ## 7  Alison        HW.3     8
 ## 8 Brandon        HW.3     6
 ## 9 Charles        HW.3     9</code></pre>
-<p>To spread the key:value pairs out into a matrix, we use the spread() command.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># score columns into columns we&#39;ll name Assesment and Score</span>
+<p>To spread the key:value pairs out into a matrix, we use the <code>spread()</code> command.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Turn the Assessment/Score pair of columns into one column per factor level of Assessment</span>
 tidy.scores %&gt;%<span class="st"> </span><span class="kw">spread</span>( <span class="dt">key=</span>Assessement, <span class="dt">value=</span>Score )</code></pre></div>
 <pre><code>##      name HW.1 HW.2 HW.3
 ## 1  Alison    8    5    8
 ## 2 Brandon    5    3    6
 ## 3 Charles    9    7    9</code></pre>
-<p>One way to keep straight which is the key column is that the key is the category, while value is the numerical value or response.</p>
+<p>One way to keep straight which is the <code>key</code> column is that the key is the category, while <code>value</code> is the numerical value or response.</p>
 </div>
+</div>
+<div id="storing-data-in-multiple-tables" class="section level2">
+<h2><span class="header-section-number">8.2</span> Storing Data in Multiple Tables</h2>
+<p>In many datasets it is common to store data across multiple tables, usually with the goal of minimizing memory used as well as providing minimal duplication of information so any change that must be made is only made in a single place.</p>
+<p>To see the rational why we might do this, consider building a data set of blood donations by a variety of donors across several years. For each blood donation, we will perform some assay and measure certain qualities about the blood and the patients health at the donation.</p>
+<pre><code>##   Donor Hemoglobin Systolic Diastolic
+## 1 Derek       17.4      121        80
+## 2  Jeff       16.9      145       101</code></pre>
+<p>But now we have to ask, what happens when we have a donor that has given blood multiple times? In this case we should just have multiple rows per person along with a date column to uniquely identify a particular donation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">donations</code></pre></div>
+<pre><code>##   Donor       Date Hemoglobin Systolic Diastolic
+## 1 Derek 2017-04-14       17.4      120        79
+## 2 Derek 2017-06-20       16.5      121        80
+## 3  Jeff 2017-08-14       16.9      145       101</code></pre>
+<p>I would like to include additional information about the donor where that infomation doesn’t change overtime. For example we might want to have information about the donar’s birthdate, sex, blood type. However, I don’t want that information in <em>every single donation line</em>. Otherwise if I mistype a birthday and have to correct it, I would have to correct it <em>everywhere</em>. For information about the donor, should live in a <code>donors</code> table, while information about a particular donation should live in the <code>donations</code> table.</p>
+<p>Furthermore, there are many Jeffs and Dereks in the world and to maintain a unique identifier (without using Social Security numbers) I will just create a <code>Donor_ID</code> code that will uniquely identify a person. Similarly I will create a <code>Donation_ID</code> that will uniquely identify a dontation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">donors</code></pre></div>
+<pre><code>##   Donor_ID F_Name L_Name B_Type      Birth       Street      City State
+## 1  Donor_1  Derek    Lee     O+ 1976-09-17 7392 Willard Flagstaff    AZ
+## 2  Donor_2   Jeff  Smith      A 1974-06-23     873 Vine   Bozeman    MT</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">donations</code></pre></div>
+<pre><code>##   Donation_ID Donor_ID       Date Hemoglobin Systolic Diastolic
+## 1  Donation_1  Donor_1 2017-04-14       17.4      120        79
+## 2  Donation_2  Donor_1 2017-06-20       16.5      121        80
+## 3  Donation_3  Donor_2 2017-08-14       16.9      145       101</code></pre>
+<p>If we have a new donor walk in and give blood, then we’ll have to create a new entry in the <code>donors</code> table as well as a new entry in the <code>donations</code> table. If an experienced donor gives again, we just have to create a new entry in the donations table.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">donors</code></pre></div>
+<pre><code>##   Donor_ID F_Name L_Name B_Type      Birth       Street      City State
+## 1  Donor_1  Derek    Lee     O+ 1976-09-17 7392 Willard Flagstaff    AZ
+## 2  Donor_2   Jeff  Smith      A 1974-06-23     873 Vine   Bozeman    MT
+## 3  Donor_3 Aubrey    Lee     O+ 1980-12-15 7392 Willard Flagstaff    AZ</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">donations</code></pre></div>
+<pre><code>##   Donation_ID Donor_ID       Date Hemoglobin Systolic Diastolic
+## 1  Donation_1  Donor_1 2017-04-14       17.4      120        79
+## 2  Donation_2  Donor_1 2017-06-20       16.5      121        80
+## 3  Donation_3  Donor_2 2017-08-14       16.9      145       101
+## 4  Donation_4  Donor_1 2017-08-26       17.6      120        79
+## 5  Donation_5  Donor_4 2017-08-26       16.1      137        90</code></pre>
+<p>This data storage set-up might be flexible enough for us. However what happens if somebody moves? If we don’t want to keep the historical information, then we could just change the person’s <code>Street_Address</code>, <code>City</code>, and <code>State</code> values. If we do want to keep that, then we could create <code>donor_addresses</code> table that contains a <code>Start_Date</code> and <code>End_Date</code> that denotes the period of time that the address was valid.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">donor_addresses</code></pre></div>
+<pre><code>##   Donor_ID       Street      City State Start_Date   End_Date
+## 1  Donor_1 346 Treeline   Pullman    WA 2015-01-26 2016-06-27
+## 2  Donor_1     645 Main Flagstsff    AZ 2016-06-28 2017-07-02
+## 3  Donor_1 7392 Willard Flagstaff    AZ 2017-07-03       &lt;NA&gt;
+## 4  Donor_2     873 Vine   Bozeman    MT 2015-03-17       &lt;NA&gt;
+## 5  Donor_3 7392 Willard Flagstaff    AZ 2017-06-01       &lt;NA&gt;</code></pre>
+<p>Given this data structure, we can now easily create new donations as well as store donor information. In the event that we need to change something about a donor, there is only <em>one</em> place to make that change.</p>
+<p>However, having data spread across multiple tables is challenging because I often want that information squished back together. For example, the blood donations services might want to find all ‘O’ or ‘O+’ donors in Flagstaff and their current mailing address and send them some notification about blood supplies being low. So we need someway to join the <code>donors</code> and <code>donor_addresses</code> tables together in a sensible manner.</p>
 </div>
 <div id="table-joins" class="section level2">
-<h2><span class="header-section-number">8.2</span> Table Joins</h2>
-<p>Often we need to squish together two data frames but they do not have the same number of rows. Consider the case where we have a data frame of observations of fish (say 200 fish caught per lake) and a separate data frame that contains information about lake (perhaps surface area, max depth, pH, etc). I want to store them as two separate tables so that when I have to record a lake level observation, I only input it <em>one</em> place. This decreases the chance that I make a copy/paste error.</p>
+<h2><span class="header-section-number">8.3</span> Table Joins</h2>
+<p>Often we need to squish together two data frames but they do not have the same number of rows. Consider the case where we have a data frame of observations of fish and a separate data frame that contains information about lake (perhaps surface area, max depth, pH, etc). I want to store them as two separate tables so that when I have to record a lake level observation, I only input it <em>one</em> place. This decreases the chance that I make a copy/paste error.</p>
 <p>To illustrate the different types of table joins, we’ll consider two different tables.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fish.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Lake =</span> <span class="kw">c</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;C&#39;</span>), <span class="dt">Fish.Weight=</span><span class="dv">101</span>:<span class="dv">106</span>)
-Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Lake =</span> <span class="kw">c</span>(    <span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;D&#39;</span>),         <span class="dt">pH=</span><span class="kw">c</span>(<span class="fl">6.5</span>, <span class="fl">6.3</span>, <span class="fl">6.1</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># tibbles are just data.frames that print a bit nicer and don&#39;t automaticall</span>
+<span class="co"># convert character columns into factors.  They behave a bit more consistently</span>
+<span class="co"># in a wide variety of situations compared to data.frames.</span>
+Fish.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">Lake_ID =</span> <span class="kw">c</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;C&#39;</span>), 
+  <span class="dt">Fish.Weight=</span><span class="kw">rnorm</span>(<span class="dv">6</span>, <span class="dt">mean=</span><span class="dv">260</span>, <span class="dt">sd=</span><span class="dv">25</span>) ) <span class="co"># make up some data</span>
+Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">Lake_ID =</span> <span class="kw">c</span>(    <span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;D&#39;</span>),   
+  <span class="dt">Lake_Name =</span> <span class="kw">c</span>(<span class="st">&#39;Lake Elaine&#39;</span>, <span class="st">&#39;Mormon Lake&#39;</span>, <span class="st">&#39;Lake Mary&#39;</span>),   
+  <span class="dt">pH=</span><span class="kw">c</span>(<span class="fl">6.5</span>, <span class="fl">6.3</span>, <span class="fl">6.1</span>),
+  <span class="dt">area =</span> <span class="kw">c</span>(<span class="dv">40</span>, <span class="dv">210</span>, <span class="dv">240</span>),
+  <span class="dt">avg_depth =</span> <span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">38</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fish.Data</code></pre></div>
-<pre><code>## # A tibble: 6 × 2
-##    Lake Fish.Weight
-##   &lt;chr&gt;       &lt;int&gt;
-## 1     A         101
-## 2     A         102
-## 3     B         103
-## 4     B         104
-## 5     C         105
-## 6     C         106</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   Lake_ID Fish.Weight
+##     &lt;chr&gt;       &lt;dbl&gt;
+## 1       A    246.9451
+## 2       A    258.6663
+## 3       B    266.0302
+## 4       B    250.0360
+## 5       C    191.1737
+## 6       C    249.4215</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Lake.Data</code></pre></div>
-<pre><code>## # A tibble: 3 × 2
-##    Lake    pH
-##   &lt;chr&gt; &lt;dbl&gt;
-## 1     B   6.5
-## 2     C   6.3
-## 3     D   6.1</code></pre>
-<p>Notice that each of these tables has a column labled <code>Lake</code>. When we join these two tables, the row that describes <code>Lake A</code> should be duplicated for each row in the <code>Fish.Data</code> that corresponds with fish caught from <code>Lake A</code>.</p>
+<pre><code>## # A tibble: 3 x 5
+##   Lake_ID   Lake_Name    pH  area avg_depth
+##     &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+## 1       B Lake Elaine   6.5    40         8
+## 2       C Mormon Lake   6.3   210        10
+## 3       D   Lake Mary   6.1   240        38</code></pre>
+<p>Notice that each of these tables has a column labled <code>Lake_ID</code>. When we join these two tables, the row that describes lake <code>A</code> should be duplicated for each row in the <code>Fish.Data</code> that corresponds with fish caught from lake <code>A</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">full_join</span>(Fish.Data, Lake.Data)</code></pre></div>
-<pre><code>## Joining, by = &quot;Lake&quot;</code></pre>
-<pre><code>## # A tibble: 7 × 3
-##    Lake Fish.Weight    pH
-##   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
-## 1     A         101    NA
-## 2     A         102    NA
-## 3     B         103   6.5
-## 4     B         104   6.5
-## 5     C         105   6.3
-## 6     C         106   6.3
-## 7     D          NA   6.1</code></pre>
+<pre><code>## Joining, by = &quot;Lake_ID&quot;</code></pre>
+<pre><code>## # A tibble: 7 x 6
+##   Lake_ID Fish.Weight   Lake_Name    pH  area avg_depth
+##     &lt;chr&gt;       &lt;dbl&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+## 1       A    246.9451        &lt;NA&gt;    NA    NA        NA
+## 2       A    258.6663        &lt;NA&gt;    NA    NA        NA
+## 3       B    266.0302 Lake Elaine   6.5    40         8
+## 4       B    250.0360 Lake Elaine   6.5    40         8
+## 5       C    191.1737 Mormon Lake   6.3   210        10
+## 6       C    249.4215 Mormon Lake   6.3   210        10
+## 7       D          NA   Lake Mary   6.1   240        38</code></pre>
 <p>Notice that because we didn’t have any fish caught in lake <code>D</code> and we don’t have any Lake information about lake <code>A</code>, when we join these two tables, we end up introducing missing observations into the resulting data frame.</p>
 <p>The other types of joins govern the behavor or these missing data.</p>
 <p><strong><code>left_join(A, B)</code></strong> For each row in A, match with a row in B, but don’t create any more rows than what was already in A.</p>
 <p><strong><code>inner_join(A,B)</code></strong> Only match row values where both data frames have a value.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">left_join</span>(Fish.Data, Lake.Data)</code></pre></div>
-<pre><code>## Joining, by = &quot;Lake&quot;</code></pre>
-<pre><code>## # A tibble: 6 × 3
-##    Lake Fish.Weight    pH
-##   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
-## 1     A         101    NA
-## 2     A         102    NA
-## 3     B         103   6.5
-## 4     B         104   6.5
-## 5     C         105   6.3
-## 6     C         106   6.3</code></pre>
+<pre><code>## Joining, by = &quot;Lake_ID&quot;</code></pre>
+<pre><code>## # A tibble: 6 x 6
+##   Lake_ID Fish.Weight   Lake_Name    pH  area avg_depth
+##     &lt;chr&gt;       &lt;dbl&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+## 1       A    246.9451        &lt;NA&gt;    NA    NA        NA
+## 2       A    258.6663        &lt;NA&gt;    NA    NA        NA
+## 3       B    266.0302 Lake Elaine   6.5    40         8
+## 4       B    250.0360 Lake Elaine   6.5    40         8
+## 5       C    191.1737 Mormon Lake   6.3   210        10
+## 6       C    249.4215 Mormon Lake   6.3   210        10</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inner_join</span>(Fish.Data, Lake.Data)</code></pre></div>
-<pre><code>## Joining, by = &quot;Lake&quot;</code></pre>
-<pre><code>## # A tibble: 4 × 3
-##    Lake Fish.Weight    pH
-##   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;
-## 1     B         103   6.5
-## 2     B         104   6.5
-## 3     C         105   6.3
-## 4     C         106   6.3</code></pre>
+<pre><code>## Joining, by = &quot;Lake_ID&quot;</code></pre>
+<pre><code>## # A tibble: 4 x 6
+##   Lake_ID Fish.Weight   Lake_Name    pH  area avg_depth
+##     &lt;chr&gt;       &lt;dbl&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+## 1       B    266.0302 Lake Elaine   6.5    40         8
+## 2       B    250.0360 Lake Elaine   6.5    40         8
+## 3       C    191.1737 Mormon Lake   6.3   210        10
+## 4       C    249.4215 Mormon Lake   6.3   210        10</code></pre>
 <p>The above examples assumed that the column used to join the two tables was named the same in both tables. This is good practice to try to do, but sometimes you have to work with data where that isn’t the case. In that situation you can use the <code>by=c(&quot;ColName.A&quot;=&quot;ColName.B&quot;)</code> syntax where <code>ColName.A</code> represents the name of the column in the first data frame and <code>ColName.B</code> is the equivalent column in the second data frame.</p>
 </div>
 <div id="exercises-7" class="section level2">
-<h2><span class="header-section-number">8.3</span> Exercises</h2>
+<h2><span class="header-section-number">8.4</span> Exercises</h2>
 <ol style="list-style-type: decimal">
 <li><p>Suppose we are given information about the maximum daily temperature from a weather station in Flagstaff, AZ. The file is available at the GitHub site that this book is hosted on.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">FlagTemp &lt;-<span class="st">  </span><span class="kw">read.csv</span>(
@@ -440,8 +498,9 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span cla
         </div>
       </div>
 <a href="7-data-manipulation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="9-graphing-using-ggplot2.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+<a href="9-graphing-using-ggplot2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
@@ -485,7 +544,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
