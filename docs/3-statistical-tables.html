@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-08-28">
+<meta name="date" content="2017-09-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -383,15 +383,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pnorm</span>(-<span class="dv">1</span>)</code></pre></div>
 <pre><code>## [1] 0.1586553</code></pre>
 <p>Notice for continuous random variables, the probability <span class="math inline">\(P\left(Z=-1\right)=0\)</span> so we can ignore the issue of “less than” vs “less than or equal to”.</p>
-<p>Often times we will want to know the probability of greater than some value. That is, we might want to find <span class="math inline">\(P\left(Z\ge1\right)\)</span>. For the normal distribution, there are a number of tricks we could use. Notably <span class="math display">\[P\left(Z\ge-1\right)  =   P\left(Z\le1\right)=1-P\left(Z&lt;-1\right)\]</span> but sometimes I’m lazy and would like to tell R to give me the area to the right instead of area to the left (which is the default). This can be done by setting the argument <span class="math inline">\(lower.tail=FALSE\)</span>.</p>
+<p>Often times we will want to know the probability of greater than some value. That is, we might want to find <span class="math inline">\(P\left(Z \ge -1\right)\)</span>. For the normal distribution, there are a number of tricks we could use. Notably <span class="math display">\[P\left(Z\ge-1\right)  =   P\left(Z\le1\right)=1-P\left(Z&lt;-1\right)\]</span> but sometimes I’m lazy and would like to tell R to give me the area to the right instead of area to the left (which is the default). This can be done by setting the argument <span class="math inline">\(lower.tail=FALSE\)</span>.</p>
 <p>The <code>mosaic</code> package includes an augmented version of the <code>pnorm()</code> function called <code>xpnorm()</code> that calculates the same number but includes some extra information and produces a pretty graph to help us understand what we just calculated and do the tedious “1 minus” calculation to find the upper area. Fortunately this x-variant exists for the Normal, Chi-squared, F, Gamma continuous distributions and the discrete Poisson, Geometric, and Binomial distributions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mosaic)
 <span class="kw">xpnorm</span>(-<span class="dv">1</span>)</code></pre></div>
-<pre><code>## 
-## If X ~ N(0, 1), then 
-## 
-##  P(X &lt;= -1) = P(Z &lt;= -1) = 0.1586553
-##  P(X &gt;  -1) = P(Z &gt;  -1) = 0.8413447</code></pre>
+<pre><code>## </code></pre>
+<pre><code>## If X ~ N(0, 1), then</code></pre>
+<pre><code>##  P(X &lt;= -1) = P(Z &lt;= -1) = 0.1587</code></pre>
+<pre><code>##  P(X &gt;  -1) = P(Z &gt;  -1) = 0.8413</code></pre>
+<pre><code>## </code></pre>
 <p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 <pre><code>## [1] 0.1586553</code></pre>
 </div>
@@ -400,8 +400,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>In class, we will also find ourselves asking for the quantiles of a distribution. Percentiles are by definition 1/100, 2/100, etc but if I am interested in something that isn’t and even division of 100, we get fancy can call them quantiles. This is a small semantic quibble, but we ought to be precise. That being said, I won’t correct somebody if they call these percentiles. For example, I might want to find the 0.30 quantile, which is the value such that 30% of the distribution is less than it, and 70% is greater. Mathematically, I wish to find the value <span class="math inline">\(z\)</span> such that <span class="math inline">\(P(Z&lt;z)=0.30\)</span>.</p>
 <p>To find this value in the tables in a book, we use the table in reverse. R gives us a handy way to do this with the <code>qnorm()</code> function and the mosaic package provides a nice visuallization using the augmented <code>xqnorm()</code>. Below, I specify that I’m using a function in the <code>mosaic</code> package by specifying it via <code>PackageName::FunctionName()</code> but that isn’t strictly necessary but can improve readability of your code.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mosaic::<span class="kw">xqnorm</span>(<span class="fl">0.30</span>)   <span class="co"># Give me the value along with a pretty picture</span></code></pre></div>
-<pre><code>##  P(X &lt;= -0.524400512708041) = 0.3
-##  P(X &gt;  -0.524400512708041) = 0.7</code></pre>
+<pre><code>## </code></pre>
+<pre><code>## If X ~ N(0, 1), then</code></pre>
+<pre><code>##  P(X &lt;= -0.5244005) = 0.3</code></pre>
+<pre><code>##  P(X &gt;  -0.5244005) = 0.7</code></pre>
+<pre><code>## </code></pre>
 <p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <pre><code>## [1] -0.5244005</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qnorm</span>(.<span class="dv">30</span>)             <span class="co"># No pretty picture, just the value</span></code></pre></div>
@@ -411,9 +414,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.4</span> r-function</h3>
 <p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 20.16770 15.61684 21.37835 22.24267 21.60523</code></pre>
+<pre><code>## [1] 20.33050 21.06777 19.10862 19.49924 17.88990</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1]  5  8 10  8</code></pre>
+<pre><code>## [1] 10  8  8  9</code></pre>
 </div>
 </div>
 <div id="exercises-2" class="section level2">

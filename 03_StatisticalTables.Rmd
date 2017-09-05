@@ -126,7 +126,7 @@ pnorm(-1)
 
 Notice for continuous random variables, the probability $P\left(Z=-1\right)=0$ so we can ignore the issue of “less than” vs “less than or equal to”.
 
-Often times we will want to know the probability of greater than some value. That is, we might want to find $P\left(Z\ge1\right)$. For the normal distribution, there are a number of tricks we could use. Notably 
+Often times we will want to know the probability of greater than some value. That is, we might want to find $P\left(Z \ge -1\right)$. For the normal distribution, there are a number of tricks we could use. Notably 
 $$P\left(Z\ge-1\right)	=	P\left(Z\le1\right)=1-P\left(Z<-1\right)$$
 but sometimes I'm lazy and would like to tell R to give me the area to the right instead of area to the left (which is the default). This can be done by setting the argument $lower.tail=FALSE$.
 

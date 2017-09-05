@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-08-28">
+<meta name="date" content="2017-09-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -451,7 +451,9 @@ grades %&gt;%<span class="st"> </span><span class="kw">filter</span>(Final &gt;<
 <p>When you want to filter rows based on row number, this is called slicing.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># grab the first 2 rows</span>
 grades %&gt;%<span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span>:<span class="dv">2</span>)</code></pre></div>
-<pre><code>##   l.name Exam1 Exam2 Final  average
+<pre><code>## # A tibble: 2 x 5
+##   l.name Exam1 Exam2 Final  average
+##   &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
 ## 1    Cox    93    98    96 95.66667
 ## 2 Dorian    89    70    85 81.33333</code></pre>
 </div>
@@ -532,6 +534,9 @@ grades %&gt;%<span class="st"> </span><span class="kw">summarise</span>( <span c
 grades %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>( Exam1:Final ) %&gt;%
 <span class="st">  </span><span class="kw">summarise_each</span>( <span class="kw">funs</span>(mean, sd) )</code></pre></div>
+<pre><code>## `summarise_each()` is deprecated.
+## Use `summarise_all()`, `summarise_at()` or `summarise_if()` instead.
+## To map `funs` over all variables, use `summarise_all()`</code></pre>
 <pre><code>##   Exam1_mean Exam2_mean Final_mean Exam1_sd Exam2_sd Final_sd
 ## 1         83      83.75       88.5 10.23067     11.5 6.757712</code></pre>
 </div>
@@ -556,10 +561,8 @@ grades %&gt;%<span class="st"> </span>
 warpbreaks %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>( wool, tension) %&gt;%<span class="st">    </span><span class="co"># grouping</span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>() )             <span class="co"># how many in each group</span></code></pre></div>
-<pre><code>## Source: local data frame [6 x 3]
-## Groups: wool [?]
-## 
-## # A tibble: 6 x 3
+<pre><code>## # A tibble: 6 x 3
+## # Groups:   wool [?]
 ##     wool tension     n
 ##   &lt;fctr&gt;  &lt;fctr&gt; &lt;int&gt;
 ## 1      A       L     9
@@ -575,10 +578,8 @@ warpbreaks %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise</span>( <span class="dt">n           =</span> <span class="kw">n</span>(),             <span class="co"># I added some formatting to show the</span>
              <span class="dt">mean.breaks =</span> <span class="kw">mean</span>(breaks),    <span class="co"># reader I am calculating several</span>
              <span class="dt">sd.breaks   =</span> <span class="kw">sd</span>(breaks))      <span class="co"># statistics.</span></code></pre></div>
-<pre><code>## Source: local data frame [6 x 5]
-## Groups: wool [?]
-## 
-## # A tibble: 6 x 5
+<pre><code>## # A tibble: 6 x 5
+## # Groups:   wool [?]
 ##     wool tension     n mean.breaks sd.breaks
 ##   &lt;fctr&gt;  &lt;fctr&gt; &lt;int&gt;       &lt;dbl&gt;     &lt;dbl&gt;
 ## 1      A       L     9    44.55556 18.097729
@@ -592,10 +593,8 @@ warpbreaks %&gt;%<span class="st"> </span>
 <span class="st">   </span><span class="kw">group_by</span>(wool, tension) %&gt;%<span class="st">                 </span><span class="co"># group by wool:tension</span>
 <span class="st">   </span><span class="kw">mutate</span>(<span class="dt">resid =</span> breaks -<span class="st"> </span><span class="kw">mean</span>(breaks)) %&gt;%<span class="st">   </span><span class="co"># mean(breaks) of the group!</span>
 <span class="st">   </span><span class="kw">head</span>(  )                                    <span class="co"># show the first couple of rows</span></code></pre></div>
-<pre><code>## Source: local data frame [6 x 4]
-## Groups: wool, tension [1]
-## 
-## # A tibble: 6 x 4
+<pre><code>## # A tibble: 6 x 4
+## # Groups:   wool, tension [1]
 ##   breaks   wool tension      resid
 ##    &lt;dbl&gt; &lt;fctr&gt;  &lt;fctr&gt;      &lt;dbl&gt;
 ## 1     26      A       L -18.555556
@@ -627,10 +626,8 @@ race.results &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
       gender),              <span class="co"># group by gender     </span>
     <span class="dt">place =</span> <span class="kw">rank</span>( time )),  <span class="co"># mutate to calculate the place column</span>
   gender, place)            <span class="co"># arrange the result by gender and place</span></code></pre></div>
-<pre><code>## Source: local data frame [8 x 4]
-## Groups: gender [2]
-## 
-## # A tibble: 8 x 4
+<pre><code>## # A tibble: 8 x 4
+## # Groups:   gender [2]
 ##     name  time gender place
 ##   &lt;fctr&gt; &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;
 ## 1 Rachel 19.82      F     1
@@ -651,10 +648,8 @@ temp.df2 &lt;-<span class="st"> </span>temp.df1 %&gt;%<span class="st"> </span><
 <span class="st">  </span><span class="kw">group_by</span>( gender ) %&gt;%
 <span class="st">  </span><span class="kw">mutate</span>( <span class="dt">place =</span> <span class="kw">rank</span>(time)) %&gt;%
 <span class="st">  </span><span class="kw">arrange</span>( gender, place )</code></pre></div>
-<pre><code>## Source: local data frame [8 x 4]
-## Groups: gender [2]
-## 
-## # A tibble: 8 x 4
+<pre><code>## # A tibble: 8 x 4
+## # Groups:   gender [2]
 ##     name  time gender place
 ##   &lt;fctr&gt; &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;
 ## 1 Rachel 19.82      F     1
