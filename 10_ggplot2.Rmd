@@ -14,7 +14,7 @@ if( length(pkgs > 0)){
 ```
 
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(ggplot2)  # my favorite graphing system
 library(dplyr)    # data frame manipulations
 ```
