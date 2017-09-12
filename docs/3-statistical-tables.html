@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-09-11">
+<meta name="date" content="2017-09-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -398,7 +398,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="q-function" class="section level3">
 <h3><span class="header-section-number">3.2.3</span> <code>q</code>-function</h3>
 <p>In class, we will also find ourselves asking for the quantiles of a distribution. Percentiles are by definition 1/100, 2/100, etc but if I am interested in something that isn’t and even division of 100, we get fancy can call them quantiles. This is a small semantic quibble, but we ought to be precise. That being said, I won’t correct somebody if they call these percentiles. For example, I might want to find the 0.30 quantile, which is the value such that 30% of the distribution is less than it, and 70% is greater. Mathematically, I wish to find the value <span class="math inline">\(z\)</span> such that <span class="math inline">\(P(Z&lt;z)=0.30\)</span>.</p>
-<p>To find this value in the tables in a book, we use the table in reverse. R gives us a handy way to do this with the <code>qnorm()</code> function and the mosaic package provides a nice visuallization using the augmented <code>xqnorm()</code>. Below, I specify that I’m using a function in the <code>mosaic</code> package by specifying it via <code>PackageName::FunctionName()</code> but that isn’t strictly necessary but can improve readability of your code.</p>
+<p>To find this value in the tables in a book, we use the table in reverse. R gives us a handy way to do this with the <code>qnorm()</code> function and the mosaic package provides a nice visualization using the augmented <code>xqnorm()</code>. Below, I specify that I’m using a function in the <code>mosaic</code> package by specifying it via <code>PackageName::FunctionName()</code> but that isn’t strictly necessary but can improve readability of your code.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mosaic::<span class="kw">xqnorm</span>(<span class="fl">0.30</span>)   <span class="co"># Give me the value along with a pretty picture</span></code></pre></div>
 <pre><code>## </code></pre>
 <pre><code>## If X ~ N(0, 1), then</code></pre>
@@ -414,9 +414,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.4</span> r-function</h3>
 <p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 19.19938 18.03520 17.61642 18.10144 20.18848</code></pre>
+<pre><code>## [1] 18.14984 22.16840 22.06064 18.93821 17.88209</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1] 8 8 8 6</code></pre>
+<pre><code>## [1]  7  7  9 10</code></pre>
 </div>
 </div>
 <div id="exercises-2" class="section level2">
@@ -427,9 +427,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><p>Create a graph of the distribution of a Poisson random variable with rate parameter <span class="math inline">\(\lambda=2\)</span> using the mosaic function <code>plotDist()</code>.</p></li>
 <li><p>Calculate the probability that a Poisson random variable (with rate parameter <span class="math inline">\(\lambda=2\)</span> ) is exactly equal to 3 using the <code>dpois()</code> function. Be sure that this value matches the graphed distribution in part (a).</p></li>
 <li><p>For a Poisson random variable with rate parameter <span class="math inline">\(\lambda=2\)</span>, calculate the probability it is less than or equal to 3, by summing the four values returned by the Poisson <code>d</code>-function.</p></li>
-<li><p>Perform the same calculation as the previous question but using the cumulative probability function <code>ppois()</code> or the mosaic function <code>xppois()</code>.</p></li>
+<li><p>Perform the same calculation as the previous question but using the cumulative probability function <code>ppois()</code>.</p></li>
 </ol></li>
-<li><p>We will examine how to use the cumulative probability functions (a.k.a. p-functions) for the normal distributions.</p>
+<li><p>We will examine how to use the cumulative probability functions (a.k.a. p-functions) for the normal and exponential distributions.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Use the mosaic function <code>plotDist()</code> to produce a graph of the standard normal distribution (that is a normal distribution with mean <span class="math inline">\(\mu=0\)</span> and standard deviation <span class="math inline">\(\sigma=1\)</span>.</p></li>
 <li><p>For a standard normal, use the <code>pnorm()</code> function or its <code>mosaic</code> augmented version <code>xpnorm()</code> to calculate</p>

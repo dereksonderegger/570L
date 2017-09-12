@@ -142,7 +142,7 @@ xpnorm(-1)
 
 In class, we will also find ourselves asking for the quantiles of a distribution. Percentiles are by definition 1/100, 2/100, etc but if I am interested in something that isn't and even division of 100, we get fancy can call them quantiles. This is a small semantic quibble, but we ought to be precise. That being said, I won't correct somebody if they call these percentiles. For example, I might want to find the 0.30 quantile, which is the value such that 30\% of the distribution is less than it, and 70\% is greater. Mathematically, I wish to find the value $z$ such that $P(Z<z)=0.30$.
 
-To find this value in the tables in a book, we use the table in reverse. R gives us a handy way to do this with the `qnorm()` function and the mosaic package provides a nice visuallization using the augmented `xqnorm()`. Below, I specify that I'm using a function in the `mosaic` package by specifying it via `PackageName::FunctionName()` but that isn't strictly necessary but can improve readability of your code.
+To find this value in the tables in a book, we use the table in reverse. R gives us a handy way to do this with the `qnorm()` function and the mosaic package provides a nice visualization using the augmented `xqnorm()`. Below, I specify that I'm using a function in the `mosaic` package by specifying it via `PackageName::FunctionName()` but that isn't strictly necessary but can improve readability of your code.
 
 ```{r}
 mosaic::xqnorm(0.30)   # Give me the value along with a pretty picture
@@ -162,17 +162,17 @@ rbinom(4, size=10, prob=.8)
 ## Exercises
 
 1. We will examine how to use the probability mass functions (a.k.a. d-functions) and cumulative probability function (a.k.a. p-function) for the Poisson distribution.
-
+    
     a) Create a graph of the distribution of a Poisson random variable with rate parameter $\lambda=2$ using the mosaic function `plotDist()`.
-
+    
     b) Calculate the probability that a Poisson random variable (with rate parameter $\lambda=2$
  ) is exactly equal to 3 using the `dpois()` function. Be sure that this value matches the graphed distribution in part (a).
-
+    
     c) For a Poisson random variable with rate parameter $\lambda=2$, calculate the probability it is less than or equal to 3, by summing the four values returned by the Poisson `d`-function.
+    
+    d) Perform the same calculation as the previous question but using the cumulative probability function `ppois()`.
 
-    d) Perform the same calculation as the previous question but using the cumulative probability function `ppois()` or the mosaic function `xppois()`.
-
-2. We will examine how to use the cumulative probability functions (a.k.a. p-functions) for the normal distributions.
+2. We will examine how to use the cumulative probability functions (a.k.a. p-functions) for the normal and exponential distributions.
     
     a) Use the mosaic function `plotDist()` to produce a graph of the standard normal distribution (that is a normal distribution with mean $\mu=0$ and standard deviation $\sigma=1$.
     
