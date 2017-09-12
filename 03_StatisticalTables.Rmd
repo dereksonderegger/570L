@@ -56,14 +56,14 @@ All the probability distributions available in R are accessed in exactly the sam
 +====================+===================================================================+
 | `d`-function(x)    | The height of the probability distribution/density at given $x$   |
 +--------------------+-------------------------------------------------------------------+
-| `p`-function(x)    |  $P\left(X\le x\right)$ where $x$ is known                        |
+| `p`-function(x)    |  Find $q$ such that $P\left(X\le x\right) = q$ where $x$ is given |
 +--------------------+-------------------------------------------------------------------+
-| `q`-function(q)    |  Find $x$ such that $P\left(X\le x\right) = q$ where $q$ is known |
+| `q`-function(q)    |  Find $x$ such that $P\left(X\le x\right) = q$ where $q$ is given |
 +--------------------+-------------------------------------------------------------------+
-| `r`-function(n)    | $n$ random observations from the distribution                     |
+| `r`-function(n)    |  Generate $n$ random observations from the distribution           |
 +--------------------+-------------------------------------------------------------------+
 
-For each distribution in R, there will be be this set of functions but we replace the “-function” with the distribution name or a shortened version. `norm`, `exp`, `binom`, `t`, `f` are the names for the normal, exponential, binomial, T and F distributions. Furthermore, most distributions have additional parameters that define the distribution and will also be passed as arguments to these functions, although, if a reasonable default value for the parameter exists, there will be a default.
+For each distribution in R, there will be this set of functions but we replace the “-function” with the distribution name or a shortened version. `norm`, `exp`, `binom`, `t`, `f` are the names for the normal, exponential, binomial, T and F distributions. Furthermore, most distributions have additional parameters that define the distribution and will also be passed as arguments to these functions, although, if a reasonable default value for the parameter exists, there will be a default.
 
 ### d-function
 
