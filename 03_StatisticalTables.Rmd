@@ -51,17 +51,17 @@ plotDist('binom', size=10, prob=.3)
 All the probability distributions available in R are accessed in exactly the same way, using a `d`-function, `p`-function, `q`-function, and `r`-function. For the rest of this section suppose that $X$ is a random variable from the distribution of interest and $x$ is some possible value that $X$ could take on. Notice that the `p`-function is the inverse of the `q`-function. 
 
 
-+--------------------+-----------------------------------------------------------+
-| Function           |    Result                                                 |
-+====================+===========================================================+
-| `d`-function(x)    | The height of the probability distribution/density at $x$ |
-+--------------------+-----------------------------------------------------------+
-| `p`-function(x)    |  $P\left(X\le x\right)$                                   |
-+--------------------+-----------------------------------------------------------+
-| `q`-function(q)    |  $x$ such that $P\left(X\le x\right) = q$                 |
-+--------------------+-----------------------------------------------------------+
-| `r`-function(n)    | $n$ random observations from the distribution             |
-+--------------------+-----------------------------------------------------------+
++--------------------+-------------------------------------------------------------------+
+| Function           |    Result                                                         |
++====================+===================================================================+
+| `d`-function(x)    | The height of the probability distribution/density at given $x$   |
++--------------------+-------------------------------------------------------------------+
+| `p`-function(x)    |  $P\left(X\le x\right)$ where $x$ is known                        |
++--------------------+-------------------------------------------------------------------+
+| `q`-function(q)    |  Find $x$ such that $P\left(X\le x\right) = q$ where $q$ is known |
++--------------------+-------------------------------------------------------------------+
+| `r`-function(n)    | $n$ random observations from the distribution                     |
++--------------------+-------------------------------------------------------------------+
 
 For each distribution in R, there will be be this set of functions but we replace the “-function” with the distribution name or a shortened version. `norm`, `exp`, `binom`, `t`, `f` are the names for the normal, exponential, binomial, T and F distributions. Furthermore, most distributions have additional parameters that define the distribution and will also be passed as arguments to these functions, although, if a reasonable default value for the parameter exists, there will be a default.
 
@@ -173,27 +173,27 @@ rbinom(4, size=10, prob=.8)
     d) Perform the same calculation as the previous question but using the cumulative probability function `ppois()` or the mosaic function `xppois()`.
 
 2. We will examine how to use the cumulative probability functions (a.k.a. p-functions) for the normal distributions.
-
-    a) Use the mosaic function `plotDist()` to produce a graph of the standard normal distribution (that is a normal distribution with mean $mu=0$ and standard deviation $\sigma=1$.
-
+    
+    a) Use the mosaic function `plotDist()` to produce a graph of the standard normal distribution (that is a normal distribution with mean $\mu=0$ and standard deviation $\sigma=1$.
+    
     b) For a standard normal, use the `pnorm()` function or its `mosaic` augmented version `xpnorm()` to calculate
-
+        
         i. $P\left(Z<-1\right)$
         ii. $P\left(Z\ge1.5\right)$
  
     c) Use the mosaic function `plotDist()` to produce a graph of an exponential distribution with rate parameter 2.
-
-    d) Suppose that $Y\sim Exp\left(2\right)$, as above, use the pexp() function to calculate $P\left(Y \le 1 \right)$. (Unfortunately there isn't a mosaic augmented `xpexp()` function.
+    
+    d) Suppose that $Y\sim Exp\left(2\right)$, as above, use the `pexp()` function to calculate $P\left(Y \le 1 \right)$. (Unfortunately there isn't a mosaic augmented `xpexp()` function.)
 
 3. We next examine how to use the quantile functions for the normal and exponential distributions using R's q-functions.
-
-    a) Find the value of a standard normal distribution ($\mu=0$, $\sigma=1$) such that 5\% of the distribution is to the left of the value using the `qnorm()` function or the mosaic augmented version `xqnorm()`.
-
-    b) Find the value of an exponential distribution with rate 2 such that 60\% of the distribution is less than it using the `qexp()` function.
+    
+    a) Find the value of a standard normal distribution ($\mu=0$, $\sigma=1$) such that 5% of the distribution is to the left of the value using the `qnorm()` function or the mosaic augmented version `xqnorm()`.
+    
+    b) Find the value of an exponential distribution with rate 2 such that 60% of the distribution is less than it using the `qexp()` function.
 
 4. Finally we will look at generating random deviates from a distribution.
     a) Generate a value of 1 from a uniform distribution with minimum 0, and maximum 1 using the `runif()` function. Repeat this step several times and confirm you are getting different values each time.
-
+    
     b) Generate a sample of size 20 from the same uniform distribution and save it as the vector `x` using the following:
         ```{r}
         x <- runif(20, min=0, max=1)
@@ -202,8 +202,5 @@ rbinom(4, size=10, prob=.8)
         ```{r}
         hist(x)
         ```
-
-    c) Generate a sample of 2000 from a normal distribution with `mean=10` and standard deviation `sd=2` using the `rnorm()` function. Create a histogram the the resulting sample.
-  
-  
     
+    c) Generate a sample of 2000 from a normal distribution with `mean=10` and standard deviation `sd=2` using the `rnorm()` function. Create a histogram the the resulting sample.

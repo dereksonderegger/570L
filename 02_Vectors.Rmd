@@ -160,7 +160,7 @@ var(x)                  # Same thing using the built-in variance function
     a) Using the seq() function and 
     b) Using the a:b shortcut and some subsequent algebra. *Hint: Generate the vector 1-10 and then multiple it by 2*.
 
-6. Generate a vector of 1001 elements that are evenly placed between 0 and 1 using the `seq()` command and name this vector `x`. 
+6. Generate a vector of 21 elements that are evenly placed between 0 and 1 using the `seq()` command and name this vector `x`. 
 
 7. Generate the vector $\left\{ 2,4,8,2,4,8,2,4,8\right\}$ 
   using the `rep()` command to replicate the vector c(2,4,8). 

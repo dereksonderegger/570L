@@ -351,8 +351,8 @@ race.results %>%
         data(ChickWeight)
         ```
     b. Look at the help files for the description of the columns.
-    c) Remove all the observations except for the weights on day 10 and day 20.
-    d) Calculate the mean and standard deviation for each diet group on days 10 and 20.
+    c) Remove all the observations except for ones on day 10 or day 20.
+    d) Calculate the mean and standard deviation of the chick weights for each diet group on days 10 and 20. 
 
 2. The OpenIntro textbook on statistics includes a data set on body dimensions. 
     a) Load the file using 
@@ -362,10 +362,9 @@ race.results %>%
     b) The column sex is coded as a 1 if the individual is male and 0 if female. This is a non-intuitive labeling system. Create a new column `sex.MF` that uses labels Male and Female. 
     c) The columns wgt and hgt measure weight and height in kilograms and centimeters (respectively). Use these to calculate the Body Mass Index (BMI) for each individual where 
     $$BMI=\frac{Weight\,(kg)}{\left[Height\,(m)\right]^{2}}$$ 
-         
-
+    
     d) Double check that your calculated BMI column is correct by examining the summary statistics of the column. BMI values should be between 18 to 40 or so.  Did you make an error in your calculation?  
-
+    
     e) The function `cut` takes a vector of continuous numerical data and creates a factor based on your give cut-points. 
         ```{r}
         # Define a continuous vector to convert to a factor
@@ -390,7 +389,7 @@ race.results %>%
                                 breaks=c(10,20,30,40,50,60,70),
                                 right=FALSE))
         ```
-
-    f) Find the average BMI for each Sex and Age group.
+    
+    f) Find the average BMI for each Sex-by-Age combination.
     
     

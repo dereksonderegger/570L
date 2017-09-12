@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-09-04">
+<meta name="date" content="2017-09-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -672,8 +672,8 @@ temp.df2 &lt;-<span class="st"> </span>temp.df1 %&gt;%<span class="st"> </span><
 <li>Look at the help files for the description of the columns.</li>
 </ol>
 <ol start="3" style="list-style-type: lower-alpha">
-<li>Remove all the observations except for the weights on day 10 and day 20.</li>
-<li>Calculate the mean and standard deviation for each diet group on days 10 and 20.</li>
+<li>Remove all the observations except for ones on day 10 or day 20.</li>
+<li>Calculate the mean and standard deviation of the chick weights for each diet group on days 10 and 20.</li>
 </ol></li>
 <li>The OpenIntro textbook on statistics includes a data set on body dimensions.
 <ol style="list-style-type: lower-alpha">
@@ -709,7 +709,7 @@ x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</s
 <span class="st">  </span><span class="kw">mutate</span>( <span class="dt">Age.Grp =</span> <span class="kw">cut</span>(age,
                         <span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">70</span>),
                         <span class="dt">right=</span><span class="ot">FALSE</span>))</code></pre></div></li>
-<li><p>Find the average BMI for each Sex and Age group.</p></li>
+<li><p>Find the average BMI for each Sex-by-Age combination.</p></li>
 </ol></li>
 </ol>
 

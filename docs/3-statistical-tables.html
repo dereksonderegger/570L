@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-09-04">
+<meta name="date" content="2017-09-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -327,8 +327,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>All the probability distributions available in R are accessed in exactly the same way, using a <code>d</code>-function, <code>p</code>-function, <code>q</code>-function, and <code>r</code>-function. For the rest of this section suppose that <span class="math inline">\(X\)</span> is a random variable from the distribution of interest and <span class="math inline">\(x\)</span> is some possible value that <span class="math inline">\(X\)</span> could take on. Notice that the <code>p</code>-function is the inverse of the <code>q</code>-function.</p>
 <table>
 <colgroup>
-<col width="25%" />
-<col width="74%" />
+<col width="23%" />
+<col width="76%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -339,15 +339,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <tbody>
 <tr class="odd">
 <td><p><code>d</code>-function(x)</p></td>
-<td><p>The height of the probability distribution/density at <span class="math inline">\(x\)</span></p></td>
+<td><p>The height of the probability distribution/density at given <span class="math inline">\(x\)</span></p></td>
 </tr>
 <tr class="even">
 <td><p><code>p</code>-function(x)</p></td>
-<td><p><span class="math inline">\(P\left(X\le x\right)\)</span></p></td>
+<td><p><span class="math inline">\(P\left(X\le x\right)\)</span> where <span class="math inline">\(x\)</span> is known</p></td>
 </tr>
 <tr class="odd">
 <td><p><code>q</code>-function(q)</p></td>
-<td><p><span class="math inline">\(x\)</span> such that <span class="math inline">\(P\left(X\le x\right) = q\)</span></p></td>
+<td><p>Find <span class="math inline">\(x\)</span> such that <span class="math inline">\(P\left(X\le x\right) = q\)</span> where <span class="math inline">\(q\)</span> is known</p></td>
 </tr>
 <tr class="even">
 <td><p><code>r</code>-function(n)</p></td>
@@ -414,9 +414,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.4</span> r-function</h3>
 <p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 20.33050 21.06777 19.10862 19.49924 17.88990</code></pre>
+<pre><code>## [1] 21.02600 21.75013 18.63197 19.37672 18.34539</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1] 10  8  8  9</code></pre>
+<pre><code>## [1] 7 9 8 7</code></pre>
 </div>
 </div>
 <div id="exercises-2" class="section level2">
@@ -431,14 +431,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ol></li>
 <li><p>We will examine how to use the cumulative probability functions (a.k.a. p-functions) for the normal distributions.</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>Use the mosaic function <code>plotDist()</code> to produce a graph of the standard normal distribution (that is a normal distribution with mean <span class="math inline">\(mu=0\)</span> and standard deviation <span class="math inline">\(\sigma=1\)</span>.</p></li>
+<li><p>Use the mosaic function <code>plotDist()</code> to produce a graph of the standard normal distribution (that is a normal distribution with mean <span class="math inline">\(\mu=0\)</span> and standard deviation <span class="math inline">\(\sigma=1\)</span>.</p></li>
 <li><p>For a standard normal, use the <code>pnorm()</code> function or its <code>mosaic</code> augmented version <code>xpnorm()</code> to calculate</p>
 <ol style="list-style-type: lower-roman">
 <li><span class="math inline">\(P\left(Z&lt;-1\right)\)</span></li>
 <li><span class="math inline">\(P\left(Z\ge1.5\right)\)</span></li>
 </ol></li>
 <li><p>Use the mosaic function <code>plotDist()</code> to produce a graph of an exponential distribution with rate parameter 2.</p></li>
-<li><p>Suppose that <span class="math inline">\(Y\sim Exp\left(2\right)\)</span>, as above, use the pexp() function to calculate <span class="math inline">\(P\left(Y \le 1 \right)\)</span>. (Unfortunately there isn’t a mosaic augmented <code>xpexp()</code> function.</p></li>
+<li><p>Suppose that <span class="math inline">\(Y\sim Exp\left(2\right)\)</span>, as above, use the <code>pexp()</code> function to calculate <span class="math inline">\(P\left(Y \le 1 \right)\)</span>. (Unfortunately there isn’t a mosaic augmented <code>xpexp()</code> function.)</p></li>
 </ol></li>
 <li><p>We next examine how to use the quantile functions for the normal and exponential distributions using R’s q-functions.</p>
 <ol style="list-style-type: lower-alpha">
