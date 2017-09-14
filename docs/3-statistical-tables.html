@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-09-12">
+<meta name="date" content="2017-09-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -414,9 +414,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.4</span> r-function</h3>
 <p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 18.14984 22.16840 22.06064 18.93821 17.88209</code></pre>
+<pre><code>## [1] 22.19456 18.50932 16.58021 20.52047 17.90940</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1]  7  7  9 10</code></pre>
+<pre><code>## [1] 8 8 6 8</code></pre>
 </div>
 </div>
 <div id="exercises-2" class="section level2">
@@ -447,7 +447,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ol></li>
 <li>Finally we will look at generating random deviates from a distribution.
 <ol style="list-style-type: lower-alpha">
-<li><p>Generate a value of 1 from a uniform distribution with minimum 0, and maximum 1 using the <code>runif()</code> function. Repeat this step several times and confirm you are getting different values each time.</p></li>
+<li><p>Generate a single value from a uniform distribution with minimum 0, and maximum 1 using the <code>runif()</code> function. Repeat this step several times and confirm you are getting different values each time.</p></li>
 <li><p>Generate a sample of size 20 from the same uniform distribution and save it as the vector <code>x</code> using the following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">20</span>, <span class="dt">min=</span><span class="dv">0</span>, <span class="dt">max=</span><span class="dv">1</span>)</code></pre></div>
 <p>Then produce a histogram of the sample using the function <code>hist()</code></p>

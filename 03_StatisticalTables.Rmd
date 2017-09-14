@@ -192,7 +192,7 @@ rbinom(4, size=10, prob=.8)
     b) Find the value of an exponential distribution with rate 2 such that 60% of the distribution is less than it using the `qexp()` function.
 
 4. Finally we will look at generating random deviates from a distribution.
-    a) Generate a value of 1 from a uniform distribution with minimum 0, and maximum 1 using the `runif()` function. Repeat this step several times and confirm you are getting different values each time.
+    a) Generate a single value from a uniform distribution with minimum 0, and maximum 1 using the `runif()` function. Repeat this step several times and confirm you are getting different values each time.
     
     b) Generate a sample of size 20 from the same uniform distribution and save it as the vector `x` using the following:
         ```{r}
