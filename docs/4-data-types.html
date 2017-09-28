@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-09-14">
+<meta name="date" content="2017-09-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -271,10 +271,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>There are some basic data types that are commonly used.</p>
 <ol style="list-style-type: decimal">
 <li><p>Integers - These are the integer numbers <span class="math inline">\(\left(\dots,-2,-1,0,1,2,\dots\right)\)</span>. To convert a numeric value to an integer you may use the function <code>as.integer()</code>.</p></li>
-<li><p>Numeric - These could be any number (whole number or decimal). To convert another type to numeric you may use the function as.numeric().</p></li>
-<li><p>Strings - These are a collection of characters (example: Storing a student’s last name). To convert another type to a string, use as.character().</p></li>
-<li><p>Factors - These are strings that can only values from a finite set. For example we might wish to store a variable that records home department of a student. Since the department can only come from a finite set of possibilities, I would use a factor. Factors are categorical variables, but R calls them factors instead of categorical variable. A vector of values of another type can always be converted to a factor using the as.factor() command.</p></li>
-<li><p>Logicals - This is a special case of a factor that can only take on the values <code>TRUE</code> and <code>FALSE</code>. (Be careful to always capitalize <code>TRUE</code> and <code>FALSE</code>. Because R is case-sensitive, TRUE is not the same as true. Using the function <code>as.logical()</code> you can convert numeric values to <code>TRUE</code> and <code>FALSE</code> where <code>0</code> is <code>FALSE</code> and anything else is <code>TRUE</code>.</p></li>
+<li><p>Numeric - These could be any number (whole number or decimal). To convert another type to numeric you may use the function <code>as.numeric()</code>.</p></li>
+<li><p>Strings - These are a collection of characters (example: Storing a student’s last name). To convert another type to a string, use <code>as.character()</code>.</p></li>
+<li><p>Factors - These are strings that can only values from a finite set. For example we might wish to store a variable that records home department of a student. Since the department can only come from a finite set of possibilities, I would use a factor. Factors are categorical variables, but R calls them factors instead of categorical variable. A vector of values of another type can always be converted to a factor using the <code>as.factor()</code> command. For converting numeric values to factors, I will often use the function <code>cut()</code>.</p></li>
+<li><p>Logicals - This is a special case of a factor that can only take on the values <code>TRUE</code> and <code>FALSE</code>. (Be careful to always capitalize <code>TRUE</code> and <code>FALSE</code>. Because R is case-sensitive, TRUE is not the same as true.) Using the function <code>as.logical()</code> you can convert numeric values to <code>TRUE</code> and <code>FALSE</code> where <code>0</code> is <code>FALSE</code> and anything else is <code>TRUE</code>.</p></li>
 </ol>
 <p>Depending on the command, R will coerce your data if necessary, but it is a good habit to do the coercion yourself. If a variable is a number, R will automatically assume that it is continuous numerical variable. If it is a character string, then R will assume it is a factor when doing any statistical analysis.</p>
 <p>To find the type of an object, the <code>str()</code> command gives the type, and if the type is complicated, it describes the structure of the object.</p>
@@ -342,7 +342,7 @@ z &lt;-<span class="st"> </span><span class="kw">factor</span>(y)
 z</code></pre></div>
 <pre><code>## [1] B Group B Group A Group A Group C Group
 ## Levels: B Group A Group C Group</code></pre>
-<p>For the Iris data, the species are ordered alphatetically. We might want to re-order how they appear in a graphs to place Versicolor first. The <code>Species</code> names are not capitalized, and perhaps I would like them to begin with a capital letter.</p>
+<p>For the Iris data, the species are ordered alphabetically. We might want to re-order how they appear in a graphs to place Versicolor first. The <code>Species</code> names are not capitalized, and perhaps I would like them to begin with a capital letter.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris$Species &lt;-<span class="st"> </span><span class="kw">factor</span>( iris$Species,
                         <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&#39;versicolor&#39;</span>,<span class="st">&#39;setosa&#39;</span>,<span class="st">&#39;virginica&#39;</span>),
                         <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;Versicolor&#39;</span>,<span class="st">&#39;Setosa&#39;</span>,<span class="st">&#39;Virginica&#39;</span>))

@@ -18,13 +18,13 @@ There are some basic data types that are commonly used.
 
 1. Integers - These are the integer numbers $\left(\dots,-2,-1,0,1,2,\dots\right)$. To convert a numeric value to an integer you may use the function `as.integer()`.
 
-2. Numeric - These could be any number (whole number or decimal). To convert another type to numeric you may use the function as.numeric().
+2. Numeric - These could be any number (whole number or decimal). To convert another type to numeric you may use the function `as.numeric()`.
 
-3. Strings - These are a collection of characters (example: Storing a student's last name). To convert another type to a string, use as.character().
+3. Strings - These are a collection of characters (example: Storing a student's last name). To convert another type to a string, use `as.character()`.
 
-4. Factors - These are strings that can only values from a finite set. For example we might wish to store a variable that records home department of a student. Since the department can only come from a finite set of possibilities, I would use a factor. Factors are categorical variables, but R calls them factors instead of categorical variable. A vector of values of another type can always be converted to a factor using the as.factor() command.
+4. Factors - These are strings that can only values from a finite set. For example we might wish to store a variable that records home department of a student. Since the department can only come from a finite set of possibilities, I would use a factor. Factors are categorical variables, but R calls them factors instead of categorical variable. A vector of values of another type can always be converted to a factor using the `as.factor()` command. For converting numeric values to factors, I will often use the function `cut()`.
 
-5. Logicals - This is a special case of a factor that can only take on the values `TRUE` and `FALSE`. (Be careful to always capitalize `TRUE` and `FALSE`. Because R is case-sensitive, TRUE is not the same as true. Using the function `as.logical()` you can convert numeric values to `TRUE` and `FALSE` where `0` is `FALSE` and anything else is `TRUE`.
+5. Logicals - This is a special case of a factor that can only take on the values `TRUE` and `FALSE`. (Be careful to always capitalize `TRUE` and `FALSE`. Because R is case-sensitive, TRUE is not the same as true.) Using the function `as.logical()` you can convert numeric values to `TRUE` and `FALSE` where `0` is `FALSE` and anything else is `TRUE`.
 
 Depending on the command, R will coerce your data if necessary, but it is a good habit to do the coercion yourself. If a variable is a number, R will automatically assume that it is continuous numerical variable. If it is a character string, then R will assume it is a factor when doing any statistical analysis. 
 
@@ -109,7 +109,7 @@ z <- factor(z,                       # vector of data levels to convert
 z
 ```
 
-For the Iris data, the species are ordered alphatetically.  We might want to re-order how they appear in a graphs to place Versicolor first. The `Species` names are not capitalized, and perhaps I would like them to begin with a capital letter. 
+For the Iris data, the species are ordered alphabetically.  We might want to re-order how they appear in a graphs to place Versicolor first. The `Species` names are not capitalized, and perhaps I would like them to begin with a capital letter. 
 
 ```{r, fig.height=3}
 iris$Species <- factor( iris$Species,
