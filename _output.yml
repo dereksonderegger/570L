@@ -7,10 +7,27 @@ bookdown::gitbook:
       scroll_highlight: true
       before: |
         <li><a href="./">A Sufficient Introduction to R</a></li>
-        <li><a href="https://dereksonderegger.github.io/570L/A_Sufficient_Introduction_to_R.pdf" target="blank">PDF version</a></li>
       after: |
     edit:
       link: https://raw.githubusercontent.com/dereksonderegger/570L/master/%s
+    download:
+      - ["A_Sufficient_Introduction_to_R.pdf",  "PDF"]
+      - ["A_Sufficient_Introduction_to_R.epub", "EPUB"]
+    search: yes
+    fontsettings:
+      theme: white
+      family: sans
+      size: 2
+    sharing:
+      facebook: no
+      twitter: no
+      google: no
+      weibo: no
+      instapper: no
+      vk: no
+      all: ['facebook', 'google', 'twitter', 'weibo', 'instapaper']      
+
+
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex

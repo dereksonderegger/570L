@@ -303,10 +303,10 @@ The key trick here was to set the `ymin` value to always be zero.
 ## Exercises
 
 1. For the dataset trees, which should already be pre-loaded. Look at the help file using `?trees` for more information about this data set. We wish to build a scatterplot that compares the height and girth of these cherry trees to the volume of lumber that was produced.  
-
+    
     a) Create a graph using ggplot2 with Height on the x-axis, Volume on the y-axis, and Girth as the either the size of the data point or the color of the data point. Which do you think is a more intuitive representation?
     b) Add appropriate labels for the main title and the x and y axes.
-
+    
 2. Consider the following small dataset that represents the number of times per day my wife played "Ring around the Rosy” with my daughter relative to the number of days since she has learned this game. The column yhat represents the best fitting line through the data, and lwr and upr represent a 95% confidence interval for the predicted value on that day.
     ```{r}
     Rosy <- data.frame(
@@ -316,11 +316,11 @@ The key trick here was to set the `ymin` value to always be zero.
       lwr   = c( 9.54,  8.5,   7.22, 5.47, 3.08, 0.22, -2.89),
       upr   = c(19.18, 16.07, 13.2, 10.82, 9.06, 7.78,  6.75))
     ```
-
+    
     a) Using `ggplot()` and `geom_point()`, create a scatterplot with `day` along the x-axis and `times` along the y-axis.
-
+    
     b) Add a line to the graph where the x-values are the `day` values but now the y-values are the predicted values which we've called `yhat`. Notice that you have to set the aesthetic y=times for the points and y=yhat for the line. Because each `geom_` will accept an `aes()` command, you can specify the `y` attribute to be different for different layers of the graph.
-
+    
     c) Add a ribbon that represents the confidence region of the regression line. The `geom_ribbon()` function requires an `x`, `ymin`, and `ymax` columns to be defined. For examples of using `geom_ribbon()` see the online documentation: [http://docs.ggplot2.org/current/geom_ribbon.html].
         ```{r, eval=FALSE}
         ggplot(Rosy, aes(x=day)) +
@@ -328,18 +328,13 @@ The key trick here was to set the `ymin` value to always be zero.
           geom_line( aes(y=yhat)) +
           geom_ribbon( aes(ymin=lwr, ymax=upr), fill='salmon')
         ```
-
     d) What happened when you added the ribbon? Did some points get hidden? If so, why?
-
     e) Reorder the statements that created the graph so that the ribbon is on the bottom and the data points are on top and the regression line is visible.
-
     f) The color of the ribbon fill is ugly. Use google to find a list of named colors available to `ggplot2`. For example, I googled “ggplot2 named colors” and found the following link: [http://sape.inf.usi.ch/quick-reference/ggplot2/colour]. Choose a color for the fill that is pleasing to you.
-
     g) Add labels for the x-axis and y-axis that are appropriate along with a main title.
 
-
 3. The R package `babynames` contains a single dataset that lists the number of children registered with Social Security with a particular name along with the proportion out of all children born in a given year. The dataset covers the from 1880 to the present. We want to plot the relative popularity of the names 'Elise' and 'Casey'.
-
+    
     a) Load the package. If it is not found on your computer, download the package from CRAN.
         ```{r, eval=FALSE}
         library(babynames)
@@ -348,7 +343,7 @@ The key trick here was to set the `ymin` value to always be zero.
     b) Read the help file for the data set `babynames` to get a sense of the columns 
     c) Create a small dataset that only has the names 'Elise' and 'Casey'.
     d) Make a plot where the x-axis is the year and the y-axis is the proportion of babies given the names. Use a line to display this relationship and distinguish the two names by color. Notice this graph is a bit ugly because there is a lot of year-to-year variability that we should smooth over.
-
+    
     e) We'll use dplyr to collapse the individual years into decades using the following code:
         ```{r, eval=FALSE}
         small <- babynames %>%
@@ -366,4 +361,4 @@ The key trick here was to set the `ymin` value to always be zero.
        geom_area()
     ```
     
-    This is a pretty neat graph as it show the relative popularity of the name over time and can easily be expanded to many many names. In fact, there is a wonderful website that takes this same data and allows you select the names quite nicely: [http://www.babynamewizard.com/voyager#prefix=&sw=both&exact=false]. My wife and I used this a lot while figuring out what to name our children. Notice that this site really uses the same graph type we just built but there are a few extra neat interactivity tricks.
+    This is a pretty neat graph as it show the relative popularity of the name over time and can easily be expanded to many many names. In fact, there is a wonderful website that takes this same data and allows you select the names quite nicely: [http://www.babynamewizard.com/voyager]. My wife and I used this a lot while figuring out what to name our children. Notice that this site really uses the same graph type we just built but there are a few extra neat interactivity tricks.

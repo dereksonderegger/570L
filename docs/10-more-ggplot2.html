@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-09-21">
+<meta name="date" content="2017-09-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -101,18 +101,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <ul class="summary">
 <li><a href="./">A Sufficient Introduction to R</a></li>
-<li><a href="https://dereksonderegger.github.io/570L/A_Sufficient_Introduction_to_R.pdf" target="blank">PDF version</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#r-as-a-simple-calculator"><i class="fa fa-check"></i><b>1.1</b> R as a simple calculator</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#assignment"><i class="fa fa-check"></i><b>1.2</b> Assignment</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#scripts-and-rmarkdown"><i class="fa fa-check"></i><b>1.3</b> Scripts and RMarkdown</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#r-scripts-.r-files"><i class="fa fa-check"></i><b>1.3.1</b> R Scripts (.R files)</a></li>
-<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#r-markdown-.rmd-files"><i class="fa fa-check"></i><b>1.3.2</b> R Markdown (.Rmd files)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="1-introduction.html"><a href="1-introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="1-introduction.html"><a href="1-introduction.html#r-as-a-simple-calculator"><i class="fa fa-check"></i><b>1.1</b> R as a simple calculator</a></li>
+<li class="chapter" data-level="1.2" data-path="1-introduction.html"><a href="1-introduction.html#assignment"><i class="fa fa-check"></i><b>1.2</b> Assignment</a></li>
+<li class="chapter" data-level="1.3" data-path="1-introduction.html"><a href="1-introduction.html#scripts-and-rmarkdown"><i class="fa fa-check"></i><b>1.3</b> Scripts and RMarkdown</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="1-introduction.html"><a href="1-introduction.html#r-scripts-.r-files"><i class="fa fa-check"></i><b>1.3.1</b> R Scripts (.R files)</a></li>
+<li class="chapter" data-level="1.3.2" data-path="1-introduction.html"><a href="1-introduction.html#r-markdown-.rmd-files"><i class="fa fa-check"></i><b>1.3.2</b> R Markdown (.Rmd files)</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.4</b> Packages</a></li>
-<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#exercises"><i class="fa fa-check"></i><b>1.5</b> Exercises</a></li>
+<li class="chapter" data-level="1.4" data-path="1-introduction.html"><a href="1-introduction.html#packages"><i class="fa fa-check"></i><b>1.4</b> Packages</a></li>
+<li class="chapter" data-level="1.5" data-path="1-introduction.html"><a href="1-introduction.html#exercises"><i class="fa fa-check"></i><b>1.5</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="2-vectors.html"><a href="2-vectors.html"><i class="fa fa-check"></i><b>2</b> Vectors</a><ul>
 <li class="chapter" data-level="2.1" data-path="2-vectors.html"><a href="2-vectors.html#accessing-vector-elements"><i class="fa fa-check"></i><b>2.1</b> Accessing Vector Elements</a></li>
@@ -400,24 +400,24 @@ Rmisc::<span class="kw">multiplot</span>( p1 +<span class="st"> </span><span cla
 <div id="exercises-9" class="section level2">
 <h2><span class="header-section-number">10.5</span> Exercises</h2>
 <ol style="list-style-type: decimal">
-<li><p>We’ll next make some density plots that relate several factors towards the birthweight of a child.</p>
+<li>We’ll next make some density plots that relate several factors towards the birthweight of a child.
 <ol style="list-style-type: lower-alpha">
 <li>Load the <code>MASS</code> library, which includes the dataset <code>birthwt</code> which contains information about 189 babies and their mothers.</li>
-<li><p>Add better labels to the race and smoke variables using the following:</p>
+<li><p>Add better labels to the <code>race</code> and <code>smoke</code> variables using the following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)
 <span class="kw">library</span>(dplyr)
 birthwt &lt;-<span class="st"> </span>birthwt %&gt;%<span class="st"> </span><span class="kw">mutate</span>(
   <span class="dt">race  =</span> <span class="kw">factor</span>(race,  <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;White&#39;</span>,<span class="st">&#39;Black&#39;</span>,<span class="st">&#39;Other&#39;</span>)),
   <span class="dt">smoke =</span> <span class="kw">factor</span>(smoke, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;No Smoke&#39;</span>, <span class="st">&#39;Smoke&#39;</span>)))</code></pre></div></li>
-<li>Graph a histogram of the birthweights bwt using <code>ggplot(birthwt, aes(x=bwt)) + geom_histogram()</code>.</li>
-<li>Make separate graphs that denote whether a mother smoked during pregnancy using the facet_grid() command.</li>
-<li><p>Perhaps race matters in relation to smoking. Make our grid of graphs vary with smoking status changing vertically, and race changing horizontally (that is the formula in <code>facet_grid()</code> should have smoking be the y variable and race as the x).</p></li>
-<li><p>Remove race from the facet grid, (so go back to the graph you had in part d). I’d like to next add an estimated density line to the graphs, but to do that, I need to first change the y-axis to be density (instead of counts), which we do by using <code>aes(y=..density..)</code> in the ggplot() aesthetics command.</p></li>
-<li><p>Next we can add the estimated smooth density using the geom_density()</p></li>
-<li><p>To really make this look nice, lets change the fill color of the histograms to be something less dark, lets use fill=‘cornsilk’ and color=‘grey60’. To play with different colors that have names, check out the following: [<a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf" class="uri">http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf</a>].</p></li>
+<li>Graph a histogram of the birthweights <code>bwt</code> using <code>ggplot(birthwt, aes(x=bwt)) + geom_histogram()</code>.</li>
+<li>Make separate graphs that denote whether a mother smoked during pregnancy using the <code>facet_grid()</code> command.</li>
+<li>Perhaps race matters in relation to smoking. Make our grid of graphs vary with smoking status changing vertically, and race changing horizontally (that is the formula in <code>facet_grid()</code> should have smoking be the y variable and race as the x).</li>
+<li>Remove <code>race</code> from the facet grid, (so go back to the graph you had in part d). I’d like to next add an estimated density line to the graphs, but to do that, I need to first change the y-axis to be density (instead of counts), which we do by using <code>aes(y=..density..)</code> in the <code>ggplot()</code> aesthetics command.</li>
+<li>Next we can add the estimated smooth density using the <code>geom_density()</code> command.</li>
+<li>To really make this look nice, lets change the fill color of the histograms to be something less dark, lets use <code>fill='cornsilk'</code> and <code>color='grey60'</code>. To play with different colors that have names, check out the following: [<a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf" class="uri">http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf</a>].</li>
 <li><p>Change the order in which the histogram and the density line are added to the plot. Does it matter and which do you prefer?</p></li>
 </ol></li>
-<li><p>Load the dataset <code>ChickWeight</code> and remind yourself what the data was using ?ChickWeight. Using <code>facet_wrap()</code>, produce a scatter plot of weight vs age for each chick. Use color to distinguish the four different <code>Diet</code> treatments.</p></li>
+<li>Load the dataset <code>ChickWeight</code> and remind yourself what the data was using ?ChickWeight. Using <code>facet_wrap()</code>, produce a scatter plot of weight vs age for each chick. Use color to distinguish the four different <code>Diet</code> treatments.</li>
 </ol>
 
 </div>
@@ -443,8 +443,8 @@ require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
-"facebook": true,
-"twitter": true,
+"facebook": false,
+"twitter": false,
 "google": false,
 "weibo": false,
 "instapper": false,
@@ -460,11 +460,12 @@ gitbook.start({
 "link": "https://raw.githubusercontent.com/dereksonderegger/570L/master/11_ggplot2_lab2.Rmd",
 "text": "Edit"
 },
-"download": null,
+"download": [["A_Sufficient_Introduction_to_R.pdf", "PDF"], ["A_Sufficient_Introduction_to_R.epub", "EPUB"]],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
-}
+},
+"search": true
 });
 });
 </script>

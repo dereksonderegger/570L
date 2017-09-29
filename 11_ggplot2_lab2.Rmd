@@ -174,9 +174,8 @@ Almost everything you want to modify can be modified within the theme and you sh
 ## Exercises
 
 1. We'll next make some density plots that relate several factors towards the birthweight of a child.
-
     a) Load the `MASS` library, which includes the dataset `birthwt` which contains information about 189 babies and their mothers.
-    b) Add better labels to the race and smoke variables using the following:
+    b) Add better labels to the `race` and `smoke` variables using the following:
         ```{r, warning=FALSE, message=FALSE}
         library(MASS)
         library(dplyr)
@@ -184,16 +183,12 @@ Almost everything you want to modify can be modified within the theme and you sh
           race  = factor(race,  labels=c('White','Black','Other')),
           smoke = factor(smoke, labels=c('No Smoke', 'Smoke')))
         ```
-    c) Graph a histogram of the birthweights bwt using `ggplot(birthwt, aes(x=bwt)) + geom_histogram()`.
-    d) Make separate graphs that denote whether a mother smoked during pregnancy using the facet_grid() command.
+    c) Graph a histogram of the birthweights `bwt` using `ggplot(birthwt, aes(x=bwt)) + geom_histogram()`.
+    d) Make separate graphs that denote whether a mother smoked during pregnancy using the `facet_grid()` command.
     e) Perhaps race matters in relation to smoking. Make our grid of graphs vary with smoking status changing vertically, and race changing horizontally (that is the formula in `facet_grid()` should have smoking be the y variable and race as the x).
-
-    f) Remove race from the facet grid, (so go back to the graph you had in part d). I'd like to next add an estimated density line to the graphs, but to do that, I need to first change the y-axis to be density (instead of counts), which we do by using `aes(y=..density..)` in the ggplot() aesthetics command.
-
-    g) Next we can add the estimated smooth density using the geom_density()
-
-    h) To really make this look nice, lets change the fill color of the histograms to be something less dark, lets use fill='cornsilk' and color='grey60'. To play with different colors that have names, check out the following: [http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf].
-
+    f) Remove `race` from the facet grid, (so go back to the graph you had in part d). I'd like to next add an estimated density line to the graphs, but to do that, I need to first change the y-axis to be density (instead of counts), which we do by using `aes(y=..density..)` in the `ggplot()` aesthetics command.
+    g) Next we can add the estimated smooth density using the `geom_density()` command.
+    h) To really make this look nice, lets change the fill color of the histograms to be something less dark, lets use `fill='cornsilk'` and `color='grey60'`. To play with different colors that have names, check out the following: [http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf].
     i) Change the order in which the histogram and the density line are added to the plot. Does it matter and which do you prefer?
 
 2. Load the dataset `ChickWeight` and remind yourself what the data was using ?ChickWeight. Using `facet_wrap()`, produce a scatter plot of weight vs age for each chick. Use color to distinguish the four different `Diet` treatments.
