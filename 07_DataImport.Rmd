@@ -163,11 +163,6 @@ str(data.4)
 
 We notice that after reading in the data, there is an additional column that just has missing data (the NA stands for not available which means that the data is missing) and a row with just a single blank. Go back to the Excel file and go to row 4 column N and notice that the cell isn't actually blank, there is a space. Delete the space, save the file, and then reload the data into R. You should notice that the extra columns are now gone. 
 
-### `libxls` bug
-There appears to be a bug in the R package `libxls` and a developer debug code is being printed to the screen for people using Windows.  This is somewhat annoying and the folks that wrote the `libxls` package have been slow to fix it.  So in the mean time, we'll use this as an excuse to talk about suppressing output. The easiest way to handle this is to use the R-chunk option `results='hide'` in the header of your R chunk. This will suppress *all* of the standard output, so you'll want to create a code chunk that *only* loads your data and you don't care that the output information is suppressed.
-
-There are many, many different options you could pass to your code chunk. See the Rmarkdown quick reference guide in the RStudio `Help -> Cheatsheets -> R Markdown Cheat Sheet`.
-
 
 ## Exercises
 

@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-09-29">
+<meta name="date" content="2017-10-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -147,9 +147,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6" data-path="6-importing-data.html"><a href="6-importing-data.html"><i class="fa fa-check"></i><b>6</b> Importing Data</a><ul>
 <li class="chapter" data-level="6.1" data-path="6-importing-data.html"><a href="6-importing-data.html#working-directory"><i class="fa fa-check"></i><b>6.1</b> Working directory</a></li>
 <li class="chapter" data-level="6.2" data-path="6-importing-data.html"><a href="6-importing-data.html#comma-separated-data"><i class="fa fa-check"></i><b>6.2</b> Comma Separated Data</a></li>
-<li class="chapter" data-level="6.3" data-path="6-importing-data.html"><a href="6-importing-data.html#ms-excel"><i class="fa fa-check"></i><b>6.3</b> MS Excel</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="6-importing-data.html"><a href="6-importing-data.html#libxls-bug"><i class="fa fa-check"></i><b>6.3.1</b> <code>libxls</code> bug</a></li>
-</ul></li>
+<li class="chapter" data-level="6.3" data-path="6-importing-data.html"><a href="6-importing-data.html#ms-excel"><i class="fa fa-check"></i><b>6.3</b> MS Excel</a></li>
 <li class="chapter" data-level="6.4" data-path="6-importing-data.html"><a href="6-importing-data.html#exercises-5"><i class="fa fa-check"></i><b>6.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="7-data-manipulation.html"><a href="7-data-manipulation.html"><i class="fa fa-check"></i><b>7</b> Data Manipulation</a><ul>
@@ -326,12 +324,34 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>In the above case, <code>lubridate</code> is having trouble understanding AM/PM differences and it is better to always specify times using 24 hour notation and skip the AM/PM designations.</p>
 <p>By default, R codes the time of day using as if the event occurred in the UMT time zone (also know as Greenwich Mean Time GMT). To specify a different time zone, use the <code>tz=</code> option. For example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mdy_hm</span>(<span class="st">&#39;9-18-2010 17:30&#39;</span>, <span class="dt">tz=</span><span class="st">&#39;MST&#39;</span>) <span class="co"># Mountain Standard Time</span></code></pre></div>
+<pre><code>## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
 <pre><code>## [1] &quot;2010-09-18 17:30:00 MST&quot;</code></pre>
 <p>This isn’t bad, but Loveland, Colorado is on MST in the winter and MDT in the summer because of daylight savings time. So to specify the time zone that could switch between standard time and daylight savings time, I should specify <code>tz='US/Mountain'</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mdy_hm</span>(<span class="st">&#39;9-18-2010 17:30&#39;</span>, <span class="dt">tz=</span><span class="st">&#39;US/Mountain&#39;</span>) <span class="co"># US mountain time</span></code></pre></div>
+<pre><code>## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXct.POSIXlt(dlt): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(dct): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
 <pre><code>## [1] &quot;2010-09-18 17:30:00 MDT&quot;</code></pre>
 <p>As Arizonans, we recognize that Arizona is weird and doesn’t use daylight savings time. Fortunately R has a built-in time zone just for us.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mdy_hm</span>(<span class="st">&#39;9-18-2010 17:30&#39;</span>, <span class="dt">tz=</span><span class="st">&#39;US/Arizona&#39;</span>) <span class="co"># US Arizona time</span></code></pre></div>
+<pre><code>## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
 <pre><code>## [1] &quot;2010-09-18 17:30:00 MST&quot;</code></pre>
 <p>R recognizes 582 different time zone locals and you can find these using the function <code>OlsonNames()</code>. To find out more about what these mean you can check out the Wikipedia page on timezones [<a href="http://en.wikipedia.org/wiki/List_of_tz_database_time_zones" class="uri">http://en.wikipedia.org/wiki/List_of_tz_database_time_zones</a>||<a href="http://en.wikipedia.org/wiki/List_of_tz_database_time_zones" class="uri">http://en.wikipedia.org/wiki/List_of_tz_database_time_zones</a>].</p>
 </div>
@@ -340,6 +360,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The <code>lubridate</code> package provides many functions for extracting information from the date. Suppose we have defined</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Derek&#39;s wedding!</span>
 x &lt;-<span class="st"> </span><span class="kw">mdy_hm</span>(<span class="st">&#39;9-18-2010 17:30&#39;</span>, <span class="dt">tz=</span><span class="st">&#39;US/Mountain&#39;</span>) <span class="co"># US Mountain time</span></code></pre></div>
+<pre><code>## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXct.POSIXlt(dlt): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(dct): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
 <table style="width:96%;">
 <colgroup>
 <col width="22%" />
@@ -425,12 +453,36 @@ x &lt;-<span class="st"> </span><span class="kw">mdy_hm</span>(<span class="st">
 </tbody>
 </table>
 <p>All of these functions can also be used to update the value. For example, we could move the day of the wedding from September <span class="math inline">\(18^{th}\)</span> to October <span class="math inline">\(18^{th}\)</span> by changing the month.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">month</span>(x) &lt;-<span class="st"> </span><span class="dv">10</span>
-x</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">month</span>(x) &lt;-<span class="st"> </span><span class="dv">10</span></code></pre></div>
+<pre><code>## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;default/
+## America/Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(date): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXct.POSIXlt(new): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x</code></pre></div>
+<pre><code>## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
 <pre><code>## [1] &quot;2010-10-18 17:30:00 MDT&quot;</code></pre>
 <p>Often I want to consider some point in time, but need to convert the timezone the date was specified into another timezone. The function <code>with_tz()</code> will take a given moment in time and figure out when that same moment is in another timezone. For example, <em>Game of Thrones</em> is made available on HBO’s streaming service at 9pm on Sunday evenings Eastern time. I need to know when I can start watching it here in Arizona.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GoT &lt;-<span class="st"> </span><span class="kw">ymd_hm</span>(<span class="st">&#39;2015-4-26 21:00&#39;</span>, <span class="dt">tz=</span><span class="st">&#39;US/Eastern&#39;</span>)
-<span class="kw">with_tz</span>(GoT, <span class="dt">tz=</span><span class="st">&#39;US/Arizona&#39;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GoT &lt;-<span class="st"> </span><span class="kw">ymd_hm</span>(<span class="st">&#39;2015-4-26 21:00&#39;</span>, <span class="dt">tz=</span><span class="st">&#39;US/Eastern&#39;</span>)</code></pre></div>
+<pre><code>## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXct.POSIXlt(dlt): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<pre><code>## Warning in as.POSIXlt.POSIXct(dct): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with_tz</span>(GoT, <span class="dt">tz=</span><span class="st">&#39;US/Arizona&#39;</span>)</code></pre></div>
+<pre><code>## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;default/America/
+## Phoenix&#39;</code></pre>
 <pre><code>## [1] &quot;2015-04-26 18:00:00 MST&quot;</code></pre>
 <p>This means that Game of Thrones is available for streaming at 6 pm Arizona time.</p>
 </div>
