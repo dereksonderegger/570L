@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-03">
+<meta name="date" content="2017-10-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -235,16 +235,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="14.3" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#arithmetic-on-dates"><i class="fa fa-check"></i><b>14.3</b> Arithmetic on Dates</a></li>
 <li class="chapter" data-level="14.4" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#exercises-13"><i class="fa fa-check"></i><b>14.4</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html"><i class="fa fa-check"></i><b>15</b> Rmarkdown Tricks</a><ul>
-<li class="chapter" data-level="15.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#mathematical-expressions"><i class="fa fa-check"></i><b>15.1</b> Mathematical expressions</a></li>
-<li class="chapter" data-level="15.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#tables"><i class="fa fa-check"></i><b>15.2</b> Tables</a><ul>
-<li class="chapter" data-level="15.2.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#simple-tables"><i class="fa fa-check"></i><b>15.2.1</b> Simple Tables</a></li>
-<li class="chapter" data-level="15.2.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#grid-tables"><i class="fa fa-check"></i><b>15.2.2</b> Grid Tables</a></li>
-<li class="chapter" data-level="15.2.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#pipe-tables"><i class="fa fa-check"></i><b>15.2.3</b> Pipe Tables</a></li>
+<li class="chapter" data-level="15" data-path="15-parallel-processing.html"><a href="15-parallel-processing.html"><i class="fa fa-check"></i><b>15</b> Parallel Processing</a></li>
+<li class="chapter" data-level="16" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html"><i class="fa fa-check"></i><b>16</b> Rmarkdown Tricks</a><ul>
+<li class="chapter" data-level="16.1" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#mathematical-expressions"><i class="fa fa-check"></i><b>16.1</b> Mathematical expressions</a></li>
+<li class="chapter" data-level="16.2" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#tables"><i class="fa fa-check"></i><b>16.2</b> Tables</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#simple-tables"><i class="fa fa-check"></i><b>16.2.1</b> Simple Tables</a></li>
+<li class="chapter" data-level="16.2.2" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#grid-tables"><i class="fa fa-check"></i><b>16.2.2</b> Grid Tables</a></li>
+<li class="chapter" data-level="16.2.3" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#pipe-tables"><i class="fa fa-check"></i><b>16.2.3</b> Pipe Tables</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#r-functions-to-produce-table-code."><i class="fa fa-check"></i><b>15.3</b> R functions to produce table code.</a><ul>
-<li class="chapter" data-level="15.3.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#knitrkable"><i class="fa fa-check"></i><b>15.3.1</b> <code>knitr::kable</code></a></li>
-<li class="chapter" data-level="15.3.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#package-pander"><i class="fa fa-check"></i><b>15.3.2</b> Package <code>pander</code></a></li>
+<li class="chapter" data-level="16.3" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#r-functions-to-produce-table-code."><i class="fa fa-check"></i><b>16.3</b> R functions to produce table code.</a><ul>
+<li class="chapter" data-level="16.3.1" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#knitrkable"><i class="fa fa-check"></i><b>16.3.1</b> <code>knitr::kable</code></a></li>
+<li class="chapter" data-level="16.3.2" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#package-pander"><i class="fa fa-check"></i><b>16.3.2</b> Package <code>pander</code></a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -527,14 +528,11 @@ grades %&gt;%<span class="st"> </span><span class="kw">summarise</span>( <span c
 grades %&gt;%<span class="st"> </span><span class="kw">summarise</span>( <span class="dt">mean.E1=</span><span class="kw">mean</span>(Exam1), <span class="dt">stddev.E1=</span><span class="kw">sd</span>(Exam2) )</code></pre></div>
 <pre><code>##   mean.E1 stddev.E1
 ## 1      83      11.5</code></pre>
-<p>If we want to apply the same statistic to each column, we use the <code>summarise_each()</code> command. We have to be a little careful here because the function you use has to work on every column (that isn’t part of the grouping structure (see <code>group_by()</code>)).</p>
+<p>If we want to apply the same statistic to each column, we use the <code>summarise_all()</code> command. We have to be a little careful here because the function you use has to work on every column (that isn’t part of the grouping structure (see <code>group_by()</code>)). There are two variants <code>summarize_at()</code> and <code>summarize_if()</code> that give you a bit more flexibility.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the mean and stddev of each column - Cannot do this to Names!</span>
 grades %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>( Exam1:Final ) %&gt;%
-<span class="st">  </span><span class="kw">summarise_each</span>( <span class="kw">funs</span>(mean, sd) )</code></pre></div>
-<pre><code>## `summarise_each()` is deprecated.
-## Use `summarise_all()`, `summarise_at()` or `summarise_if()` instead.
-## To map `funs` over all variables, use `summarise_all()`</code></pre>
+<span class="st">  </span><span class="kw">summarise_all</span>( <span class="kw">funs</span>(mean, sd) )</code></pre></div>
 <pre><code>##   Exam1_mean Exam2_mean Final_mean Exam1_sd Exam2_sd Final_sd
 ## 1         83      83.75       88.5 10.23067     11.5 6.757712</code></pre>
 </div>

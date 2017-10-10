@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-03">
+<meta name="date" content="2017-10-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="13-string-manipulation.html">
-<link rel="next" href="15-rmarkdown-tricks.html">
+<link rel="next" href="15-parallel-processing.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -235,16 +235,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="14.3" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#arithmetic-on-dates"><i class="fa fa-check"></i><b>14.3</b> Arithmetic on Dates</a></li>
 <li class="chapter" data-level="14.4" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#exercises-13"><i class="fa fa-check"></i><b>14.4</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html"><i class="fa fa-check"></i><b>15</b> Rmarkdown Tricks</a><ul>
-<li class="chapter" data-level="15.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#mathematical-expressions"><i class="fa fa-check"></i><b>15.1</b> Mathematical expressions</a></li>
-<li class="chapter" data-level="15.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#tables"><i class="fa fa-check"></i><b>15.2</b> Tables</a><ul>
-<li class="chapter" data-level="15.2.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#simple-tables"><i class="fa fa-check"></i><b>15.2.1</b> Simple Tables</a></li>
-<li class="chapter" data-level="15.2.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#grid-tables"><i class="fa fa-check"></i><b>15.2.2</b> Grid Tables</a></li>
-<li class="chapter" data-level="15.2.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#pipe-tables"><i class="fa fa-check"></i><b>15.2.3</b> Pipe Tables</a></li>
+<li class="chapter" data-level="15" data-path="15-parallel-processing.html"><a href="15-parallel-processing.html"><i class="fa fa-check"></i><b>15</b> Parallel Processing</a></li>
+<li class="chapter" data-level="16" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html"><i class="fa fa-check"></i><b>16</b> Rmarkdown Tricks</a><ul>
+<li class="chapter" data-level="16.1" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#mathematical-expressions"><i class="fa fa-check"></i><b>16.1</b> Mathematical expressions</a></li>
+<li class="chapter" data-level="16.2" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#tables"><i class="fa fa-check"></i><b>16.2</b> Tables</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#simple-tables"><i class="fa fa-check"></i><b>16.2.1</b> Simple Tables</a></li>
+<li class="chapter" data-level="16.2.2" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#grid-tables"><i class="fa fa-check"></i><b>16.2.2</b> Grid Tables</a></li>
+<li class="chapter" data-level="16.2.3" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#pipe-tables"><i class="fa fa-check"></i><b>16.2.3</b> Pipe Tables</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#r-functions-to-produce-table-code."><i class="fa fa-check"></i><b>15.3</b> R functions to produce table code.</a><ul>
-<li class="chapter" data-level="15.3.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#knitrkable"><i class="fa fa-check"></i><b>15.3.1</b> <code>knitr::kable</code></a></li>
-<li class="chapter" data-level="15.3.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#package-pander"><i class="fa fa-check"></i><b>15.3.2</b> Package <code>pander</code></a></li>
+<li class="chapter" data-level="16.3" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#r-functions-to-produce-table-code."><i class="fa fa-check"></i><b>16.3</b> R functions to produce table code.</a><ul>
+<li class="chapter" data-level="16.3.1" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#knitrkable"><i class="fa fa-check"></i><b>16.3.1</b> <code>knitr::kable</code></a></li>
+<li class="chapter" data-level="16.3.2" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#package-pander"><i class="fa fa-check"></i><b>16.3.2</b> Package <code>pander</code></a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -537,7 +538,7 @@ x +<span class="st"> </span><span class="kw">years</span>(<span class="dv">2</sp
         </div>
       </div>
 <a href="13-string-manipulation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="15-rmarkdown-tricks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="15-parallel-processing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

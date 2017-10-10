@@ -247,12 +247,12 @@ We could calculate multiple summary statistics if we like.
 grades %>% summarise( mean.E1=mean(Exam1), stddev.E1=sd(Exam2) )
 ```
 
-If we want to apply the same statistic to each column, we use the `summarise_each()` command. We have to be a little careful here because the function you use has to work on every column (that isn't part of the grouping structure (see `group_by()`)).
+If we want to apply the same statistic to each column, we use the `summarise_all()` command. We have to be a little careful here because the function you use has to work on every column (that isn't part of the grouping structure (see `group_by()`)). There are two variants `summarize_at()` and `summarize_if()` that give you a bit more flexibility.
 ```{r}
 # calculate the mean and stddev of each column - Cannot do this to Names!
 grades %>% 
   select( Exam1:Final ) %>%
-  summarise_each( funs(mean, sd) )
+  summarise_all( funs(mean, sd) )
 ```
 
 #### Miscellaneous functions

@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-03">
+<meta name="date" content="2017-10-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -235,16 +235,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="14.3" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#arithmetic-on-dates"><i class="fa fa-check"></i><b>14.3</b> Arithmetic on Dates</a></li>
 <li class="chapter" data-level="14.4" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#exercises-13"><i class="fa fa-check"></i><b>14.4</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html"><i class="fa fa-check"></i><b>15</b> Rmarkdown Tricks</a><ul>
-<li class="chapter" data-level="15.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#mathematical-expressions"><i class="fa fa-check"></i><b>15.1</b> Mathematical expressions</a></li>
-<li class="chapter" data-level="15.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#tables"><i class="fa fa-check"></i><b>15.2</b> Tables</a><ul>
-<li class="chapter" data-level="15.2.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#simple-tables"><i class="fa fa-check"></i><b>15.2.1</b> Simple Tables</a></li>
-<li class="chapter" data-level="15.2.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#grid-tables"><i class="fa fa-check"></i><b>15.2.2</b> Grid Tables</a></li>
-<li class="chapter" data-level="15.2.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#pipe-tables"><i class="fa fa-check"></i><b>15.2.3</b> Pipe Tables</a></li>
+<li class="chapter" data-level="15" data-path="15-parallel-processing.html"><a href="15-parallel-processing.html"><i class="fa fa-check"></i><b>15</b> Parallel Processing</a></li>
+<li class="chapter" data-level="16" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html"><i class="fa fa-check"></i><b>16</b> Rmarkdown Tricks</a><ul>
+<li class="chapter" data-level="16.1" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#mathematical-expressions"><i class="fa fa-check"></i><b>16.1</b> Mathematical expressions</a></li>
+<li class="chapter" data-level="16.2" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#tables"><i class="fa fa-check"></i><b>16.2</b> Tables</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#simple-tables"><i class="fa fa-check"></i><b>16.2.1</b> Simple Tables</a></li>
+<li class="chapter" data-level="16.2.2" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#grid-tables"><i class="fa fa-check"></i><b>16.2.2</b> Grid Tables</a></li>
+<li class="chapter" data-level="16.2.3" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#pipe-tables"><i class="fa fa-check"></i><b>16.2.3</b> Pipe Tables</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#r-functions-to-produce-table-code."><i class="fa fa-check"></i><b>15.3</b> R functions to produce table code.</a><ul>
-<li class="chapter" data-level="15.3.1" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#knitrkable"><i class="fa fa-check"></i><b>15.3.1</b> <code>knitr::kable</code></a></li>
-<li class="chapter" data-level="15.3.2" data-path="15-rmarkdown-tricks.html"><a href="15-rmarkdown-tricks.html#package-pander"><i class="fa fa-check"></i><b>15.3.2</b> Package <code>pander</code></a></li>
+<li class="chapter" data-level="16.3" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#r-functions-to-produce-table-code."><i class="fa fa-check"></i><b>16.3</b> R functions to produce table code.</a><ul>
+<li class="chapter" data-level="16.3.1" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#knitrkable"><i class="fa fa-check"></i><b>16.3.1</b> <code>knitr::kable</code></a></li>
+<li class="chapter" data-level="16.3.2" data-path="16-rmarkdown-tricks.html"><a href="16-rmarkdown-tricks.html#package-pander"><i class="fa fa-check"></i><b>16.3.2</b> Package <code>pander</code></a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -412,9 +413,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.4</span> r-function</h3>
 <p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 20.59519 21.71410 22.22369 20.50776 23.93511</code></pre>
+<pre><code>## [1] 20.41428 21.04574 20.65472 23.67904 19.58089</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1] 6 9 9 6</code></pre>
+<pre><code>## [1] 7 4 8 9</code></pre>
 </div>
 </div>
 <div id="exercises-2" class="section level2">

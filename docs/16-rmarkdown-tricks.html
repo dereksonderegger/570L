@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="11-flow-control.html">
-<link rel="next" href="13-string-manipulation.html">
+<link rel="prev" href="15-parallel-processing.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -265,241 +265,544 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="user-defined-functions" class="section level1">
-<h1><span class="header-section-number">Chapter 12</span> User Defined Functions</h1>
-<p>It is very important to be able to define a piece of programing logic that is repeated often. For example, I don’t want to have to always program the mathematical code for calculating the sample variance of a vector of data. Instead I just want to call a function that does everything for me and I don’t have to worry about the details.</p>
-<p>While hiding the computational details is nice, fundamentally writing functions allows us to think about our problems at a higher layer of abstraction. For example, most scientists just want to run a t-test on their data and get the appropriate p-value out; they want to focus on their problem and not how to calculate what the appropriate degrees of freedom are. Functions let us do that.</p>
-<div id="basic-function-definition" class="section level2">
-<h2><span class="header-section-number">12.1</span> Basic function definition</h2>
-<p>In the course of your analysis, it can be useful to define your own functions. The format for defining your own function is</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">function.name &lt;-<span class="st"> </span>function(arg1, arg2, arg3){
-  statement1
-  statement2
-}</code></pre></div>
-<p>where <code>arg1</code> is the first argument passed to the function and <code>arg2</code> is the second.</p>
-<p>To illustrate how to define your own function, we will define a variance calculating function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define my function</span>
-my.var &lt;-<span class="st"> </span>function(x){
-  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)                <span class="co"># calculate sample size</span>
-  xbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x)               <span class="co"># calculate sample mean</span>
-  SSE &lt;-<span class="st"> </span><span class="kw">sum</span>( (x-xbar)^<span class="dv">2</span> )      <span class="co"># calculate sum of squared error</span>
-  v &lt;-<span class="st"> </span>SSE /<span class="st"> </span>( n -<span class="st"> </span><span class="dv">1</span> )          <span class="co"># &quot;average&quot; squared error</span>
-  <span class="kw">return</span>(v)                     <span class="co"># result of function is v</span>
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create a vector that I wish to calculate the variance of</span>
-test.vector &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>)
-
-<span class="co"># calculate the variance using my function</span>
-calculated.var &lt;-<span class="st"> </span><span class="kw">my.var</span>( test.vector )
-calculated.var</code></pre></div>
-<pre><code>## [1] 2.7</code></pre>
-<p>Notice that even though I defined my function using <code>x</code> as my vector of data, and passed my function something named <code>test.vector</code>, R does the appropriate renaming.If my function doesn’t modify its input arguments, then R just passes a pointer to the inputs to avoid copying large amounts of data when you call a function. If your function modifies its input, then R will take the input data, copy it, and then pass that new copy to the function. This means that a function cannot modify its arguments. In Computer Science parlance, R does not allow for procedural side effects. Think of the variable <code>x</code> as a placeholder, with it being replaced by whatever gets passed into the function.</p>
-<p>When I call a function, the function might cause something to happen (e.g. draw a plot) or it might do some calculates the result is returned by the function and we might want to save that. Inside a function, if I want the result of some calculation saved, I return the result as the output of the function. The way I specify to do this is via the <code>return</code> statement. (Actually R doesn’t completely require this. But the alternative method is less intuitive and I strongly recommend using the <code>return()</code> statement for readability.)</p>
-<p>By writing a function, I can use the same chunk of code repeatedly. This means that I can do all my tedious calculations inside the function and just call the function whenever I want and happily ignore the details. Consider the function <code>t.test()</code> which we have used to do all the calculations in a t-test. We could write a similar function using the following code:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define my function</span>
-one.sample.t.test &lt;-<span class="st"> </span>function(input.data, mu0){
-  n    &lt;-<span class="st"> </span><span class="kw">length</span>(input.data)
-  xbar &lt;-<span class="st"> </span><span class="kw">mean</span>(input.data)
-  s    &lt;-<span class="st"> </span><span class="kw">sd</span>(input.data)
-  t    &lt;-<span class="st"> </span>(xbar -<span class="st"> </span>mu0)/(s /<span class="st"> </span><span class="kw">sqrt</span>(n))
-  if( t &lt;<span class="st"> </span><span class="dv">0</span> ){
-    p.value &lt;-<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">pt</span>(t, <span class="dt">df=</span>n<span class="dv">-1</span>)
-  }else{
-    p.value &lt;-<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>(<span class="dv">1</span>-<span class="kw">pt</span>(t, <span class="dt">df=</span>n<span class="dv">-1</span>))
-  }
-  <span class="co"># we haven&#39;t addressed how to print things in a organized </span>
-  <span class="co"># fashion, the following is ugly, but works...</span>
-  <span class="co"># Notice that this function returns a character string</span>
-  <span class="co"># with the necessary information in the string.</span>
-  <span class="kw">return</span>( <span class="kw">paste</span>(<span class="st">&#39;t =&#39;</span>, t, <span class="st">&#39; and p.value =&#39;</span>, p.value) )
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create a vector that I wish apply a one-sample t-test on.</span>
-test.data &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)
-<span class="kw">one.sample.t.test</span>( test.data, <span class="dt">mu0=</span><span class="dv">2</span> )</code></pre></div>
-<pre><code>## [1] &quot;t = 3.15682074900988  and p.value = 0.00826952416706961&quot;</code></pre>
-<p>Nearly every function we use to do data analysis is written in a similar fashion. Somebody decided it would be convenient to have a function that did an ANOVA analysis and they wrote something similar to the above function, but is a bit grander in scope. Even if you don’t end up writing any of your own functions, knowing how to will help you understand why certain functions you use are designed the way they are.</p>
-</div>
-<div id="parameter-defaults" class="section level2">
-<h2><span class="header-section-number">12.2</span> Parameter Defaults</h2>
-<p>When I define a function and can let it take as many arguments as I want and I can also give default values to the arguments. For example we can define the normal density function using the following code which gives a default mean of <span class="math inline">\(0\)</span> and default standard deviation of <span class="math inline">\(1\)</span>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a function that defines the shape of a normal distribution.</span>
-<span class="co"># by including mu=0, we give a default value that the function</span>
-<span class="co"># user can override</span>
-dnorm.alternate &lt;-<span class="st"> </span>function(x, <span class="dt">mu=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>){
-  out &lt;-<span class="st"> </span><span class="dv">1</span> /<span class="st"> </span>(sd *<span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">2</span>*pi)) *<span class="st"> </span><span class="kw">exp</span>( -(x-mu)^<span class="dv">2</span> /<span class="st"> </span>(<span class="dv">2</span> *<span class="st"> </span>sd^<span class="dv">2</span>) )
-  <span class="kw">return</span>(out)
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># test the function to see if it works</span>
-<span class="kw">dnorm.alternate</span>(<span class="dv">1</span>)</code></pre></div>
-<pre><code>## [1] 0.2419707</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dnorm.alternate</span>(<span class="dv">1</span>, <span class="dt">mu=</span><span class="dv">1</span>)</code></pre></div>
-<pre><code>## [1] 0.3989423</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Lets test the function a bit more by drawing the height</span>
-<span class="co"># of the normal distribution a lots of different points</span>
-<span class="co"># ... First the standard normal!</span>
-x &lt;-<span class="st"> </span><span class="kw">seq</span>(-<span class="dv">3</span>, <span class="dv">3</span>, <span class="dt">length=</span><span class="dv">601</span>)
-<span class="kw">plot</span>( x, <span class="kw">dnorm.alternate</span>(x) )  <span class="co"># use default mu=0, sd=1</span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-220-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># next a normal with mean 1, and standard deviation 1</span>
-<span class="kw">plot</span>( x, <span class="kw">dnorm.alternate</span>(x, <span class="dt">mu=</span><span class="dv">1</span>) ) <span class="co"># override mu, but use sd=1</span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-221-1.png" width="672" /></p>
-<p>Many functions that we use have defaults that we don’t normally mess with. For example, the function <code>mean()</code> has an option the specifies what it should do if your vector of data has missing data. The common solution is to remove those observations, but we might have wanted to say that the mean is unknown one component of it was unknown.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="ot">NA</span>)     <span class="co"># fourth element is missing</span>
-<span class="kw">mean</span>(x)              <span class="co"># default is to return NA if any element is missing</span></code></pre></div>
-<pre><code>## [1] NA</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(x, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)  <span class="co"># Only average the non-missing data</span></code></pre></div>
-<pre><code>## [1] 2</code></pre>
-<p>As you look at the help pages for different functions, you’ll see in the function definitions what the default values are. For example, the function <code>mean</code> has another option, <code>trim</code>, which specifies what percent of the data to trim at the extremes. Because we would expect mean to not do any trimming by default, the authors have appropriately defined the default amount of trimming to be zero via the definition <code>trim=0</code>.</p>
-</div>
-<div id="ellipses" class="section level2">
-<h2><span class="header-section-number">12.3</span> Ellipses</h2>
-<p>When writing functions, I occasionally have a situation where I call function <code>a()</code> and function <code>a()</code> needs to call another function, say <code>b()</code>, and I want to pass an unusual parameter to that function. To do this, I’ll use a set of three periods called an <em>ellipses</em>. What these do is represent a set of parameter values that will be passed along to a subsequent function.For example the following code takes the result of a simple linear regression and plots the data and the regression line and confidence region (basically I’m recreating a function that does the same thing as ggplot2’s geom_smooth() layer). I might not want to specify (and give good defaults) to every single graphical parameter that the plot() function supports. Instead I’ll just use the ‘…’ argument and pass any additional parameters to the plot function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a function that draws the regression line and confidence interval</span>
-<span class="co"># notice it doesn&#39;t return anything... all it does is draw a plot</span>
-show.lm &lt;-<span class="st"> </span>function(m, <span class="dt">interval.type=</span><span class="st">&#39;confidence&#39;</span>, <span class="dt">fill.col=</span><span class="st">&#39;light grey&#39;</span>, ...){
-  x &lt;-<span class="st"> </span>m$model[,<span class="dv">2</span>]       <span class="co"># extract the predictor variable</span>
-  y &lt;-<span class="st"> </span>m$model[,<span class="dv">1</span>]       <span class="co"># extract the response</span>
-  pred &lt;-<span class="st"> </span><span class="kw">predict</span>(m, <span class="dt">interval=</span>interval.type)
-  <span class="kw">plot</span>(x, y, ...)
-  <span class="kw">polygon</span>( <span class="kw">c</span>(x,<span class="kw">rev</span>(x)),                         <span class="co"># draw the ribbon defined</span>
-           <span class="kw">c</span>(pred[,<span class="st">&#39;lwr&#39;</span>], <span class="kw">rev</span>(pred[,<span class="st">&#39;upr&#39;</span>])),  <span class="co"># by lwr and upr - polygon</span>
-           <span class="dt">col=</span><span class="st">&#39;light grey&#39;</span>)                    <span class="co"># fills in the region defined by            </span>
-  <span class="kw">lines</span>(x, pred[, <span class="st">&#39;fit&#39;</span>])                       <span class="co"># a set of vertices, need to reverse            </span>
-  <span class="kw">points</span>(x, y)                                 <span class="co"># the uppers to make a nice figure</span>
-} </code></pre></div>
-<p>This function looks daunting, but we experiment to see what it does.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first define a simple linear model from our cherry tree data</span>
-m &lt;-<span class="st"> </span><span class="kw">lm</span>( Volume ~<span class="st"> </span>Girth, <span class="dt">data=</span>trees )
-
-<span class="co"># call the function with no extraneous parameters</span>
-<span class="kw">show.lm</span>( m )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-224-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Pass arguments that will just be passed along to the plot function</span>
-<span class="kw">show.lm</span>( m, <span class="dt">xlab=</span><span class="st">&#39;Girth&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Volume&#39;</span>, 
-         <span class="dt">main=</span><span class="st">&#39;Relationship between Girth and Volume&#39;</span>)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-225-1.png" width="672" /></p>
-<p>This type of trick is done commonly. Look at the help files for <code>hist()</code> and <code>qqnorm()</code> and you’ll see the ellipses used to pass graphical parameters along to sub-functions. Functions like <code>lm()</code> use the ellipses to pass arguments to the low level regression fitting functions that do the actual calculations. By only including these parameters via the ellipses, must users won’t be tempted to mess with the parameters, but experts who know the nitty-gritty details can still modify those parameters.</p>
-</div>
-<div id="function-overloading" class="section level2">
-<h2><span class="header-section-number">12.4</span> Function Overloading</h2>
-<p>Frequently the user wants to inspect the results of some calculation and display a variable or object to the screen. The <code>print()</code> function does exactly that, but it acts differently for matrices than it does for vectors. It especially acts different for lists that I obtained from a call like <code>lm()</code> or <code>aov()</code>.</p>
-<p>The reason that the print function can act differently depending on the object type that I pass it is because the function <code>print()</code> is <em>overloaded</em>. What this means is that there is a <code>print.lm()</code> function that is called whenever I call <code>print(obj)</code> when <code>obj</code> is the output of an <code>lm()</code> command.</p>
-<p>Recall that we initially introduced a few different classes of data, Numerical, Factors, and Logicals. It turns out that I can create more types of classes.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>:<span class="dv">10</span>)
-y &lt;-<span class="st"> </span><span class="dv">3+2</span>*x+<span class="kw">rnorm</span>(<span class="dv">10</span>)
-
-h &lt;-<span class="st"> </span><span class="kw">hist</span>(y)  <span class="co"># h should be of class &quot;Histogram&quot;</span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-226-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(h)</code></pre></div>
-<pre><code>## [1] &quot;histogram&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>( y ~<span class="st"> </span>x ) <span class="co"># model is something of class &quot;lm&quot;</span>
-<span class="kw">class</span>(model)</code></pre></div>
-<pre><code>## [1] &quot;lm&quot;</code></pre>
-<p>Many common functions such as <code>plot()</code> are overloaded so that when I call the plot function with an object, it will in turn call <code>plot.lm()</code> or <code>plot.histogram()</code> as appropriate. When building statistical models I am often interested in different quantities and would like to get those regardless of the model I am using. Below are a list of functions that work whether I fit a model via <code>aov()</code>, <code>lm()</code>, <code>glm()</code>, or <code>gam()</code>.</p>
-<table style="width:64%;">
+<div id="rmarkdown-tricks" class="section level1">
+<h1><span class="header-section-number">Chapter 16</span> Rmarkdown Tricks</h1>
+<p>We have been using RMarkdown files to combine the analysis and discussion into one nice document that contains all the analysis steps so that your research is reproducible.</p>
+<p>There are many resources on the web about Markdown and the variant that RStudio uses (called RMarkdown), but the easiest reference is to just use the RStudio help tab to access the help. I particular like <code>Help -&gt; Cheatsheets -&gt; RMarkdown Reference Guide</code> because it gives me the standard Markdown information but also a bunch of information about the options I can use to customize the behavior of individual R code chunks.</p>
+<p>Two topics that aren’t covered in the RStudio help files are how to insert mathematical text symbols and how to produce decent looking tables without too much fuss.</p>
+<p>Most of what is presented here isn’t primarily about how to use R, but rather how to work with tools in RMarkdown so that the final product is neat and tidy. While you could print out your RMarkdown file and then clean it up in MS Word, sometimes there is a good to want as nice a starting point as possible.</p>
+<div id="mathematical-expressions" class="section level2">
+<h2><span class="header-section-number">16.1</span> Mathematical expressions</h2>
+<p>The primary way to insert a mathematical expression is to use a markup language called LaTeX. This is a very powerful system and it is what most Mathematicians use to write their documents. The downside is that there is a lot to learn. However, you can get most of what you need pretty easily.</p>
+<p>For RMarkdown to recognize you are writing math using LaTeX, you need to enclose the LaTeX with dollar signs ($). Some examples of common LaTeX patterns are given below:</p>
+<table>
 <colgroup>
-<col width="31%" />
-<col width="31%" />
+<col width="18%" />
+<col width="23%" />
+<col width="17%" />
+<col width="19%" />
+<col width="20%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th>Quantity</th>
-<th>Function Name</th>
+<th align="center">Goal</th>
+<th align="center">LaTeX</th>
+<th align="center">Output</th>
+<th align="center">LaTeX</th>
+<th align="center">Output</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><p>Residuals</p></td>
-<td><p><code>resid( obj )</code></p></td>
+<td align="center">power</td>
+<td align="center"><code>$x^2$</code></td>
+<td align="center"><span class="math inline">\(x^2\)</span></td>
+<td align="center"><code>$y^{0.95}$</code></td>
+<td align="center"><span class="math inline">\(y^{0.95}\)</span></td>
 </tr>
 <tr class="even">
-<td><p>Model Coefficients</p></td>
-<td><p><code>coef( obj )</code></p></td>
+<td align="center">Subscript</td>
+<td align="center"><code>$x_i$</code></td>
+<td align="center"><span class="math inline">\(x_i\)</span></td>
+<td align="center"><code>$t_{24}$</code></td>
+<td align="center"><span class="math inline">\(t_{24}\)</span></td>
 </tr>
 <tr class="odd">
-<td><p>Summary Table</p></td>
-<td><p><code>summary( obj )</code></p></td>
+<td align="center">Greek</td>
+<td align="center"><code>$\alpha$ $\beta$</code></td>
+<td align="center"><span class="math inline">\(\alpha\)</span> <span class="math inline">\(\beta\)</span></td>
+<td align="center"><code>$\theta$ $\Theta$</code></td>
+<td align="center"><span class="math inline">\(\theta\)</span> <span class="math inline">\(\Theta\)</span></td>
 </tr>
 <tr class="even">
-<td><p>ANOVA Table</p></td>
-<td><p><code>anova( obj )</code></p></td>
+<td align="center">Bar</td>
+<td align="center"><code>$\bar{x}$</code></td>
+<td align="center"><span class="math inline">\(\bar{x}\)</span></td>
+<td align="center"><code>$\bar{mu}_i$</code></td>
+<td align="center"><span class="math inline">\(\bar{\mu}_i\)</span></td>
 </tr>
 <tr class="odd">
-<td><p>AIC value</p></td>
-<td><p><code>AIC( obj )</code></p></td>
+<td align="center">Hat</td>
+<td align="center"><code>$\hat{mu}$</code></td>
+<td align="center"><span class="math inline">\(\hat{\mu}\)</span></td>
+<td align="center"><code>$\hat{y}_i$</code></td>
+<td align="center"><span class="math inline">\(\hat{y}_i\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">Star</td>
+<td align="center"><code>$y^*$</code></td>
+<td align="center"><span class="math inline">\(y^*\)</span></td>
+<td align="center"><code>$\hat{\mu}^*_i$</code></td>
+<td align="center"><span class="math inline">\(\hat{\mu}^*_i\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center">Centered Dot</td>
+<td align="center"><code>$\cdot$</code></td>
+<td align="center"><span class="math inline">\(\cdot\)</span></td>
+<td align="center"><code>$\bar{y}_{i\cdot}$</code></td>
+<td align="center"><span class="math inline">\(\bar{y}_{i\cdot}\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">Sum</td>
+<td align="center"><code>$\sum x_i$</code></td>
+<td align="center"><span class="math inline">\(\sum x_i\)</span></td>
+<td align="center"><code>$\sum_{i=0}^N x_i$</code></td>
+<td align="center"><span class="math inline">\(\sum_{i=0}^N x_i\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">Square Root</td>
+<td align="center"><code>$\sqrt{a}$</code></td>
+<td align="center"><span class="math inline">\(\sqrt{a}\)</span></td>
+<td align="center"><code>$\sqrt{a^2 + b^2}$</code></td>
+<td align="center"><span class="math inline">\(\sqrt{a^2 + b^2}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">Fractions</td>
+<td align="center"><code>$\frac{a}{b}$</code></td>
+<td align="center"><span class="math inline">\(\frac{a}{b}\)</span></td>
+<td align="center"><code>$\frac{x_i - \bar{x}{s/\sqrt{n}$</code></td>
+<td align="center"><span class="math inline">\(\frac{x_i - \bar{x}}{s/\sqrt{n}}\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>For the residual function, there exists a <code>resid.lm()</code> function, and <code>resid.gam()</code> and it is these functions are called when we run the command <code>resid( obj )</code>.</p>
+<p>Within your RMarkdown document, you can include LaTeX code by enclosing it with dollar signs. So you might write <code>$\alpha=0.05$</code> in your text, but after it is knitted to a pdf, html, or Word, you’ll see <span class="math inline">\(\alpha=0.05\)</span>. If you want your mathematical equation to be on its own line, all by itself, enclose it with double dollar signs. So</p>
+<p><code>$$z_i = \frac{z_i-\bar{x}}{\sigma / \sqrt{n}}$$</code></p>
+<p>would be displayed as</p>
+<p><span class="math display">\[ z_{i}=\frac{x_{i}-\bar{X}}{\sigma/\sqrt{n}} \]</span></p>
+<p>Unfortunately RMarkdown is a little picky about spaces near the $ and $$ signs and you can’t have any spaces between them and the LaTeX command. For a more information about all the different symbols you can use, google ‘LaTeX math symbols’.</p>
 </div>
-<div id="scope" class="section level2">
-<h2><span class="header-section-number">12.5</span> Scope</h2>
-<p>Consider the case where we make a function that calculates the trimmed mean. A good implementation of the function is given here.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define a function for the trimmed mean</span>
-<span class="co"># x: vector of values to be averaged</span>
-<span class="co"># k: the number of elements to trim on either side</span>
-trimmed.mean &lt;-<span class="st"> </span>function(x, <span class="dt">k=</span><span class="dv">0</span>){
-  x &lt;-<span class="st"> </span><span class="kw">sort</span>(x)      <span class="co"># arrange the input according magnitude</span>
-  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)    <span class="co"># n = how many observations</span>
-  if( k &gt;<span class="st"> </span><span class="dv">0</span>){
-    x &lt;-<span class="st"> </span>x[<span class="kw">c</span>(-<span class="dv">1</span>*(<span class="dv">1</span>:k), -<span class="dv">1</span>*((n-k<span class="dv">+1</span>):n))]  <span class="co"># remove first k, last k</span>
-  }
-  tm &lt;-<span class="st"> </span><span class="kw">sum</span>(x) /<span class="st"> </span><span class="kw">length</span>(x)  <span class="co"># mean of the remaining observations</span>
-  <span class="kw">return</span>( tm )
-} 
-
-x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>:<span class="dv">1</span>,<span class="dv">50</span>)                        <span class="co"># 10, 9, 8, ..., 1</span>
-output &lt;-<span class="st"> </span><span class="kw">trimmed.mean</span>(x, <span class="dt">k=</span><span class="dv">2</span>)
-output</code></pre></div>
-<pre><code>## [1] 6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x                                <span class="co"># x is unchanged</span></code></pre></div>
-<pre><code>##  [1] 10  9  8  7  6  5  4  3  2  1 50</code></pre>
-<p>Notice that even though I passed <code>x</code> into the function and then sorted it, <code>x</code> remained unsorted outside the function. When I modified <code>x</code>, R made a copy of <code>x</code> and sorted the <em>copy</em> that belonged to the function so that I didn’t modify a variable that was defined outside of the scope of my function. But what if I didn’t bother with passing x and k. If I don’t pass in the values of x and k, then R will try to find them in my current workspace.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a horribly defined function that has no parameters</span>
-<span class="co"># but still accesses something called &quot;x&quot;</span>
-trimmed.mean &lt;-<span class="st"> </span>function(){
-  x &lt;-<span class="st"> </span><span class="kw">sort</span>(x)
-  n &lt;-<span class="st"> </span><span class="kw">length</span>(x)
-  if( k &gt;<span class="st"> </span><span class="dv">0</span>){
-    x &lt;-<span class="st"> </span>x[<span class="kw">c</span>(-<span class="dv">1</span>*(<span class="dv">1</span>:k), -<span class="dv">1</span>*((n-k<span class="dv">+1</span>):n))]
-  }
-  tm &lt;-<span class="st"> </span><span class="kw">sum</span>(x)/<span class="kw">length</span>(x)
-  <span class="kw">return</span>( tm )
-} 
-
-x &lt;-<span class="st"> </span><span class="kw">c</span>( <span class="dv">1</span>:<span class="dv">10</span>, <span class="dv">50</span> )    <span class="co"># data to trim</span>
-k &lt;-<span class="st"> </span><span class="dv">2</span>
-
-<span class="kw">trimmed.mean</span>()  <span class="co"># amazingly this still works</span></code></pre></div>
-<pre><code>## [1] 6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># but what if k wasn&#39;t defined?</span>
-<span class="kw">rm</span>(k)           <span class="co"># remove k </span>
-<span class="kw">trimmed.mean</span>()  <span class="co"># now the function can&#39;t find anything named k and throws and error.</span></code></pre></div>
-<pre><code>## Error in trimmed.mean(): object &#39;k&#39; not found</code></pre>
-<p>So if I forget to pass some variable into a function, but it happens to be defined outside the function, R will find it. It is not good practice to rely on that because how do I take the trimmed mean of a vector named z? Worse yet, what if the variable x changes between runs of your function? What should be consistently giving the same result keeps changing. This is especially insidious when you have defined most of the arguments the function uses, but missed one. Your function happily goes to the next higher scope and sometimes finds it.</p>
-<p>When executing a function, R will have access to all the variables defined in the function, all the variables defined in the function that called your function and so on until the base workspace. However, you should never let your function refer to something that is not either created in your function or passed in via a parameter.</p>
+<div id="tables" class="section level2">
+<h2><span class="header-section-number">16.2</span> Tables</h2>
+<p>For the following descriptions of the simple, grid, and pipe tables, I’ve shamelessly stolen from the Pandoc documentation. [<a href="http://pandoc.org/README.html#tables" class="uri">http://pandoc.org/README.html#tables</a>]</p>
+<p>One way to print a table is to just print in in R and have the table presented in the code chunk. For example, suppose I want to print out the first 4 rows of the trees dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>trees[<span class="dv">1</span>:<span class="dv">4</span>, ]
+data</code></pre></div>
+<pre><code>##   Girth Height Volume
+## 1   8.3     70   10.3
+## 2   8.6     65   10.3
+## 3   8.8     63   10.2
+## 4  10.5     72   16.4</code></pre>
+<p>Usually this is sufficient, but suppose you want something a bit nicer because you are generating tables regularly and you don’t want to have to clean them up by hand. Tables in RMarkdown follow the table conventions from the Markdown class with a few minor exceptions. Markdown provides 4 ways to define a table and RMarkdown supports 3 of those.</p>
+<div id="simple-tables" class="section level3">
+<h3><span class="header-section-number">16.2.1</span> Simple Tables</h3>
+<p>Simple tables look like this (Notice I don’t wrap these dollar signs or anything, just a blank line above and below the table):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Right   Left     Center   Default 
+-------<span class="st"> </span>------<span class="st"> </span>----------<span class="st"> </span>-------<span class="st"> </span>
+<span class="st">     </span><span class="dv">12</span> <span class="dv">12</span>        hmmm        <span class="dv">12</span> 
+    <span class="dv">123</span> <span class="dv">123</span>        <span class="dv">123</span>       <span class="dv">123</span> 
+      <span class="dv">1</span> <span class="dv">1</span>            <span class="dv">1</span>         <span class="dv">1</span></code></pre></div>
+<p>and would be rendered like this:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Right</th>
+<th align="left">Left</th>
+<th align="center">Center</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">12</td>
+<td align="left">12</td>
+<td align="center">hmmm</td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td align="left">123</td>
+<td align="left">123</td>
+<td align="center">123</td>
+<td>123</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="center">1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>The headers and table rows must each fit on one line. Column alignments are determined by the position of the header text relative to the dashed line below it.</p>
+<p>If the dashed line is flush with the header text on the right side but extends beyond it on the left, the column is right-aligned. If the dashed line is flush with the header text on the left side but extends beyond it on the right, the column is left-aligned. If the dashed line extends beyond the header text on both sides, the column is centered. If the dashed line is flush with the header text on both sides, the default alignment is used (in most cases, this will be left). The table must end with a blank line, or a line of dashes followed by a blank line.</p>
 </div>
-<div id="exercises-11" class="section level2">
-<h2><span class="header-section-number">12.6</span> Exercises</h2>
-<ol style="list-style-type: decimal">
-<li><p>Write a function that calculates the density function of a Uniform continuous variable on the interval <span class="math inline">\(\left(a,b\right)\)</span>. The function is defined as <span class="math display">\[f\left(x\right)=\begin{cases}
-\frac{1}{b-a} &amp; \;\;\;\textrm{if }a\le x\le b\\
-0 &amp; \;\;\;\textrm{otherwise}
-\end{cases}\]</span> which looks like this</p>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-229-1.png" width="672" /></p>
-<p>We want to write a function <code>duniform(x, a, b)</code> that takes an arbitrary value of <code>x</code> and parameters a and b and return the appropriate height of the density function. For various values of <code>x</code>, <code>a</code>, and <code>b</code>, demonstrate that your function returns the correct density value. Ideally, your function should be able to take a vector of values for <code>x</code> and return a vector of densities.</p></li>
-<li><p>I very often want to provide default values to a parameter that I pass to a function. For example, it is so common for me to use the <code>pnorm()</code> and <code>qnorm()</code> functions on the standard normal, that R will automatically use <code>mean=0</code> and <code>sd=1</code> parameters unless you tell R otherwise. To get that behavior, we just set the default parameter values in the definition. When the function is called, the user specified value is used, but if none is specified, the defaults are used. Look at the help page for the functions <code>dunif()</code>, and notice that there are a number of default parameters. For your <code>duniform()</code> function provide default values of <code>0</code> and <code>1</code> for <code>a</code> and <code>b</code>. Demonstrate that your function is appropriately using the given default values.</p></li>
-</ol>
+<div id="grid-tables" class="section level3">
+<h3><span class="header-section-number">16.2.2</span> Grid Tables</h3>
+<p>Grid tables are a little more flexible and each cell can take an arbitrary Markdown block elements (such as lists).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">+---------------+---------------+--------------------+
+<span class="er">|</span><span class="st"> </span>Fruit         |<span class="st"> </span>Price         |<span class="st"> </span>Advantages         |
++<span class="er">===============</span>+<span class="er">===============</span>+<span class="er">====================</span>+
+<span class="er">|</span><span class="st"> </span>Bananas       |<span class="st"> </span><span class="er">$</span><span class="fl">1.34</span>         |<span class="st"> </span>-<span class="st"> </span>built-in wrapper |
+<span class="er">|</span><span class="st">               </span><span class="er">|</span><span class="st">               </span><span class="er">|</span><span class="st"> </span>-<span class="st"> </span>bright color     |
++---------------+---------------+--------------------+
+<span class="er">|</span><span class="st"> </span>Oranges       |<span class="st"> </span><span class="er">$</span><span class="fl">2.10</span>         |<span class="st"> </span>-<span class="st"> </span>cures scurvy     |
+<span class="er">|</span><span class="st">               </span><span class="er">|</span><span class="st">               </span><span class="er">|</span><span class="st"> </span>-<span class="st"> </span>tasty            |
++---------------+---------------+--------------------+</code></pre></div>
+<p>which is rendered as the following:</p>
+<table style="width:74%;">
+<colgroup>
+<col width="22%" />
+<col width="22%" />
+<col width="29%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Fruit</th>
+<th>Price</th>
+<th>Advantages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>Bananas</p></td>
+<td><p>$1.34</p></td>
+<td><ul>
+<li>built-in wrapper</li>
+<li>bright color</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><p>Oranges</p></td>
+<td><p>$2.10</p></td>
+<td><ul>
+<li>cures scurvy</li>
+<li>tasty</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+<p>Grid table doesn’t support Left/Center/Right alignment. Both Simple tables and Grid tables require you to format the blocks nicely inside the RMarkdown file and that can be a bit annoying if something changes and you have to fix the spacing in the rest of the table. Both Simple and Grid tables don’t require column headers.</p>
+</div>
+<div id="pipe-tables" class="section level3">
+<h3><span class="header-section-number">16.2.3</span> Pipe Tables</h3>
+<p>Pipe tables look quite similar to grid tables but Markdown isn’t as picky about the pipes lining up. However, it does require a header row (which you could leave the elements blank in).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">|<span class="st"> </span>Right |<span class="st"> </span>Left |<span class="st"> </span>Default |<span class="st"> </span>Center |
+<span class="er">|</span>------<span class="er">:|:</span>-----<span class="er">|</span>---------<span class="er">|:</span>------<span class="er">:|</span>
+<span class="er">|</span><span class="st">   </span><span class="dv">12</span>  |<span class="st">  </span><span class="dv">12</span>  |<span class="st">    </span><span class="dv">12</span>   |<span class="st">    </span><span class="dv">12</span>  |
+<span class="er">|</span><span class="st">  </span><span class="dv">123</span>  |<span class="st">  </span><span class="dv">123</span> |<span class="st">   </span><span class="dv">123</span>   |<span class="st">   </span><span class="dv">123</span>  |
+<span class="er">|</span><span class="st">    </span><span class="dv">1</span>  |<span class="st">    </span><span class="dv">1</span> |<span class="st">     </span><span class="dv">1</span>   |<span class="st">     </span><span class="dv">1</span>  |</code></pre></div>
+<p>which will render as the following:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Right</th>
+<th align="left">Left</th>
+<th>Default</th>
+<th align="center">Center</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">12</td>
+<td align="left">12</td>
+<td>12</td>
+<td align="center">12</td>
+</tr>
+<tr class="even">
+<td align="right">123</td>
+<td align="left">123</td>
+<td>123</td>
+<td align="center">123</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">1</td>
+<td>1</td>
+<td align="center">1</td>
+</tr>
+</tbody>
+</table>
+<p>In general I prefer to use the pipe tables because it seems a little less picky about getting everything correct. However it is still pretty annoying to get the table laid out correctly.</p>
+<p>In all of these tables, you can use the regular RMarkdown formatting tricks for italicizing and bolding. So I could have a table such as the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">|<span class="st">   </span>Source    |<span class="st">  </span>df  |<span class="st">   </span>Sum of Sq   |<span class="st">    </span>Mean Sq    |<span class="st">    </span>F   |<span class="st">  </span><span class="er">$</span><span class="kw">Pr</span>(&gt;F_{<span class="dv">1</span>,<span class="dv">29</span>})$<span class="st">    </span><span class="er">|</span>
+<span class="er">|:</span>------------<span class="er">|</span>-----<span class="er">:|</span>--------------<span class="er">:|</span>--------------<span class="er">:|</span>-------<span class="er">:|</span>--------------------<span class="er">:|</span>
+<span class="er">|</span><span class="st">  </span>Girth      |<span class="st">  </span><span class="er">*</span><span class="dv">1</span>*<span class="st"> </span><span class="er">|</span><span class="st">  </span><span class="fl">7581.8</span>       |<span class="st">  </span><span class="fl">7581.8</span>       |<span class="st"> </span><span class="fl">419.26</span> |<span class="st">  </span><span class="er">**&lt;</span><span class="st"> </span><span class="fl">2.2e-16</span>**<span class="st">      </span><span class="er">|</span>
+<span class="er">|</span><span class="st">  </span>Residual   |<span class="st">  </span><span class="dv">29</span>  |<span class="st">  </span><span class="fl">524.3</span>        |<span class="st">   </span><span class="fl">18.1</span>        |<span class="st">        </span><span class="er">|</span><span class="st">                     </span><span class="er">|</span></code></pre></div>
+<p>and have it look like this:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Source</th>
+<th align="right">df</th>
+<th align="right">Sum of Sq</th>
+<th align="right">Mean Sq</th>
+<th align="right">F</th>
+<th align="right"><span class="math inline">\(Pr(&gt;F_{1,29})\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Girth</td>
+<td align="right"><em>1</em></td>
+<td align="right">7581.8</td>
+<td align="right">7581.8</td>
+<td align="right">419.26</td>
+<td align="right"><strong>&lt; 2.2e-16</strong></td>
+</tr>
+<tr class="even">
+<td align="left">Residual</td>
+<td align="right">29</td>
+<td align="right">524.3</td>
+<td align="right">18.1</td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+<p>The problem with all of this is that I don’t want to create these by hand. Instead I would like functions that take a data frame or matrix and spit out the RMarkdown code for the table.</p>
+</div>
+</div>
+<div id="r-functions-to-produce-table-code." class="section level2">
+<h2><span class="header-section-number">16.3</span> R functions to produce table code.</h2>
+<p>There are a couple of different packages that convert a data frame to simple/grid/pipe table. We will explore a couple of these, starting with the most basic and moving to the more complicated. The general idea is that we’ll produce the appropriate simple/grid/pipe table syntax in R, and when it gets knitted, then RMarkdown will turn our simple/grid/pipe table into something pretty.</p>
+<div id="knitrkable" class="section level3">
+<h3><span class="header-section-number">16.3.1</span> <code>knitr::kable</code></h3>
+<p>The <code>knitr</code> package includes a function that produces simple tables. It doesn’t have much customizability, but it gets the job done.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># in this code chunk, I&#39;ve used the &quot;results=&#39;hold&#39;&quot; option to prevent</span>
+<span class="co"># the RMarkdown processor from turning this into something pretty</span>
+knitr::<span class="kw">kable</span>( data )</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Girth</th>
+<th align="right">Height</th>
+<th align="right">Volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">8.3</td>
+<td align="right">70</td>
+<td align="right">10.3</td>
+</tr>
+<tr class="even">
+<td align="right">8.6</td>
+<td align="right">65</td>
+<td align="right">10.3</td>
+</tr>
+<tr class="odd">
+<td align="right">8.8</td>
+<td align="right">63</td>
+<td align="right">10.2</td>
+</tr>
+<tr class="even">
+<td align="right">10.5</td>
+<td align="right">72</td>
+<td align="right">16.4</td>
+</tr>
+<tr class="odd">
+<td align="right">which, i</td>
+<td align="right">f I don’t</td>
+<td align="right">prevent the RMarkdown processor from doing its job, will get</td>
+</tr>
+<tr class="even">
+<td align="right">rendered</td>
+<td align="right">as such:</td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">kable</span>( data )</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Girth</th>
+<th align="right">Height</th>
+<th align="right">Volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">8.3</td>
+<td align="right">70</td>
+<td align="right">10.3</td>
+</tr>
+<tr class="even">
+<td align="right">8.6</td>
+<td align="right">65</td>
+<td align="right">10.3</td>
+</tr>
+<tr class="odd">
+<td align="right">8.8</td>
+<td align="right">63</td>
+<td align="right">10.2</td>
+</tr>
+<tr class="even">
+<td align="right">10.5</td>
+<td align="right">72</td>
+<td align="right">16.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="package-pander" class="section level3">
+<h3><span class="header-section-number">16.3.2</span> Package <code>pander</code></h3>
+<p>The package <code>pander</code> seems to be a nice compromise between customization and not having to learn too much. It is relatively powerful in that it will take <code>summary()</code> and <code>anova()</code> output and produce tables for them. By default <code>pander</code> will produce simple tables, but you can ask for Grid or Pipe tables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pander)
+<span class="kw">pander</span>( data, <span class="dt">style=</span><span class="st">&#39;rmarkdown&#39;</span> )   <span class="co"># style is pipe tables...</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Girth</th>
+<th align="center">Height</th>
+<th align="center">Volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">8.3</td>
+<td align="center">70</td>
+<td align="center">10.3</td>
+</tr>
+<tr class="even">
+<td align="center">8.6</td>
+<td align="center">65</td>
+<td align="center">10.3</td>
+</tr>
+<tr class="odd">
+<td align="center">8.8</td>
+<td align="center">63</td>
+<td align="center">10.2</td>
+</tr>
+<tr class="even">
+<td align="center">10.5</td>
+<td align="center">72</td>
+<td align="center">16.4</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>pander</code> package deals with summary and anova tables from a variety of different analyses. So you can simply ask for a nice looking version using the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>( Volume ~<span class="st"> </span>Girth, <span class="dt">data=</span>trees )    <span class="co"># a simple regression</span>
+<span class="kw">pander</span>( <span class="kw">summary</span>(model) )    <span class="co"># my usual summary table</span></code></pre></div>
+<table style="width:86%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>Girth</strong></td>
+<td align="center">5.066</td>
+<td align="center">0.2474</td>
+<td align="center">20.48</td>
+<td align="center">8.644e-19</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">-36.94</td>
+<td align="center">3.365</td>
+<td align="center">-10.98</td>
+<td align="center">7.621e-12</td>
+</tr>
+</tbody>
+</table>
+<table style="width:85%;">
+<caption>Fitting linear model: Volume ~ Girth</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="11%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">31</td>
+<td align="center">4.252</td>
+<td align="center">0.9353</td>
+<td align="center">0.9331</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pander</span>( <span class="kw">anova</span>( model ) )    <span class="co"># my usual anova table</span></code></pre></div>
+<table style="width:83%;">
+<caption>Analysis of Variance Table</caption>
+<colgroup>
+<col width="22%" />
+<col width="6%" />
+<col width="12%" />
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Df</th>
+<th align="center">Sum Sq</th>
+<th align="center">Mean Sq</th>
+<th align="center">F value</th>
+<th align="center">Pr(&gt;F)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>Girth</strong></td>
+<td align="center">1</td>
+<td align="center">7582</td>
+<td align="center">7582</td>
+<td align="center">419.4</td>
+<td align="center">8.644e-19</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Residuals</strong></td>
+<td align="center">29</td>
+<td align="center">524.3</td>
+<td align="center">18.08</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+</tbody>
+</table>
 
 </div>
 </div>
+</div>
+
+
+
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="11-flow-control.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="13-string-manipulation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="15-parallel-processing.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -528,7 +831,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://raw.githubusercontent.com/dereksonderegger/570L/master/13_Functions.Rmd",
+"link": "https://raw.githubusercontent.com/dereksonderegger/570L/master/20_RMarkdownTricks.Rmd",
 "text": "Edit"
 },
 "download": [["A_Sufficient_Introduction_to_R.pdf", "PDF"], ["A_Sufficient_Introduction_to_R.epub", "EPUB"]],
