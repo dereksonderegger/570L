@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="9-graphing-using-ggplot2.html">
-<link rel="next" href="11-flow-control.html">
+<link rel="prev" href="14-dates-and-times.html">
+<link rel="next" href="16-rmarkdown-tricks.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -274,160 +274,284 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="more-ggplot2" class="section level1">
-<h1><span class="header-section-number">Chapter 10</span> More <code>ggplot2</code></h1>
-<div id="faceting" class="section level2">
-<h2><span class="header-section-number">10.1</span> Faceting</h2>
-<p>The goal with faceting is to make many panels of graphics where each panel represents the same relationship between variables, but something changes between each panel. For example using the <code>iris</code> dataset we could look at the relationship between <code>Sepal.Length</code> and <code>Petal.Length</code> either with all the data in one graph, or one panel per species.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-<span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Sepal.Width)) +
-<span class="st">  </span><span class="kw">geom_point</span>() +
-<span class="st">  </span><span class="kw">facet_grid</span>( . ~<span class="st"> </span>Species )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-177-1.png" width="672" /></p>
-<p>The line <code>facet_grid( formula )</code> tells <code>ggplot2</code> to make panels, and the formula tells how to orient the panels. Recall that a formula is always in the order <code>y ~ x</code> and because I want the species to change as we go across the page, but don’t have anything I want to change vertically we use <code>. ~ Species</code> to represent that. If we had wanted three graphs stacked then we could use <code>Species ~ .</code>.</p>
-<p>For a second example, we look at a dataset that examines the amount a waiter was tipped by 244 parties. Covariates that were measured include the day of the week, size of the party, total amount of the bill, amount tipped, whether there were smokers in the group and the gender of the person paying the bill</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(tips, <span class="dt">package=</span><span class="st">&#39;reshape&#39;</span>)
-<span class="kw">head</span>(tips)</code></pre></div>
-<pre><code>##   total_bill  tip    sex smoker day   time size
-## 1      16.99 1.01 Female     No Sun Dinner    2
-## 2      10.34 1.66   Male     No Sun Dinner    3
-## 3      21.01 3.50   Male     No Sun Dinner    3
-## 4      23.68 3.31   Male     No Sun Dinner    2
-## 5      24.59 3.61 Female     No Sun Dinner    4
-## 6      25.29 4.71   Male     No Sun Dinner    4</code></pre>
-<p>It is easy to look at the relationship between the size of the bill and the percent tipped.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tips, <span class="kw">aes</span>(<span class="dt">x =</span> total_bill, <span class="dt">y =</span> tip /<span class="st"> </span>total_bill )) +
-<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-179-1.png" width="672" /></p>
-<p>Next we ask if there is a difference in tipping percent based on gender or day of the week by plotting this relationship for each combination of gender and day.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tips, <span class="kw">aes</span>(<span class="dt">x =</span> total_bill, <span class="dt">y =</span> tip /<span class="st"> </span>total_bill )) +
-<span class="st">  </span><span class="kw">geom_point</span>() +
-<span class="st">  </span><span class="kw">facet_grid</span>( sex ~<span class="st"> </span>day )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-180-1.png" width="672" /></p>
-<p>Sometimes we want multiple rows and columns of facets, but there is only one categorical variable with many levels. In that case we use facet_wrap which takes a one-sided formula.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tips, <span class="kw">aes</span>(<span class="dt">x =</span> total_bill, <span class="dt">y =</span> tip /<span class="st"> </span>total_bill )) +
-<span class="st">  </span><span class="kw">geom_point</span>() +
-<span class="st">  </span><span class="kw">facet_wrap</span>( ~<span class="st"> </span>day )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-181-1.png" width="672" /></p>
-<p>Finally we can allow the x and y scales to vary between the panels by setting “free”, “free_x”, or “free_y”. In the following code, the y-axis scale changes between the gender groups.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tips, <span class="kw">aes</span>(<span class="dt">x =</span> total_bill, <span class="dt">y =</span> tip /<span class="st"> </span>total_bill )) +
-<span class="st">  </span><span class="kw">geom_point</span>() +
-<span class="st">  </span><span class="kw">facet_grid</span>( sex ~<span class="st"> </span>day, <span class="dt">scales=</span><span class="st">&quot;free_y&quot;</span> )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
-</div>
-<div id="modifying-scales" class="section level2">
-<h2><span class="header-section-number">10.2</span> Modifying Scales</h2>
-<p>Often it is useful to modify the scales that we have on the x or y axis. In particular we might want to display some modified version of a variable.</p>
-<div id="log-scales" class="section level3">
-<h3><span class="header-section-number">10.2.1</span> Log scales</h3>
-<p>For this example, we’ll use the <code>ACS</code> data from the <code>Lock5Data</code> package that has information about <code>Income</code> (in thousands of dollars) and <code>Age</code>. Lets make a scatterplot of the data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Lock5Data)
-<span class="kw">data</span>(ACS)
-<span class="kw">ggplot</span>(ACS, <span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span>Income)) +
-<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
-<pre><code>## Warning: Removed 175 rows containing missing values (geom_point).</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-183-1.png" width="672" /></p>
-<p>This is an ugly graph because six observations dominate the graph and the bulk of the data (income &lt; $100,000) is squished together. One solution is to plot income on the <span class="math inline">\(\log_{10}\)</span> scale. There are a couple ways to do this. The simplest way is to just do a transformation on the column of data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ACS, <span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span><span class="kw">log10</span>(Income))) +
-<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
-<pre><code>## Warning: Removed 175 rows containing missing values (geom_point).</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
-<p>This works quite well to see the trend of peak earning happening in a persons 40s and 50s, but the scale is difficult for me to understand (what does <span class="math inline">\(\log_{10}\left(X\right)=1\)</span> mean here? Oh right, that is <span class="math inline">\(10^{1}=X\)</span> so that is the $10,000 line). It would be really nice if we could do the transformation but have the labels on the original scale.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ACS, <span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span>Income)) +
-<span class="st">  </span><span class="kw">geom_point</span>() +
-<span class="st">  </span><span class="kw">scale_y_log10</span>()</code></pre></div>
-<pre><code>## Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>## Warning: Removed 175 rows containing missing values (geom_point).</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
-<p>Now the y-axis is in the original units (thousands of dollars) but obnoxiously we only have two labeled values. Lets define the major break points (the white lines that have numerical labels) to be at 1,10,100 thousand dollars in salary. Likewise we will tell <code>ggplot2</code> to set minor break points at 1 to 10 thousand dollars (with steps of 1 thousand dollars) and then 10 thousand to 100 thousand but with step sizes of 10 thousand, and finally minor breaks above 100 thousand being in steps of 100 thousand.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(ACS, <span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span>Income)) +
-<span class="st">  </span><span class="kw">geom_point</span>() +
-<span class="st">  </span><span class="kw">scale_y_log10</span>(<span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">100</span>),
-                <span class="dt">minor=</span><span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">10</span>,
-                        <span class="kw">seq</span>( <span class="dv">10</span>, <span class="dv">100</span>,<span class="dt">by=</span><span class="dv">10</span> ),
-                        <span class="kw">seq</span>(<span class="dv">100</span>,<span class="dv">1000</span>,<span class="dt">by=</span><span class="dv">100</span>))) +
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&#39;Income (1000s of dollars)&#39;</span>)</code></pre></div>
-<pre><code>## Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<pre><code>## Warning: Removed 175 rows containing missing values (geom_point).</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
-</div>
-<div id="arbitrary-transformations" class="section level3">
-<h3><span class="header-section-number">10.2.2</span> Arbitrary transformations</h3>
-<p>The function <code>scale_y_log10()</code> is actually just a wrapper to the <code>scale_y_continuous()</code> function with a predefined transformation. If you want to rescale function using some other function (say the inverse, or square-root, or <span class="math inline">\(\log_{2}\)</span> ) you can use the <code>scale_y_continuous()</code> function (for the x-axis there is a corresponding <code>scale_x_????</code>) family of functions. There is a whole list of transformations built into ggplot2 that work (transformations include “asn”, “atanh”, “boxcox”, “exp”, “identity”, “log”, “log10”, “log1p”, “log2”, “logit”, “probability”, “probit”, “reciprocal”, “reverse” and “sqrt”). If you need a custom function, that can be done by defining a new transformation via the trans_new() function.</p>
-</div>
-</div>
-<div id="multi-plot" class="section level2">
-<h2><span class="header-section-number">10.3</span> Multi-plot</h2>
-<p>There are times that you must create a graphic that is composed of several sub-graphs and think of it as one object. Unfortunately the mechanism that <code>ggplot2</code> gives for this is cumbersome and it is usually easier to use a function called <code>multiplot</code>. The explaination I’ve heard about why this function wasn’t included in ggplot2 is that you should think about faceting first and only resort to <code>multiplot</code> if you have to. The function <code>multiplot</code> is included in a couple of packages, e.g. <code>Rmisc</code>, but I always just google ‘ggplot2 multiplot’ to get to the webpage [<a href="http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/" class="uri">http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/</a>]</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This example uses the ChickWeight dataset, which comes with ggplot2 </span>
-<span class="co"># First plot </span>
-p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x=</span>Time, <span class="dt">y=</span>weight, <span class="dt">colour=</span>Diet, <span class="dt">group=</span>Chick)) +
-<span class="st">    </span><span class="kw">geom_line</span>() +
-<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Growth curve for individual chicks&quot;</span>)
+<div id="speeding-up-r" class="section level1">
+<h1><span class="header-section-number">Chapter 15</span> Speeding up R</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(microbenchmark)  <span class="co"># for measuring how long stuff takes</span>
 
-<span class="co"># Second plot</span>
-p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x=</span>Time, <span class="dt">y=</span>weight, <span class="dt">colour=</span>Diet)) +
-<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span>.<span class="dv">3</span>) +
-<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">alpha=</span>.<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">1</span>) +
-<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Fitted growth curve per diet&quot;</span>)
+<span class="kw">library</span>(doMC)      <span class="co"># do multi-core stuff</span>
+<span class="kw">library</span>(foreach)   <span class="co"># parallelizable for loops</span>
 
-<span class="co"># Third plot </span>
-p3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">subset</span>(ChickWeight, Time==<span class="dv">21</span>), <span class="kw">aes</span>(<span class="dt">x=</span>weight, <span class="dt">colour=</span>Diet)) +
-<span class="st">    </span><span class="kw">geom_density</span>() +
-<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Final weight, by diet&quot;</span>)</code></pre></div>
-<p>Suppose that I want to layout these three plots in an arrangement like so:</p>
-<p><span class="math display">\[\textrm{layout}=\left[\begin{array}{ccc}
-1 &amp; 2 &amp; 2\\
-1 &amp; 2 &amp; 2\\
-1 &amp; 3 &amp; 3
-\end{array}\right]\]</span></p>
-<p>where plot 1 is a tall, skinny plot on the left, plot 2 is more squarish, and plot 3 is short on the bottom right. This sort of table arrangement can be quite flexible if you have many rows and many columns, but generally we can get by with something with only a couple rows/columns.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.layout =<span class="st"> </span><span class="kw">cbind</span>( <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>) )
-Rmisc::<span class="kw">multiplot</span>( p1, p2, p3, <span class="dt">layout=</span>my.layout)  <span class="co"># Package::FunctionName</span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
-</div>
-<div id="themes" class="section level2">
-<h2><span class="header-section-number">10.4</span> Themes</h2>
-<p>A great deal of thought went into the default settings of ggplot2 to maximize the visual clarity of the graphs. However some people believe the defaults for many of the tiny graphical settings are poor. You can modify each of these but it is often easier to modify them all at once by selecting a different theme. The ggplot2 package includes several, <code>theme_bw()</code>, and <code>theme_minimal()</code> being the two that I use most often. Below are a few to examples:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Rmisc::<span class="kw">multiplot</span>( p1 +<span class="st"> </span><span class="kw">theme_bw</span>(),          <span class="co"># Black and white</span>
-                  p1 +<span class="st"> </span><span class="kw">theme_minimal</span>(),   
-                  p1 +<span class="st"> </span><span class="kw">theme_dark</span>(),        
-                  p1 +<span class="st"> </span><span class="kw">theme_light</span>(),
-                  <span class="dt">cols=</span><span class="dv">2</span> )                         <span class="co"># two columns of graphs   </span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-189-1.png" width="672" /></p>
-<p>There are more themes in the package <code>ggthemes</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggthemes)
-Rmisc::<span class="kw">multiplot</span>( p1 +<span class="st"> </span><span class="kw">theme_stata</span>(),          <span class="co"># Black and white</span>
-                  p1 +<span class="st"> </span><span class="kw">theme_economist</span>(),   
-                  p1 +<span class="st"> </span><span class="kw">theme_fivethirtyeight</span>(),        
-                  p1 +<span class="st"> </span><span class="kw">theme_excel</span>(),
-                  <span class="dt">cols=</span><span class="dv">2</span> )                         <span class="co"># two columns of graphs     </span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
-<p>Almost everything you want to modify can be modified within the theme and you should check out the <code>ggplot2</code> documentation for more information and examples of how to modify different elements. [<a href="http://docs.ggplot2.org/current/theme.html" class="uri">http://docs.ggplot2.org/current/theme.html</a>]</p>
-</div>
-<div id="exercises-9" class="section level2">
-<h2><span class="header-section-number">10.5</span> Exercises</h2>
-<ol style="list-style-type: decimal">
-<li>We’ll next make some density plots that relate several factors towards the birthweight of a child.
-<ol style="list-style-type: lower-alpha">
-<li>Load the <code>MASS</code> library, which includes the dataset <code>birthwt</code> which contains information about 189 babies and their mothers.</li>
-<li><p>Add better labels to the <code>race</code> and <code>smoke</code> variables using the following:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)
+<span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(dplyr)
-birthwt &lt;-<span class="st"> </span>birthwt %&gt;%<span class="st"> </span><span class="kw">mutate</span>(
-  <span class="dt">race  =</span> <span class="kw">factor</span>(race,  <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;White&#39;</span>,<span class="st">&#39;Black&#39;</span>,<span class="st">&#39;Other&#39;</span>)),
-  <span class="dt">smoke =</span> <span class="kw">factor</span>(smoke, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;No Smoke&#39;</span>, <span class="st">&#39;Smoke&#39;</span>)))</code></pre></div></li>
-<li>Graph a histogram of the birthweights <code>bwt</code> using <code>ggplot(birthwt, aes(x=bwt)) + geom_histogram()</code>.</li>
-<li>Make separate graphs that denote whether a mother smoked during pregnancy using the <code>facet_grid()</code> command.</li>
-<li>Perhaps race matters in relation to smoking. Make our grid of graphs vary with smoking status changing vertically, and race changing horizontally (that is the formula in <code>facet_grid()</code> should have smoking be the y variable and race as the x).</li>
-<li>Remove <code>race</code> from the facet grid, (so go back to the graph you had in part d). I’d like to next add an estimated density line to the graphs, but to do that, I need to first change the y-axis to be density (instead of counts), which we do by using <code>aes(y=..density..)</code> in the <code>ggplot()</code> aesthetics command.</li>
-<li>Next we can add the estimated smooth density using the <code>geom_density()</code> command.</li>
-<li>To really make this look nice, lets change the fill color of the histograms to be something less dark, lets use <code>fill='cornsilk'</code> and <code>color='grey60'</code>. To play with different colors that have names, check out the following: [<a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf" class="uri">http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf</a>].</li>
-<li><p>Change the order in which the histogram and the density line are added to the plot. Does it matter and which do you prefer?</p></li>
-</ol></li>
-<li>Load the dataset <code>ChickWeight</code> and remind yourself what the data was using ?ChickWeight. Using <code>facet_wrap()</code>, produce a scatter plot of weight vs age for each chick. Use color to distinguish the four different <code>Diet</code> treatments.</li>
-</ol>
 
+<span class="kw">library</span>(faraway)   <span class="co"># some examples</span>
+<span class="kw">library</span>(boot)
+<span class="kw">library</span>(caret)
+<span class="kw">library</span>(glmnet)</code></pre></div>
+<p>Eventually if you have large enough data sets, an R user eventually writes code that is slow to execute and needs to be sped up. This chapter tries to lay out common problems and bad habits and shows how to correct them. However, the correctness and maintainability of code should take precendence over speed. Too often, misguided attempts to obtain efficient code results in an unmaintainable mess that is no faster that the initial code.</p>
+<p>Hadley Wickham has a book aimed at advanced R user that describes many of the finer details about R. One section in the book describes his process for building fast, maintainable software projects and if you have the time, I highly suggest reading the on-line version, <a href="http://adv-r.had.co.nz/Performance.html">Advanced R</a>.</p>
+<p>First we need some way of measuring how long our code took to run. For this we will use the package <code>microbenchmark</code>. The idea is that we want to evaluate two or three expressions that solve a problem.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1000</span>)
+<span class="kw">microbenchmark</span>(
+  <span class="kw">sqrt</span>(x),         <span class="co"># First expression to compare</span>
+  x^(<span class="fl">0.5</span>)          <span class="co"># second expression to compare</span>
+) %&gt;%<span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>## Unit: microseconds
+##     expr   min    lq  mean median    uq   max neval cld
+##  sqrt(x)  2.57  2.63  2.84   2.65  2.74   9.8   100  a 
+##  x^(0.5) 30.01 30.13 31.04  30.17 30.24 109.5   100   b</code></pre>
+<p>What <code>microbenchmark</code> does is run the two expressions a number of times and then produces the 5-number summary of those times. By running it multiple times, we account for the randomness associated with a operating system that is also running at the same time.</p>
+<div id="vectorizing-your-code" class="section level2">
+<h2><span class="header-section-number">15.1</span> Vectorizing your code</h2>
+<p>Often we need to perform some simple action repeatedly. It is natural to write a <code>for</code> loop to do the action and we wish to speed the up. In this first case, we will consider having to do the action millions of times and each chunk of computation within the <code>for</code> takes very little time.</p>
+<p>Consider frame of 4 columns, and for each of <span class="math inline">\(n\)</span> rows, we wish to know which column has the largest value.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">make.data &lt;-<span class="st"> </span>function(n){
+  data &lt;-<span class="st"> </span><span class="kw">cbind</span>(
+    <span class="kw">rnorm</span>(n, <span class="dt">mean=</span><span class="dv">5</span>, <span class="dt">sd=</span><span class="dv">2</span>),
+    <span class="kw">rpois</span>(n, <span class="dt">lambda =</span> <span class="dv">5</span>),
+    <span class="kw">rgamma</span>(n, <span class="dt">shape =</span> <span class="dv">2</span>, <span class="dt">scale =</span> <span class="dv">3</span>),
+    <span class="kw">rexp</span>(n, <span class="dt">rate =</span> <span class="dv">1</span>/<span class="dv">5</span>))
+  data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(data)
+  <span class="kw">return</span>(data)
+}
+
+data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class="dv">100</span>)</code></pre></div>
+<p>The way that you might first think about solving this problem is to write a for loop and, for each row, figure it out.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f1 &lt;-<span class="st"> </span>function( input ){
+  output &lt;-<span class="st"> </span><span class="ot">NULL</span>
+  for( i in <span class="dv">1</span>:<span class="kw">nrow</span>(input) ){
+    output[i] &lt;-<span class="st"> </span><span class="kw">which.max</span>( input[i,] )
+  }
+  <span class="kw">return</span>(output)
+}</code></pre></div>
+<p>We might consider that there are two ways to return a value from a function (using the <code>return</code> function and just printing it). In fact, I’ve always heard that using the <code>return</code> statment is a touch slower.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f2.noReturn &lt;-<span class="st"> </span>function( input ){
+  output &lt;-<span class="st"> </span><span class="ot">NULL</span>
+  for( i in <span class="dv">1</span>:<span class="kw">nrow</span>(input) ){
+    output[i] &lt;-<span class="st"> </span><span class="kw">which.max</span>( input[i,] )
+  }
+  output
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class="dv">100</span>)
+<span class="kw">microbenchmark</span>(
+  <span class="kw">f1</span>(data),
+  <span class="kw">f2.noReturn</span>(data)
+) %&gt;%<span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>## Unit: milliseconds
+##               expr  min   lq mean median   uq    max neval cld
+##           f1(data) 3.75 4.00 5.94   4.14 4.63 153.71   100   a
+##  f2.noReturn(data) 3.71 3.98 4.41   4.13 4.43   8.04   100   a</code></pre>
+<p>In fact, it looks like it is a touch slower, but not massively compared to the run-to-run variability. I prefer to use the <code>return</code> statement for readability, but if we agree have the last line of code in the function be whatever needs to be returned, readability isn’t strongly effected.</p>
+<p>We next consider whether it would be faster to allocate the output vector once we figure out the number of rows needed, or just build it on the fly?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f3.AllocOutput &lt;-<span class="st"> </span>function( input ){
+  n &lt;-<span class="st"> </span><span class="kw">nrow</span>(input)
+  output &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NULL</span>, n)
+  for( i in <span class="dv">1</span>:<span class="kw">nrow</span>(input) ){
+    output[i] &lt;-<span class="st"> </span><span class="kw">which.max</span>( input[i,] )
+  }
+  <span class="kw">return</span>(output)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">microbenchmark</span>(
+  <span class="kw">f1</span>(data),
+  <span class="kw">f3.AllocOutput</span>(data)
+) %&gt;%<span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>## Unit: milliseconds
+##                  expr  min   lq mean median   uq  max neval cld
+##              f1(data) 3.71 3.93 4.88   4.44 5.63 8.44   100   a
+##  f3.AllocOutput(data) 3.69 3.89 4.99   4.38 5.88 9.48   100   a</code></pre>
+<p>If anything, allocating the size of output first was slower. So given this, we shouldn’t feel to bad being lazy and using <code>output &lt;- NULL</code> to initiallize things.</p>
+</div>
+<div id="vectorizing" class="section level2">
+<h2><span class="header-section-number">15.2</span> Vectorizing</h2>
+<p>In general, <code>for</code> loops in R are very slow and we want to avoid them as much as possible. The <code>apply</code> family of functions can be quite helpful for applying a function to each row or column of a matrix or data.frame or to each element of a list.</p>
+<p>To test this, instead of a <code>for</code> loop, we will use <code>apply</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f4.apply &lt;-<span class="st"> </span>function( input ){
+  output &lt;-<span class="st"> </span><span class="kw">apply</span>(input, <span class="dv">1</span>, which.max)
+  <span class="kw">return</span>(output)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">microbenchmark</span>(
+  <span class="kw">f1</span>(data),
+  <span class="kw">f4.apply</span>(data)
+) %&gt;%<span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>## Unit: microseconds
+##            expr  min   lq mean median   uq  max neval cld
+##        f1(data) 3750 3981 4516   4139 4743 7563   100   b
+##  f4.apply(data)  297  322  370    349  380  808   100  a</code></pre>
+<p>This is the type of speed up that matters. We have a 10-fold speed up in execution time and particularly the maximum time has dropped impressively.</p>
+<p>Unfortunately, I have always found the <code>apply</code> functions a little cumbersome and I prefer to use <code>dplyr</code> instead strictly for readability.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f5.dplyr &lt;-<span class="st"> </span>function( input ){
+  output &lt;-<span class="st"> </span>input %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>( <span class="dt">max.col=</span><span class="kw">which.max</span>( <span class="kw">c</span>(X1, X2, X3, X4) ) ) 
+  <span class="kw">return</span>(output$max.col)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">microbenchmark</span>(
+  <span class="kw">f4.apply</span>(data),
+  <span class="kw">f5.dplyr</span>(data)
+) %&gt;%<span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>## Unit: microseconds
+##            expr  min   lq mean median   uq  max neval cld
+##  f4.apply(data)  331  362  399    383  420  613   100  a 
+##  f5.dplyr(data) 2201 2303 2698   2442 2704 9641   100   b</code></pre>
+<p>Unfortunately <code>dplyr</code> is a lot slower than <code>apply</code> in this case. I wonder if the dynamics would change with a larger <code>n</code>?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class="dv">10000</span>)
+<span class="kw">microbenchmark</span>(
+  <span class="kw">f4.apply</span>(data),
+  <span class="kw">f5.dplyr</span>(data)
+) %&gt;%<span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>## Unit: milliseconds
+##            expr   min    lq  mean median   uq   max neval cld
+##  f4.apply(data) 25.31 33.32 45.55  40.01 52.4 241.7   100   b
+##  f5.dplyr(data)  2.19  2.87  3.82   3.21  4.0  18.6   100  a</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class="dv">100000</span>)
+<span class="kw">microbenchmark</span>(
+  <span class="kw">f4.apply</span>(data),
+  <span class="kw">f5.dplyr</span>(data)
+) %&gt;%<span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>## Unit: milliseconds
+##            expr    min     lq   mean median     uq max neval cld
+##  f4.apply(data) 306.30 395.40 519.48 508.06 613.94 890   100   b
+##  f5.dplyr(data)   3.41   4.31   7.83   4.81   5.74 213   100  a</code></pre>
+<p>What just happened? The package <code>dplyr</code> is designed to work well for large data sets, and utilizes a modified structure, called a <code>tibble</code>, which provides massive benefits for large tables, but at the small scale, the overhead of converting the <code>data.frame</code> to a <code>tibble</code> overwhelms any speed up. But because the small sample case is already fast enough to not be noticable, we don’t really care about the small <code>n</code> case.</p>
+</div>
+<div id="parallel-processing" class="section level2">
+<h2><span class="header-section-number">15.3</span> Parallel Processing</h2>
+<p>Most modern computers have multiple computing cores, and can run muliple processes at the same time. Sometimes this means that you can run multiple programs and switch back and forth easily without lag, but we are now interested in using as many cores as possible to get our statistical calculations completed by using muliple processing cores at the same time. This is referred to as running the process “in parallel” and there are many tasks in modern statistical computing that are “embarrasingly easily parallelized”. In particular bootstrapping and cross validation techniques are extremely easy to implement in a parallel fashion.</p>
+<p>However, running commands in parallel incurs some overhead cost in set up computation, as well as all the message passing from core to core. For example, to have 5 cores all perform an analysis on a set of data, all 5 cores must have access to the data, and not overwrite any of it. So parallelizing code only makes sense if the individual steps that we pass to each core is of sufficient size that the overhead incurred is substantially less than the time to run the job.</p>
+<p>We should think of executing code in parallel as having three major steps: 1. Tell R that there are multiple computing cores available and to set up a useable cluster to which we can pass jobs to. 2. Decide what ‘computational chunk’ should be sent to each core and distribute all necessary data, libraries, etc to each core. 3. Combine the results of each core back into a unified object.</p>
+</div>
+<div id="parallelizing-for-loops" class="section level2">
+<h2><span class="header-section-number">15.4</span> Parallelizing for loops</h2>
+<p>There are a number of packages that allow you to tell R how many cores you have access to. One of the easiest ways to parallelize a for loop is using a package called <code>foreach</code>. The registration of multiple cores is actually pretty easy.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">doMC::<span class="kw">registerDoMC</span>(<span class="dt">cores =</span> <span class="dv">2</span>)  <span class="co"># my laptop only has two cores.</span></code></pre></div>
+<p>We will consider an example that is common in modern statistics. We will examine parallel computing utilizing a bootstrap example where we create bootstrap samples for calculating confidence intervals for regression coefficients.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(trees, <span class="kw">aes</span>(<span class="dt">x=</span>Girth, <span class="dt">y=</span>Volume)) +<span class="st"> </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&#39;lm&#39;</span>)</code></pre></div>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-280-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>( Volume ~<span class="st"> </span>Girth, <span class="dt">data=</span>trees)</code></pre></div>
+<p>This is how we would do this previously.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># f is a formula</span>
+<span class="co"># df is the input data frame</span>
+<span class="co"># M is the number of bootstrap iterations</span>
+boot.for &lt;-<span class="st"> </span>function( f, df, <span class="dt">M=</span><span class="dv">999</span>){
+  output &lt;-<span class="st"> </span><span class="kw">list</span>()
+  for( i in <span class="dv">1</span>:<span class="dv">100</span> ){
+    <span class="co"># Do stuff</span>
+    model.star &lt;-<span class="st"> </span><span class="kw">lm</span>( f, <span class="dt">data=</span>df %&gt;%<span class="st"> </span><span class="kw">sample_frac</span>(<span class="dv">1</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>) )
+    output[[i]] &lt;-<span class="st"> </span>model.star$coefficients 
+  }
+
+  <span class="co"># use rbind to put the list of results together into a data.frame</span>
+  output &lt;-<span class="st"> </span><span class="kw">sapply</span>(output, rbind) %&gt;%<span class="st"> </span><span class="kw">t</span>() %&gt;%<span class="st"> </span><span class="kw">data.frame</span>()
+  <span class="kw">return</span>(output)
+}</code></pre></div>
+<p>We will first ask about how to do the same thing using the function <code>foreach</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># f is a formula</span>
+<span class="co"># df is the input data frame</span>
+<span class="co"># M is the number of bootstrap iterations</span>
+boot.foreach &lt;-<span class="st"> </span>function(f, df, <span class="dt">M=</span><span class="dv">999</span>){
+  output &lt;-<span class="st"> </span><span class="kw">foreach</span>( <span class="dt">i=</span><span class="dv">1</span>:<span class="dv">100</span> ) %dopar%<span class="st"> </span>{
+    <span class="co"># Do stuff</span>
+    model.star &lt;-<span class="st"> </span><span class="kw">lm</span>( f, <span class="dt">data=</span>df %&gt;%<span class="st"> </span><span class="kw">sample_frac</span>(<span class="dv">1</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>) )
+    model.star$coefficients 
+  }
+  
+  <span class="co"># use rbind to put the list of results together into a data.frame</span>
+  output &lt;-<span class="st"> </span><span class="kw">sapply</span>(output, rbind) %&gt;%<span class="st"> </span><span class="kw">t</span>() %&gt;%<span class="st"> </span><span class="kw">data.frame</span>()
+  <span class="kw">return</span>(output)
+}</code></pre></div>
+<p>Not much has changed in our code. Lets see which is faster.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">microbenchmark</span>(
+  <span class="kw">boot.for</span>( Volume~Girth, trees ),
+  <span class="kw">boot.foreach</span>( Volume~Girth, trees )
+) %&gt;%<span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>## Unit: milliseconds
+##                                 expr min  lq mean median  uq max neval cld
+##      boot.for(Volume ~ Girth, trees) 257 288  325    316 348 549   100  a 
+##  boot.foreach(Volume ~ Girth, trees) 351 373  418    391 433 736   100   b</code></pre>
+<p>In this case, the overhead associated with splitting the job across two cores, copying the data over, and then combining the results back together was more than we saved by using both cores. If the nugget of computation within each pass of the <code>for</code> loop was larger, then it would pay to use both cores.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># massiveTrees has 31000 observations</span>
+massiveTrees &lt;-<span class="st"> </span><span class="ot">NULL</span>
+for( i in <span class="dv">1</span>:<span class="dv">1000</span> ){
+  massiveTrees &lt;-<span class="st"> </span><span class="kw">rbind</span>(massiveTrees, trees)
+}
+<span class="kw">microbenchmark</span>(
+  <span class="kw">boot.for</span>( Volume~Girth, massiveTrees )  ,
+  <span class="kw">boot.foreach</span>( Volume~Girth, massiveTrees )
+) %&gt;%<span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>## Unit: seconds
+##                                        expr  min   lq mean median   uq
+##      boot.for(Volume ~ Girth, massiveTrees) 3.44 3.73 4.11   4.04 4.49
+##  boot.foreach(Volume ~ Girth, massiveTrees) 1.93 2.03 2.23   2.19 2.36
+##   max neval cld
+##  5.02   100   b
+##  3.11   100  a</code></pre>
+<p>Because we often generate a bunch of results that we want to see as a data.frame, the <code>foreach</code> function includes and option to do it for us.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">output &lt;-<span class="st"> </span><span class="kw">foreach</span>( <span class="dt">i=</span><span class="dv">1</span>:<span class="dv">100</span>, <span class="dt">.combine=</span>data.frame ) %dopar%<span class="st"> </span>{
+  <span class="co"># Do stuff</span>
+  model.star &lt;-<span class="st"> </span><span class="kw">lm</span>( Volume ~<span class="st"> </span>Girth, <span class="dt">data=</span> trees %&gt;%<span class="st"> </span><span class="kw">sample_frac</span>(<span class="dv">1</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>) )
+  model$coefficients 
+}</code></pre></div>
+<p>It is important to recognize that the data.frame <code>trees</code> was utilized inside the <code>foreach</code> loop. So when we called the <code>foreach</code> loop and distributed the workload across the cores, it was smart enough to distribute the data to each core. However, if there were functions that we utilized inside the foor loop that came from a packege, we need to tell each core to load the function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">output &lt;-<span class="st"> </span><span class="kw">foreach</span>( <span class="dt">i=</span><span class="dv">1</span>:<span class="dv">1000</span>, <span class="dt">.combine=</span>data.frame, <span class="dt">.packages=</span><span class="st">&#39;dplyr&#39;</span> ) %dopar%<span class="st"> </span>{
+  <span class="co"># Do stuff</span>
+  model.star &lt;-<span class="st"> </span><span class="kw">lm</span>( Volume ~<span class="st"> </span>Girth, <span class="dt">data=</span> trees %&gt;%<span class="st"> </span><span class="kw">sample_frac</span>(<span class="dv">1</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>) )
+  model.star$coefficients 
+}</code></pre></div>
+</div>
+<div id="parallel-aware-functions" class="section level2">
+<h2><span class="header-section-number">15.5</span> Parallel Aware Functions</h2>
+<p>There are many packages that address problems that are “embarassingly easily parallelized” and they will happily work with multiple cores. Methods that rely on resampling certainly fit into this category.</p>
+<div id="bootboot" class="section level3">
+<h3><span class="header-section-number">15.5.1</span> <code>boot::boot</code></h3>
+<p>Bootstrapping relys on resampling the dataset and calculating test statistics from each resample. In R, the most common way to do this is using the package <code>boot</code> and we just need to tell the <code>boot</code> function, to use the multiple cores available. (Note, we have to have registered the cores first!)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>( Volume ~<span class="st"> </span>Girth, <span class="dt">data=</span>trees)
+my.fun &lt;-<span class="st"> </span>function(df, index){
+  model.star &lt;-<span class="st"> </span><span class="kw">lm</span>( Volume ~<span class="st"> </span>Girth, <span class="dt">data=</span> trees[index,] )
+  model.star$coefficients 
+}
+<span class="kw">microbenchmark</span>(
+  <span class="dt">serial   =</span> boot::<span class="kw">boot</span>( trees, my.fun, <span class="dt">R=</span><span class="dv">1000</span> ),
+  <span class="dt">parallel =</span> boot::<span class="kw">boot</span>( trees, my.fun, <span class="dt">R=</span><span class="dv">1000</span>, 
+                         <span class="dt">parallel=</span><span class="st">&#39;multicore&#39;</span>, <span class="dt">ncpus=</span><span class="dv">2</span> ) 
+) %&gt;%<span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>## Unit: milliseconds
+##      expr min  lq mean median  uq  max neval cld
+##    serial 714 758  834    817 874 1292   100   b
+##  parallel 635 658  695    672 708 1055   100  a</code></pre>
+<p>In this case, we had a bit of a spead up, but not a factor of 2. This is due to the overhead of splitting the job across both cores.</p>
+</div>
+<div id="carettrain" class="section level3">
+<h3><span class="header-section-number">15.5.2</span> <code>caret::train</code></h3>
+<p>The statistical learning package <code>caret</code> also handles all the work to do cross validation in a parallel computing environment. The functions in <code>caret</code> have an option <code>allowParallel</code> which by default is TRUE, which controls if we should use all the cores. Assuming we have already registered the number of cores, then by default <code>caret</code> will use them all.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(faraway)
+<span class="kw">library</span>(caret)
+ctrl.serial &lt;-<span class="st"> </span><span class="kw">trainControl</span>( <span class="dt">method=</span><span class="st">&#39;repeatedcv&#39;</span>, <span class="dt">number=</span><span class="dv">5</span>, <span class="dt">repeats=</span><span class="dv">4</span>,  
+                      <span class="dt">preProcOptions =</span> <span class="kw">c</span>(<span class="st">&#39;center&#39;</span>,<span class="st">&#39;scale&#39;</span>),
+                      <span class="dt">allowParallel =</span> <span class="ot">FALSE</span>)
+ctrl.parallel &lt;-<span class="st"> </span><span class="kw">trainControl</span>( <span class="dt">method=</span><span class="st">&#39;repeatedcv&#39;</span>, <span class="dt">number=</span><span class="dv">5</span>, <span class="dt">repeats=</span><span class="dv">4</span>,  
+                      <span class="dt">preProcOptions =</span> <span class="kw">c</span>(<span class="st">&#39;center&#39;</span>,<span class="st">&#39;scale&#39;</span>),
+                      <span class="dt">allowParallel =</span> <span class="ot">TRUE</span>)
+grid &lt;-<span class="st"> </span><span class="kw">data.frame</span>( 
+  <span class="dt">alpha  =</span> <span class="dv">1</span>,  <span class="co"># 1 =&gt; Lasso Regression</span>
+  <span class="dt">lambda =</span> <span class="kw">exp</span>(<span class="kw">seq</span>(-<span class="dv">6</span>, <span class="dv">1</span>, <span class="dt">length=</span><span class="dv">50</span>)))
+
+<span class="kw">microbenchmark</span>(
+  model &lt;-<span class="st"> </span><span class="kw">train</span>( lpsa ~<span class="st"> </span>., <span class="dt">data=</span>prostate, <span class="dt">method=</span><span class="st">&#39;glmnet&#39;</span>,
+                  <span class="dt">trControl=</span>ctrl.serial, <span class="dt">tuneGrid=</span>grid, 
+                  <span class="dt">lambda =</span> grid$lambda ),
+  model &lt;-<span class="st"> </span><span class="kw">train</span>( lpsa ~<span class="st"> </span>., <span class="dt">data=</span>prostate, <span class="dt">method=</span><span class="st">&#39;glmnet&#39;</span>,
+                  <span class="dt">trControl=</span>ctrl.parallel, <span class="dt">tuneGrid=</span>grid, 
+                  <span class="dt">lambda =</span> grid$lambda )
+) %&gt;%<span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>## Unit: seconds
+##                                                                                                                                 expr
+##    model &lt;- train(lpsa ~ ., data = prostate, method = &quot;glmnet&quot;,      trControl = ctrl.serial, tuneGrid = grid, lambda = grid$lambda)
+##  model &lt;- train(lpsa ~ ., data = prostate, method = &quot;glmnet&quot;,      trControl = ctrl.parallel, tuneGrid = grid, lambda = grid$lambda)
+##   min   lq mean median   uq  max neval cld
+##  1.10 1.16 1.22   1.21 1.26 1.54   100   a
+##  1.11 1.17 1.23   1.20 1.26 1.81   100   a</code></pre>
+<p>Again, we saw only moderate gains by using both cores, however it didn’t really cost us anything. Because the <code>caret</code> package by default allows parallel processing, it doesn’t hurt to just load the <code>doMC</code> package and register the number of cores. Even in just the two core case, it is a good habit to get into so that when you port your code to a huge computer with many cores, the only thing to change is how many cores you have access to.</p>
+
+</div>
 </div>
 </div>
             </section>
@@ -435,8 +559,8 @@ birthwt &lt;-<span class="st"> </span>birthwt %&gt;%<span class="st"> </span><sp
           </div>
         </div>
       </div>
-<a href="9-graphing-using-ggplot2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="11-flow-control.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="14-dates-and-times.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="16-rmarkdown-tricks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -465,7 +589,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://raw.githubusercontent.com/dereksonderegger/570L/master/11_ggplot2_lab2.Rmd",
+"link": "https://raw.githubusercontent.com/dereksonderegger/570L/master/16_SpeedingUpR.Rmd",
 "text": "Edit"
 },
 "download": [["A_Sufficient_Introduction_to_R.pdf", "PDF"], ["A_Sufficient_Introduction_to_R.epub", "EPUB"]],

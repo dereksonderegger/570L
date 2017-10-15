@@ -232,6 +232,37 @@ grades %>% mutate(
                        c( 'F','D','C','B','A')) )  # and makes a factor
 ```
 
+We might look at this data frame and want to do some rounding. For example, I might want to take each numeric column and round it. In this case, the functions `mutate_at()` and `mutate_if()` allow us to apply a function to a particular column and save the output.
+
+```{r}
+# for each column, if it is numeric, apply the round() function to the column
+# while using any additional arguments.  So round two digits.
+grades %>%
+  mutate_if( is.numeric, round, digits=2 )
+```
+
+The `mutate_at()` function works similarly, but we just have to specify with columns.
+
+```{r}
+# round columns 2 through 5
+grades %>%
+  mutate_at( 2:5, round, digits=2 )
+
+# round columns that start with "ave"
+grades %>%
+  mutate_at( vars(starts_with("ave")), round )
+
+# These do not work because they doesn't evaluate to column indices.
+# I can only hope that at some point, this syntax works
+# 
+# grades %>%
+#   mutate_at( starts_with("ave"), round )
+#   
+# grades %>%
+#   mutate_at( Exam1:average, round, digits=2 )
+```
+
+
 
 #### summarise()
 
@@ -254,6 +285,12 @@ grades %>%
   select( Exam1:Final ) %>%
   summarise_all( funs(mean, sd) )
 ```
+
+```{r}
+grades  %>%
+  summarise_if(is.numeric, funs(Xbar=mean, SD=sd) )
+```
+
 
 #### Miscellaneous functions
 
