@@ -47,7 +47,7 @@ microbenchmark(
 What `microbenchmark` does is run the two expressions a number of times and then produces the 5-number summary of those times. By running it multiple times, we account for the randomness associated with a operating system that is also running at the same time.
 
 
-## Vectorizing your code
+## Faster for loops?
 Often we need to perform some simple action repeatedly. It is natural to write a `for` loop to do the action and we wish to speed the up. In this first case, we will consider having to do the action millions of times and each chunk of computation within the `for` takes very little time.
 
 Consider frame of 4 columns, and for each of $n$ rows, we wish to know which column has the largest value.
@@ -122,7 +122,7 @@ microbenchmark(
 ```
 If anything, allocating the size of output first was slower. So given this, we shouldn't feel to bad being lazy and using `output <- NULL` to initiallize things.
 
-## Vectorizing
+## Vectorizing loops
 In general, `for` loops in R are very slow and we want to avoid them as much as possible. The `apply` family of functions can be quite helpful for applying a function to each row or column of a matrix or data.frame or to each element of a list.
 
 To test this, instead of a `for` loop, we will use `apply`.

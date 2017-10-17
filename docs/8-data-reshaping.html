@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Sufficient Introduction to R</title>
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-15">
+<meta name="date" content="2017-10-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -236,8 +236,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="14.4" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#exercises-13"><i class="fa fa-check"></i><b>14.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html"><i class="fa fa-check"></i><b>15</b> Speeding up R</a><ul>
-<li class="chapter" data-level="15.1" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#vectorizing-your-code"><i class="fa fa-check"></i><b>15.1</b> Vectorizing your code</a></li>
-<li class="chapter" data-level="15.2" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#vectorizing"><i class="fa fa-check"></i><b>15.2</b> Vectorizing</a></li>
+<li class="chapter" data-level="15.1" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#faster-for-loops"><i class="fa fa-check"></i><b>15.1</b> Faster for loops?</a></li>
+<li class="chapter" data-level="15.2" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#vectorizing-loops"><i class="fa fa-check"></i><b>15.2</b> Vectorizing loops</a></li>
 <li class="chapter" data-level="15.3" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#parallel-processing"><i class="fa fa-check"></i><b>15.3</b> Parallel Processing</a></li>
 <li class="chapter" data-level="15.4" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#parallelizing-for-loops"><i class="fa fa-check"></i><b>15.4</b> Parallelizing for loops</a></li>
 <li class="chapter" data-level="15.5" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#parallel-aware-functions"><i class="fa fa-check"></i><b>15.5</b> Parallel Aware Functions</a><ul>
@@ -283,15 +283,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">8.1</span> <code>tidyr</code></h2>
 <p>There is a common issue with obtaining data with many columns that you wish were organized as rows. For example, I might have data in a grade book that has several homework scores and I’d like to produce a nice graph that has assignment number on the x-axis and score on the y-axis. Unfortunately this is incredibly hard to do when the data is arranged in the following way:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grade.book &lt;-<span class="st"> </span><span class="kw">rbind</span>(
-  <span class="kw">data.frame</span>(<span class="dt">name=</span><span class="st">&#39;Alison&#39;</span>,  <span class="dt">HW.1=</span><span class="dv">8</span>, <span class="dt">HW.2=</span><span class="dv">5</span>, <span class="dt">HW.3=</span><span class="dv">8</span>),
-  <span class="kw">data.frame</span>(<span class="dt">name=</span><span class="st">&#39;Brandon&#39;</span>, <span class="dt">HW.1=</span><span class="dv">5</span>, <span class="dt">HW.2=</span><span class="dv">3</span>, <span class="dt">HW.3=</span><span class="dv">6</span>),
-  <span class="kw">data.frame</span>(<span class="dt">name=</span><span class="st">&#39;Charles&#39;</span>, <span class="dt">HW.1=</span><span class="dv">9</span>, <span class="dt">HW.2=</span><span class="dv">7</span>, <span class="dt">HW.3=</span><span class="dv">9</span>))
+  <span class="kw">data.frame</span>(<span class="dt">name=</span><span class="st">&#39;Alison&#39;</span>,  <span class="dt">HW.1=</span><span class="dv">8</span>, <span class="dt">HW.2=</span><span class="dv">5</span>, <span class="dt">HW.3=</span><span class="dv">8</span>, <span class="dt">HW.4=</span><span class="dv">4</span>),
+  <span class="kw">data.frame</span>(<span class="dt">name=</span><span class="st">&#39;Brandon&#39;</span>, <span class="dt">HW.1=</span><span class="dv">5</span>, <span class="dt">HW.2=</span><span class="dv">3</span>, <span class="dt">HW.3=</span><span class="dv">6</span>, <span class="dt">HW.4=</span><span class="dv">9</span>),
+  <span class="kw">data.frame</span>(<span class="dt">name=</span><span class="st">&#39;Charles&#39;</span>, <span class="dt">HW.1=</span><span class="dv">9</span>, <span class="dt">HW.2=</span><span class="dv">7</span>, <span class="dt">HW.3=</span><span class="dv">9</span>, <span class="dt">HW.4=</span><span class="dv">10</span>))
 grade.book</code></pre></div>
-<pre><code>##      name HW.1 HW.2 HW.3
-## 1  Alison    8    5    8
-## 2 Brandon    5    3    6
-## 3 Charles    9    7    9</code></pre>
-<p>What we want to do is turn this data frame from a <em>wide</em> data frame into a <em>long</em> data frame. In MS Excel this is called pivoting. Essentially I’d like to create a data frame with three columns: <code>name</code>, <code>assignment</code>, and <code>score</code>. That is to say that each homework datum really has three pieces of information: who it came from, which homework it was, and what the score was. It doesn’t conceptually matter if I store it as 3 columns or 3 rows so long as there is a way to identify how a student scored on a particular homework. So we want to reshape the HW1 to HW3 columns into two columns (assignment and score).</p>
+<pre><code>##      name HW.1 HW.2 HW.3 HW.4
+## 1  Alison    8    5    8    4
+## 2 Brandon    5    3    6    9
+## 3 Charles    9    7    9   10</code></pre>
+<p>What we want to do is turn this data frame from a <em>wide</em> data frame into a <em>long</em> data frame. In MS Excel this is called pivoting. Essentially I’d like to create a data frame with three columns: <code>name</code>, <code>assignment</code>, and <code>score</code>. That is to say that each homework datum really has three pieces of information: who it came from, which homework it was, and what the score was. It doesn’t conceptually matter if I store it as 3 rows of 4 columns or 12 rows so long as there is a way to identify how a student scored on a particular homework. So we want to reshape the HW1 to HW4 columns into two columns (assignment and score).</p>
 <p>This package was built by the sample people that created dplyr and ggplot2 and there is a nice introduction at: [<a href="http://blog.rstudio.org/2014/07/22/introducing-tidyr/" class="uri">http://blog.rstudio.org/2014/07/22/introducing-tidyr/</a>]</p>
 <div id="verbs-1" class="section level3">
 <h3><span class="header-section-number">8.1.1</span> Verbs</h3>
@@ -304,26 +304,29 @@ grade.book</code></pre></div>
 tidy.scores &lt;-<span class="st"> </span>grade.book %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">gather</span>( <span class="dt">key=</span>Assessement,  <span class="co"># What should I call the key column</span>
           <span class="dt">value=</span>Score,      <span class="co"># What should I call the values column</span>
-          HW<span class="fl">.1</span>:HW<span class="fl">.3</span>         <span class="co"># which columns to apply this to</span>
+          HW<span class="fl">.1</span>:HW<span class="fl">.4</span>         <span class="co"># which columns to apply this to</span>
           )
 tidy.scores</code></pre></div>
-<pre><code>##      name Assessement Score
-## 1  Alison        HW.1     8
-## 2 Brandon        HW.1     5
-## 3 Charles        HW.1     9
-## 4  Alison        HW.2     5
-## 5 Brandon        HW.2     3
-## 6 Charles        HW.2     7
-## 7  Alison        HW.3     8
-## 8 Brandon        HW.3     6
-## 9 Charles        HW.3     9</code></pre>
+<pre><code>##       name Assessement Score
+## 1   Alison        HW.1     8
+## 2  Brandon        HW.1     5
+## 3  Charles        HW.1     9
+## 4   Alison        HW.2     5
+## 5  Brandon        HW.2     3
+## 6  Charles        HW.2     7
+## 7   Alison        HW.3     8
+## 8  Brandon        HW.3     6
+## 9  Charles        HW.3     9
+## 10  Alison        HW.4     4
+## 11 Brandon        HW.4     9
+## 12 Charles        HW.4    10</code></pre>
 <p>To spread the key:value pairs out into a matrix, we use the <code>spread()</code> command.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Turn the Assessment/Score pair of columns into one column per factor level of Assessment</span>
 tidy.scores %&gt;%<span class="st"> </span><span class="kw">spread</span>( <span class="dt">key=</span>Assessement, <span class="dt">value=</span>Score )</code></pre></div>
-<pre><code>##      name HW.1 HW.2 HW.3
-## 1  Alison    8    5    8
-## 2 Brandon    5    3    6
-## 3 Charles    9    7    9</code></pre>
+<pre><code>##      name HW.1 HW.2 HW.3 HW.4
+## 1  Alison    8    5    8    4
+## 2 Brandon    5    3    6    9
+## 3 Charles    9    7    9   10</code></pre>
 <p>One way to keep straight which is the <code>key</code> column is that the key is the category, while <code>value</code> is the numerical value or response.</p>
 </div>
 </div>
@@ -379,7 +382,7 @@ tidy.scores %&gt;%<span class="st"> </span><span class="kw">spread</span>( <span
 <h2><span class="header-section-number">8.3</span> Table Joins</h2>
 <p>Often we need to squish together two data frames but they do not have the same number of rows. Consider the case where we have a data frame of observations of fish and a separate data frame that contains information about lake (perhaps surface area, max depth, pH, etc). I want to store them as two separate tables so that when I have to record a lake level observation, I only input it <em>one</em> place. This decreases the chance that I make a copy/paste error.</p>
 <p>To illustrate the different types of table joins, we’ll consider two different tables.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># tibbles are just data.frames that print a bit nicer and don&#39;t automaticall</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># tibbles are just data.frames that print a bit nicer and don&#39;t automatically</span>
 <span class="co"># convert character columns into factors.  They behave a bit more consistently</span>
 <span class="co"># in a wide variety of situations compared to data.frames.</span>
 Fish.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
@@ -395,12 +398,12 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <pre><code>## # A tibble: 6 x 2
 ##   Lake_ID Fish.Weight
 ##     &lt;chr&gt;       &lt;dbl&gt;
-## 1       A    264.6170
-## 2       A    287.0315
-## 3       B    301.2982
-## 4       B    227.3717
-## 5       C    272.3461
-## 6       C    265.2031</code></pre>
+## 1       A    277.1944
+## 2       A    255.9143
+## 3       B    257.8466
+## 4       B    254.9844
+## 5       C    258.6194
+## 6       C    235.7187</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Lake.Data</code></pre></div>
 <pre><code>## # A tibble: 3 x 5
 ##   Lake_ID   Lake_Name    pH  area avg_depth
@@ -414,12 +417,12 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <pre><code>## # A tibble: 7 x 6
 ##   Lake_ID Fish.Weight   Lake_Name    pH  area avg_depth
 ##     &lt;chr&gt;       &lt;dbl&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-## 1       A    264.6170        &lt;NA&gt;    NA    NA        NA
-## 2       A    287.0315        &lt;NA&gt;    NA    NA        NA
-## 3       B    301.2982 Lake Elaine   6.5    40         8
-## 4       B    227.3717 Lake Elaine   6.5    40         8
-## 5       C    272.3461 Mormon Lake   6.3   210        10
-## 6       C    265.2031 Mormon Lake   6.3   210        10
+## 1       A    277.1944        &lt;NA&gt;    NA    NA        NA
+## 2       A    255.9143        &lt;NA&gt;    NA    NA        NA
+## 3       B    257.8466 Lake Elaine   6.5    40         8
+## 4       B    254.9844 Lake Elaine   6.5    40         8
+## 5       C    258.6194 Mormon Lake   6.3   210        10
+## 6       C    235.7187 Mormon Lake   6.3   210        10
 ## 7       D          NA   Lake Mary   6.1   240        38</code></pre>
 <p>Notice that because we didn’t have any fish caught in lake <code>D</code> and we don’t have any Lake information about lake <code>A</code>, when we join these two tables, we end up introducing missing observations into the resulting data frame.</p>
 <p>The other types of joins govern the behavor or these missing data.</p>
@@ -430,21 +433,21 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <pre><code>## # A tibble: 6 x 6
 ##   Lake_ID Fish.Weight   Lake_Name    pH  area avg_depth
 ##     &lt;chr&gt;       &lt;dbl&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-## 1       A    264.6170        &lt;NA&gt;    NA    NA        NA
-## 2       A    287.0315        &lt;NA&gt;    NA    NA        NA
-## 3       B    301.2982 Lake Elaine   6.5    40         8
-## 4       B    227.3717 Lake Elaine   6.5    40         8
-## 5       C    272.3461 Mormon Lake   6.3   210        10
-## 6       C    265.2031 Mormon Lake   6.3   210        10</code></pre>
+## 1       A    277.1944        &lt;NA&gt;    NA    NA        NA
+## 2       A    255.9143        &lt;NA&gt;    NA    NA        NA
+## 3       B    257.8466 Lake Elaine   6.5    40         8
+## 4       B    254.9844 Lake Elaine   6.5    40         8
+## 5       C    258.6194 Mormon Lake   6.3   210        10
+## 6       C    235.7187 Mormon Lake   6.3   210        10</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inner_join</span>(Fish.Data, Lake.Data)</code></pre></div>
 <pre><code>## Joining, by = &quot;Lake_ID&quot;</code></pre>
 <pre><code>## # A tibble: 4 x 6
 ##   Lake_ID Fish.Weight   Lake_Name    pH  area avg_depth
 ##     &lt;chr&gt;       &lt;dbl&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-## 1       B    301.2982 Lake Elaine   6.5    40         8
-## 2       B    227.3717 Lake Elaine   6.5    40         8
-## 3       C    272.3461 Mormon Lake   6.3   210        10
-## 4       C    265.2031 Mormon Lake   6.3   210        10</code></pre>
+## 1       B    257.8466 Lake Elaine   6.5    40         8
+## 2       B    254.9844 Lake Elaine   6.5    40         8
+## 3       C    258.6194 Mormon Lake   6.3   210        10
+## 4       C    235.7187 Mormon Lake   6.3   210        10</code></pre>
 <p>The above examples assumed that the column used to join the two tables was named the same in both tables. This is good practice to try to do, but sometimes you have to work with data where that isn’t the case. In that situation you can use the <code>by=c(&quot;ColName.A&quot;=&quot;ColName.B&quot;)</code> syntax where <code>ColName.A</code> represents the name of the column in the first data frame and <code>ColName.B</code> is the equivalent column in the second data frame.</p>
 </div>
 <div id="exercises-7" class="section level2">
@@ -465,7 +468,7 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <li><p>Download the dataset and correctly order the <code>Year</code> variable using the following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Survey &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;http://www.lock5stat.com/datasets/StudentSurvey.csv&#39;</span>, <span class="dt">na.strings=</span><span class="kw">c</span>(<span class="st">&#39;&#39;</span>,<span class="st">&#39; &#39;</span>)) %&gt;%
 <span class="st">   </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">factor</span>(Year, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;FirstYear&#39;</span>,<span class="st">&#39;Sophomore&#39;</span>,<span class="st">&#39;Junior&#39;</span>,<span class="st">&#39;Senior&#39;</span>)))</code></pre></div></li>
-<li>Using some combination of <code>dplyr</code> functions, produce a data set with eight rows that contains the number of responses for each gender:year combination. <em>Notice there are two females that neglected to give their Year and you should remove them first. The function <code>is.na(Year)</code> will return logical values indicating if the Year value was missing and you can flip those values using the negation operator <code>!</code>. So you might consider using <code>!is.na(Year)</code> as the argument to a filter() command. Alternatively you sort on Year and remove the first two rows using <code>slice(-2:-1)</code>. Next you’ll want to summarize each Year/Gender group using the <code>n()</code> function which gives the number of rows in a data set.</em></li>
+<li>Using some combination of <code>dplyr</code> functions, produce a data set with eight rows that contains the number of responses for each gender:year combination. <em>Notice there are two females that neglected to give their Year and you should remove them first. The function <code>is.na(Year)</code> will return logical values indicating if the Year value was missing and you can flip those values using the negation operator <code>!</code>. So you might consider using <code>!is.na(Year)</code> as the argument to a <code>filter()</code> command. Alternatively you could sort on <code>Year</code> and remove the first two rows using <code>slice(-2:-1)</code>. Next you’ll want to summarize each Year/Gender group using the <code>n()</code> function which gives the number of rows in a data set.</em></li>
 <li><p>Using <code>tidyr</code> commands, produce a table of the number of responses in the following form:</p>
 <table>
 <thead>
@@ -495,7 +498,7 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 </tbody>
 </table></li>
 </ol></li>
-<li><p>The package <code>nycflights</code> contains information about all the flights that arrived in or left from New York City in 2013. This package contains five data tables, but there are three data tables we will work with. The data table <code>flights</code> gives information about a particular flight, <code>airports</code> gives information about a particular airport, and <code>airlines</code> gives information about each airline. Create a table of all the flights on February 14th by Virgin America that has columns for the carrier, destination, departure time, and flight duration. Join this table with the airports information for the destination. Notice that because the column for the destination airport code doesn’t match up between <code>flights</code> and <code>airports</code>, you’ll have to use the <code>by=c(&quot;TableA.Col&quot;=&quot;TableB.Col&quot;)</code> argument where you insert the correct names for <code>TableA.Col</code> and <code>TableB.Col</code>.</p></li>
+<li><p>The package <code>nycflights13</code> contains information about all the flights that arrived in or left from New York City in 2013. This package contains five data tables, but there are three data tables we will work with. The data table <code>flights</code> gives information about a particular flight, <code>airports</code> gives information about a particular airport, and <code>airlines</code> gives information about each airline. Create a table of all the flights on February 14th by Virgin America that has columns for the carrier, destination, departure time, and flight duration. Join this table with the airports information for the destination. Notice that because the column for the destination airport code doesn’t match up between <code>flights</code> and <code>airports</code>, you’ll have to use the <code>by=c(&quot;TableA.Col&quot;=&quot;TableB.Col&quot;)</code> argument where you insert the correct names for <code>TableA.Col</code> and <code>TableB.Col</code>.</p></li>
 </ol>
 
 </div>
@@ -517,7 +520,7 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-require(["gitbook"], function(gitbook) {
+gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,

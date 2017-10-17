@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Sufficient Introduction to R</title>
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-15">
+<meta name="date" content="2017-10-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -236,8 +236,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="14.4" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#exercises-13"><i class="fa fa-check"></i><b>14.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html"><i class="fa fa-check"></i><b>15</b> Speeding up R</a><ul>
-<li class="chapter" data-level="15.1" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#vectorizing-your-code"><i class="fa fa-check"></i><b>15.1</b> Vectorizing your code</a></li>
-<li class="chapter" data-level="15.2" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#vectorizing"><i class="fa fa-check"></i><b>15.2</b> Vectorizing</a></li>
+<li class="chapter" data-level="15.1" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#faster-for-loops"><i class="fa fa-check"></i><b>15.1</b> Faster for loops?</a></li>
+<li class="chapter" data-level="15.2" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#vectorizing-loops"><i class="fa fa-check"></i><b>15.2</b> Vectorizing loops</a></li>
 <li class="chapter" data-level="15.3" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#parallel-processing"><i class="fa fa-check"></i><b>15.3</b> Parallel Processing</a></li>
 <li class="chapter" data-level="15.4" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#parallelizing-for-loops"><i class="fa fa-check"></i><b>15.4</b> Parallelizing for loops</a></li>
 <li class="chapter" data-level="15.5" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#parallel-aware-functions"><i class="fa fa-check"></i><b>15.5</b> Parallel Aware Functions</a><ul>
@@ -422,9 +422,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.4</span> r-function</h3>
 <p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 24.09802 20.50633 19.86383 19.59905 16.89159</code></pre>
+<pre><code>## [1] 19.71508 21.98480 19.60145 20.16615 20.14081</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1] 8 6 7 8</code></pre>
+<pre><code>## [1]  9  7  7 10</code></pre>
 </div>
 </div>
 <div id="exercises-2" class="section level2">
@@ -484,7 +484,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-require(["gitbook"], function(gitbook) {
+gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,

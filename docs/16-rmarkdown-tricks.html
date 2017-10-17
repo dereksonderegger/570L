@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Sufficient Introduction to R</title>
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-15">
+<meta name="date" content="2017-10-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -236,8 +236,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="14.4" data-path="14-dates-and-times.html"><a href="14-dates-and-times.html#exercises-13"><i class="fa fa-check"></i><b>14.4</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html"><i class="fa fa-check"></i><b>15</b> Speeding up R</a><ul>
-<li class="chapter" data-level="15.1" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#vectorizing-your-code"><i class="fa fa-check"></i><b>15.1</b> Vectorizing your code</a></li>
-<li class="chapter" data-level="15.2" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#vectorizing"><i class="fa fa-check"></i><b>15.2</b> Vectorizing</a></li>
+<li class="chapter" data-level="15.1" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#faster-for-loops"><i class="fa fa-check"></i><b>15.1</b> Faster for loops?</a></li>
+<li class="chapter" data-level="15.2" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#vectorizing-loops"><i class="fa fa-check"></i><b>15.2</b> Vectorizing loops</a></li>
 <li class="chapter" data-level="15.3" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#parallel-processing"><i class="fa fa-check"></i><b>15.3</b> Parallel Processing</a></li>
 <li class="chapter" data-level="15.4" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#parallelizing-for-loops"><i class="fa fa-check"></i><b>15.4</b> Parallelizing for loops</a></li>
 <li class="chapter" data-level="15.5" data-path="15-speeding-up-r.html"><a href="15-speeding-up-r.html#parallel-aware-functions"><i class="fa fa-check"></i><b>15.5</b> Parallel Aware Functions</a><ul>
@@ -696,13 +696,13 @@ knitr::<span class="kw">kable</span>( data )</code></pre></div>
 <p>The <code>pander</code> package deals with summary and anova tables from a variety of different analyses. So you can simply ask for a nice looking version using the following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>( Volume ~<span class="st"> </span>Girth, <span class="dt">data=</span>trees )    <span class="co"># a simple regression</span>
 <span class="kw">pander</span>( <span class="kw">summary</span>(model) )    <span class="co"># my usual summary table</span></code></pre></div>
-<table style="width:86%;">
+<table style="width:88%;">
 <colgroup>
 <col width="25%" />
 <col width="15%" />
 <col width="18%" />
 <col width="13%" />
-<col width="13%" />
+<col width="15%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -715,27 +715,27 @@ knitr::<span class="kw">kable</span>( data )</code></pre></div>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>Girth</strong></td>
-<td align="center">5.066</td>
-<td align="center">0.2474</td>
-<td align="center">20.48</td>
-<td align="center">8.644e-19</td>
-</tr>
-<tr class="even">
 <td align="center"><strong>(Intercept)</strong></td>
 <td align="center">-36.94</td>
 <td align="center">3.365</td>
 <td align="center">-10.98</td>
 <td align="center">7.621e-12</td>
 </tr>
+<tr class="even">
+<td align="center"><strong>Girth</strong></td>
+<td align="center">5.066</td>
+<td align="center">0.2474</td>
+<td align="center">20.48</td>
+<td align="center">8.644e-19</td>
+</tr>
 </tbody>
 </table>
-<table style="width:85%;">
+<table style="width:86%;">
 <caption>Fitting linear model: Volume ~ Girth</caption>
 <colgroup>
 <col width="20%" />
 <col width="30%" />
-<col width="11%" />
+<col width="12%" />
 <col width="22%" />
 </colgroup>
 <thead>
@@ -756,7 +756,7 @@ knitr::<span class="kw">kable</span>( data )</code></pre></div>
 </tbody>
 </table>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pander</span>( <span class="kw">anova</span>( model ) )    <span class="co"># my usual anova table</span></code></pre></div>
-<table style="width:83%;">
+<table style="width:85%;">
 <caption>Analysis of Variance Table</caption>
 <colgroup>
 <col width="22%" />
@@ -764,7 +764,7 @@ knitr::<span class="kw">kable</span>( data )</code></pre></div>
 <col width="12%" />
 <col width="13%" />
 <col width="13%" />
-<col width="13%" />
+<col width="15%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -822,7 +822,7 @@ knitr::<span class="kw">kable</span>( data )</code></pre></div>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-require(["gitbook"], function(gitbook) {
+gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
