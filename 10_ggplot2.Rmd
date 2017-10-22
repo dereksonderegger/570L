@@ -33,7 +33,91 @@ Next, it should be noted that `ggplot2` is designed to act on data frames. It is
 
 These notes are sufficient for creating simple graphs using `ggplot2`, but are not intended to be exhaustive. There are many places online to get help with `ggplot2`. One very nice resource is the website [http://www.cookbook-r.com/Graphs/] which gives much of the information available in the book R Graphics Cookbook which I highly recommend. Second is just googling your problems and see what you can find on websites such as StackExchange.
 
+One way that `ggplot2` makes it easy to form very complicated graphs is that it provides a large number of basic building blocks that, when stacked upon each other, can produce extremely complicated graphs. A full list is available at [http://docs.ggplot2.org/current/] but the following list gives some idea of different building blocks.
+
+These different geometries are different ways to display the relationship between variables and can be combined in many interesting ways.
+
+ Geom	             |    Description	                                    |   Required Aesthetics
+-------------------|----------------------------------------------------|-----------------------
+`geom_bar`         |	A barplot                                         |	`x`
+`geom_boxplot`     | 	Boxplots                                          | `x`
+`geom_density`     | 	A smoothed histogram                              |	`x`
+`geom_errorbar`    |	Error bars	                                      | `ymin, ymax`
+`geom_histogram`	 |  A histogram                                       |	`x`
+`geom_line`	       |  Draw a line (after sorting x-values)	            | `x, y`
+`geom_path`	       |  Draw a line (without sorting x-values)	          | `x, y`
+`geom_point`	     |  Draw points (for a scatterplot)	                  | `x, y`
+`geom_ribbon`	     |  Enclose a region, and color the interior          |	`ymin, ymax`
+`geom_smooth`	     |  Add a ribbon that summarizes a scatterplot	      | `x, y`
+`geom_text`	       |  Add text to a graph	                              | `x, y, label`
+`geom_label`	     |  Add text to a graph	                              | `x, y, label`
+`geom_tile`        |  Create Heat map                                   | `x, y, fill`
+
+A graph can be built up layer by layer, where:
+
+* Each layer corresponds to a `geom`, each of which requires a dataset and a mapping between an aesthetic and a column of the data set.
+
+    – If you don't specify either, then the layer inherits everything defined in the ggplot() command.
+    – You can have different datasets for each layer!
+
+* Can add layers with a `+`, or you can define two plots and add them together (second one over-writes anything that conflicts).
+
+
 ## Basic Graphs
+
+### Bar Charts
+
+Bar charts and histograms are how we think about displaying informtion about a single covariate.  That is to say, we are not trying to make a graph of the relationship between $x$ and $y$, but rather understanding what values of $x$ are present and how frequently they show up.
+
+For displaying a categorical variable on the x-axis, a bar chart is a good option. Here we consider a data set that gives the fuel efficiency of different classes of vehicles in two different years. This is a subset of data that the EPA makes available on [http://fueleconomy.gov]. It contains only model which had a new release every year between 1999 and 2008 and therefore represents the most popular cars sold in the US. It includes information for each model for years 1999 and 2008. The dataset is included in the `ggplot2` package as `mpg`.
+
+```{r}
+data(mpg, package='ggplot2')  # load the dataset
+str(mpg)
+```
+
+First we could summarize the data by how many of each model there are in the different classes.
+```{r, fig.height=3}
+ggplot(data=mpg, aes(x=class)) +
+  geom_bar()
+```
+
+1. The data set we wish to use is specified using `data=mpg`.  This is the first argument defined in the function, so you could skip the `data=` part if the input data.frame is the first argument.
+
+2. The column in the data that we wish to investigate is defined in the `aes(x=class)` part. This means the x-axis will be the car's class, which is indicated by the column named `class`.
+
+3. The way we want to display this information is using a bar chart.
+
+
+By default, the `geom_box()` just counts the number of cases and displays how many observations were in each class. This behavior can modified using the `stat=` option. In particular, if I have a data frame that I have already summarized, `stat=identity` will allow you to set the height of the bar.
+
+### Histograms
+Histograms also focus on a single variable and give how frequently particular ranges of the data occur.
+
+```{r, fig.height=3}
+ggplot(mpg, aes(x=hwy)) + 
+  geom_histogram()
+```
+
+Just as `geom_bar` by default calculated the number of observations in each level of my factor of interest (which was `class`, `geom_histogram` breaks up my x-axis into distinct bins (by default in uses 30 bins), and then counts how many observations fall into each bin, and displys the number as a bar. To change the number of bins, we could either tell it the number of bins (e.g. `bins=20`) or the width of each bin (e.g. `binwidth=4`).
+
+```{r, fig.height=3}
+ggplot(mpg, aes(x=hwy)) + 
+  geom_histogram(bins=8)       # 8 bins
+```
+
+
+Often we want to rescale the y-axis so that it is in terms of density, which is
+$$density=\frac{\#\;observations\;in\;bin}{total\;number\;observations}\cdot\frac{1}{bin\;width}$$
+
+To ask `geom_histogram` to calculate the density instead of counts, we simply add an option to the `aes()` list that specifies that the y-axis should be the density. Notice that this only rescales the y-axis and the shape of the histogram is identical.
+
+```{r, fig.height=3}
+ggplot(mpg, aes(x=hwy, y=..density..)) + 
+  geom_histogram(bins=8)       # 8 bins
+```
+
+
 
 ### Scatterplots
 
@@ -78,106 +162,191 @@ The important part isn't that color and size were defined in the `geom_point()` 
 
 2. Anything set outside an `aes()` command will be in the form `attribute=value` and will be fixed. 
 
-Next, I suppose I want to add a regression line (the line that best summarizes the relationship between Sepal.Length and Petal.Length) to each of these groups. We can do this by adding another layer to the graph, in this case, a `smoother` layer. The `geom_smoother` is intended to take a scatterplot of points and draw the best-fitting curve to the data. There are several options for how it choses to do this, but I'll tell it to fit a regression line to each set of data. Below, we have a graph of data points, a regression line, and a confidence region for the line.
-
-```{r, fig.height=3}
-ggplot( data=iris, aes(x=Sepal.Length, y=Petal.Length, color=Species) ) +  
-  geom_point( ) +
-  geom_smooth( method='lm' ) # fit a regression to each species
-```
-
-I typically don't use this method because it has too many limitations as to how I fit the smoother. I prefer to fit a model to the data, calculate the predicted values along with whatever confidence intervals I want, and plot those directly using `geom_line()` and `geom_ribbon()`).
-
-```{r, fig.height=3}
-model <- lm( Petal.Length ~ Sepal.Length * Species, data=iris) # fit the model
-iris <- cbind( iris, predict(model, interval='conf') )         # calc yhat, CI
-ggplot(iris, aes(x=Sepal.Length, color=Species, fill=Species)) +
-  geom_ribbon( aes(ymin=lwr, ymax=upr), alpha=.4) +  # alpha is the opacity of the ribbon
-  geom_line( aes(y=fit)) +
-  geom_point( aes(y=Petal.Length))
-```
-
-
-
-
-### Bar Charts
-
-For displaying a categorical variable on the x-axis and a continuous variable on the y-axis, a bar chart is a good option. Here we consider a data set that gives the fuel efficiency of different classes of vehicles in two different years. This is a subset of data that the EPA makes available on [http://fueleconomy.gov]. It contains only model which had a new release every year between 1999 and 2008 and therefore represents the most popular cars sold in the US. It includes information for each model for years 1999 and 2008. The dataset is included in the `ggplot2` package as `mpg`.
-
-```{r}
-data(mpg, package='ggplot2')  # load the dataset
-str(mpg)
-```
-
-First we could summarize the data by how many of each model there are in the different classes.
-```{r, fig.height=3}
-ggplot(mpg, aes(x=class)) +
-  geom_bar()
-```
-
-By default, the `geom_box()` just counts the number of cases and displays how many observations were in each class. If we were interested in knowing the mean highway fuel efficiency, we would have to summarize the data and calculate the mean for each class. Fortunately that is pretty easy to do.
-
-```{r, warning=FALSE, message=FALSE}
-mpg.small <- mpg %>%
-  group_by(class) %>%
-  summarise(mean.hwy = mean(hwy),
-            sd.hwy   = sd(hwy),
-            num.obs  = n() )
-
-ggplot(mpg.small, aes(x=class, y=mean.hwy)) +
-  geom_bar( stat = 'identity' )              # no further summarization!
-```
-
-
-The stat='identity' part is necessary to keep `geom_bar()` from doing any default summarization. We can add some error bars to show the standard deviation as well.
-```{r, fig.height=3}
-ggplot(mpg.small, aes(x=class, y=mean.hwy,
-                      ymin = mean.hwy-sd.hwy, 
-                      ymax = mean.hwy+sd.hwy)) +
-  geom_bar( stat = 'identity' ) +
-  geom_linerange()
-```
 
 
 ### Box Plots 
 
-Boxplots are a common way to show a categorical variable on the x-axis and continuous on the y-axis. I actually prefer these over the barchart we did prior.
+Boxplots are a common way to show a categorical variable on the x-axis and continuous on the y-axis. 
 ```{r}
 ggplot(mpg, aes(x=class, y=hwy)) +
   geom_boxplot()
 ```
 
+The boxes show the $25^{th}$, $50^{th}$, and $75^{th}$ percentile and the lines coming off the box extend to the smallest and largest non-outlier observation.  
 
-### Geometries and Layers
 
-One way that `ggplot2` makes it easy to form very complicated graphs is that it provides a large number of basic building blocks that, when stacked upon each other, can produce extremely complicated graphs. A full list is available at [http://docs.ggplot2.org/current/] but the following list gives some idea of different building blocks.
+## Fine Tuning
 
-These different geometries are different ways to display the relationship between variables and can be combined in many interesting ways.
+### Labels
 
- Geom	             |    Description	                                    |   Required Aesthetics
--------------------|----------------------------------------------------|-----------------------
-`geom_bar`         |	A barplot                                         |	`x`
-`geom_boxplot`     | 	Boxplots                                          | `x`
-`geom_density`     | 	A smoothed histogram                              |	`x`
-`geom_errorbar`    |	Error bars	                                      | `ymin, ymax`
-`geom_histogram`	 |  A histogram                                       |	`x`
-`geom_line`	       |  Draw a line (after sorting x-values)	            | `x, y`
-`geom_path`	       |  Draw a line (without sorting x-values)	          | `x, y`
-`geom_point`	     |  Draw points (for a scatterplot)	                  | `x, y`
-`geom_ribbon`	     |  Enclose a region, and color the interior          |	`ymin, ymax`
-`geom_smooth`	     |  Add a ribbon that summarizes a scatterplot	      | `x, y`
-`geom_text`	       |  Add text to a graph	                              | `x, y, label`
+To make a graph more understandable, it is necessary to tweak labels for the axes and add a main title and such. Here we'll adjust labels in a graph, including the legend labels.
+```{r, fig.height=3}
+# Treat the number of cylinders in a car as a categorical variable (4,6 or 8)
+mtcars$cyl <- factor(mtcars$cyl) 
 
-A graph can be built up layer by layer, where:
+ggplot(mtcars, aes(x=wt, y=mpg, col=cyl)) +
+   geom_point() +
+  labs( title='Weight vs Miles per Gallon') +
+  labs( x="Weight in tons (2000 lbs)", y="Miles per Gallon (US)" ) +
+  labs( color="Cylinders")     
+```
 
-* Each layer corresponds to a `geom`, each of which requires a dataset and a mapping between an aesthetic and a column of the data set.
+You could either call the `labs()` command repeatedly with each label, or you could provide multiple arguements to just one `labs()` call.  
 
-    – If you don't specify either, then the layer inherits everything defined in the ggplot() command.
-    – You can have different datasets for each layer!
+### Color Scales
+Adjusting the color palette for the color scales is not particularly hard, but it isn't intuitive. You can either set them up using a set of predefined palettes or you can straight up pick the colors. Furthermore we need to recognize that picking colors for a continuous covariate is different than for a factor.  In the continuous case, we have to pick a low and high colors and `ggplot` will smoothly transition between the two. In the discrete case with a factor, each factor level gets its own color.
 
-* Can add layers with a +, or you can define two plots and add them together (second one over-writes anything that conflicts).
+To make these choices, we will use the functions that modify the scales.  In particular, if we are modifying the `color` aesthetic, we will use the `scale_color_XXX` functions where the `XXX` gets replaced by something more specific. If we are modifying the `fill` colors, then we will use the `scale_fill_XXX` family of functions.
 
-## Getting Fancy 
+#### Colors for Factors 
+
+We can set the colors manually using the function `scale_color_manual` which expects the name of the colors for each factor level.  The order given in the `values` argument corresponds to the order of the levels of the factor.
+
+For a nice list of the named colors you can use, I like to refer to this webpage: [https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/colorPaletteCheatsheet.pdf](https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/colorPaletteCheatsheet.pdf)
+```{r}
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, color=Species)) +
+  geom_point() +
+  scale_color_manual(values=c('blue', 'darkmagenta', 'aquamarine'))
+```
+
+If you want to instead pick a color palette and let ggplot pick the colors to be farthest apart based on the number of factor levels, you can use `scale_color_manual` and then have the values chosen by one of the palette functions where you just have to tell it how many levels you have.
+
+```{r}
+library(colorspace)   # these two packages have some decent 
+library(grDevices)    # color palettes.
+
+rainbow(6)   # if you have six factor levels, what colors should we use 
+
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, color=Species)) +
+  geom_point() +
+  scale_color_manual(values = rainbow(3))
+```
+
+#### Colors for continuous values
+
+For this example, we will consider an elevation map of the Maunga Whau volcano in New Zealand.  This dataset comes built into R as the matrix `volcano`, but I've modified it slightly and saved it to a package I have on github called `dsdata`
+
+```{r}
+library(devtools)
+install_github('dereksonderegger/dsdata')
+```
+
+
+```{r}
+data('Eden', package='dsData')
+```
+
+
+```{r}
+ggplot( Eden, aes(x=x, y=y, fill=elevation)) +
+  geom_raster()
+```
+
+The default gradient isn't too bad, but we might want to manually chose two colors to smoothly scale between. Because I want to effect the colors I've chosen for the `fill` aesthetic, I have to modify this using `scale_fill_XXX`
+
+```{r}
+ggplot( Eden, aes(x=x, y=y, fill=elevation)) +
+  geom_tile() +
+  scale_fill_gradient(low = "red", high = "blue")
+```
+
+I think we ought to have the blue color come in a little earlier. Also, I want to specify a middle color  so that our graph transitions from red to green to blue. To do this, we also have to specify where the middle color should be located along the elevation range.
+
+```{r}
+ggplot( Eden, aes(x=x, y=y, fill=elevation)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "red", mid='green', high = "blue",
+                       midpoint=135)
+```
+
+If we don't want to specify the colors manually we can, as usual, specify the color palete. The `gradientn` functions allow us to specify a large numbers intermediate colors.
+```{r}
+ggplot( Eden, aes(x=x, y=y, fill=elevation)) +
+  geom_tile() +
+  scale_fill_gradientn(colours = terrain.colors(5))
+```
+
+
+### Adjusting axes 
+
+#### Setting breakpoints
+Sometimes the default axis breakpoints aren't quite what I want and I want to add a number or remove a number. To do this, we will modify the x or y scale. Typically I only have a problem when the axis is continuous, so we will concentrate on that case.
+
+```{r}
+ggplot(mpg, aes(x=class, y=hwy)) + 
+  geom_boxplot() 
+```
+
+In this case, suppose that we want the major breakpoints (which have labels) to occur every 5 mpg, and the minor breakpoints (which just have a white line) to occur midway between those (so every 2.5 mpg). 
+
+```{r}
+ggplot(mpg, aes(x=class, y=hwy)) + 
+  geom_boxplot() +
+  scale_y_continuous( breaks = seq(10, 45, by=5) ) 
+```
+
+If we wanted to adjust the minor breaks, we could do that using the `minor_breaks` argument. If we want to remove the minor breaks completely, we could set the minor breaks to be `NULL`
+
+```{r}
+ggplot(mpg, aes(x=class, y=hwy)) + 
+  geom_boxplot() +
+  scale_y_continuous( breaks = seq(10, 45, by=5), minor_breaks = NULL ) 
+```
+
+
+### Zooming in/out
+It is often important to be able to force the graph to have a particular range in either the x-axis or the y-axis.  Given a particular range of intest, there are two ways that we could this:
+
+* Remove all data points that fall outside the range and just plot the reduced dataset. This is accomplished using the `xlim()` and `ylim()` functions, or setting either of those inside another `scale_XXX` function.
+* Use all the data to create a graph and just zoom in/out in that graph. This is accomplished using the `coord_cartesian()` function
+
+```{r}
+ggplot(trees, aes(x=Girth, y=Volume)) + 
+  geom_point() +
+  geom_smooth(method='lm')
+```
+
+If we want to reset the x-axis to stop at $x=19$, and $y=60$, then we could use the `xlim()` and `ylim()` functions, but this will cause the regression line to be chopped off and it won't even use that data point when calculating the regression.
+
+```{r}
+# Danger!  This removes the data points first!
+ggplot(trees, aes(x=Girth, y=Volume)) + 
+  geom_point() +
+  geom_smooth(method='lm') +
+  xlim( 8, 19 ) + ylim(0, 60)
+```
+
+Alternatively, we could use the `coord_cartesion` function to chop the axes _after_everything has been calculated.
+
+```{r}
+# Safer!  Create the graph and then just zoom in
+ggplot(trees, aes(x=Girth, y=Volume)) + 
+  geom_point() +
+  geom_smooth(method='lm') +
+  coord_cartesian( xlim=c(8, 19 ), ylim=c(0, 60))
+```
+
+
+## Cookbook Examples
+
+### Scatterplot with prediction ribbons
+Often I want to create a scatterplot and then graph the predicted values as a ribbon on top.  While it is possible to do this automatically using the `geom_smoother()` function, I prefer not to do this because I don't have much control over how the model is created.
+
+```{r}
+# fit a linear model to the trees dataset
+model <- lm( Volume ~ Girth, data=trees )
+
+# add the fitted values and confidence interval values for each observation
+# to the original data frame, and call the augmented dataset trees.aug.
+trees.aug <- trees %>% cbind( predict(model, interval='confidence', newdata=.) )
+
+# Plot the augmented data. Alpha is the opacity of the ribbon
+ggplot(trees.aug, aes(x=Girth, y=Volume)) +
+  geom_ribbon( aes(ymin=lwr, ymax=upr), alpha=.4, fill='darkgrey' ) +
+  geom_line( aes(y=fit) ) + 
+  geom_point( aes( y = Volume ) )
+```
+
 
 ### Bar Plot
 
@@ -217,45 +386,9 @@ ggplot(stats, aes(x=Species)) +
 ```
 
 
-### Histograms
-
-Creating histograms of continuous data is a very common thing to do. The simplest way to do this in ggplot() is using the geom_histogram function. The simplest form is the the following:
-```{r}
-data <- data.frame(x=rexp(10000, rate=1/5))
-ggplot(data, aes(x=x)) + 
-  geom_histogram() 
-```
-
-Somewhat annoyingly, `ggplot2` does not by default use an intelligent choice for the number of bins. Instead we are stuck investigating different bin-widths by hand. To do this, we set the number of bins via the `binwidth` argument. Notice that the y-axis is the number of observations in each bin. If we want the y-axis to be density (so that the area shaded has area 1), we just need to tell geom_histogram to have `y=..density..` instead of the default. 
-```{r, fig.height=3}
-ggplot(data, aes(x=x, y=..density..)) + 
-  geom_histogram(binwidth=.25) 
-```
-
-Often I want to also add some sort of smoothed density plot to my histogram. The geom to do that is `geom_density()` which takes your x-values and creates a smoothed density function using kernel density algorithm with a normal kernel. To do this, we need both layers of my plot to have a y-axis of density.
-```{r, fig.height=3}
-ggplot(data, aes(x=x, y=..density..)) + 
-  geom_histogram(binwidth=.25) +
-  geom_density(color='red', size=1.5)
-```
 
 
-### Adjusting labels
-
-To make a graph more understandable, it is necessary to tweak labels for the axes and add a main title and such. Here we'll adjust labels in a graph, including the legend labels.
-```{r, fig.height=3}
-# Treat the number of cylinders in a car as a categorical variable (4,6 or 8)
-mtcars$cyl <- factor(mtcars$cyl) 
-
-ggplot(mtcars, aes(x=wt, y=mpg, col=cyl)) +
-   geom_point() +
-  labs( title='Weight vs Miles per Gallon') +
-  labs( x="Weight in tons (2000 lbs)" ) +
-  labs( y="Miles per Gallon (US)") +
-  labs( color="Cylinders")     
-```
-
-### Plotting distributions 
+### Distributions 
 
 Often I need to plot a distribution and perhaps shade some area in. In this section we'll give a method for plotting continuous and discrete distributions using `ggplot2`.
 
