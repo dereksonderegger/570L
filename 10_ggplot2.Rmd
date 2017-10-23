@@ -19,23 +19,21 @@ library(ggplot2)  # my favorite graphing system
 library(dplyr)    # data frame manipulations
 ```
 
-There are three major “systems” of making graphs in R. The basic plotting commands in R are quite effective but the commands do not have a way of being combined in easy ways. Lattice graphics (which the `mosaic` package uses) makes it possible to create some quite complicated graphs but it is very difficult to do make non-standard graphs. The last package, `ggplot2` tries to not anticipate what the user wants to do, but rather provide the mechanisms for pulling together different graphical concepts and the user gets to decide elements to combine. 
+There are three major “systems” of making graphs in R. The basic plotting commands in R are quite effective but the commands do not have a way of being combined in easy ways. Lattice graphics (which the `mosaic` package uses) makes it possible to create some quite complicated graphs but it is very difficult to do make non-standard graphs. The last package, `ggplot2` tries to not anticipate what the user wants to do, but rather provide the mechanisms for pulling together different graphical concepts and the user gets to decide which elements to combine. 
 
-To make the most of ggplot2 it is important to wrap your mind around “The Grammar of Graphics”. The act of building a graph can be broken down into three steps. 
+To make the most of `ggplot2` it is important to wrap your mind around “The Grammar of Graphics”. Briefly, the act of building a graph can be broken down into three steps. 
 
 1. Define what data we are using. 
 
-2. What is the major relationship we wish to examine. 
+2. What is the major relationship we wish to examine? 
 
-3. In what way should we present that relationship. These relationships can be presented in multiple ways, and the process of creating a good graph relies on building layers upon layers of information. For example, we might start with printing the raw data and then overlay a regression line over the top. 
+3. In what way should we present that relationship? These relationships can be presented in multiple ways, and the process of creating a good graph relies on building layers upon layers of information. For example, we might start with printing the raw data and then overlay a regression line over the top. 
 
 Next, it should be noted that `ggplot2` is designed to act on data frames. It is actually hard to just draw three data points and for simple graphs it might be easier to use the base graphing system in R. However for any real data analysis project, the data will already be in a data frame and this is not an annoyance.
 
-These notes are sufficient for creating simple graphs using `ggplot2`, but are not intended to be exhaustive. There are many places online to get help with `ggplot2`. One very nice resource is the website [http://www.cookbook-r.com/Graphs/] which gives much of the information available in the book R Graphics Cookbook which I highly recommend. Second is just googling your problems and see what you can find on websites such as StackExchange.
+These notes are sufficient for creating simple graphs using `ggplot2`, but are not intended to be exhaustive. There are many places online to get help with `ggplot2`. One very nice resource is the website, [http://www.cookbook-r.com/Graphs/](http://www.cookbook-r.com/Graphs/), which gives much of the information available in the book R Graphics Cookbook which I highly recommend. Second is just googling your problems and see what you can find on websites such as StackExchange.
 
-One way that `ggplot2` makes it easy to form very complicated graphs is that it provides a large number of basic building blocks that, when stacked upon each other, can produce extremely complicated graphs. A full list is available at [http://docs.ggplot2.org/current/] but the following list gives some idea of different building blocks.
-
-These different geometries are different ways to display the relationship between variables and can be combined in many interesting ways.
+One way that `ggplot2` makes it easy to form very complicated graphs is that it provides a large number of basic building blocks that, when stacked upon each other, can produce extremely complicated graphs. A full list is available at [http://docs.ggplot2.org/current/](http://docs.ggplot2.org/current/) but the following list gives some idea of different building blocks. These different geometries are different ways to display the relationship between variables and can be combined in many interesting ways.
 
  Geom	             |    Description	                                    |   Required Aesthetics
 -------------------|----------------------------------------------------|-----------------------
@@ -56,11 +54,10 @@ These different geometries are different ways to display the relationship betwee
 A graph can be built up layer by layer, where:
 
 * Each layer corresponds to a `geom`, each of which requires a dataset and a mapping between an aesthetic and a column of the data set.
+    * If you don't specify either, then the layer inherits everything defined in the `ggplot()` command.
+    * You can have different datasets for each layer!
 
-    – If you don't specify either, then the layer inherits everything defined in the ggplot() command.
-    – You can have different datasets for each layer!
-
-* Can add layers with a `+`, or you can define two plots and add them together (second one over-writes anything that conflicts).
+* Layers can be added with a `+`, or you can define two plots and add them together (second one over-writes anything that conflicts).
 
 
 ## Basic Graphs
@@ -69,14 +66,14 @@ A graph can be built up layer by layer, where:
 
 Bar charts and histograms are how we think about displaying informtion about a single covariate.  That is to say, we are not trying to make a graph of the relationship between $x$ and $y$, but rather understanding what values of $x$ are present and how frequently they show up.
 
-For displaying a categorical variable on the x-axis, a bar chart is a good option. Here we consider a data set that gives the fuel efficiency of different classes of vehicles in two different years. This is a subset of data that the EPA makes available on [http://fueleconomy.gov]. It contains only model which had a new release every year between 1999 and 2008 and therefore represents the most popular cars sold in the US. It includes information for each model for years 1999 and 2008. The dataset is included in the `ggplot2` package as `mpg`.
+For displaying a categorical variable on the x-axis, a bar chart is a good option. Here we consider a data set that gives the fuel efficiency of different classes of vehicles in two different years. This is a subset of data that the EPA makes available on [http://fueleconomy.gov](http://fueleconomy.gov). It contains only model which had a new release every year between 1999 and 2008 and therefore represents the most popular cars sold in the US. It includes information for each model for years 1999 and 2008. The dataset is included in the `ggplot2` package as `mpg`.
 
 ```{r}
 data(mpg, package='ggplot2')  # load the dataset
 str(mpg)
 ```
 
-First we could summarize the data by how many of each model there are in the different classes.
+First we could summarize the data by how many models there are in the different classes.
 ```{r, fig.height=3}
 ggplot(data=mpg, aes(x=class)) +
   geom_bar()
@@ -89,7 +86,7 @@ ggplot(data=mpg, aes(x=class)) +
 3. The way we want to display this information is using a bar chart.
 
 
-By default, the `geom_box()` just counts the number of cases and displays how many observations were in each class. This behavior can modified using the `stat=` option. In particular, if I have a data frame that I have already summarized, `stat=identity` will allow you to set the height of the bar.
+By default, the `geom_box()` just counts the number of cases and displays how many observations were in each factor level. This behavior can modified using the `stat=` option. In particular, if I have a data frame that I have already summarized, `stat=identity` will allow you to set the height of the bar.
 
 ### Histograms
 Histograms also focus on a single variable and give how frequently particular ranges of the data occur.
@@ -99,7 +96,7 @@ ggplot(mpg, aes(x=hwy)) +
   geom_histogram()
 ```
 
-Just as `geom_bar` by default calculated the number of observations in each level of my factor of interest (which was `class`, `geom_histogram` breaks up my x-axis into distinct bins (by default in uses 30 bins), and then counts how many observations fall into each bin, and displys the number as a bar. To change the number of bins, we could either tell it the number of bins (e.g. `bins=20`) or the width of each bin (e.g. `binwidth=4`).
+Just as `geom_bar` by default calculated the number of observations in each level of my factor of interest, `geom_histogram` breaks up the x-axis into distinct bins (by default, 30 bins), and then counts how many observations fall into each bin, and displys the number as a bar. To change the number of bins, we could either tell it the number of bins (e.g. `bins=20`) or the width of each bin (e.g. `binwidth=4`).
 
 ```{r, fig.height=3}
 ggplot(mpg, aes(x=hwy)) + 
@@ -209,13 +206,13 @@ ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, color=Species)) +
   scale_color_manual(values=c('blue', 'darkmagenta', 'aquamarine'))
 ```
 
-If you want to instead pick a color palette and let ggplot pick the colors to be farthest apart based on the number of factor levels, you can use `scale_color_manual` and then have the values chosen by one of the palette functions where you just have to tell it how many levels you have.
+If you want to instead pick a color palette and let the palette pick the colors to be farthest apart based on the number of factor levels, you can use `scale_color_manual` and then have the values chosen by one of the palette functions where you just have to tell it how many levels you have.
 
 ```{r}
 library(colorspace)   # these two packages have some decent 
-library(grDevices)    # color palettes.
+library(grDevices)    # color palettes functions.
 
-rainbow(6)   # if you have six factor levels, what colors should we use 
+rainbow(6)   # if we have six factor levels, what colors should we use? 
 
 ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length, color=Species)) +
   geom_point() +
@@ -259,7 +256,7 @@ ggplot( Eden, aes(x=x, y=y, fill=elevation)) +
                        midpoint=135)
 ```
 
-If we don't want to specify the colors manually we can, as usual, specify the color palete. The `gradientn` functions allow us to specify a large numbers intermediate colors.
+If we don't want to specify the colors manually we can, as usual, specify the color palette. The `gradientn` functions allow us to specify a large numbers intermediate colors.
 ```{r}
 ggplot( Eden, aes(x=x, y=y, fill=elevation)) +
   geom_tile() +
@@ -295,7 +292,7 @@ ggplot(mpg, aes(x=class, y=hwy)) +
 
 
 ### Zooming in/out
-It is often important to be able to force the graph to have a particular range in either the x-axis or the y-axis.  Given a particular range of intest, there are two ways that we could this:
+It is often important to be able to force the graph to have a particular range in either the x-axis or the y-axis.  Given a particular range of interest, there are two ways that we could this:
 
 * Remove all data points that fall outside the range and just plot the reduced dataset. This is accomplished using the `xlim()` and `ylim()` functions, or setting either of those inside another `scale_XXX` function.
 * Use all the data to create a graph and just zoom in/out in that graph. This is accomplished using the `coord_cartesian()` function
@@ -378,7 +375,7 @@ ggplot(stats, aes(x=Species)) +
 ```
 
 
-The last thing to notice is that the *order* in which the different layers matter. This is similar to photoshop or GIS software where the layers added last can obscure prior layers. In the graph below, the lower part of the error bar is obscured by the grey bar.
+The last thing to notice is that the *order* in which the different layers matter. This is similar to Photoshop or GIS software where the layers added last can obscure prior layers. In the graph below, the lower part of the error bar is obscured by the grey bar.
 ```{r, fig.height=3}
 ggplot(stats, aes(x=Species)) +
   geom_errorbar( aes(ymin=lwr, ymax=upr), color='red', width=.4 ) +
@@ -421,7 +418,7 @@ ggplot(plot.data, aes(x=x, y=density, fill=Group)) +
 
 #### Discrete distributions
 
-The idea for discrete distributions will be to draw points for the height and then add bars. Lets look at doing this for the poisson distribution with rate parameter $\lambda=2$.
+The idea for discrete distributions will be to draw points for the height and then add bars. Lets look at doing this for the Poisson distribution with rate parameter $\lambda=2$.
 ```{r, fig.height=3}
 plot.data <- data.frame( x=seq(0,10) ) %>%
   mutate( probability = dpois(x, lambda=2) )
@@ -440,7 +437,7 @@ The key trick here was to set the `ymin` value to always be zero.
     a) Create a graph using ggplot2 with Height on the x-axis, Volume on the y-axis, and Girth as the either the size of the data point or the color of the data point. Which do you think is a more intuitive representation?
     b) Add appropriate labels for the main title and the x and y axes.
     
-2. Consider the following small dataset that represents the number of times per day my wife played "Ring around the Rosy” with my daughter relative to the number of days since she has learned this game. The column yhat represents the best fitting line through the data, and lwr and upr represent a 95% confidence interval for the predicted value on that day.
+2. Consider the following small dataset that represents the number of times per day my wife played "Ring around the Rosy” with my daughter relative to the number of days since she has learned this game. The column `yhat` represents the best fitting line through the data, and `lwr` and `upr` represent a 95% confidence interval for the predicted value on that day.
     ```{r}
     Rosy <- data.frame(
       times = c(15, 11, 9, 12, 5, 2, 3),
@@ -454,7 +451,7 @@ The key trick here was to set the `ymin` value to always be zero.
     
     b) Add a line to the graph where the x-values are the `day` values but now the y-values are the predicted values which we've called `yhat`. Notice that you have to set the aesthetic y=times for the points and y=yhat for the line. Because each `geom_` will accept an `aes()` command, you can specify the `y` attribute to be different for different layers of the graph.
     
-    c) Add a ribbon that represents the confidence region of the regression line. The `geom_ribbon()` function requires an `x`, `ymin`, and `ymax` columns to be defined. For examples of using `geom_ribbon()` see the online documentation: [http://docs.ggplot2.org/current/geom_ribbon.html].
+    c) Add a ribbon that represents the confidence region of the regression line. The `geom_ribbon()` function requires an `x`, `ymin`, and `ymax` columns to be defined. For examples of using `geom_ribbon()` see the online documentation: [http://docs.ggplot2.org/current/geom_ribbon.html](http://docs.ggplot2.org/current/geom_ribbon.html).
         ```{r, eval=FALSE}
         ggplot(Rosy, aes(x=day)) +
           geom_point(aes(y=times)) +
@@ -463,7 +460,7 @@ The key trick here was to set the `ymin` value to always be zero.
         ```
     d) What happened when you added the ribbon? Did some points get hidden? If so, why?
     e) Reorder the statements that created the graph so that the ribbon is on the bottom and the data points are on top and the regression line is visible.
-    f) The color of the ribbon fill is ugly. Use google to find a list of named colors available to `ggplot2`. For example, I googled “ggplot2 named colors” and found the following link: [http://sape.inf.usi.ch/quick-reference/ggplot2/colour]. Choose a color for the fill that is pleasing to you.
+    f) The color of the ribbon fill is ugly. Use Google to find a list of named colors available to `ggplot2`. For example, I googled “ggplot2 named colors” and found the following link: [http://sape.inf.usi.ch/quick-reference/ggplot2/colour](http://sape.inf.usi.ch/quick-reference/ggplot2/colour). Choose a color for the fill that is pleasing to you.
     g) Add labels for the x-axis and y-axis that are appropriate along with a main title.
 
 3. The R package `babynames` contains a single dataset that lists the number of children registered with Social Security with a particular name along with the proportion out of all children born in a given year. The dataset covers the from 1880 to the present. We want to plot the relative popularity of the names 'Elise' and 'Casey'.
@@ -494,4 +491,4 @@ The key trick here was to set the `ymin` value to always be zero.
        geom_area()
     ```
     
-    This is a pretty neat graph as it show the relative popularity of the name over time and can easily be expanded to many many names. In fact, there is a wonderful website that takes this same data and allows you select the names quite nicely: [http://www.babynamewizard.com/voyager]. My wife and I used this a lot while figuring out what to name our children. Notice that this site really uses the same graph type we just built but there are a few extra neat interactivity tricks.
+    This is a pretty neat graph as it show the relative popularity of the name over time and can easily be expanded to many many names. In fact, there is a wonderful website that takes this same data and allows you select the names quite nicely: [http://www.babynamewizard.com/voyager](http://www.babynamewizard.com/voyager). My wife and I used this a lot while figuring out what to name our children. Notice that this site really uses the same graph type we just built but there are a few extra neat interactivity tricks.

@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-22">
+<meta name="date" content="2017-10-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -283,17 +283,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 9</span> Graphing using <code>ggplot2</code></h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)  <span class="co"># my favorite graphing system</span>
 <span class="kw">library</span>(dplyr)    <span class="co"># data frame manipulations</span></code></pre></div>
-<p>There are three major “systems” of making graphs in R. The basic plotting commands in R are quite effective but the commands do not have a way of being combined in easy ways. Lattice graphics (which the <code>mosaic</code> package uses) makes it possible to create some quite complicated graphs but it is very difficult to do make non-standard graphs. The last package, <code>ggplot2</code> tries to not anticipate what the user wants to do, but rather provide the mechanisms for pulling together different graphical concepts and the user gets to decide elements to combine.</p>
-<p>To make the most of ggplot2 it is important to wrap your mind around “The Grammar of Graphics”. The act of building a graph can be broken down into three steps.</p>
+<p>There are three major “systems” of making graphs in R. The basic plotting commands in R are quite effective but the commands do not have a way of being combined in easy ways. Lattice graphics (which the <code>mosaic</code> package uses) makes it possible to create some quite complicated graphs but it is very difficult to do make non-standard graphs. The last package, <code>ggplot2</code> tries to not anticipate what the user wants to do, but rather provide the mechanisms for pulling together different graphical concepts and the user gets to decide which elements to combine.</p>
+<p>To make the most of <code>ggplot2</code> it is important to wrap your mind around “The Grammar of Graphics”. Briefly, the act of building a graph can be broken down into three steps.</p>
 <ol style="list-style-type: decimal">
 <li><p>Define what data we are using.</p></li>
-<li><p>What is the major relationship we wish to examine.</p></li>
-<li><p>In what way should we present that relationship. These relationships can be presented in multiple ways, and the process of creating a good graph relies on building layers upon layers of information. For example, we might start with printing the raw data and then overlay a regression line over the top.</p></li>
+<li><p>What is the major relationship we wish to examine?</p></li>
+<li><p>In what way should we present that relationship? These relationships can be presented in multiple ways, and the process of creating a good graph relies on building layers upon layers of information. For example, we might start with printing the raw data and then overlay a regression line over the top.</p></li>
 </ol>
 <p>Next, it should be noted that <code>ggplot2</code> is designed to act on data frames. It is actually hard to just draw three data points and for simple graphs it might be easier to use the base graphing system in R. However for any real data analysis project, the data will already be in a data frame and this is not an annoyance.</p>
-<p>These notes are sufficient for creating simple graphs using <code>ggplot2</code>, but are not intended to be exhaustive. There are many places online to get help with <code>ggplot2</code>. One very nice resource is the website [<a href="http://www.cookbook-r.com/Graphs/" class="uri">http://www.cookbook-r.com/Graphs/</a>] which gives much of the information available in the book R Graphics Cookbook which I highly recommend. Second is just googling your problems and see what you can find on websites such as StackExchange.</p>
-<p>One way that <code>ggplot2</code> makes it easy to form very complicated graphs is that it provides a large number of basic building blocks that, when stacked upon each other, can produce extremely complicated graphs. A full list is available at [<a href="http://docs.ggplot2.org/current/" class="uri">http://docs.ggplot2.org/current/</a>] but the following list gives some idea of different building blocks.</p>
-<p>These different geometries are different ways to display the relationship between variables and can be combined in many interesting ways.</p>
+<p>These notes are sufficient for creating simple graphs using <code>ggplot2</code>, but are not intended to be exhaustive. There are many places online to get help with <code>ggplot2</code>. One very nice resource is the website, <a href="http://www.cookbook-r.com/Graphs/" class="uri">http://www.cookbook-r.com/Graphs/</a>, which gives much of the information available in the book R Graphics Cookbook which I highly recommend. Second is just googling your problems and see what you can find on websites such as StackExchange.</p>
+<p>One way that <code>ggplot2</code> makes it easy to form very complicated graphs is that it provides a large number of basic building blocks that, when stacked upon each other, can produce extremely complicated graphs. A full list is available at <a href="http://docs.ggplot2.org/current/" class="uri">http://docs.ggplot2.org/current/</a> but the following list gives some idea of different building blocks. These different geometries are different ways to display the relationship between variables and can be combined in many interesting ways.</p>
 <table>
 <thead>
 <tr class="header">
@@ -372,16 +371,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </table>
 <p>A graph can be built up layer by layer, where:</p>
 <ul>
-<li><p>Each layer corresponds to a <code>geom</code>, each of which requires a dataset and a mapping between an aesthetic and a column of the data set.</p>
-<p>– If you don’t specify either, then the layer inherits everything defined in the ggplot() command. – You can have different datasets for each layer!</p></li>
-<li><p>Can add layers with a <code>+</code>, or you can define two plots and add them together (second one over-writes anything that conflicts).</p></li>
+<li>Each layer corresponds to a <code>geom</code>, each of which requires a dataset and a mapping between an aesthetic and a column of the data set.
+<ul>
+<li>If you don’t specify either, then the layer inherits everything defined in the <code>ggplot()</code> command.</li>
+<li>You can have different datasets for each layer!</li>
+</ul></li>
+<li>Layers can be added with a <code>+</code>, or you can define two plots and add them together (second one over-writes anything that conflicts).</li>
 </ul>
 <div id="basic-graphs" class="section level2">
 <h2><span class="header-section-number">9.1</span> Basic Graphs</h2>
 <div id="bar-charts" class="section level3">
 <h3><span class="header-section-number">9.1.1</span> Bar Charts</h3>
 <p>Bar charts and histograms are how we think about displaying informtion about a single covariate. That is to say, we are not trying to make a graph of the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, but rather understanding what values of <span class="math inline">\(x\)</span> are present and how frequently they show up.</p>
-<p>For displaying a categorical variable on the x-axis, a bar chart is a good option. Here we consider a data set that gives the fuel efficiency of different classes of vehicles in two different years. This is a subset of data that the EPA makes available on [<a href="http://fueleconomy.gov" class="uri">http://fueleconomy.gov</a>]. It contains only model which had a new release every year between 1999 and 2008 and therefore represents the most popular cars sold in the US. It includes information for each model for years 1999 and 2008. The dataset is included in the <code>ggplot2</code> package as <code>mpg</code>.</p>
+<p>For displaying a categorical variable on the x-axis, a bar chart is a good option. Here we consider a data set that gives the fuel efficiency of different classes of vehicles in two different years. This is a subset of data that the EPA makes available on <a href="http://fueleconomy.gov" class="uri">http://fueleconomy.gov</a>. It contains only model which had a new release every year between 1999 and 2008 and therefore represents the most popular cars sold in the US. It includes information for each model for years 1999 and 2008. The dataset is included in the <code>ggplot2</code> package as <code>mpg</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(mpg, <span class="dt">package=</span><span class="st">&#39;ggplot2&#39;</span>)  <span class="co"># load the dataset</span>
 <span class="kw">str</span>(mpg)</code></pre></div>
 <pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    234 obs. of  11 variables:
@@ -396,7 +398,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##  $ hwy         : int  29 29 31 30 26 26 27 26 25 28 ...
 ##  $ fl          : chr  &quot;p&quot; &quot;p&quot; &quot;p&quot; &quot;p&quot; ...
 ##  $ class       : chr  &quot;compact&quot; &quot;compact&quot; &quot;compact&quot; &quot;compact&quot; ...</code></pre>
-<p>First we could summarize the data by how many of each model there are in the different classes.</p>
+<p>First we could summarize the data by how many models there are in the different classes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>mpg, <span class="kw">aes</span>(<span class="dt">x=</span>class)) +
 <span class="st">  </span><span class="kw">geom_bar</span>()</code></pre></div>
 <p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-153-1.png" width="672" /></p>
@@ -405,7 +407,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><p>The column in the data that we wish to investigate is defined in the <code>aes(x=class)</code> part. This means the x-axis will be the car’s class, which is indicated by the column named <code>class</code>.</p></li>
 <li><p>The way we want to display this information is using a bar chart.</p></li>
 </ol>
-<p>By default, the <code>geom_box()</code> just counts the number of cases and displays how many observations were in each class. This behavior can modified using the <code>stat=</code> option. In particular, if I have a data frame that I have already summarized, <code>stat=identity</code> will allow you to set the height of the bar.</p>
+<p>By default, the <code>geom_box()</code> just counts the number of cases and displays how many observations were in each factor level. This behavior can modified using the <code>stat=</code> option. In particular, if I have a data frame that I have already summarized, <code>stat=identity</code> will allow you to set the height of the bar.</p>
 </div>
 <div id="histograms" class="section level3">
 <h3><span class="header-section-number">9.1.2</span> Histograms</h3>
@@ -414,7 +416,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="st">  </span><span class="kw">geom_histogram</span>()</code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-154-1.png" width="672" /></p>
-<p>Just as <code>geom_bar</code> by default calculated the number of observations in each level of my factor of interest (which was <code>class</code>, <code>geom_histogram</code> breaks up my x-axis into distinct bins (by default in uses 30 bins), and then counts how many observations fall into each bin, and displys the number as a bar. To change the number of bins, we could either tell it the number of bins (e.g. <code>bins=20</code>) or the width of each bin (e.g. <code>binwidth=4</code>).</p>
+<p>Just as <code>geom_bar</code> by default calculated the number of observations in each level of my factor of interest, <code>geom_histogram</code> breaks up the x-axis into distinct bins (by default, 30 bins), and then counts how many observations fall into each bin, and displys the number as a bar. To change the number of bins, we could either tell it the number of bins (e.g. <code>bins=20</code>) or the width of each bin (e.g. <code>binwidth=4</code>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x=</span>hwy)) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">8</span>)       <span class="co"># 8 bins</span></code></pre></div>
 <p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-155-1.png" width="672" /></p>
@@ -494,11 +496,11 @@ mtcars$cyl &lt;-<span class="st"> </span><span class="kw">factor</span>(mtcars$c
 <span class="st">  </span><span class="kw">geom_point</span>() +
 <span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&#39;blue&#39;</span>, <span class="st">&#39;darkmagenta&#39;</span>, <span class="st">&#39;aquamarine&#39;</span>))</code></pre></div>
 <p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-163-1.png" width="672" /></p>
-<p>If you want to instead pick a color palette and let ggplot pick the colors to be farthest apart based on the number of factor levels, you can use <code>scale_color_manual</code> and then have the values chosen by one of the palette functions where you just have to tell it how many levels you have.</p>
+<p>If you want to instead pick a color palette and let the palette pick the colors to be farthest apart based on the number of factor levels, you can use <code>scale_color_manual</code> and then have the values chosen by one of the palette functions where you just have to tell it how many levels you have.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(colorspace)   <span class="co"># these two packages have some decent </span>
-<span class="kw">library</span>(grDevices)    <span class="co"># color palettes.</span>
+<span class="kw">library</span>(grDevices)    <span class="co"># color palettes functions.</span>
 
-<span class="kw">rainbow</span>(<span class="dv">6</span>)   <span class="co"># if you have six factor levels, what colors should we use </span></code></pre></div>
+<span class="kw">rainbow</span>(<span class="dv">6</span>)   <span class="co"># if we have six factor levels, what colors should we use? </span></code></pre></div>
 <pre><code>## [1] &quot;#FF0000FF&quot; &quot;#FFFF00FF&quot; &quot;#00FF00FF&quot; &quot;#00FFFFFF&quot; &quot;#0000FFFF&quot; &quot;#FF00FFFF&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Width, <span class="dt">y=</span>Sepal.Length, <span class="dt">color=</span>Species)) +
 <span class="st">  </span><span class="kw">geom_point</span>() +
@@ -527,7 +529,7 @@ mtcars$cyl &lt;-<span class="st"> </span><span class="kw">factor</span>(mtcars$c
 <span class="st">  </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">low =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">mid=</span><span class="st">&#39;green&#39;</span>, <span class="dt">high =</span> <span class="st">&quot;blue&quot;</span>,
                        <span class="dt">midpoint=</span><span class="dv">135</span>)</code></pre></div>
 <p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-169-1.png" width="672" /></p>
-<p>If we don’t want to specify the colors manually we can, as usual, specify the color palete. The <code>gradientn</code> functions allow us to specify a large numbers intermediate colors.</p>
+<p>If we don’t want to specify the colors manually we can, as usual, specify the color palette. The <code>gradientn</code> functions allow us to specify a large numbers intermediate colors.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( Eden, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">fill=</span>elevation)) +
 <span class="st">  </span><span class="kw">geom_tile</span>() +
 <span class="st">  </span><span class="kw">scale_fill_gradientn</span>(<span class="dt">colours =</span> <span class="kw">terrain.colors</span>(<span class="dv">5</span>))</code></pre></div>
@@ -556,7 +558,7 @@ mtcars$cyl &lt;-<span class="st"> </span><span class="kw">factor</span>(mtcars$c
 </div>
 <div id="zooming-inout" class="section level3">
 <h3><span class="header-section-number">9.2.4</span> Zooming in/out</h3>
-<p>It is often important to be able to force the graph to have a particular range in either the x-axis or the y-axis. Given a particular range of intest, there are two ways that we could this:</p>
+<p>It is often important to be able to force the graph to have a particular range in either the x-axis or the y-axis. Given a particular range of interest, there are two ways that we could this:</p>
 <ul>
 <li>Remove all data points that fall outside the range and just plot the reduced dataset. This is accomplished using the <code>xlim()</code> and <code>ylim()</code> functions, or setting either of those inside another <code>scale_XXX</code> function.</li>
 <li>Use all the data to create a graph and just zoom in/out in that graph. This is accomplished using the <code>coord_cartesian()</code> function</li>
@@ -629,7 +631,7 @@ stats</code></pre></div>
 <span class="st">  </span><span class="kw">geom_bar</span>( <span class="kw">aes</span>(<span class="dt">y=</span>Mean), <span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>, <span class="dt">fill=</span><span class="st">&#39;grey&#39;</span>, <span class="dt">width=</span>.<span class="dv">6</span>) +
 <span class="st">  </span><span class="kw">geom_errorbar</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>lwr, <span class="dt">ymax=</span>upr), <span class="dt">color=</span><span class="st">&#39;red&#39;</span>, <span class="dt">width=</span>.<span class="dv">4</span> )</code></pre></div>
 <p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-180-1.png" width="672" /></p>
-<p>The last thing to notice is that the <em>order</em> in which the different layers matter. This is similar to photoshop or GIS software where the layers added last can obscure prior layers. In the graph below, the lower part of the error bar is obscured by the grey bar.</p>
+<p>The last thing to notice is that the <em>order</em> in which the different layers matter. This is similar to Photoshop or GIS software where the layers added last can obscure prior layers. In the graph below, the lower part of the error bar is obscured by the grey bar.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(stats, <span class="kw">aes</span>(<span class="dt">x=</span>Species)) +
 <span class="st">  </span><span class="kw">geom_errorbar</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>lwr, <span class="dt">ymax=</span>upr), <span class="dt">color=</span><span class="st">&#39;red&#39;</span>, <span class="dt">width=</span>.<span class="dv">4</span> ) +
 <span class="st">  </span><span class="kw">geom_bar</span>( <span class="kw">aes</span>(<span class="dt">y=</span>Mean), <span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>, <span class="dt">fill=</span><span class="st">&#39;grey&#39;</span>, <span class="dt">width=</span>.<span class="dv">6</span>)</code></pre></div>
@@ -661,7 +663,7 @@ plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <spa
 </div>
 <div id="discrete-distributions" class="section level4">
 <h4><span class="header-section-number">9.3.3.2</span> Discrete distributions</h4>
-<p>The idea for discrete distributions will be to draw points for the height and then add bars. Lets look at doing this for the poisson distribution with rate parameter <span class="math inline">\(\lambda=2\)</span>.</p>
+<p>The idea for discrete distributions will be to draw points for the height and then add bars. Lets look at doing this for the Poisson distribution with rate parameter <span class="math inline">\(\lambda=2\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">x=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>) ) %&gt;%
 <span class="st">  </span><span class="kw">mutate</span>( <span class="dt">probability =</span> <span class="kw">dpois</span>(x, <span class="dt">lambda=</span><span class="dv">2</span>) )
 
@@ -681,7 +683,7 @@ plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <spa
 <li>Create a graph using ggplot2 with Height on the x-axis, Volume on the y-axis, and Girth as the either the size of the data point or the color of the data point. Which do you think is a more intuitive representation?</li>
 <li>Add appropriate labels for the main title and the x and y axes.</li>
 </ol></li>
-<li><p>Consider the following small dataset that represents the number of times per day my wife played “Ring around the Rosy” with my daughter relative to the number of days since she has learned this game. The column yhat represents the best fitting line through the data, and lwr and upr represent a 95% confidence interval for the predicted value on that day.</p>
+<li><p>Consider the following small dataset that represents the number of times per day my wife played “Ring around the Rosy” with my daughter relative to the number of days since she has learned this game. The column <code>yhat</code> represents the best fitting line through the data, and <code>lwr</code> and <code>upr</code> represent a 95% confidence interval for the predicted value on that day.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Rosy &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
   <span class="dt">times =</span> <span class="kw">c</span>(<span class="dv">15</span>, <span class="dv">11</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>),
   <span class="dt">day   =</span> <span class="dv">1</span>:<span class="dv">7</span>,
@@ -691,14 +693,14 @@ plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <spa
 <ol style="list-style-type: lower-alpha">
 <li><p>Using <code>ggplot()</code> and <code>geom_point()</code>, create a scatterplot with <code>day</code> along the x-axis and <code>times</code> along the y-axis.</p></li>
 <li><p>Add a line to the graph where the x-values are the <code>day</code> values but now the y-values are the predicted values which we’ve called <code>yhat</code>. Notice that you have to set the aesthetic y=times for the points and y=yhat for the line. Because each <code>geom_</code> will accept an <code>aes()</code> command, you can specify the <code>y</code> attribute to be different for different layers of the graph.</p></li>
-<li><p>Add a ribbon that represents the confidence region of the regression line. The <code>geom_ribbon()</code> function requires an <code>x</code>, <code>ymin</code>, and <code>ymax</code> columns to be defined. For examples of using <code>geom_ribbon()</code> see the online documentation: [<a href="http://docs.ggplot2.org/current/geom_ribbon.html" class="uri">http://docs.ggplot2.org/current/geom_ribbon.html</a>].</p>
+<li><p>Add a ribbon that represents the confidence region of the regression line. The <code>geom_ribbon()</code> function requires an <code>x</code>, <code>ymin</code>, and <code>ymax</code> columns to be defined. For examples of using <code>geom_ribbon()</code> see the online documentation: <a href="http://docs.ggplot2.org/current/geom_ribbon.html" class="uri">http://docs.ggplot2.org/current/geom_ribbon.html</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(Rosy, <span class="kw">aes</span>(<span class="dt">x=</span>day)) +
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y=</span>times)) +
 <span class="st">  </span><span class="kw">geom_line</span>( <span class="kw">aes</span>(<span class="dt">y=</span>yhat)) +
 <span class="st">  </span><span class="kw">geom_ribbon</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>lwr, <span class="dt">ymax=</span>upr), <span class="dt">fill=</span><span class="st">&#39;salmon&#39;</span>)</code></pre></div></li>
 <li>What happened when you added the ribbon? Did some points get hidden? If so, why?</li>
 <li>Reorder the statements that created the graph so that the ribbon is on the bottom and the data points are on top and the regression line is visible.</li>
-<li>The color of the ribbon fill is ugly. Use google to find a list of named colors available to <code>ggplot2</code>. For example, I googled “ggplot2 named colors” and found the following link: [<a href="http://sape.inf.usi.ch/quick-reference/ggplot2/colour" class="uri">http://sape.inf.usi.ch/quick-reference/ggplot2/colour</a>]. Choose a color for the fill that is pleasing to you.</li>
+<li>The color of the ribbon fill is ugly. Use Google to find a list of named colors available to <code>ggplot2</code>. For example, I googled “ggplot2 named colors” and found the following link: <a href="http://sape.inf.usi.ch/quick-reference/ggplot2/colour" class="uri">http://sape.inf.usi.ch/quick-reference/ggplot2/colour</a>. Choose a color for the fill that is pleasing to you.</li>
 <li><p>Add labels for the x-axis and y-axis that are appropriate along with a main title.</p></li>
 </ol></li>
 <li><p>The R package <code>babynames</code> contains a single dataset that lists the number of children registered with Social Security with a particular name along with the proportion out of all children born in a given year. The dataset covers the from 1880 to the present. We want to plot the relative popularity of the names ‘Elise’ and ‘Casey’.</p>
@@ -721,7 +723,7 @@ plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <spa
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(small, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>prop, <span class="dt">fill=</span>name)) +<span class="st"> </span>
 <span class="st">   </span><span class="kw">geom_area</span>()</code></pre></div>
-<p>This is a pretty neat graph as it show the relative popularity of the name over time and can easily be expanded to many many names. In fact, there is a wonderful website that takes this same data and allows you select the names quite nicely: [<a href="http://www.babynamewizard.com/voyager" class="uri">http://www.babynamewizard.com/voyager</a>]. My wife and I used this a lot while figuring out what to name our children. Notice that this site really uses the same graph type we just built but there are a few extra neat interactivity tricks.</p></li>
+<p>This is a pretty neat graph as it show the relative popularity of the name over time and can easily be expanded to many many names. In fact, there is a wonderful website that takes this same data and allows you select the names quite nicely: <a href="http://www.babynamewizard.com/voyager" class="uri">http://www.babynamewizard.com/voyager</a>. My wife and I used this a lot while figuring out what to name our children. Notice that this site really uses the same graph type we just built but there are a few extra neat interactivity tricks.</p></li>
 </ol>
 
 </div>
