@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-23">
+<meta name="date" content="2017-11-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -307,10 +307,10 @@ grade.book</code></pre></div>
 <li><p><code>spread</code> - This is the opposite of gather. This takes a key column (or columns) and a results column and forms a new column for each level of the key column(s).</p></li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first we gather the score columns into columns we&#39;ll name Assesment and Score</span>
-tidy.scores &lt;-<span class="st"> </span>grade.book %&gt;%<span class="st"> </span>
+tidy.scores &lt;-<span class="st"> </span>grade.book <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">gather</span>( <span class="dt">key=</span>Assessement,  <span class="co"># What should I call the key column</span>
           <span class="dt">value=</span>Score,      <span class="co"># What should I call the values column</span>
-          HW<span class="fl">.1</span>:HW<span class="fl">.4</span>         <span class="co"># which columns to apply this to</span>
+          HW.<span class="dv">1</span><span class="op">:</span>HW.<span class="dv">4</span>         <span class="co"># which columns to apply this to</span>
           )
 tidy.scores</code></pre></div>
 <pre><code>##       name Assessement Score
@@ -328,7 +328,7 @@ tidy.scores</code></pre></div>
 ## 12 Charles        HW.4    10</code></pre>
 <p>To spread the key:value pairs out into a matrix, we use the <code>spread()</code> command.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Turn the Assessment/Score pair of columns into one column per factor level of Assessment</span>
-tidy.scores %&gt;%<span class="st"> </span><span class="kw">spread</span>( <span class="dt">key=</span>Assessement, <span class="dt">value=</span>Score )</code></pre></div>
+tidy.scores <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>( <span class="dt">key=</span>Assessement, <span class="dt">value=</span>Score )</code></pre></div>
 <pre><code>##      name HW.1 HW.2 HW.3 HW.4
 ## 1  Alison    8    5    8    4
 ## 2 Brandon    5    3    6    9
@@ -404,12 +404,12 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <pre><code>## # A tibble: 6 x 2
 ##   Lake_ID Fish.Weight
 ##     &lt;chr&gt;       &lt;dbl&gt;
-## 1       A    274.0906
-## 2       A    229.6238
-## 3       B    266.5001
-## 4       B    250.2341
-## 5       C    274.6288
-## 6       C    234.5745</code></pre>
+## 1       A    325.4581
+## 2       A    267.4397
+## 3       B    258.9545
+## 4       B    239.6195
+## 5       C    238.0742
+## 6       C    224.7929</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Lake.Data</code></pre></div>
 <pre><code>## # A tibble: 3 x 5
 ##   Lake_ID   Lake_Name    pH  area avg_depth
@@ -423,12 +423,12 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <pre><code>## # A tibble: 7 x 6
 ##   Lake_ID Fish.Weight   Lake_Name    pH  area avg_depth
 ##     &lt;chr&gt;       &lt;dbl&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-## 1       A    274.0906        &lt;NA&gt;    NA    NA        NA
-## 2       A    229.6238        &lt;NA&gt;    NA    NA        NA
-## 3       B    266.5001 Lake Elaine   6.5    40         8
-## 4       B    250.2341 Lake Elaine   6.5    40         8
-## 5       C    274.6288 Mormon Lake   6.3   210        10
-## 6       C    234.5745 Mormon Lake   6.3   210        10
+## 1       A    325.4581        &lt;NA&gt;    NA    NA        NA
+## 2       A    267.4397        &lt;NA&gt;    NA    NA        NA
+## 3       B    258.9545 Lake Elaine   6.5    40         8
+## 4       B    239.6195 Lake Elaine   6.5    40         8
+## 5       C    238.0742 Mormon Lake   6.3   210        10
+## 6       C    224.7929 Mormon Lake   6.3   210        10
 ## 7       D          NA   Lake Mary   6.1   240        38</code></pre>
 <p>Notice that because we didn’t have any fish caught in lake <code>D</code> and we don’t have any Lake information about lake <code>A</code>, when we join these two tables, we end up introducing missing observations into the resulting data frame.</p>
 <p>The other types of joins govern the behavor or these missing data.</p>
@@ -439,21 +439,21 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <pre><code>## # A tibble: 6 x 6
 ##   Lake_ID Fish.Weight   Lake_Name    pH  area avg_depth
 ##     &lt;chr&gt;       &lt;dbl&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-## 1       A    274.0906        &lt;NA&gt;    NA    NA        NA
-## 2       A    229.6238        &lt;NA&gt;    NA    NA        NA
-## 3       B    266.5001 Lake Elaine   6.5    40         8
-## 4       B    250.2341 Lake Elaine   6.5    40         8
-## 5       C    274.6288 Mormon Lake   6.3   210        10
-## 6       C    234.5745 Mormon Lake   6.3   210        10</code></pre>
+## 1       A    325.4581        &lt;NA&gt;    NA    NA        NA
+## 2       A    267.4397        &lt;NA&gt;    NA    NA        NA
+## 3       B    258.9545 Lake Elaine   6.5    40         8
+## 4       B    239.6195 Lake Elaine   6.5    40         8
+## 5       C    238.0742 Mormon Lake   6.3   210        10
+## 6       C    224.7929 Mormon Lake   6.3   210        10</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inner_join</span>(Fish.Data, Lake.Data)</code></pre></div>
 <pre><code>## Joining, by = &quot;Lake_ID&quot;</code></pre>
 <pre><code>## # A tibble: 4 x 6
 ##   Lake_ID Fish.Weight   Lake_Name    pH  area avg_depth
 ##     &lt;chr&gt;       &lt;dbl&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-## 1       B    266.5001 Lake Elaine   6.5    40         8
-## 2       B    250.2341 Lake Elaine   6.5    40         8
-## 3       C    274.6288 Mormon Lake   6.3   210        10
-## 4       C    234.5745 Mormon Lake   6.3   210        10</code></pre>
+## 1       B    258.9545 Lake Elaine   6.5    40         8
+## 2       B    239.6195 Lake Elaine   6.5    40         8
+## 3       C    238.0742 Mormon Lake   6.3   210        10
+## 4       C    224.7929 Mormon Lake   6.3   210        10</code></pre>
 <p>The above examples assumed that the column used to join the two tables was named the same in both tables. This is good practice to try to do, but sometimes you have to work with data where that isn’t the case. In that situation you can use the <code>by=c(&quot;ColName.A&quot;=&quot;ColName.B&quot;)</code> syntax where <code>ColName.A</code> represents the name of the column in the first data frame and <code>ColName.B</code> is the equivalent column in the second data frame.</p>
 </div>
 <div id="exercises-7" class="section level2">
@@ -472,7 +472,7 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <li>A common task is to take a set of data that has multiple categorical variables and create a table of the number of cases for each combination. An introductory statistics textbook contains a dataset summarizing student surveys from several sections of an intro class. The two variables of interest for us are <code>Gender</code> and <code>Year</code> which are the students gender and year in college.
 <ol style="list-style-type: lower-alpha">
 <li><p>Download the dataset and correctly order the <code>Year</code> variable using the following:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Survey &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;http://www.lock5stat.com/datasets/StudentSurvey.csv&#39;</span>, <span class="dt">na.strings=</span><span class="kw">c</span>(<span class="st">&#39;&#39;</span>,<span class="st">&#39; &#39;</span>)) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Survey &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;http://www.lock5stat.com/datasets/StudentSurvey.csv&#39;</span>, <span class="dt">na.strings=</span><span class="kw">c</span>(<span class="st">&#39;&#39;</span>,<span class="st">&#39; &#39;</span>)) <span class="op">%&gt;%</span>
 <span class="st">   </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">factor</span>(Year, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;FirstYear&#39;</span>,<span class="st">&#39;Sophomore&#39;</span>,<span class="st">&#39;Junior&#39;</span>,<span class="st">&#39;Senior&#39;</span>)))</code></pre></div></li>
 <li>Using some combination of <code>dplyr</code> functions, produce a data set with eight rows that contains the number of responses for each gender:year combination. <em>Notice there are two females that neglected to give their Year and you should remove them first. The function <code>is.na(Year)</code> will return logical values indicating if the Year value was missing and you can flip those values using the negation operator <code>!</code>. So you might consider using <code>!is.na(Year)</code> as the argument to a <code>filter()</code> command. Alternatively you could sort on <code>Year</code> and remove the first two rows using <code>slice(-2:-1)</code>. Next you’ll want to summarize each Year/Gender group using the <code>n()</code> function which gives the number of rows in a data set.</em></li>
 <li><p>Using <code>tidyr</code> commands, produce a table of the number of responses in the following form:</p>

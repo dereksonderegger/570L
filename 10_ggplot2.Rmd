@@ -37,16 +37,16 @@ One way that `ggplot2` makes it easy to form very complicated graphs is that it 
 
  Geom	             |    Description	                                    |   Required Aesthetics
 -------------------|----------------------------------------------------|-----------------------
-`geom_bar`         |	A barplot                                         |	`x`
-`geom_boxplot`     | 	Boxplots                                          | `x`
-`geom_density`     | 	A smoothed histogram                              |	`x`
-`geom_errorbar`    |	Error bars	                                      | `ymin, ymax`
 `geom_histogram`	 |  A histogram                                       |	`x`
+`geom_bar`         |	A barplot                                         |	`x`
+`geom_density`     |  A density plot of data. (smoothed histogram)      | `x`
+`geom_boxplot`     | 	Boxplots                                          | `x, y`
 `geom_line`	       |  Draw a line (after sorting x-values)	            | `x, y`
 `geom_path`	       |  Draw a line (without sorting x-values)	          | `x, y`
 `geom_point`	     |  Draw points (for a scatterplot)	                  | `x, y`
-`geom_ribbon`	     |  Enclose a region, and color the interior          |	`ymin, ymax`
 `geom_smooth`	     |  Add a ribbon that summarizes a scatterplot	      | `x, y`
+`geom_ribbon`	     |  Enclose a region, and color the interior          |	`ymin, ymax`
+`geom_errorbar`    |	Error bars	                                      | `ymin, ymax`
 `geom_text`	       |  Add text to a graph	                              | `x, y, label`
 `geom_label`	     |  Add text to a graph	                              | `x, y, label`
 `geom_tile`        |  Create Heat map                                   | `x, y, fill`

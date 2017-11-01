@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-23">
+<meta name="date" content="2017-11-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -383,8 +383,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.2</span> p-function</h3>
 <p>Often we are interested in the probability of observing some value or anything less (In probability theory, we call this the cumulative density function or CDF). P-values will be calculated this way, so we want a nice easy way to do this.</p>
 <p>To start our example with the binomial distribution, again let <span class="math inline">\(X\sim Binomial\left(n=10,\pi=0.2\right)\)</span>. Suppose I want to know what the probability of observing a 0, 1, or 2? That is, what is <span class="math inline">\(P\left(X\le2\right)\)</span>? I could just find the probability of each and add them up.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbinom</span>(<span class="dv">0</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">2</span>)   +<span class="st">       </span><span class="co">#   P(X==0) +</span>
-<span class="st">  </span><span class="kw">dbinom</span>(<span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">2</span>) +<span class="st">       </span><span class="co">#     P(X==1) +</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbinom</span>(<span class="dv">0</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">2</span>)   <span class="op">+</span><span class="st">       </span><span class="co">#   P(X==0) +</span>
+<span class="st">  </span><span class="kw">dbinom</span>(<span class="dv">1</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">2</span>) <span class="op">+</span><span class="st">       </span><span class="co">#     P(X==1) +</span>
 <span class="st">  </span><span class="kw">dbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">2</span>)         <span class="co">#     P(X==2)</span></code></pre></div>
 <pre><code>## [1] 0.6777995</code></pre>
 <p>but this would get tedious for binomial distributions with a large number of trials. The shortcut is to use the <code>pbinom()</code> function.</p>
@@ -393,13 +393,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>For discrete distributions, you must be careful because R will give you the probability of less than or equal to 2. If you wanted less than two, you should use <code>dbinom(1,10,.2)</code>.</p>
 <p>The normal distribution works similarly. Suppose for <span class="math inline">\(Z\sim N\left(0,1\right)\)</span> and we wanted to know <span class="math inline">\(P\left(Z\le-1\right)\)</span>? <img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <p>The answer is easily found via <code>pnorm()</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pnorm</span>(-<span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pnorm</span>(<span class="op">-</span><span class="dv">1</span>)</code></pre></div>
 <pre><code>## [1] 0.1586553</code></pre>
 <p>Notice for continuous random variables, the probability <span class="math inline">\(P\left(Z=-1\right)=0\)</span> so we can ignore the issue of “less than” vs “less than or equal to”.</p>
 <p>Often times we will want to know the probability of greater than some value. That is, we might want to find <span class="math inline">\(P\left(Z \ge -1\right)\)</span>. For the normal distribution, there are a number of tricks we could use. Notably <span class="math display">\[P\left(Z\ge-1\right)  =   P\left(Z\le1\right)=1-P\left(Z&lt;-1\right)\]</span> but sometimes I’m lazy and would like to tell R to give me the area to the right instead of area to the left (which is the default). This can be done by setting the argument <span class="math inline">\(lower.tail=FALSE\)</span>.</p>
 <p>The <code>mosaic</code> package includes an augmented version of the <code>pnorm()</code> function called <code>xpnorm()</code> that calculates the same number but includes some extra information and produces a pretty graph to help us understand what we just calculated and do the tedious “1 minus” calculation to find the upper area. Fortunately this x-variant exists for the Normal, Chi-squared, F, Gamma continuous distributions and the discrete Poisson, Geometric, and Binomial distributions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mosaic)
-<span class="kw">xpnorm</span>(-<span class="dv">1</span>)</code></pre></div>
+<span class="kw">xpnorm</span>(<span class="op">-</span><span class="dv">1</span>)</code></pre></div>
 <pre><code>## </code></pre>
 <pre><code>## If X ~ N(0, 1), then</code></pre>
 <pre><code>##  P(X &lt;= -1) = P(Z &lt;= -1) = 0.1587</code></pre>
@@ -412,7 +412,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.3</span> <code>q</code>-function</h3>
 <p>In class, we will also find ourselves asking for the quantiles of a distribution. Percentiles are by definition 1/100, 2/100, etc but if I am interested in something that isn’t and even division of 100, we get fancy can call them quantiles. This is a small semantic quibble, but we ought to be precise. That being said, I won’t correct somebody if they call these percentiles. For example, I might want to find the 0.30 quantile, which is the value such that 30% of the distribution is less than it, and 70% is greater. Mathematically, I wish to find the value <span class="math inline">\(z\)</span> such that <span class="math inline">\(P(Z&lt;z)=0.30\)</span>.</p>
 <p>To find this value in the tables in a book, we use the table in reverse. R gives us a handy way to do this with the <code>qnorm()</code> function and the mosaic package provides a nice visualization using the augmented <code>xqnorm()</code>. Below, I specify that I’m using a function in the <code>mosaic</code> package by specifying it via <code>PackageName::FunctionName()</code> but that isn’t strictly necessary but can improve readability of your code.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mosaic::<span class="kw">xqnorm</span>(<span class="fl">0.30</span>)   <span class="co"># Give me the value along with a pretty picture</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mosaic<span class="op">::</span><span class="kw">xqnorm</span>(<span class="fl">0.30</span>)   <span class="co"># Give me the value along with a pretty picture</span></code></pre></div>
 <pre><code>## </code></pre>
 <pre><code>## If X ~ N(0, 1), then</code></pre>
 <pre><code>##  P(X &lt;= -0.5244005) = 0.3</code></pre>
@@ -427,9 +427,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">3.2.4</span> r-function</h3>
 <p>Finally, I often want to be able to generate random data from a particular distribution. R does this with the r-function. The first argument to this function the number of random variables to draw and any remaining arguments are the parameters of the distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">20</span>, <span class="dt">sd=</span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 21.70394 19.93504 20.67622 17.45005 19.58323</code></pre>
+<pre><code>## [1] 18.03185 14.02379 18.44912 20.06135 18.87234</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbinom</span>(<span class="dv">4</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span>.<span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1] 7 8 9 8</code></pre>
+<pre><code>## [1]  9  8  9 10</code></pre>
 </div>
 </div>
 <div id="exercises-2" class="section level2">

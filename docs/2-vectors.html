@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-23">
+<meta name="date" content="2017-11-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -295,7 +295,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## [1] 1 2 3 4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">4</span>)        <span class="co"># &#39;by&#39; has a default of 1   </span></code></pre></div>
 <pre><code>## [1] 1 2 3 4</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>:<span class="dv">4</span>             <span class="co"># a shortcut for seq(1,4)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>             <span class="co"># a shortcut for seq(1,4)</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">5</span>, <span class="dt">by=</span>.<span class="dv">5</span>)</code></pre></div>
 <pre><code>## [1] 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0</code></pre>
@@ -319,12 +319,12 @@ vec3</code></pre></div>
 <p>This subscripting notation can get more complicated. For example I might want the 2nd and 3rd element or the 3rd through 5th elements.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foo[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)]  <span class="co"># elements 2 and 3</span></code></pre></div>
 <pre><code>## [1] &quot;B&quot; &quot;C&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foo[ <span class="dv">3</span>:<span class="dv">5</span> ]   <span class="co"># elements 3 to 5</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foo[ <span class="dv">3</span><span class="op">:</span><span class="dv">5</span> ]   <span class="co"># elements 3 to 5</span></code></pre></div>
 <pre><code>## [1] &quot;C&quot; &quot;D&quot; &quot;F&quot;</code></pre>
 <p>Finally, I might be interested in getting the entire vector except for a certain element. To do this, R allows us to use the square bracket notation with a negative index number.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foo[-<span class="dv">1</span>]          <span class="co"># everything but the first element</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foo[<span class="op">-</span><span class="dv">1</span>]          <span class="co"># everything but the first element</span></code></pre></div>
 <pre><code>## [1] &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;F&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foo[ -<span class="dv">1</span>*<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>) ] <span class="co"># everything but the first two elements</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foo[ <span class="op">-</span><span class="dv">1</span><span class="op">*</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>) ] <span class="co"># everything but the first two elements</span></code></pre></div>
 <pre><code>## [1] &quot;C&quot; &quot;D&quot; &quot;F&quot;</code></pre>
 <p>Now is a good time to address what is the <code>[1]</code> doing in our output? Because vectors are often very long and might span multiple lines, R is trying to help us by telling us the index number of the left most value. If we have a very long vector, the second line of values will start with the index of the first value on the second line.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The letters vector is a vector of all 26 lower-case letters</span>
@@ -336,7 +336,7 @@ letters</code></pre></div>
 <div id="scalar-functions-applied-to-vectors" class="section level2">
 <h2><span class="header-section-number">2.2</span> Scalar Functions Applied to Vectors</h2>
 <p>It is very common to want to perform some operation on all the elements of a vector simultaneously. For example, I might want take the absolute value of every element. Functions that are inherently defined on single values will almost always apply the function to each element of the vector if given a vector.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>-<span class="dv">5</span>:<span class="dv">5</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">5</span><span class="op">:</span><span class="dv">5</span>
 x</code></pre></div>
 <pre><code>##  [1] -5 -4 -3 -2 -1  0  1  2  3  4  5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">abs</span>(x)</code></pre></div>
@@ -349,15 +349,15 @@ x</code></pre></div>
 <div id="vector-algebra" class="section level2">
 <h2><span class="header-section-number">2.3</span> Vector Algebra</h2>
 <p>All algebra done with vectors will be done element-wise by default.For matrix and vector multiplication as usually defined by mathematicians, use <code>%*%</code> instead of <code>*</code>. So two vectors added together result in their individual elements being summed.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">4</span>
-y &lt;-<span class="st"> </span><span class="dv">5</span>:<span class="dv">8</span>
-x +<span class="st"> </span>y</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>
+y &lt;-<span class="st"> </span><span class="dv">5</span><span class="op">:</span><span class="dv">8</span>
+x <span class="op">+</span><span class="st"> </span>y</code></pre></div>
 <pre><code>## [1]  6  8 10 12</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x *<span class="st"> </span>y</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">*</span><span class="st"> </span>y</code></pre></div>
 <pre><code>## [1]  5 12 21 32</code></pre>
 <p>R does another trick when doing vector algebra. If the lengths of the two vectors don’t match, R will recycle the elements of the shorter vector to come up with vector the same length as the longer. This is potentially confusing, but is most often used when adding a long vector to a vector of length 1.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">4</span>
-x +<span class="st"> </span><span class="dv">1</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>
+x <span class="op">+</span><span class="st"> </span><span class="dv">1</span></code></pre></div>
 <pre><code>## [1] 2 3 4 5</code></pre>
 </div>
 <div id="commonly-used-vector-functions" class="section level2">
@@ -409,16 +409,16 @@ x +<span class="st"> </span><span class="dv">1</span></code></pre></div>
 xbar &lt;-<span class="st"> </span><span class="kw">mean</span>(x)         <span class="co"># calculate the mean</span>
 xbar</code></pre></div>
 <pre><code>## [1] 6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x -<span class="st"> </span>xbar                <span class="co"># calculate the errors </span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">-</span><span class="st"> </span>xbar                <span class="co"># calculate the errors </span></code></pre></div>
 <pre><code>## [1] -4 -2  0  2  4</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(x-xbar)^<span class="dv">2</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(x<span class="op">-</span>xbar)<span class="op">^</span><span class="dv">2</span></code></pre></div>
 <pre><code>## [1] 16  4  0  4 16</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>( (x-xbar)^<span class="dv">2</span> )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>( (x<span class="op">-</span>xbar)<span class="op">^</span><span class="dv">2</span> )</code></pre></div>
 <pre><code>## [1] 40</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="kw">length</span>(x)          <span class="co"># how many data points do we have</span>
 n</code></pre></div>
 <pre><code>## [1] 5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>((x-xbar)^<span class="dv">2</span>)/(n<span class="dv">-1</span>)   <span class="co"># calculating the variance by hand</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>((x<span class="op">-</span>xbar)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span>(n<span class="op">-</span><span class="dv">1</span>)   <span class="co"># calculating the variance by hand</span></code></pre></div>
 <pre><code>## [1] 10</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(x)                  <span class="co"># Same thing using the built-in variance function</span></code></pre></div>
 <pre><code>## [1] 10</code></pre>

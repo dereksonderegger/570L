@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-23">
+<meta name="date" content="2017-11-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -286,14 +286,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">11.1</span> Decision statements</h2>
 <p>An if statement takes on the following two formats</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simplest version</span>
-if( logical ){
+<span class="cf">if</span>( logical ){
   expression        <span class="co"># can be many lines of code</span>
 }
 
 <span class="co"># Including the optional else</span>
-if( logical ){
+<span class="cf">if</span>( logical ){
   expression
-}else{
+}<span class="cf">else</span>{
   expression
 }</code></pre></div>
 <p>where the else part is optional.</p>
@@ -301,26 +301,26 @@ if( logical ){
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Flip the coin, and we get a 0 or 1</span>
 result &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dt">n=</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.5</span>)
 result</code></pre></div>
-<pre><code>## [1] 0</code></pre>
+<pre><code>## [1] 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># convert the 0/1 to Tail/Head</span>
-if( result ==<span class="st"> </span><span class="dv">0</span> ){
+<span class="cf">if</span>( result <span class="op">==</span><span class="st"> </span><span class="dv">0</span> ){
   result &lt;-<span class="st"> &#39;Tail&#39;</span>
-}else{
+}<span class="cf">else</span>{
   result &lt;-<span class="st"> &#39;Head&#39;</span>
 }
 
 result</code></pre></div>
-<pre><code>## [1] &quot;Tail&quot;</code></pre>
+<pre><code>## [1] &quot;Head&quot;</code></pre>
 <p>What is happening is that the test expression inside the <code>if()</code> is evaluated and if it is true, then the subsequent statement is executed. If the test expression is false, the next statement is skipped. The way the R language is defined, only the first statement after the if statement is executed (or skipped) depending on the test expression. If we want multiple statements to be executed (or skipped), we will wrap those expressions in curly brackets <code>{ }</code>. I find it easier to follow the <code>if else</code> logic when I see the curly brackets so I use them even when there is only one expression to be executed. Also notice that the RStudio editor indents the code that might be skipped to try help give you a hint that it will be conditionally evaluated.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Flip the coin, and we get a 0 or 1</span>
 result &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dt">n=</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.5</span>)
 result</code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># convert the 0/1 to Tail/Head</span>
-if( result ==<span class="st"> </span><span class="dv">0</span> ){
+<span class="cf">if</span>( result <span class="op">==</span><span class="st"> </span><span class="dv">0</span> ){
   result &lt;-<span class="st"> &#39;Tail&#39;</span>
   <span class="kw">print</span>(<span class="st">&quot; in the if statement, got a Tail! &quot;</span>)
-}else{
+}<span class="cf">else</span>{
   result &lt;-<span class="st"> &#39;Head&#39;</span>
   <span class="kw">print</span>(<span class="st">&quot;In the else part!&quot;</span>) 
 }</code></pre></div>
@@ -331,13 +331,13 @@ if( result ==<span class="st"> </span><span class="dv">0</span> ){
 <p>Finally we can nest if else statements together to allow you to write code that has many different execution routes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># randomly grab a number between 0,5 and round it up to 1,2, ..., 5</span>
 birth.order &lt;-<span class="st"> </span><span class="kw">ceiling</span>( <span class="kw">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">5</span>) )  
-if( birth.order ==<span class="st"> </span><span class="dv">1</span> ){
+<span class="cf">if</span>( birth.order <span class="op">==</span><span class="st"> </span><span class="dv">1</span> ){
   <span class="kw">print</span>(<span class="st">&#39;The first child had more rules to follow&#39;</span>)
-}else if( birth.order ==<span class="st"> </span><span class="dv">2</span> ){
+}<span class="cf">else</span> <span class="cf">if</span>( birth.order <span class="op">==</span><span class="st"> </span><span class="dv">2</span> ){
   <span class="kw">print</span>(<span class="st">&#39;The second child was ignored&#39;</span>)
-}else if( birth.order ==<span class="st"> </span><span class="dv">3</span> ){
+}<span class="cf">else</span> <span class="cf">if</span>( birth.order <span class="op">==</span><span class="st"> </span><span class="dv">3</span> ){
   <span class="kw">print</span>(<span class="st">&#39;The third child was spoiled&#39;</span>)
-}else{
+}<span class="cf">else</span>{
   <span class="co"># if birth.order is anything other than 1, 2 or 3</span>
   <span class="kw">print</span>(<span class="st">&#39;No more unfounded generalizations!&#39;</span>)
 }</code></pre></div>
@@ -352,21 +352,21 @@ n  &lt;-<span class="st"> </span><span class="dv">20</span>   <span class="co">#
 x  &lt;-<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean=</span><span class="dv">2</span>, <span class="dt">sd=</span><span class="dv">1</span>)
 
 <span class="co"># testing H0: mu = 0  vs Ha: mu =/= 0</span>
-t  &lt;-<span class="st"> </span>( <span class="kw">mean</span>(x) -<span class="st"> </span><span class="dv">0</span> ) /<span class="st"> </span>( <span class="kw">sd</span>(x)/<span class="kw">sqrt</span>(n) )
-df &lt;-<span class="st"> </span>n<span class="dv">-1</span>
-if( t &lt;<span class="st"> </span><span class="dv">0</span> ){
-  p.value &lt;-<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">pt</span>(t, df)
-}else{
-  p.value &lt;-<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span><span class="kw">pt</span>(t, df))
+t  &lt;-<span class="st"> </span>( <span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span><span class="dv">0</span> ) <span class="op">/</span><span class="st"> </span>( <span class="kw">sd</span>(x)<span class="op">/</span><span class="kw">sqrt</span>(n) )
+df &lt;-<span class="st"> </span>n<span class="op">-</span><span class="dv">1</span>
+<span class="cf">if</span>( t <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> ){
+  p.value &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">pt</span>(t, df)
+}<span class="cf">else</span>{
+  p.value &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(t, df))
 }
 
 <span class="co"># print the resulting p-value</span>
 p.value</code></pre></div>
-<pre><code>## [1] 2.656827e-09</code></pre>
+<pre><code>## [1] 4.246747e-08</code></pre>
 <p>This sort of logic is necessary for the calculation of p-values and so something similar is found somewhere inside the <code>t.test()</code> function.</p>
 <p>When my code expressions in the if/else sections are short, I can use the command <code>ifelse()</code> that is a little more space efficient and responds correctly to vectors. The syntax is <code>ifelse( logical.expression, TrueValue, FalseValue )</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
-<span class="kw">ifelse</span>( x &lt;=<span class="st"> </span><span class="dv">5</span>, <span class="st">&#39;Small Value&#39;</span>, <span class="st">&#39;Large Value&#39;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>
+<span class="kw">ifelse</span>( x <span class="op">&lt;=</span><span class="st"> </span><span class="dv">5</span>, <span class="st">&#39;Small Value&#39;</span>, <span class="st">&#39;Large Value&#39;</span>)</code></pre></div>
 <pre><code>##  [1] &quot;Small Value&quot; &quot;Small Value&quot; &quot;Small Value&quot; &quot;Small Value&quot; &quot;Small Value&quot;
 ##  [6] &quot;Large Value&quot; &quot;Large Value&quot; &quot;Large Value&quot; &quot;Large Value&quot; &quot;Large Value&quot;</code></pre>
 </div>
@@ -377,18 +377,18 @@ p.value</code></pre></div>
 <h3><span class="header-section-number">11.2.1</span> <code>while</code> Loops</h3>
 <p>The basic form of a <code>while</code> loop is as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># while loop with 1 line</span>
-while( logical )
+<span class="cf">while</span>( logical )
   expression   <span class="co"># One line of R-code</span>
 
 <span class="co"># while loop with multiple lines to be repeated</span>
-while( logical ){
+<span class="cf">while</span>( logical ){
   expression1      <span class="co"># multiple lines of R code</span>
   expression2
 }</code></pre></div>
 <p>The computer will first evaluate the test expression. If it is true, it will execute the code once. It will then evaluate the test expression again to see if it is still true, and if so it will execute the code section a third time. The computer will continue with this process until the test expression finally evaluates as false.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">2</span>
-while( x &lt;<span class="st"> </span><span class="dv">100</span> ){
-  x &lt;-<span class="st"> </span><span class="dv">2</span>*x
+<span class="cf">while</span>( x <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span> ){
+  x &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>x
   <span class="kw">print</span>(x)
 }</code></pre></div>
 <pre><code>## [1] 4
@@ -400,7 +400,7 @@ while( x &lt;<span class="st"> </span><span class="dv">100</span> ){
 <p>It is very common to forget to update the variable used in the test expression. In that case the test expression will never be false and the computer will never stop. This unfortunate situation is called an <em>infinite loop</em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Example of an infinite loop!  Do not Run!</span>
 x &lt;-<span class="st"> </span><span class="dv">1</span>
-while( x &lt;<span class="st"> </span><span class="dv">10</span> ){
+<span class="cf">while</span>( x <span class="op">&lt;</span><span class="st"> </span><span class="dv">10</span> ){
   <span class="kw">print</span>(x)
 }</code></pre></div>
 </div>
@@ -408,15 +408,15 @@ while( x &lt;<span class="st"> </span><span class="dv">10</span> ){
 <h3><span class="header-section-number">11.2.2</span> <code>for</code> Loops</h3>
 <p>Often we know ahead of time exactly how many times we should go through the loop. We could use a <code>while</code> loop, but there is also a second construct called a <code>for</code> loop that is quite useful.</p>
 <p>The format of a for loop is as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for( index in vector ) 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span>( index <span class="cf">in</span> vector ) 
   expression 
 
-for( index in vector ){
+<span class="cf">for</span>( index <span class="cf">in</span> vector ){
   expression1
   expression2
 }</code></pre></div>
 <p>where the <code>index</code> variable will take on each value in <code>vector</code> in succession and then statement will be evaluated. As always, statement can be multiple statements wrapped in curly brackets {}.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for( i in <span class="dv">1</span>:<span class="dv">5</span> ){
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span>( i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span> ){
   <span class="kw">print</span>(i)
 }</code></pre></div>
 <pre><code>## [1] 1
@@ -431,8 +431,8 @@ F[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">0</s
 F[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="dv">1</span>              <span class="co"># F[2]  should be 1</span>
 <span class="kw">cat</span>(<span class="st">&#39;F = &#39;</span>, F, <span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)   <span class="co"># concatenate for pretty output; Just for show </span></code></pre></div>
 <pre><code>## F =  0 1 0 0 0 0 0 0 0 0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for( n in <span class="dv">3</span>:<span class="dv">10</span> ){
-  F[n] &lt;-<span class="st"> </span>F[n<span class="dv">-1</span>] +<span class="st"> </span>F[n<span class="dv">-2</span>] <span class="co"># define based on the prior two values</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span>( n <span class="cf">in</span> <span class="dv">3</span><span class="op">:</span><span class="dv">10</span> ){
+  F[n] &lt;-<span class="st"> </span>F[n<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>F[n<span class="op">-</span><span class="dv">2</span>] <span class="co"># define based on the prior two values</span>
   <span class="kw">cat</span>(<span class="st">&#39;F = &#39;</span>, F, <span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)    <span class="co"># show the current step of the loop</span>
 }</code></pre></div>
 <pre><code>## F =  0 1 1 0 0 0 0 0 0 0 
@@ -448,14 +448,14 @@ F[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="dv">1</s
 <span class="kw">library</span>(ggplot2)
 
 SampDist &lt;-<span class="st"> </span><span class="kw">data.frame</span>() <span class="co"># Make a data frame to store the means </span>
-for( i in <span class="dv">1</span>:<span class="dv">1000</span> ){
-  SampDist &lt;-<span class="st"> </span>trees %&gt;%
-<span class="st">    </span><span class="kw">sample_frac</span>(<span class="dt">replace=</span><span class="ot">TRUE</span>) %&gt;%<span class="st"> </span>
-<span class="st">    </span>dplyr::<span class="kw">summarise</span>(<span class="dt">xbar=</span><span class="kw">mean</span>(Height)) %&gt;%<span class="st"> </span><span class="co"># 1x1 data frame</span>
+<span class="cf">for</span>( i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">1000</span> ){
+  SampDist &lt;-<span class="st"> </span>trees <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">sample_frac</span>(<span class="dt">replace=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">xbar=</span><span class="kw">mean</span>(Height)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 1x1 data frame</span>
 <span class="st">    </span><span class="kw">rbind</span>( SampDist )
 }
 
-<span class="kw">ggplot</span>(SampDist, <span class="kw">aes</span>(<span class="dt">x=</span>xbar)) +<span class="st"> </span>
+<span class="kw">ggplot</span>(SampDist, <span class="kw">aes</span>(<span class="dt">x=</span>xbar)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_histogram</span>()</code></pre></div>
 <p><img src="A_Sufficient_Introduction_to_R_files/figure-html/ForLoopExample-1.png" width="672" /></p>
 </div>
@@ -485,32 +485,32 @@ b &lt;-<span class="st"> </span><span class="dv">10</span>
 x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n=</span><span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">10</span>)  <span class="co"># one random value between 0 and 10 </span>
 x
 
-if( x &lt;<span class="st"> </span>a ){
+<span class="cf">if</span>( x <span class="op">&lt;</span><span class="st"> </span>a ){
   result &lt;-<span class="st"> </span>???
-}else if( x &lt;=<span class="st"> </span>b ){
+}<span class="cf">else</span> <span class="cf">if</span>( x <span class="op">&lt;=</span><span class="st"> </span>b ){
   result &lt;-<span class="st"> </span>???
-}else{
+}<span class="cf">else</span>{
   result &lt;-<span class="st"> </span>???
 }</code></pre></div>
 <p>Replace the <code>???</code> with the appropriate value, either 0 or <span class="math inline">\(1/\left(b-a\right)\)</span>.</p></li>
 <li><p>We could perform the logical comparison all in one comparison. Recall that we can use <code>&amp;</code> to mean “and” and <code>|</code> to mean “or”. In the following two code chunks, replace the <code>???</code> with either <code>&amp;</code> or <code>|</code> to make the appropriate result.</p>
 <ol style="list-style-type: lower-roman">
 <li><div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n=</span><span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">10</span>)  <span class="co"># one random value between 0 and 10 </span>
-if( (a&lt;=x) &amp;<span class="st"> </span>(x&lt;=b) ){
-  result &lt;-<span class="st"> </span><span class="dv">1</span>/(b-a)
-}else{
+<span class="cf">if</span>( (a<span class="op">&lt;=</span>x) <span class="op">&amp;</span><span class="st"> </span>(x<span class="op">&lt;=</span>b) ){
+  result &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span>(b<span class="op">-</span>a)
+}<span class="cf">else</span>{
   result &lt;-<span class="st"> </span><span class="dv">0</span>
 }
 <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;x=&#39;</span>,<span class="kw">round</span>(x,<span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39;  result=&#39;</span>, <span class="kw">round</span>(result,<span class="dt">digits=</span><span class="dv">3</span>)))</code></pre></div></li>
 <li><div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n=</span><span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">10</span>)  <span class="co"># one random value between 0 and 10 </span>
-if( (x&lt;a) ??? (b&lt;x) ){
+<span class="cf">if</span>( (x<span class="op">&lt;</span>a) ??? (b<span class="op">&lt;</span>x) ){
   result &lt;-<span class="st"> </span><span class="dv">0</span>
-}else{
-  result &lt;-<span class="st"> </span><span class="dv">1</span>/(b-a)
+}<span class="cf">else</span>{
+  result &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span>(b<span class="op">-</span>a)
 }
 <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;x=&#39;</span>,<span class="kw">round</span>(x,<span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39;  result=&#39;</span>, <span class="kw">round</span>(result,<span class="dt">digits=</span><span class="dv">3</span>)))</code></pre></div></li>
 <li><div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n=</span><span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">10</span>)  <span class="co"># one random value between 0 and 10 </span>
-result &lt;-<span class="st"> </span><span class="kw">ifelse</span>( a&lt;x &amp;<span class="st"> </span>x&lt;b, ???, ??? )
+result &lt;-<span class="st"> </span><span class="kw">ifelse</span>( a<span class="op">&lt;</span>x <span class="op">&amp;</span><span class="st"> </span>x<span class="op">&lt;</span>b, ???, ??? )
 <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;x=&#39;</span>,<span class="kw">round</span>(x,<span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39;  result=&#39;</span>, <span class="kw">round</span>(result,<span class="dt">digits=</span><span class="dv">3</span>)))</code></pre></div></li>
 </ol></li>
 </ol></li>
@@ -518,15 +518,15 @@ result &lt;-<span class="st"> </span><span class="kw">ifelse</span>( a&lt;x &amp
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 df &lt;-<span class="st"> </span><span class="dv">4</span>
 N &lt;-<span class="st"> </span><span class="dv">1000</span>
-x &lt;-<span class="st"> </span><span class="kw">seq</span>(-<span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">length=</span>N)
+x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">length=</span>N)
 data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( 
   <span class="dt">x =</span> <span class="kw">c</span>(x,x),
   <span class="dt">y =</span> <span class="kw">c</span>(<span class="kw">dnorm</span>(x), <span class="kw">dt</span>(x, df)),
   <span class="dt">type =</span> <span class="kw">c</span>( <span class="kw">rep</span>(<span class="st">&#39;Normal&#39;</span>,N), <span class="kw">rep</span>(<span class="st">&#39;T&#39;</span>,N) ) )
 
 <span class="co"># make a nice graph</span>
-myplot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">color=</span>type, <span class="dt">linetype=</span>type)) +
-<span class="st">  </span><span class="kw">geom_line</span>() +
+myplot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">color=</span>type, <span class="dt">linetype=</span>type)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">paste</span>(<span class="st">&#39;Std Normal vs t with&#39;</span>, df, <span class="st">&#39;degrees of freedom&#39;</span>))
 
 <span class="co"># actually print the nice graph we made</span>

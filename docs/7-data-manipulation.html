@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-23">
+<meta name="date" content="2017-11-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -325,7 +325,7 @@ grades &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
 <p>The <code>apply()</code> function will apply an arbitrary function to each row (or column) of a matrix or a data frame and then aggregate the results into a vector.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Because I can&#39;t take the mean of the last names column,</span>
 <span class="co"># remove the name column</span>
-scores &lt;-<span class="st"> </span>grades[,-<span class="dv">1</span>]
+scores &lt;-<span class="st"> </span>grades[,<span class="op">-</span><span class="dv">1</span>]
 scores</code></pre></div>
 <pre><code>##   Exam1 Exam2 Final
 ## 1    93    98    96
@@ -376,9 +376,9 @@ grades</code></pre></div>
     field_mice),
   head)</code></pre></div>
 <p>is more readably written:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foo_foo %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">hopping_through</span>(forest) %&gt;%
-<span class="st">  </span><span class="kw">scooping_up</span>( field_mice) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foo_foo <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">hopping_through</span>(forest) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">scooping_up</span>( field_mice) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">bopping</span>( head )</code></pre></div>
 <p>In <code>dplyr</code>, all the functions below take a data set as its first argument and outputs an appropriately modified data set. This will allow me to chain together commands in a readable fashion.</p>
 <div id="verbs" class="section level3">
@@ -408,32 +408,32 @@ grades</code></pre></div>
 ## 3  Kelso    80    82    81 81.00000
 ## 4   Turk    70    85    92 82.33333</code></pre>
 <p>I could select the columns Exam columns by hand, or by using an extension of the <code>:</code> operator</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">select</span>( Exam1, Exam2 )   <span class="co"># Exam1 and Exam2</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>( Exam1, Exam2 )   <span class="co"># Exam1 and Exam2</span></code></pre></div>
 <pre><code>##   Exam1 Exam2
 ## 1    93    98
 ## 2    89    70
 ## 3    80    82
 ## 4    70    85</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">select</span>( Exam1:Final )    <span class="co"># Columns Exam1 through Final</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>( Exam1<span class="op">:</span>Final )    <span class="co"># Columns Exam1 through Final</span></code></pre></div>
 <pre><code>##   Exam1 Exam2 Final
 ## 1    93    98    96
 ## 2    89    70    85
 ## 3    80    82    81
 ## 4    70    85    92</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">select</span>( -Exam1 )         <span class="co"># Negative indexing by name works</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>( <span class="op">-</span>Exam1 )         <span class="co"># Negative indexing by name works</span></code></pre></div>
 <pre><code>##   l.name Exam2 Final  average
 ## 1    Cox    98    96 95.66667
 ## 2 Dorian    70    85 81.33333
 ## 3  Kelso    82    81 81.00000
 ## 4   Turk    85    92 82.33333</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">select</span>( <span class="dv">1</span>:<span class="dv">2</span> )            <span class="co"># Can select column by column position</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>( <span class="dv">1</span><span class="op">:</span><span class="dv">2</span> )            <span class="co"># Can select column by column position</span></code></pre></div>
 <pre><code>##   l.name Exam1
 ## 1    Cox    93
 ## 2 Dorian    89
 ## 3  Kelso    80
 ## 4   Turk    70</code></pre>
 <p>The <code>select()</code> command has a few other tricks. There are functional calls that describe the columns you wish to select that take advantage of pattern matching. I generally can get by with <code>starts_with()</code>, <code>ends_with()</code>, and <code>contains()</code>, but there is a final operator <code>matches()</code> that takes a regular expression.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">select</span>( <span class="kw">starts_with</span>(<span class="st">&#39;Exam&#39;</span>) )   <span class="co"># Exam1 and Exam2</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>( <span class="kw">starts_with</span>(<span class="st">&#39;Exam&#39;</span>) )   <span class="co"># Exam1 and Exam2</span></code></pre></div>
 <pre><code>##   Exam1 Exam2
 ## 1    93    98
 ## 2    89    70
@@ -444,18 +444,18 @@ grades</code></pre></div>
 <h5><span class="header-section-number">7.2.1.1.2</span> <code>filter()</code></h5>
 <p>It is common to want to select particular rows where we have some logically expression to pick the rows.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select students with Final grades greater than 90</span>
-grades %&gt;%<span class="st"> </span><span class="kw">filter</span>(Final &gt;<span class="st"> </span><span class="dv">90</span>)</code></pre></div>
+grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Final <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>)</code></pre></div>
 <pre><code>##   l.name Exam1 Exam2 Final  average
 ## 1    Cox    93    98    96 95.66667
 ## 2   Turk    70    85    92 82.33333</code></pre>
 <p>You can have multiple logical expressions to select rows and they will be logically combined so that only rows that satisfy all of the conditions are selected. The logicals are joined together using <code>&amp;</code> (and) operator or the <code>|</code> (or) operator and you may explicitly use other logicals. For example a factor column type might be used to select rows where type is either one or two via the following: <code>type==1 | type==2</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select students with Final grades above 90 and</span>
 <span class="co"># average score also above 90</span>
-grades %&gt;%<span class="st"> </span><span class="kw">filter</span>(Final &gt;<span class="st"> </span><span class="dv">90</span>, average &gt;<span class="st"> </span><span class="dv">90</span>)</code></pre></div>
+grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Final <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, average <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>)</code></pre></div>
 <pre><code>##   l.name Exam1 Exam2 Final  average
 ## 1    Cox    93    98    96 95.66667</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># we could also use an &quot;and&quot; condition</span>
-grades %&gt;%<span class="st"> </span><span class="kw">filter</span>(Final &gt;<span class="st"> </span><span class="dv">90</span> &amp;<span class="st"> </span>average &gt;<span class="st"> </span><span class="dv">90</span>)</code></pre></div>
+grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Final <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span> <span class="op">&amp;</span><span class="st"> </span>average <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>)</code></pre></div>
 <pre><code>##   l.name Exam1 Exam2 Final  average
 ## 1    Cox    93    98    96 95.66667</code></pre>
 </div>
@@ -463,7 +463,7 @@ grades %&gt;%<span class="st"> </span><span class="kw">filter</span>(Final &gt;<
 <h5><span class="header-section-number">7.2.1.1.3</span> <code>slice()</code></h5>
 <p>When you want to filter rows based on row number, this is called slicing.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># grab the first 2 rows</span>
-grades %&gt;%<span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span>:<span class="dv">2</span>)</code></pre></div>
+grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</code></pre></div>
 <pre><code>## # A tibble: 2 x 5
 ##   l.name Exam1 Exam2 Final  average
 ##   &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
@@ -474,14 +474,14 @@ grades %&gt;%<span class="st"> </span><span class="kw">slice</span>(<span class=
 <div id="arrange" class="section level4">
 <h4><span class="header-section-number">7.2.1.2</span> <code>arrange()</code></h4>
 <p>We often need to re-order the rows of a data frame. For example, we might wish to take our grade book and sort the rows by the average score, or perhaps alphabetically. The <code>arrange()</code> function does exactly that. The first argument is the data frame to re-order, and the subsequent arguments are the columns to sort on. The order of the sorting column determines the precedent… the first sorting column is first used and the second sorting column is only used to break ties.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">arrange</span>(l.name)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(l.name)</code></pre></div>
 <pre><code>##   l.name Exam1 Exam2 Final  average
 ## 1    Cox    93    98    96 95.66667
 ## 2 Dorian    89    70    85 81.33333
 ## 3  Kelso    80    82    81 81.00000
 ## 4   Turk    70    85    92 82.33333</code></pre>
 <p>The default sorting is in ascending order, so to sort the grades with the highest scoring person in the first row, we must tell arrange to do it in descending order using <code>desc(column.name)</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Final))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Final))</code></pre></div>
 <pre><code>##   l.name Exam1 Exam2 Final  average
 ## 1    Cox    93    98    96 95.66667
 ## 2   Turk    70    85    92 82.33333
@@ -501,7 +501,7 @@ dd</code></pre></div>
 ## 3 High 9 1
 ## 4  Low 9 2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># arrange the rows first by treatment, and then by y (y in descending order)</span>
-dd %&gt;%<span class="st"> </span><span class="kw">arrange</span>(Trt, <span class="kw">desc</span>(y))</code></pre></div>
+dd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(Trt, <span class="kw">desc</span>(y))</code></pre></div>
 <pre><code>##    Trt y z
 ## 1  Low 9 2
 ## 2  Med 3 1
@@ -511,17 +511,17 @@ dd %&gt;%<span class="st"> </span><span class="kw">arrange</span>(Trt, <span cla
 <div id="mutate" class="section level4">
 <h4><span class="header-section-number">7.2.1.3</span> mutate()</h4>
 <p>I often need to create a new column that is some function of the old columns. This was often cumbersome. Consider code to calculate the average grade in my grade book example.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades$average &lt;-<span class="st"> </span>(grades$Exam1 +<span class="st"> </span>grades$Exam2 +<span class="st"> </span>grades$Final) /<span class="st"> </span><span class="dv">3</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades<span class="op">$</span>average &lt;-<span class="st"> </span>(grades<span class="op">$</span>Exam1 <span class="op">+</span><span class="st"> </span>grades<span class="op">$</span>Exam2 <span class="op">+</span><span class="st"> </span>grades<span class="op">$</span>Final) <span class="op">/</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
 <p>Instead, we could use the <code>mutate()</code> function and avoid all the <code>grades$</code> nonsense.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">mutate</span>( <span class="dt">average =</span> (Exam1 +<span class="st"> </span>Exam2 +<span class="st"> </span>Final)/<span class="dv">3</span> )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>( <span class="dt">average =</span> (Exam1 <span class="op">+</span><span class="st"> </span>Exam2 <span class="op">+</span><span class="st"> </span>Final)<span class="op">/</span><span class="dv">3</span> )</code></pre></div>
 <pre><code>##   l.name Exam1 Exam2 Final  average
 ## 1    Cox    93    98    96 95.66667
 ## 2 Dorian    89    70    85 81.33333
 ## 3  Kelso    80    82    81 81.00000
 ## 4   Turk    70    85    92 82.33333</code></pre>
 <p>You can do multiple calculations within the same <code>mutate()</code> command, and you can even refer to columns that were created in the same <code>mutate()</code> command.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades %&gt;%<span class="st"> </span><span class="kw">mutate</span>( 
-  <span class="dt">average =</span> (Exam1 +<span class="st"> </span>Exam2 +<span class="st"> </span>Final)/<span class="dv">3</span>,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>( 
+  <span class="dt">average =</span> (Exam1 <span class="op">+</span><span class="st"> </span>Exam2 <span class="op">+</span><span class="st"> </span>Final)<span class="op">/</span><span class="dv">3</span>,
   <span class="dt">grade =</span> <span class="kw">cut</span>(average, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">100</span>),  <span class="co"># cut takes numeric variable</span>
                        <span class="kw">c</span>( <span class="st">&#39;F&#39;</span>,<span class="st">&#39;D&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;A&#39;</span>)) )  <span class="co"># and makes a factor</span></code></pre></div>
 <pre><code>##   l.name Exam1 Exam2 Final  average grade
@@ -532,7 +532,7 @@ dd %&gt;%<span class="st"> </span><span class="kw">arrange</span>(Trt, <span cla
 <p>We might look at this data frame and want to do some rounding. For example, I might want to take each numeric column and round it. In this case, the functions <code>mutate_at()</code> and <code>mutate_if()</code> allow us to apply a function to a particular column and save the output.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># for each column, if it is numeric, apply the round() function to the column</span>
 <span class="co"># while using any additional arguments.  So round two digits.</span>
-grades %&gt;%
+grades <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate_if</span>( is.numeric, round, <span class="dt">digits=</span><span class="dv">2</span> )</code></pre></div>
 <pre><code>##   l.name Exam1 Exam2 Final average
 ## 1    Cox    93    98    96   95.67
@@ -541,15 +541,15 @@ grades %&gt;%
 ## 4   Turk    70    85    92   82.33</code></pre>
 <p>The <code>mutate_at()</code> function works similarly, but we just have to specify with columns.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># round columns 2 through 5</span>
-grades %&gt;%
-<span class="st">  </span><span class="kw">mutate_at</span>( <span class="dv">2</span>:<span class="dv">5</span>, round, <span class="dt">digits=</span><span class="dv">2</span> )</code></pre></div>
+grades <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate_at</span>( <span class="dv">2</span><span class="op">:</span><span class="dv">5</span>, round, <span class="dt">digits=</span><span class="dv">2</span> )</code></pre></div>
 <pre><code>##   l.name Exam1 Exam2 Final average
 ## 1    Cox    93    98    96   95.67
 ## 2 Dorian    89    70    85   81.33
 ## 3  Kelso    80    82    81   81.00
 ## 4   Turk    70    85    92   82.33</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># round columns that start with &quot;ave&quot;</span>
-grades %&gt;%
+grades <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate_at</span>( <span class="kw">vars</span>(<span class="kw">starts_with</span>(<span class="st">&quot;ave&quot;</span>)), round )</code></pre></div>
 <pre><code>##   l.name Exam1 Exam2 Final average
 ## 1    Cox    93    98    96      96
@@ -569,22 +569,22 @@ grades %&gt;%
 <h4><span class="header-section-number">7.2.1.4</span> summarise()</h4>
 <p>By itself, this function is quite boring, but will become useful later on. Its purpose is to calculate summary statistics using any or all of the data columns. Notice that we get to chose the name of the new column. The way to think about this is that we are collapsing information stored in multiple rows into a single row of values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the mean of exam 1</span>
-grades %&gt;%<span class="st"> </span><span class="kw">summarise</span>( <span class="dt">mean.E1=</span><span class="kw">mean</span>(Exam1))</code></pre></div>
+grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>( <span class="dt">mean.E1=</span><span class="kw">mean</span>(Exam1))</code></pre></div>
 <pre><code>##   mean.E1
 ## 1      83</code></pre>
 <p>We could calculate multiple summary statistics if we like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the mean and standard deviation </span>
-grades %&gt;%<span class="st"> </span><span class="kw">summarise</span>( <span class="dt">mean.E1=</span><span class="kw">mean</span>(Exam1), <span class="dt">stddev.E1=</span><span class="kw">sd</span>(Exam2) )</code></pre></div>
+grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>( <span class="dt">mean.E1=</span><span class="kw">mean</span>(Exam1), <span class="dt">stddev.E1=</span><span class="kw">sd</span>(Exam2) )</code></pre></div>
 <pre><code>##   mean.E1 stddev.E1
 ## 1      83      11.5</code></pre>
 <p>If we want to apply the same statistic to each column, we use the <code>summarise_all()</code> command. We have to be a little careful here because the function you use has to work on every column (that isn’t part of the grouping structure (see <code>group_by()</code>)). There are two variants <code>summarize_at()</code> and <code>summarize_if()</code> that give you a bit more flexibility.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the mean and stddev of each column - Cannot do this to Names!</span>
-grades %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>( Exam1:Final ) %&gt;%
+grades <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>( Exam1<span class="op">:</span>Final ) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise_all</span>( <span class="kw">funs</span>(mean, sd) )</code></pre></div>
 <pre><code>##   Exam1_mean Exam2_mean Final_mean Exam1_sd Exam2_sd Final_sd
 ## 1         83      83.75       88.5 10.23067     11.5 6.757712</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades  %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades  <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise_if</span>(is.numeric, <span class="kw">funs</span>(<span class="dt">Xbar=</span>mean, <span class="dt">SD=</span>sd) )</code></pre></div>
 <pre><code>##   Exam1_Xbar Exam2_Xbar Final_Xbar average_Xbar Exam1_SD Exam2_SD Final_SD
 ## 1         83      83.75       88.5     85.08333 10.23067     11.5 6.757712
@@ -609,8 +609,8 @@ grades %&gt;%<span class="st"> </span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># group_by:  what variable(s) shall we group one</span>
 <span class="co"># n() is a function that returns how many rows are in the </span>
 <span class="co">#   currently selected sub-dataframe</span>
-warpbreaks %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>( wool, tension) %&gt;%<span class="st">    </span><span class="co"># grouping</span>
+warpbreaks <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>( wool, tension) <span class="op">%&gt;%</span><span class="st">    </span><span class="co"># grouping</span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>() )             <span class="co"># how many in each group</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ## # Groups:   wool [?]
@@ -624,8 +624,8 @@ warpbreaks %&gt;%<span class="st"> </span>
 ## 6      B       H     9</code></pre>
 <p>The <code>group_by</code> function takes a data.frame and returns the same data.frame, but with some extra information so that any subsequent function acts on each unique combination defined in the <code>group_by</code>. If you wish to remove this behavior, use <code>group_by()</code> to reset the grouping to have no grouping variable.</p>
 <p>Using the same <code>summarise</code> function, we could calculate the group mean and standard deviation for each wool-by-tension group.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">warpbreaks %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(wool, tension) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">warpbreaks <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(wool, tension) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise</span>( <span class="dt">n           =</span> <span class="kw">n</span>(),             <span class="co"># I added some formatting to show the</span>
              <span class="dt">mean.breaks =</span> <span class="kw">mean</span>(breaks),    <span class="co"># reader I am calculating several</span>
              <span class="dt">sd.breaks   =</span> <span class="kw">sd</span>(breaks))      <span class="co"># statistics.</span></code></pre></div>
@@ -640,9 +640,9 @@ warpbreaks %&gt;%<span class="st"> </span>
 ## 5      B       M     9    28.77778  9.431036
 ## 6      B       H     9    18.77778  4.893306</code></pre>
 <p>If instead of summarizing each split, we might want to just do some calculation and the output should have the same number of rows as the input data frame. In this case I’ll tell <code>dplyr</code> that we are mutating the data frame instead of summarizing it. For example, suppose that I want to calculate the residual value <span class="math display">\[e_{ijk}=y_{ijk}-\bar{y}_{ij\cdot}\]</span> where <span class="math inline">\(\bar{y}_{ij\cdot}\)</span> is the mean of each <code>wool:tension</code> combination.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">warpbreaks %&gt;%<span class="st"> </span>
-<span class="st">   </span><span class="kw">group_by</span>(wool, tension) %&gt;%<span class="st">                 </span><span class="co"># group by wool:tension</span>
-<span class="st">   </span><span class="kw">mutate</span>(<span class="dt">resid =</span> breaks -<span class="st"> </span><span class="kw">mean</span>(breaks)) %&gt;%<span class="st">   </span><span class="co"># mean(breaks) of the group!</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">warpbreaks <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">   </span><span class="kw">group_by</span>(wool, tension) <span class="op">%&gt;%</span><span class="st">                 </span><span class="co"># group by wool:tension</span>
+<span class="st">   </span><span class="kw">mutate</span>(<span class="dt">resid =</span> breaks <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(breaks)) <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># mean(breaks) of the group!</span>
 <span class="st">   </span><span class="kw">head</span>(  )                                    <span class="co"># show the first couple of rows</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ## # Groups:   wool, tension [1]
@@ -691,13 +691,13 @@ race.results &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
 ## 8    Bob 21.23      M     4</code></pre>
 <p>This is very difficult to read because you have to read the code <em>from the inside out</em>.</p>
 <p>Another (and slightly more readable) way to complete our task is to save each intermediate step of our process and then use that in the next step:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp.df0 &lt;-<span class="st"> </span>race.results %&gt;%<span class="st"> </span><span class="kw">group_by</span>( gender)
-temp.df1 &lt;-<span class="st"> </span>temp.df0 %&gt;%<span class="st"> </span><span class="kw">mutate</span>( <span class="dt">place =</span> <span class="kw">rank</span>(time) )
-temp.df2 &lt;-<span class="st"> </span>temp.df1 %&gt;%<span class="st"> </span><span class="kw">arrange</span>( gender, place )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp.df0 &lt;-<span class="st"> </span>race.results <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>( gender)
+temp.df1 &lt;-<span class="st"> </span>temp.df0 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>( <span class="dt">place =</span> <span class="kw">rank</span>(time) )
+temp.df2 &lt;-<span class="st"> </span>temp.df1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>( gender, place )</code></pre></div>
 <p>It would be nice if I didn’t have to save all these intermediate results because keeping track of temp1 and temp2 gets pretty annoying if I keep changing the order of how things or calculated or add/subtract steps. This is exactly what <code>%&gt;%</code> does for me.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">race.results %&gt;%
-<span class="st">  </span><span class="kw">group_by</span>( gender ) %&gt;%
-<span class="st">  </span><span class="kw">mutate</span>( <span class="dt">place =</span> <span class="kw">rank</span>(time)) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">race.results <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>( gender ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>( <span class="dt">place =</span> <span class="kw">rank</span>(time)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">arrange</span>( gender, place )</code></pre></div>
 <pre><code>## # A tibble: 8 x 4
 ## # Groups:   gender [2]
@@ -735,7 +735,7 @@ temp.df2 &lt;-<span class="st"> </span>temp.df1 %&gt;%<span class="st"> </span><
 <li><p>Double check that your calculated BMI column is correct by examining the summary statistics of the column. BMI values should be between 18 to 40 or so. Did you make an error in your calculation?</p></li>
 <li><p>The function <code>cut</code> takes a vector of continuous numerical data and creates a factor based on your give cut-points.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define a continuous vector to convert to a factor</span>
-x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
+x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>
 
 <span class="co"># divide range of x into three groups of equal length</span>
 <span class="kw">cut</span>(x, <span class="dt">breaks=</span><span class="dv">3</span>)</code></pre></div>
@@ -756,7 +756,7 @@ x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</s
 <pre><code>##  [1] Low    Low    Low    Low    Medium Medium Medium High   High   High  
 ## Levels: Low Medium High</code></pre>
 <p>Create a new column of in the data frame that divides the age into decades (10-19, 20-29, 30-39, etc). Notice the oldest person in the study is 67.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Body &lt;-<span class="st"> </span>Body %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Body &lt;-<span class="st"> </span>Body <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>( <span class="dt">Age.Grp =</span> <span class="kw">cut</span>(age,
                         <span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">70</span>),
                         <span class="dt">right=</span><span class="ot">FALSE</span>))</code></pre></div></li>

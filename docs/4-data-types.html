@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-23">
+<meta name="date" content="2017-11-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -324,9 +324,9 @@ Books</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(x)</code></pre></div>
 <pre><code>## [1] 5.2</code></pre>
 <p>If we try an operation that only makes sense on numeric types (like addition) then R complain unless we first convert it. There are places where R will try to coerce an object to another data type but it happens inconsistently and you should just do the conversion yourself</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x<span class="dv">+1</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x<span class="op">+</span><span class="dv">1</span></code></pre></div>
 <pre><code>## Error in x + 1: non-numeric argument to binary operator</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(x) +<span class="st"> </span><span class="dv">1</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(x) <span class="op">+</span><span class="st"> </span><span class="dv">1</span></code></pre></div>
 <pre><code>## [1] 6.2</code></pre>
 </div>
 <div id="factors" class="section level2">
@@ -356,14 +356,14 @@ z</code></pre></div>
 <pre><code>## [1] B Group B Group A Group A Group C Group
 ## Levels: B Group A Group C Group</code></pre>
 <p>For the Iris data, the species are ordered alphabetically. We might want to re-order how they appear in a graphs to place Versicolor first. The <code>Species</code> names are not capitalized, and perhaps I would like them to begin with a capital letter.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris$Species &lt;-<span class="st"> </span><span class="kw">factor</span>( iris$Species,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris<span class="op">$</span>Species &lt;-<span class="st"> </span><span class="kw">factor</span>( iris<span class="op">$</span>Species,
                         <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&#39;versicolor&#39;</span>,<span class="st">&#39;setosa&#39;</span>,<span class="st">&#39;virginica&#39;</span>),
                         <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;Versicolor&#39;</span>,<span class="st">&#39;Setosa&#39;</span>,<span class="st">&#39;Virginica&#39;</span>))
-<span class="kw">boxplot</span>( Sepal.Length ~<span class="st"> </span>Species, <span class="dt">data=</span>iris)</code></pre></div>
+<span class="kw">boxplot</span>( Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data=</span>iris)</code></pre></div>
 <p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 <p>Often we wish to take a continuous numerical vector and transform it into a factor. The function cut() takes a vector of numerical data and creates a factor based on your give cut-points.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define a continuous vector to convert to a factor</span>
-x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
+x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>
 
 <span class="co"># divide range of x into three groups of equal length</span>
 <span class="kw">cut</span>(x, <span class="dt">breaks=</span><span class="dv">3</span>)</code></pre></div>
@@ -388,24 +388,24 @@ x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</s
 <h2><span class="header-section-number">4.4</span> Logicals</h2>
 <p>Often I wish to know which elements of a vector are equal to some value, or are greater than something. R allows us to make those tests at the vector level.</p>
 <p>Very often we need to make a comparison and test if something is equal to something else, or if one thing is bigger than another. To test these, we will use the <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, <code>&gt;=</code>, <code>&gt;</code>, and <code>!=</code> operators. These can be used similarly to</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> &lt;<span class="st"> </span><span class="dv">10</span>    <span class="co"># 6 less than 10?</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">10</span>    <span class="co"># 6 less than 10?</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> ==<span class="st"> </span><span class="dv">10</span>   <span class="co"># 6 equal to 10?</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> <span class="op">==</span><span class="st"> </span><span class="dv">10</span>   <span class="co"># 6 equal to 10?</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> !=<span class="st"> </span><span class="dv">10</span>   <span class="co"># 6 not equal to 10?</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> <span class="op">!=</span><span class="st"> </span><span class="dv">10</span>   <span class="co"># 6 not equal to 10?</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>where we used 6 and 10 just for clarity. The result of each of these is a logical value (a <code>TRUE</code> or <code>FALSE</code>). In most cases these would be variables you had previously created and were using.</p>
 <p>Suppose I have a vector of numbers and I want to get all the values greater than 16. Using the &gt; comparison, I can create a vector of logical values that tells me if the specified value is greater than 16. The <code>which()</code> takes a vector of logicals and returns the indices that are true.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>-<span class="dv">10</span>:<span class="dv">10</span>     <span class="co"># a vector of 20 values, (11th element is the 0)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">10</span><span class="op">:</span><span class="dv">10</span>     <span class="co"># a vector of 20 values, (11th element is the 0)</span>
 x</code></pre></div>
 <pre><code>##  [1] -10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6
 ## [18]   7   8   9  10</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &gt;<span class="st"> </span><span class="dv">0</span>           <span class="co"># a vector of 20 logicals</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>           <span class="co"># a vector of 20 logicals</span></code></pre></div>
 <pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [12]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">which</span>( x &gt;<span class="st"> </span><span class="dv">0</span> )  <span class="co"># which vector elements are &gt; 0</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">which</span>( x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> )  <span class="co"># which vector elements are &gt; 0</span></code></pre></div>
 <pre><code>##  [1] 12 13 14 15 16 17 18 19 20 21</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[ <span class="kw">which</span>(x&gt;<span class="dv">0</span>) ] <span class="co"># Grab the elements &gt; 0 </span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[ <span class="kw">which</span>(x<span class="op">&gt;</span><span class="dv">0</span>) ] <span class="co"># Grab the elements &gt; 0 </span></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 <p>On function I find to be occasionally useful is the <code>is.element(el, set)' function which allows me to figure out which elements of a vector are one of a set of possibilities. For example, I might want to know which elements of the</code>letters` vector are vowels.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">letters  <span class="co"># this is all 26 english lowercase letters</span></code></pre></div>
@@ -417,17 +417,17 @@ x</code></pre></div>
 <p>This shows me the vowels occur at the 1st, 5th, 9th, 15th, and 21st elements of the alphabet.</p>
 <p>Often I want to make multiple comparisons. For example given a bunch of students and a vector of their GPAs and another vector of their major, maybe I want to find all undergraduate Forestry majors with a GPA greater than 3.0. Then, given my set of university students, I want ask two questions: Is their major Forestry, and is their GPA greater than 3.0. So I need to combine those two logical results into a single logical that is true if both questions are true.</p>
 <p>The command &amp; means “and” and | means “or”. We can combine two logical values using these two similarly:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  &amp;<span class="st"> </span><span class="ot">TRUE</span>     <span class="co"># both are true so combo so result is true</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  <span class="op">&amp;</span><span class="st"> </span><span class="ot">TRUE</span>     <span class="co"># both are true so combo so result is true</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  &amp;<span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># one true and one false so result is false</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  <span class="op">&amp;</span><span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># one true and one false so result is false</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">FALSE</span> &amp;<span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># both are false so the result is false</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">FALSE</span> <span class="op">&amp;</span><span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># both are false so the result is false</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  |<span class="st"> </span><span class="ot">TRUE</span>     <span class="co"># at least one is true -&gt; TRUE</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  <span class="op">|</span><span class="st"> </span><span class="ot">TRUE</span>     <span class="co"># at least one is true -&gt; TRUE</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  |<span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># at least one is true -&gt; TRUE</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  <span class="op">|</span><span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># at least one is true -&gt; TRUE</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">FALSE</span> |<span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># neither is true -&gt; FALSE</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">FALSE</span> <span class="op">|</span><span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># neither is true -&gt; FALSE</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 </div>
 <div id="exercises-3" class="section level2">

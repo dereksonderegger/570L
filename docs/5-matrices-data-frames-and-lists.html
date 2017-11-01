@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-23">
+<meta name="date" content="2017-11-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -308,7 +308,7 @@ b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</sp
 ## a    1    2    3
 ## b    4    5    6</code></pre>
 <p>Notice that doing this has provided R with some names for the individual rows and columns. I can change these using the commands <code>colnames()</code> and <code>rownames()</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dt">nrow=</span><span class="dv">3</span>, <span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>) 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">nrow=</span><span class="dv">3</span>, <span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>) 
 <span class="kw">colnames</span>(M) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Column1&#39;</span>, <span class="st">&#39;Column2&#39;</span>)       <span class="co"># set column labels</span>
 <span class="kw">rownames</span>(M) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Row1&#39;</span>, <span class="st">&#39;Row2&#39;</span>,<span class="st">&#39;Row3&#39;</span>)      <span class="co"># set row labels</span>
 M</code></pre></div>
@@ -318,7 +318,7 @@ M</code></pre></div>
 ## Row3       5       6</code></pre>
 <p>This is actually a pretty peculiar way of setting the <em>attributes</em> of the object <code>M</code> because it looks like we are evaluating a function and assigning some value to the function output. Yes it is weird, but R was developed in the 70s and it seemed like a good idea at the time.</p>
 <p>Accessing a particular element of a matrix is done in a similar manner as with vectors, using the <code>[ ]</code> notation, but this time we must specify which row and which column. Notice that this scheme always is <code>[row, col]</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dt">nrow=</span><span class="dv">3</span>, <span class="dt">ncol=</span><span class="dv">2</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">nrow=</span><span class="dv">3</span>, <span class="dt">ncol=</span><span class="dv">2</span>)
 M1</code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]    1    4
@@ -326,7 +326,7 @@ M1</code></pre></div>
 ## [3,]    3    6</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M1[<span class="dv">1</span>,<span class="dv">2</span>]     <span class="co"># Grab row 1, column 2 value</span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M1[<span class="dv">1</span>, <span class="dv">1</span>:<span class="dv">2</span>]  <span class="co"># Grab row 1, and columns 1 and 2.</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M1[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]  <span class="co"># Grab row 1, and columns 1 and 2.</span></code></pre></div>
 <pre><code>## [1] 1 4</code></pre>
 <p>I might want to grab a single row or a single column out of a matrix, which is sometimes referred to as taking a slice of the matrix. I could figure out how long that vector is, but often I’m too lazy. Instead I can just specify the specify the particular row or column I want.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M1</code></pre></div>
@@ -377,10 +377,10 @@ data</code></pre></div>
 </tbody>
 </table>
 <p>Because the columns have meaning and we have given them column names, it is desirable to want to access an element by the name of the column as opposed to the column number.In large Excel spreadsheets I often get annoyed trying to remember which column something was in and muttering “Was total biomass in column P or Q?” A system where I could just name the column Total.Biomass and be done with it is much nicer to work with and I make fewer dumb mistakes.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data$Name       <span class="co"># The $-sign means to reference a column by its label</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data<span class="op">$</span>Name       <span class="co"># The $-sign means to reference a column by its label</span></code></pre></div>
 <pre><code>## [1] Bob  Jeff Mary
 ## Levels: Bob Jeff Mary</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data$Name[<span class="dv">2</span>]    <span class="co"># Notice that data$Name results in a vector, which I can manipulate</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data<span class="op">$</span>Name[<span class="dv">2</span>]    <span class="co"># Notice that data$Name results in a vector, which I can manipulate</span></code></pre></div>
 <pre><code>## [1] Jeff
 ## Levels: Bob Jeff Mary</code></pre>
 <p>I can mix the <code>[ ]</code> notation with the column names. The following is also acceptable:</p>
@@ -396,7 +396,7 @@ data</code></pre></div>
 ## 2 Jeff    75     42
 ## 3 Mary    92     43</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># if you assign a value to a column that doesn&#39;t exist, R will create it</span>
-data$Score3 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">61</span>,<span class="dv">62</span>,<span class="dv">63</span>) <span class="co"># the Score3 column will created</span>
+data<span class="op">$</span>Score3 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">61</span>,<span class="dv">62</span>,<span class="dv">63</span>) <span class="co"># the Score3 column will created</span>
 data</code></pre></div>
 <pre><code>##   Name Score Score2 Score3
 ## 1  Bob    90     41     61
@@ -404,8 +404,8 @@ data</code></pre></div>
 ## 3 Mary    92     43     63</code></pre>
 <p>Data frames are very commonly used and many commonly used functions will take a <code>data=</code> argument and all other arguments are assumed to be in the given data frame. Unfortunately this is not universally supported by all functions and you must look at the help file for the function you are interested in.</p>
 <p>Data frames are also very restricive in that the shape of the data must be rectangular. If I try to create a new column that doesn’t have enough rows, R will complain.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data$Score4 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</code></pre></div>
-<pre><code>## Error in `$&lt;-.data.frame`(`*tmp*`, &quot;Score4&quot;, value = c(1, 2)): replacement has 2 rows, data has 3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data<span class="op">$</span>Score4 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</code></pre></div>
+<pre><code>## Error in `$&lt;-.data.frame`(`*tmp*`, Score4, value = c(1, 2)): replacement has 2 rows, data has 3</code></pre>
 </div>
 <div id="lists" class="section level2">
 <h2><span class="header-section-number">5.3</span> Lists</h2>
@@ -427,15 +427,15 @@ Derek &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Derek[[ <span class="dv">3</span> ]]    <span class="co"># Third element of the list is the vector of pets</span></code></pre></div>
 <pre><code>## [1] &quot;Beau&quot;   &quot;Tess&quot;   &quot;Kaylee&quot;</code></pre>
 <p>There is a second way I can access elements. For data frames it was convenient to use the notation <code>DataFrame$ColumnName</code> and we will use the same convention for lists. Actually a data frame is just a list with the requirement that each list element is a vector and all vectors are of the same length. To access my pets names we can use the following notation:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Derek$Pets         <span class="co"># Using the &#39;$&#39; notation</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Derek<span class="op">$</span>Pets         <span class="co"># Using the &#39;$&#39; notation</span></code></pre></div>
 <pre><code>## [1] &quot;Beau&quot;   &quot;Tess&quot;   &quot;Kaylee&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Derek[[ <span class="st">&#39;Pets&#39;</span> ]]  <span class="co"># Using the &#39;[[ ]]&#39; notation</span></code></pre></div>
 <pre><code>## [1] &quot;Beau&quot;   &quot;Tess&quot;   &quot;Kaylee&quot;</code></pre>
 <p>To add something new to the list object, we can just make an assignment in a similar fashion as we did for <code>data.frame</code> and just assign a value to a slot that doesn’t (yet!) exist.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Derek$Spawn &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Elise&#39;</span>, <span class="st">&#39;Casey&#39;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Derek<span class="op">$</span>Spawn &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Elise&#39;</span>, <span class="st">&#39;Casey&#39;</span>)</code></pre></div>
 <p>We can also add extremely complicated items to my list. Here we’ll add a <code>data.frame</code> as another list element.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Recall that we previous had defined a data.frame called &quot;data&quot;</span>
-Derek$RandomDataFrame &lt;-<span class="st"> </span>data  <span class="co"># Assign it to be a list element</span>
+Derek<span class="op">$</span>RandomDataFrame &lt;-<span class="st"> </span>data  <span class="co"># Assign it to be a list element</span>
 <span class="kw">str</span>(Derek)</code></pre></div>
 <pre><code>## List of 5
 ##  $ Spouse         : chr &quot;Aubrey&quot;
@@ -469,7 +469,7 @@ results &lt;-<span class="st"> </span><span class="kw">t.test</span>(x, <span cl
 ##  $ data.name  : chr &quot;x&quot;
 ##  - attr(*, &quot;class&quot;)= chr &quot;htest&quot;</code></pre>
 <p>We see that result is actually a list with 9 elements in it. To access the p-value we could use:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results$p.value</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results<span class="op">$</span>p.value</code></pre></div>
 <pre><code>## [1] 0.3813385</code></pre>
 <p>If I ask R to print the object <code>results</code>, it will hide the structure from you and print it in a “pretty” fashion because there is a <code>print</code> function defined specifically for objects created by the <code>t.test()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results</code></pre></div>
@@ -539,7 +539,7 @@ results &lt;-<span class="st"> </span><span class="kw">t.test</span>(x, <span cl
 <li><p>Examine the data frame using the <code>str()</code> command. Look at the help file for the data using the command <code>help(trees)</code> or <code>?trees</code>.</p></li>
 <li><p>Perform a regression relating the volume of lumber produced to the girth and height of the tree using the following command</p></li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="kw">lm</span>( Volume ~<span class="st"> </span>Girth +<span class="st"> </span>Height, <span class="dt">data=</span>trees)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="kw">lm</span>( Volume <span class="op">~</span><span class="st"> </span>Girth <span class="op">+</span><span class="st"> </span>Height, <span class="dt">data=</span>trees)</code></pre></div>
 <ol start="4" style="list-style-type: lower-alpha">
 <li><p>Use the str() command to inspect <code>m</code>. Extract the model coefficients from this list.</p></li>
 <li><p>The list m can be passed to other functions. For example, the function <code>summary()</code> will take the list and recognize that it was produced by the <code>lm()</code> function and produce a summary table in the manner that we are used to seeing. Produce that summary table using the command</p></li>

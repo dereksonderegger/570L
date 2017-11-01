@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-10-23">
+<meta name="date" content="2017-11-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -298,12 +298,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">1.1</span> R as a simple calculator</h2>
 <p>Assuming that you have started R on whatever platform you like, you can use R as a simple calculator. At the prompt, type 2+3 and hit enter. What you should see is the following</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Some simple addition</span>
-<span class="dv">2+3</span></code></pre></div>
+<span class="dv">2</span><span class="op">+</span><span class="dv">3</span></code></pre></div>
 <pre><code>## [1] 5</code></pre>
 <p>In this fashion you can use R as a very capable calculator.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span>*<span class="dv">8</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span><span class="op">*</span><span class="dv">8</span></code></pre></div>
 <pre><code>## [1] 48</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">4</span>^<span class="dv">3</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">4</span><span class="op">^</span><span class="dv">3</span></code></pre></div>
 <pre><code>## [1] 64</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exp</span>(<span class="dv">1</span>)   <span class="co"># exp() is the exponential function</span></code></pre></div>
 <pre><code>## [1] 2.718282</code></pre>
@@ -335,13 +335,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="assignment" class="section level2">
 <h2><span class="header-section-number">1.2</span> Assignment</h2>
 <p>We need to be able to assign a value to a variable to be able to use it later. R does this by using an arrow <code>&lt;-</code> or an equal sign <code>=</code>. While R supports either, for readability, I suggest people pick one assignment operator and stick with it. I personally prefer to use the arrow. Variable names cannot start with a number, may not include spaces, and are case sensitive.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tau &lt;-<span class="st"> </span><span class="dv">2</span>*pi       <span class="co"># create two variables</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tau &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>pi       <span class="co"># create two variables</span>
 my.test.var =<span class="st"> </span><span class="dv">5</span>   <span class="co"># notice they show up in &#39;Environment&#39; tab in RStudio!</span>
 tau</code></pre></div>
 <pre><code>## [1] 6.283185</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.test.var</code></pre></div>
 <pre><code>## [1] 5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tau *<span class="st"> </span>my.test.var</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tau <span class="op">*</span><span class="st"> </span>my.test.var</code></pre></div>
 <pre><code>## [1] 31.41593</code></pre>
 <p>As your analysis gets more complicated, you’ll want to save the results to a variable so that you can access the results later. <em>If you don’t assign the result to a variable, you have no way of accessing the result.</em></p>
 </div>
@@ -365,10 +365,10 @@ x &lt;-<span class="st"> </span><span class="kw">seq</span>(.<span class="dv">1<
 <span class="co"># Problem 2</span>
 <span class="co"># Calculate the exponential function of a couple of values</span>
 <span class="co"># and make a plot of the function from -2 to 2</span>
-<span class="kw">exp</span>(-<span class="dv">2</span>)
+<span class="kw">exp</span>(<span class="op">-</span><span class="dv">2</span>)
 <span class="kw">exp</span>(<span class="dv">0</span>)
 <span class="kw">exp</span>(<span class="dv">2</span>)
-x &lt;-<span class="st"> </span><span class="kw">seq</span>(-<span class="dv">2</span>, <span class="dv">2</span>, <span class="dt">length=</span><span class="dv">1000</span>)
+x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dt">length=</span><span class="dv">1000</span>)
 <span class="kw">plot</span>(x, <span class="kw">exp</span>(x))</code></pre></div>
 <p>This looks perfectly acceptable as a way of documenting what you did, but this script file doesn’t contain the actual results of commands I ran, nor does it show you the plots. Also anytime I want to comment on some output, it needs to be offset with the commenting character <code>#</code>. It would be nice to have both the commands and the results merged into one document. This is what the R Markdown file does for us.</p>
 </div>

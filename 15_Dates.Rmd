@@ -1,5 +1,23 @@
 # Dates and Times
 
+```{r, echo=FALSE}
+# Unattach any packages that happen to already be loaded. In general this is unecessary
+# but is important for the creation of the book to not have package namespaces
+# fighting unexpectedly.
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+```{r, warning=FALSE, message=FALSE}
+Sys.setenv(TZ='US/Arizona')  # an error in Mac OSX
+library( lubridate )
+```
+
 Dates within a computer require some special organization because there are several competing conventions for how to write a date (some of them more confusing than others) and because the sort order should be in the order that the dates occur in time.
 
 One useful tidbit of knowledge is that computer systems store a time point as the number of seconds from set point in time, called the epoch. So long as your system uses the same epoch, the use doesn't have to worry about when the epoch is, but if you are switching between software systems, you might run into problems if they use different epochs. In R, we use midnight on Jan 1, 1970. In Microsoft Excel, they use Jan 0, 1900. 
@@ -22,7 +40,6 @@ To create a `Date` object, we need to take a string or number that represents a 
 
 The uncommon orders aren't likely to be used, but the `lubridate` package includes them for completeness. Once the order has been specified, the `lubridate` package will try as many different ways to parse the date that make sense. As a result, so long as the order is consistent, all of the following will work:
 ```{r, warning=FALSE, message=FALSE}
-library( lubridate )
 mdy( 'June 26, 1997', 'Jun 26 97', '6-26-97', '6-26-1997', '6/26/97', '6-26/97' )
 ```
 
