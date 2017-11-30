@@ -19,7 +19,7 @@ paste( ..., sep = ' ', collapse = NULL )
 ```
 
 
-The `...` piece means that we can pass any number of objects to be pasted together. The `sep` argument gives the string that separates the strings to be joined and the collapse argument that specifies if a simplification should be performed before pasting together.
+The `...` piece means that we can pass any number of objects to be pasted together. The `sep` argument gives the string that separates the strings to be joined and the collapse argument that specifies if a simplification should be performed after being pasting together.
 
 Suppose we want to combine the strings “Peanut butter” and “Jelly” then we could execute:
 
@@ -49,10 +49,10 @@ last.names <- c('Stark','Baratheon','Targaryen')
 paste( first.names, last.names)
 ```
 
-If we want `paste()` produce just a single string of output, use the `collapse=` argument to first paste together each input vector (separated by the `collapse` character).
+If we want `paste()` produce just a single string of output, use the `collapse=` argument to paste together each of the output vectors (separated by the `collapse` character).
 ```{r}
-paste( paste( "n =", c(5,25,100) ) )
-paste( "n =", c(5,25,100), collapse=':' )
+paste( "n =", c(5,25,100) )  # Produces 3 strings
+paste( "n =", c(5,25,100), collapse=':' ) # collapses output into one string
 
 paste(first.names, last.names, sep='.', collapse=' : ')
 ```

@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-11-01">
+<meta name="date" content="2017-11-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -302,9 +302,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   x<span class="op">^</span>(<span class="fl">0.5</span>)          <span class="co"># second expression to compare</span>
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: microseconds
-##     expr   min    lq  mean median    uq   max neval cld
-##  sqrt(x)  2.04  2.22  2.53   2.33  2.59  5.45   100  a 
-##  x^(0.5) 23.94 24.42 28.99  25.81 26.74 79.87   100   b</code></pre>
+##     expr   min   lq  mean median    uq   max neval cld
+##  sqrt(x)  2.02  2.1  2.26   2.19  2.27  3.69   100  a 
+##  x^(0.5) 23.50 23.7 23.91  23.81 23.93 28.66   100   b</code></pre>
 <p>What <code>microbenchmark</code> does is run the two expressions a number of times and then produces the 5-number summary of those times. By running it multiple times, we account for the randomness associated with a operating system that is also running at the same time.</p>
 <div id="faster-for-loops" class="section level2">
 <h2><span class="header-section-number">15.1</span> Faster for loops?</h2>

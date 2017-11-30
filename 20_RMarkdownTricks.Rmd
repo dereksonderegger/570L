@@ -214,8 +214,10 @@ have much customizability, but it gets the job done.
 # the RMarkdown processor from turning this into something pretty
 knitr::kable( data )
 ```
+
 which, if I don't prevent the RMarkdown processor from doing its job, will get
 rendered as such:
+
 ```{r}
 knitr::kable( data )
 ```
