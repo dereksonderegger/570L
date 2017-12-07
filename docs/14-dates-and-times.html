@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-11-30">
+<meta name="date" content="2017-12-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -284,7 +284,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Sys.setenv</span>(<span class="dt">TZ=</span><span class="st">&#39;US/Arizona&#39;</span>)  <span class="co"># an error in Mac OSX</span>
 <span class="kw">library</span>( lubridate )</code></pre></div>
 <p>Dates within a computer require some special organization because there are several competing conventions for how to write a date (some of them more confusing than others) and because the sort order should be in the order that the dates occur in time.</p>
-<p>One useful tidbit of knowledge is that computer systems store a time point as the number of seconds from set point in time, called the epoch. So long as your system uses the same epoch, the use doesn’t have to worry about when the epoch is, but if you are switching between software systems, you might run into problems if they use different epochs. In R, we use midnight on Jan 1, 1970. In Microsoft Excel, they use Jan 0, 1900.</p>
+<p>One useful tidbit of knowledge is that computer systems store a time point as the number of seconds from set point in time, called the epoch. So long as you always use the same epoch, you doesn’t have to worry about when the epoch is, but if you are switching between software systems, you might run into problems if they use different epochs. In R, we use midnight on Jan 1, 1970. In Microsoft Excel, they use Jan 0, 1900.</p>
 <p>For many years, R users hated dealing with dates because it was difficult to remember how to get R to take a string that represents a date (e.g. “June 26, 1997”) because users were required to specify how the format was arranged using a relatively complex set of rules. For example <code>%y</code> represents the two digit year, <code>%Y</code> represents the four digit year, <code>%m</code> represents the month, but <code>%b</code> represents the month written as Jan or Mar. Into this mess came Hadley Wickham (of <code>ggplot2</code> and <code>dplyr</code> fame) and his student Garrett Grolemund. The internal structure of R dates and times is quite robust, but the functions we use to manipulate them are horrible. To fix this, Dr Wickham and his then PhD student Dr Grolemund introduced the <code>lubridate</code> package.</p>
 <div id="creating-date-and-time-objects" class="section level2">
 <h2><span class="header-section-number">14.1</span> Creating Date and Time objects</h2>

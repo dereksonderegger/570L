@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2017-11-30">
+<meta name="date" content="2017-12-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -512,8 +512,15 @@ mtcars<span class="op">$</span>cyl &lt;-<span class="st"> </span><span class="kw
 <p>For this example, we will consider an elevation map of the Maunga Whau volcano in New Zealand. This dataset comes built into R as the matrix <code>volcano</code>, but I’ve modified it slightly and saved it to a package I have on github called <code>dsdata</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
 <span class="kw">install_github</span>(<span class="st">&#39;dereksonderegger/dsdata&#39;</span>)</code></pre></div>
-<pre><code>## Skipping install of &#39;dsData&#39; from a github remote, the SHA1 (fad67447) has not changed since last install.
-##   Use `force = TRUE` to force installation</code></pre>
+<pre><code>## Downloading GitHub repo dereksonderegger/dsdata@master
+## from URL https://api.github.com/repos/dereksonderegger/dsdata/zipball/master</code></pre>
+<pre><code>## Installing dsData</code></pre>
+<pre><code>## &#39;/Library/Frameworks/R.framework/Resources/bin/R&#39; --no-site-file  \
+##   --no-environ --no-save --no-restore --quiet CMD INSTALL  \
+##   &#39;/private/var/folders/d1/drs_scp95wd_s6zsdksk312m0000gn/T/RtmpWXFKeO/devtools119fb7c72dbf4/dereksonderegger-dsData-a8349ec&#39;  \
+##   --library=&#39;/Library/Frameworks/R.framework/Versions/3.4/Resources/library&#39;  \
+##   --install-tests</code></pre>
+<pre><code>## </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&#39;Eden&#39;</span>, <span class="dt">package=</span><span class="st">&#39;dsData&#39;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( Eden, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">fill=</span>elevation)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_raster</span>()</code></pre></div>
