@@ -267,8 +267,6 @@ A graph can be built up layer by layer, where:
 * Layers can be added with a `+`, or you can define two plots and add them together (second one over-writes anything that conflicts).
 
 
-## Basic Graphs
-
 ### Bar Charts
 
 Bar charts and histograms are how we think about displaying informtion about a single covariate.  That is to say, we are not trying to make a graph of the relationship between $x$ and $y$, but rather understanding what values of $x$ are present and how frequently they show up.
