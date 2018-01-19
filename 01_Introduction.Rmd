@@ -209,7 +209,7 @@ Similarly you could calculate the standard deviation for the exam as well.
 ```{r}
 Grades %>%
   summarize( Exam.1.mean = mean( Exam.1 ),
-             Exam.2.sd   = sd( Exam.1   ) )
+             Exam.1.sd   = sd(   Exam.1   ) )
 ```
 
 Recall the `butterfat` data we loaded earlier.

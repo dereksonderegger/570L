@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2018-01-10">
+<meta name="date" content="2018-01-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -582,9 +582,9 @@ grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">s
 ## 1      83</code></pre>
 <p>We could calculate multiple summary statistics if we like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the mean and standard deviation </span>
-grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>( <span class="dt">mean.E1=</span><span class="kw">mean</span>(Exam1), <span class="dt">stddev.E1=</span><span class="kw">sd</span>(Exam2) )</code></pre></div>
+grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>( <span class="dt">mean.E1=</span><span class="kw">mean</span>(Exam1), <span class="dt">stddev.E1=</span><span class="kw">sd</span>(Exam1) )</code></pre></div>
 <pre><code>##   mean.E1 stddev.E1
-## 1      83      11.5</code></pre>
+## 1      83  10.23067</code></pre>
 <p>If we want to apply the same statistic to each column, we use the <code>summarise_all()</code> command. We have to be a little careful here because the function you use has to work on every column (that isn’t part of the grouping structure (see <code>group_by()</code>)). There are two variants <code>summarize_at()</code> and <code>summarize_if()</code> that give you a bit more flexibility.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the mean and stddev of each column - Cannot do this to Names!</span>
 grades <span class="op">%&gt;%</span><span class="st"> </span>

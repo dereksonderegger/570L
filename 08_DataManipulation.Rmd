@@ -275,7 +275,7 @@ grades %>% summarise( mean.E1=mean(Exam1))
 We could calculate multiple summary statistics if we like.
 ```{r}
 # calculate the mean and standard deviation 
-grades %>% summarise( mean.E1=mean(Exam1), stddev.E1=sd(Exam2) )
+grades %>% summarise( mean.E1=mean(Exam1), stddev.E1=sd(Exam1) )
 ```
 
 If we want to apply the same statistic to each column, we use the `summarise_all()` command. We have to be a little careful here because the function you use has to work on every column (that isn't part of the grouping structure (see `group_by()`)). There are two variants `summarize_at()` and `summarize_if()` that give you a bit more flexibility.

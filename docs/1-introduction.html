@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2018-01-10">
+<meta name="date" content="2018-01-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -469,8 +469,8 @@ Grades <span class="op">%&gt;%</span>
 <p>Similarly you could calculate the standard deviation for the exam as well.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Grades <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>( <span class="dt">Exam.1.mean =</span> <span class="kw">mean</span>( Exam.<span class="dv">1</span> ),
-             <span class="dt">Exam.2.sd   =</span> <span class="kw">sd</span>( Exam.<span class="dv">1</span>   ) )</code></pre></div>
-<pre><code>##   Exam.1.mean Exam.2.sd
+             <span class="dt">Exam.1.sd   =</span> <span class="kw">sd</span>(   Exam.<span class="dv">1</span>   ) )</code></pre></div>
+<pre><code>##   Exam.1.mean Exam.1.sd
 ## 1        85.5  7.593857</code></pre>
 <p>Recall the <code>butterfat</code> data we loaded earlier.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">butterfat[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, ] <span class="co"># only the first 6 observations</span></code></pre></div>
