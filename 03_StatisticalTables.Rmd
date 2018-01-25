@@ -34,7 +34,7 @@ The `mosaic` package provides a very useful routine for understanding a distribu
 |              |             | `max=1`       | Maximum of the distribution        | 
 +--------------+-------------+---------------+------------------------------------+
 
-For example, to see the normal distribution with mean $mu=10$ and standard deviation $\sigma=2$, we use
+For example, to see the normal distribution with mean $\mu=10$ and standard deviation $\sigma=2$, we use
 ```{r, fig.height=3, message=FALSE, warning=FALSE}
 library(mosaic)
 plotDist('norm', mean=10, sd=2)
