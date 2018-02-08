@@ -118,7 +118,7 @@ iris$Species <- factor( iris$Species,
 boxplot( Sepal.Length ~ Species, data=iris)
 ```
 
-Often we wish to take a continuous numerical vector and transform it into a factor. The function cut() takes a vector of numerical data and creates a factor based on your give cut-points. 
+Often we wish to take a continuous numerical vector and transform it into a factor. The function `cut()` takes a vector of numerical data and creates a factor based on your give cut-points. 
 
 ```{r}
 # Define a continuous vector to convert to a factor
@@ -152,7 +152,7 @@ Very often we need to make a comparison and test if something is equal to someth
 
 where we used 6 and 10 just for clarity. The result of each of these is a logical value (a `TRUE` or `FALSE`). In most cases these would be variables you had previously created and were using. 
 
-Suppose I have a vector of numbers and I want to get all the values greater than 16. Using the > comparison, I can create a vector of logical values that tells me if the specified value is greater than 16. The `which()` takes a vector of logicals and returns the indices that are true. 
+Suppose I have a vector of numbers and I want to get all the values greater than 16. Using the `>` comparison, I can create a vector of logical values that tells me if the specified value is greater than 16. The `which()` takes a vector of logicals and returns the indices that are true. 
 
 ```{r}
 x <- -10:10     # a vector of 20 values, (11th element is the 0)
@@ -163,7 +163,7 @@ x[ which(x>0) ] # Grab the elements > 0
 ```
 
 
-On function I find to be occasionally useful is the `is.element(el, set)' function which allows me to figure out which elements of a vector are one of a set of possibilities. For example, I might want to know which elements of the `letters` vector are vowels.
+On function I find to be occasionally useful is the `is.element(el, set)` function which allows me to figure out which elements of a vector are one of a set of possibilities. For example, I might want to know which elements of the `letters` vector are vowels.
 
 ```{r}
 letters  # this is all 26 english lowercase letters
@@ -175,7 +175,7 @@ This shows me the vowels occur at the 1st, 5th, 9th, 15th, and 21st elements of 
 
 Often I want to make multiple comparisons. For example given a bunch of students and a vector of their GPAs and another vector of their major, maybe I want to find all undergraduate Forestry majors with a GPA greater than 3.0. Then, given my set of university students, I want ask two questions: Is their major Forestry, and is their GPA greater than 3.0. So I need to combine those two logical results into a single logical that is true if both questions are true. 
 
-The command & means “and” and | means “or”. We can combine two logical values using these two similarly: 
+The command `&` means “and” and `|` means “or”. We can combine two logical values using these two similarly: 
 ```{r}
 TRUE  & TRUE     # both are true so combo so result is true
 TRUE  & FALSE    # one true and one false so result is false

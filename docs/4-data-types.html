@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2018-01-25">
+<meta name="date" content="2018-02-08">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -369,7 +369,7 @@ z</code></pre></div>
                         <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;Versicolor&#39;</span>,<span class="st">&#39;Setosa&#39;</span>,<span class="st">&#39;Virginica&#39;</span>))
 <span class="kw">boxplot</span>( Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data=</span>iris)</code></pre></div>
 <p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
-<p>Often we wish to take a continuous numerical vector and transform it into a factor. The function cut() takes a vector of numerical data and creates a factor based on your give cut-points.</p>
+<p>Often we wish to take a continuous numerical vector and transform it into a factor. The function <code>cut()</code> takes a vector of numerical data and creates a factor based on your give cut-points.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define a continuous vector to convert to a factor</span>
 x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>
 
@@ -403,7 +403,7 @@ x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> <span class="op">!=</span><span class="st"> </span><span class="dv">10</span>   <span class="co"># 6 not equal to 10?</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>where we used 6 and 10 just for clarity. The result of each of these is a logical value (a <code>TRUE</code> or <code>FALSE</code>). In most cases these would be variables you had previously created and were using.</p>
-<p>Suppose I have a vector of numbers and I want to get all the values greater than 16. Using the &gt; comparison, I can create a vector of logical values that tells me if the specified value is greater than 16. The <code>which()</code> takes a vector of logicals and returns the indices that are true.</p>
+<p>Suppose I have a vector of numbers and I want to get all the values greater than 16. Using the <code>&gt;</code> comparison, I can create a vector of logical values that tells me if the specified value is greater than 16. The <code>which()</code> takes a vector of logicals and returns the indices that are true.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">10</span><span class="op">:</span><span class="dv">10</span>     <span class="co"># a vector of 20 values, (11th element is the 0)</span>
 x</code></pre></div>
 <pre><code>##  [1] -10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6
@@ -415,7 +415,7 @@ x</code></pre></div>
 <pre><code>##  [1] 12 13 14 15 16 17 18 19 20 21</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[ <span class="kw">which</span>(x<span class="op">&gt;</span><span class="dv">0</span>) ] <span class="co"># Grab the elements &gt; 0 </span></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
-<p>On function I find to be occasionally useful is the <code>is.element(el, set)' function which allows me to figure out which elements of a vector are one of a set of possibilities. For example, I might want to know which elements of the</code>letters` vector are vowels.</p>
+<p>On function I find to be occasionally useful is the <code>is.element(el, set)</code> function which allows me to figure out which elements of a vector are one of a set of possibilities. For example, I might want to know which elements of the <code>letters</code> vector are vowels.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">letters  <span class="co"># this is all 26 english lowercase letters</span></code></pre></div>
 <pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot;
 ## [18] &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
@@ -424,7 +424,7 @@ x</code></pre></div>
 <pre><code>## [1]  1  5  9 15 21</code></pre>
 <p>This shows me the vowels occur at the 1st, 5th, 9th, 15th, and 21st elements of the alphabet.</p>
 <p>Often I want to make multiple comparisons. For example given a bunch of students and a vector of their GPAs and another vector of their major, maybe I want to find all undergraduate Forestry majors with a GPA greater than 3.0. Then, given my set of university students, I want ask two questions: Is their major Forestry, and is their GPA greater than 3.0. So I need to combine those two logical results into a single logical that is true if both questions are true.</p>
-<p>The command &amp; means “and” and | means “or”. We can combine two logical values using these two similarly:</p>
+<p>The command <code>&amp;</code> means “and” and <code>|</code> means “or”. We can combine two logical values using these two similarly:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  <span class="op">&amp;</span><span class="st"> </span><span class="ot">TRUE</span>     <span class="co"># both are true so combo so result is true</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="ot">TRUE</span>  <span class="op">&amp;</span><span class="st"> </span><span class="ot">FALSE</span>    <span class="co"># one true and one false so result is false</span></code></pre></div>
