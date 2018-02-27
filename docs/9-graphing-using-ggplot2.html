@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2018-02-16">
+<meta name="date" content="2018-02-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -409,7 +409,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>First we could summarize the data by how many models there are in the different classes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span>mpg, <span class="kw">aes</span>(<span class="dt">x=</span>class)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>()</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-168-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-169-1.png" width="672" /></p>
 <ol style="list-style-type: decimal">
 <li><p>The data set we wish to use is specified using <code>data=mpg</code>. This is the first argument defined in the function, so you could skip the <code>data=</code> part if the input data.frame is the first argument.</p></li>
 <li><p>The column in the data that we wish to investigate is defined in the <code>aes(x=class)</code> part. This means the x-axis will be the car’s class, which is indicated by the column named <code>class</code>.</p></li>
@@ -423,16 +423,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x=</span>hwy)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_histogram</span>()</code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-169-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-170-1.png" width="672" /></p>
 <p>Just as <code>geom_bar</code> by default calculated the number of observations in each level of my factor of interest, <code>geom_histogram</code> breaks up the x-axis into distinct bins (by default, 30 bins), and then counts how many observations fall into each bin, and displys the number as a bar. To change the number of bins, we could either tell it the number of bins (e.g. <code>bins=20</code>) or the width of each bin (e.g. <code>binwidth=4</code>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x=</span>hwy)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">8</span>)       <span class="co"># 8 bins</span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-170-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-171-1.png" width="672" /></p>
 <p>Often we want to rescale the y-axis so that it is in terms of density, which is <span class="math display">\[density=\frac{\#\;observations\;in\;bin}{total\;number\;observations}\cdot\frac{1}{bin\;width}\]</span></p>
 <p>To ask <code>geom_histogram</code> to calculate the density instead of counts, we simply add an option to the <code>aes()</code> list that specifies that the y-axis should be the density. Notice that this only rescales the y-axis and the shape of the histogram is identical.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x=</span>hwy, <span class="dt">y=</span>..density..)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">8</span>)       <span class="co"># 8 bins</span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-171-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-172-1.png" width="672" /></p>
 </div>
 <div id="scatterplots-1" class="section level3">
 <h3><span class="header-section-number">9.1.3</span> Scatterplots</h3>
@@ -447,7 +447,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( <span class="dt">data=</span>iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Petal.Length) ) <span class="op">+</span><span class="st">  </span>
 <span class="st">    </span><span class="kw">geom_point</span>(  )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-173-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-174-1.png" width="672" /></p>
 <ol style="list-style-type: decimal">
 <li><p>The data set we wish to use is specified using <code>data=iris</code>.</p></li>
 <li><p>The relationship we want to explore is <code>x=Sepal.Length</code> and <code>y=Petal.Length</code>. This means the x-axis will be the Sepal Length and the y-axis will be the Petal Length.</p></li>
@@ -456,11 +456,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>We can define other attributes that might reflect other aspects of the data. For example, we might want for the of the data point to change dynamically based on the species of iris.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( <span class="dt">data=</span>iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Petal.Length, <span class="dt">color=</span>Species) ) <span class="op">+</span><span class="st">  </span>
 <span class="st">    </span><span class="kw">geom_point</span>(  )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-174-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-175-1.png" width="672" /></p>
 <p>The <code>aes()</code> command inside the previous section of code is quite mysterious. The way to think about the <code>aes()</code> is that it gives you a way to define relationships that are data dependent. In the previous graph, the x-value and y-value for each point was defined dynamically by the data, as was the color. If we just wanted all the data points to be colored blue and larger, then the following code would do that</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( <span class="dt">data=</span>iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Length, <span class="dt">y=</span>Petal.Length) ) <span class="op">+</span><span class="st">  </span>
 <span class="st">    </span><span class="kw">geom_point</span>( <span class="dt">color=</span><span class="st">&#39;blue&#39;</span>, <span class="dt">size=</span><span class="dv">4</span> )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-175-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-176-1.png" width="672" /></p>
 <p>The important part isn’t that color and size were defined in the <code>geom_point()</code> but that they were defined outside of an <code>aes()</code> function!</p>
 <ol style="list-style-type: decimal">
 <li><p>Anything set inside an <code>aes()</code> command will be of the form <code>attribute=Column_Name</code> and will change based on the data.</p></li>
@@ -472,7 +472,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Boxplots are a common way to show a categorical variable on the x-axis and continuous on the y-axis.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x=</span>class, <span class="dt">y=</span>hwy)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-176-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-177-1.png" width="672" /></p>
 <p>The boxes show the <span class="math inline">\(25^{th}\)</span>, <span class="math inline">\(50^{th}\)</span>, and <span class="math inline">\(75^{th}\)</span> percentile and the lines coming off the box extend to the smallest and largest non-outlier observation.</p>
 </div>
 </div>
@@ -489,7 +489,7 @@ mtcars<span class="op">$</span>cyl &lt;-<span class="st"> </span><span class="kw
 <span class="st">  </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&#39;Weight vs Miles per Gallon&#39;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>( <span class="dt">x=</span><span class="st">&quot;Weight in tons (2000 lbs)&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Miles per Gallon (US)&quot;</span> ) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>( <span class="dt">color=</span><span class="st">&quot;Cylinders&quot;</span>)     </code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-177-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-178-1.png" width="672" /></p>
 <p>You could either call the <code>labs()</code> command repeatedly with each label, or you could provide multiple arguements to just one <code>labs()</code> call.</p>
 </div>
 <div id="color-scales" class="section level3">
@@ -503,7 +503,7 @@ mtcars<span class="op">$</span>cyl &lt;-<span class="st"> </span><span class="kw
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Width, <span class="dt">y=</span>Sepal.Length, <span class="dt">color=</span>Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&#39;blue&#39;</span>, <span class="st">&#39;darkmagenta&#39;</span>, <span class="st">&#39;aquamarine&#39;</span>))</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-178-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-179-1.png" width="672" /></p>
 <p>If you want to instead pick a color palette and let the palette pick the colors to be farthest apart based on the number of factor levels, you can use <code>scale_color_manual</code> and then have the values chosen by one of the palette functions where you just have to tell it how many levels you have.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(colorspace)   <span class="co"># these two packages have some decent </span>
 <span class="kw">library</span>(grDevices)    <span class="co"># color palettes functions.</span>
@@ -513,35 +513,42 @@ mtcars<span class="op">$</span>cyl &lt;-<span class="st"> </span><span class="kw
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x=</span>Sepal.Width, <span class="dt">y=</span>Sepal.Length, <span class="dt">color=</span>Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">rainbow</span>(<span class="dv">3</span>))</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-179-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-180-1.png" width="672" /></p>
 </div>
 <div id="colors-for-continuous-values" class="section level4">
 <h4><span class="header-section-number">9.2.2.2</span> Colors for continuous values</h4>
 <p>For this example, we will consider an elevation map of the Maunga Whau volcano in New Zealand. This dataset comes built into R as the matrix <code>volcano</code>, but I’ve modified it slightly and saved it to a package I have on github called <code>dsdata</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
 <span class="kw">install_github</span>(<span class="st">&#39;dereksonderegger/dsdata&#39;</span>)</code></pre></div>
-<pre><code>## Skipping install of &#39;dsData&#39; from a github remote, the SHA1 (a8349ec7) has not changed since last install.
-##   Use `force = TRUE` to force installation</code></pre>
+<pre><code>## Downloading GitHub repo dereksonderegger/dsdata@master
+## from URL https://api.github.com/repos/dereksonderegger/dsdata/zipball/master</code></pre>
+<pre><code>## Installing dsData</code></pre>
+<pre><code>## &#39;/Library/Frameworks/R.framework/Resources/bin/R&#39; --no-site-file  \
+##   --no-environ --no-save --no-restore --quiet CMD INSTALL  \
+##   &#39;/private/var/folders/d1/drs_scp95wd_s6zsdksk312m0000gn/T/RtmpHtNLo0/devtools53d678528ab7/dereksonderegger-dsData-a8349ec&#39;  \
+##   --library=&#39;/Library/Frameworks/R.framework/Versions/3.4/Resources/library&#39;  \
+##   --install-tests</code></pre>
+<pre><code>## </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&#39;Eden&#39;</span>, <span class="dt">package=</span><span class="st">&#39;dsData&#39;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( Eden, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">fill=</span>elevation)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_raster</span>()</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-183-1.png" width="672" /></p>
 <p>The default gradient isn’t too bad, but we might want to manually chose two colors to smoothly scale between. Because I want to effect the colors I’ve chosen for the <code>fill</code> aesthetic, I have to modify this using <code>scale_fill_XXX</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( Eden, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">fill=</span>elevation)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_tile</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;blue&quot;</span>)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-183-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
 <p>I think we ought to have the blue color come in a little earlier. Also, I want to specify a middle color so that our graph transitions from red to green to blue. To do this, we also have to specify where the middle color should be located along the elevation range.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( Eden, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">fill=</span>elevation)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_tile</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">low =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">mid=</span><span class="st">&#39;green&#39;</span>, <span class="dt">high =</span> <span class="st">&quot;blue&quot;</span>,
                        <span class="dt">midpoint=</span><span class="dv">135</span>)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
 <p>If we don’t want to specify the colors manually we can, as usual, specify the color palette. The <code>gradientn</code> functions allow us to specify a large numbers intermediate colors.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>( Eden, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y, <span class="dt">fill=</span>elevation)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_tile</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_gradientn</span>(<span class="dt">colours =</span> <span class="kw">terrain.colors</span>(<span class="dv">5</span>))</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
 </div>
 </div>
 <div id="adjusting-axes" class="section level3">
@@ -551,17 +558,17 @@ mtcars<span class="op">$</span>cyl &lt;-<span class="st"> </span><span class="kw
 <p>Sometimes the default axis breakpoints aren’t quite what I want and I want to add a number or remove a number. To do this, we will modify the x or y scale. Typically I only have a problem when the axis is continuous, so we will concentrate on that case.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x=</span>class, <span class="dt">y=</span>hwy)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>() </code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-187-1.png" width="672" /></p>
 <p>In this case, suppose that we want the major breakpoints (which have labels) to occur every 5 mpg, and the minor breakpoints (which just have a white line) to occur midway between those (so every 2.5 mpg).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x=</span>class, <span class="dt">y=</span>hwy)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>( <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">10</span>, <span class="dv">45</span>, <span class="dt">by=</span><span class="dv">5</span>) ) </code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-187-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
 <p>If we wanted to adjust the minor breaks, we could do that using the <code>minor_breaks</code> argument. If we want to remove the minor breaks completely, we could set the minor breaks to be <code>NULL</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x=</span>class, <span class="dt">y=</span>hwy)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>( <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">10</span>, <span class="dv">45</span>, <span class="dt">by=</span><span class="dv">5</span>), <span class="dt">minor_breaks =</span> <span class="ot">NULL</span> ) </code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-189-1.png" width="672" /></p>
 </div>
 </div>
 <div id="zooming-inout" class="section level3">
@@ -574,7 +581,7 @@ mtcars<span class="op">$</span>cyl &lt;-<span class="st"> </span><span class="kw
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(trees, <span class="kw">aes</span>(<span class="dt">x=</span>Girth, <span class="dt">y=</span>Volume)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&#39;lm&#39;</span>)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-189-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
 <p>If we want to reset the x-axis to stop at <span class="math inline">\(x=19\)</span>, and <span class="math inline">\(y=60\)</span>, then we could use the <code>xlim()</code> and <code>ylim()</code> functions, but this will cause the regression line to be chopped off and it won’t even use that data point when calculating the regression.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Danger!  This removes the data points first!</span>
 <span class="kw">ggplot</span>(trees, <span class="kw">aes</span>(<span class="dt">x=</span>Girth, <span class="dt">y=</span>Volume)) <span class="op">+</span><span class="st"> </span>
@@ -583,14 +590,14 @@ mtcars<span class="op">$</span>cyl &lt;-<span class="st"> </span><span class="kw
 <span class="st">  </span><span class="kw">xlim</span>( <span class="dv">8</span>, <span class="dv">19</span> ) <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="dv">60</span>)</code></pre></div>
 <pre><code>## Warning: Removed 1 rows containing non-finite values (stat_smooth).</code></pre>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-191-1.png" width="672" /></p>
 <p>Alternatively, we could use the <code>coord_cartesion</code> function to chop the axes _after_everything has been calculated.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Safer!  Create the graph and then just zoom in</span>
 <span class="kw">ggplot</span>(trees, <span class="kw">aes</span>(<span class="dt">x=</span>Girth, <span class="dt">y=</span>Volume)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&#39;lm&#39;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>( <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">19</span> ), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">60</span>))</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-191-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-192-1.png" width="672" /></p>
 </div>
 </div>
 <div id="cookbook-examples" class="section level2">
@@ -610,7 +617,7 @@ trees.aug &lt;-<span class="st"> </span>trees <span class="op">%&gt;%</span><spa
 <span class="st">  </span><span class="kw">geom_ribbon</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>lwr, <span class="dt">ymax=</span>upr), <span class="dt">alpha=</span>.<span class="dv">4</span>, <span class="dt">fill=</span><span class="st">&#39;darkgrey&#39;</span> ) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>( <span class="kw">aes</span>(<span class="dt">y=</span>fit) ) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>( <span class="kw">aes</span>( <span class="dt">y =</span> Volume ) )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-192-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-193-1.png" width="672" /></p>
 </div>
 <div id="bar-plot" class="section level3">
 <h3><span class="header-section-number">9.3.2</span> Bar Plot</h3>
@@ -633,17 +640,17 @@ stats</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(stats, <span class="kw">aes</span>(<span class="dt">x=</span>Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>( <span class="kw">aes</span>(<span class="dt">y=</span>Mean), <span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_errorbar</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>lwr, <span class="dt">ymax=</span>upr) )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-194-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
 <p>While this isn’t too bad, we would like to make this a bit more pleasing to look at. Each of the bars is a little too wide and the error bars should be a tad narrower than then bar. Also, the fill color for the bars is too dark. So I’ll change all of these, by setting those attributes <em>outside of an <code>aes()</code> command</em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(stats, <span class="kw">aes</span>(<span class="dt">x=</span>Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>( <span class="kw">aes</span>(<span class="dt">y=</span>Mean), <span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>, <span class="dt">fill=</span><span class="st">&#39;grey&#39;</span>, <span class="dt">width=</span>.<span class="dv">6</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_errorbar</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>lwr, <span class="dt">ymax=</span>upr), <span class="dt">color=</span><span class="st">&#39;red&#39;</span>, <span class="dt">width=</span>.<span class="dv">4</span> )</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
 <p>The last thing to notice is that the <em>order</em> in which the different layers matter. This is similar to Photoshop or GIS software where the layers added last can obscure prior layers. In the graph below, the lower part of the error bar is obscured by the grey bar.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(stats, <span class="kw">aes</span>(<span class="dt">x=</span>Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_errorbar</span>( <span class="kw">aes</span>(<span class="dt">ymin=</span>lwr, <span class="dt">ymax=</span>upr), <span class="dt">color=</span><span class="st">&#39;red&#39;</span>, <span class="dt">width=</span>.<span class="dv">4</span> ) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>( <span class="kw">aes</span>(<span class="dt">y=</span>Mean), <span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>, <span class="dt">fill=</span><span class="st">&#39;grey&#39;</span>, <span class="dt">width=</span>.<span class="dv">6</span>)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-197-1.png" width="672" /></p>
 </div>
 <div id="distributions" class="section level3">
 <h3><span class="header-section-number">9.3.3</span> Distributions</h3>
@@ -658,7 +665,7 @@ plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <spa
 <span class="kw">ggplot</span>(plot.data, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>density)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>()  <span class="op">+</span><span class="st">   </span><span class="co"># just a line</span>
 <span class="st">  </span><span class="kw">geom_area</span>()      <span class="co"># shade in the area under the line</span></code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-197-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
 <p>This isn’t too bad, but often we want to add some color to two different sections, perhaps we want different colors distinguishing between values <span class="math inline">\(\ge2.5\)</span> vs values <span class="math inline">\(&lt;2.5\)</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">x=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>, <span class="dt">length=</span><span class="dv">1000</span>) ) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>( <span class="dt">density =</span> <span class="kw">df</span>(x, <span class="dv">5</span>, <span class="dv">30</span>),
@@ -667,7 +674,7 @@ plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <spa
 <span class="kw">ggplot</span>(plot.data, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>density, <span class="dt">fill=</span>Group)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_area</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>() </code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
 </div>
 <div id="discrete-distributions" class="section level4">
 <h4><span class="header-section-number">9.3.3.2</span> Discrete distributions</h4>
@@ -678,7 +685,7 @@ plot.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <spa
 <span class="kw">ggplot</span>(plot.data, <span class="kw">aes</span>(<span class="dt">x=</span>x)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>( <span class="kw">aes</span>(<span class="dt">y=</span>probability) ) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_linerange</span>(<span class="kw">aes</span>(<span class="dt">ymax=</span>probability), <span class="dt">ymin=</span><span class="dv">0</span>) </code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-200-1.png" width="672" /></p>
 <p>The key trick here was to set the <code>ymin</code> value to always be zero.</p>
 </div>
 </div>

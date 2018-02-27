@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2018-02-16">
+<meta name="date" content="2018-02-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -593,41 +593,6 @@ data</code></pre></div>
 <div id="knitrkable" class="section level3">
 <h3><span class="header-section-number">16.3.1</span> <code>knitr::kable</code></h3>
 <p>The <code>knitr</code> package includes a function that produces simple tables. It doesn’t have much customizability, but it gets the job done.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># in this code chunk, I&#39;ve used the &quot;results=&#39;hold&#39;&quot; option to prevent</span>
-<span class="co"># the RMarkdown processor from turning this into something pretty</span>
-knitr<span class="op">::</span><span class="kw">kable</span>( data )</code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="right">Girth</th>
-<th align="right">Height</th>
-<th align="right">Volume</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">8.3</td>
-<td align="right">70</td>
-<td align="right">10.3</td>
-</tr>
-<tr class="even">
-<td align="right">8.6</td>
-<td align="right">65</td>
-<td align="right">10.3</td>
-</tr>
-<tr class="odd">
-<td align="right">8.8</td>
-<td align="right">63</td>
-<td align="right">10.2</td>
-</tr>
-<tr class="even">
-<td align="right">10.5</td>
-<td align="right">72</td>
-<td align="right">16.4</td>
-</tr>
-</tbody>
-</table>
-<p>which, if I don’t prevent the RMarkdown processor from doing its job, will get rendered as such:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>( data )</code></pre></div>
 <table>
 <thead>
@@ -699,7 +664,8 @@ knitr<span class="op">::</span><span class="kw">kable</span>( data )</code></pre
 </table>
 <p>The <code>pander</code> package deals with summary and anova tables from a variety of different analyses. So you can simply ask for a nice looking version using the following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>( Volume <span class="op">~</span><span class="st"> </span>Girth, <span class="dt">data=</span>trees )    <span class="co"># a simple regression</span>
-<span class="kw">pander</span>( <span class="kw">summary</span>(model) )    <span class="co"># my usual summary table</span></code></pre></div>
+<span class="kw">pander</span>( <span class="kw">summary</span>(model) )    <span class="co"># my usual summary table</span>
+<span class="kw">pander</span>( <span class="kw">anova</span>( model ) )    <span class="co"># my usual anova table</span></code></pre></div>
 <table style="width:88%;">
 <colgroup>
 <col width="25%" />
@@ -759,7 +725,6 @@ knitr<span class="op">::</span><span class="kw">kable</span>( data )</code></pre
 </tr>
 </tbody>
 </table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pander</span>( <span class="kw">anova</span>( model ) )    <span class="co"># my usual anova table</span></code></pre></div>
 <table style="width:85%;">
 <caption>Analysis of Variance Table</caption>
 <colgroup>

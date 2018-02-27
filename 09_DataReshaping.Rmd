@@ -14,8 +14,9 @@ if( length(pkgs > 0)){
 ```
 
 ```{r, warning=FALSE, message=FALSE}
-library(tidyr)   # for the gather/spread commands
-library(dplyr)   # for the join stuff
+# library(tidyr)   # for the gather/spread commands
+# library(dplyr)   # for the join stuff
+library(tidyverse) # dplyr, tidyr, ggplot2, etc.
 ```
 
 
@@ -51,7 +52,7 @@ As with the dplyr package, there are two main verbs to remember:
 ```{r}
 # first we gather the score columns into columns we'll name Assesment and Score
 tidy.scores <- grade.book %>% 
-  gather( key=Assessement,  # What should I call the key column
+  gather( key=Homework,  # What should I call the key column
           value=Score,      # What should I call the values column
           HW.1:HW.4         # which columns to apply this to
           )
@@ -62,7 +63,7 @@ To spread the key:value pairs out into a matrix, we use the `spread()` command.
 
 ```{r}
 # Turn the Assessment/Score pair of columns into one column per factor level of Assessment
-tidy.scores %>% spread( key=Assessement, value=Score )
+tidy.scores %>% spread( key=Homework, value=Score )
 ```
 
 One way to keep straight which is the `key` column is that the key is the category, while `value` is the numerical value or response. 
@@ -215,6 +216,18 @@ inner_join(Fish.Data, Lake.Data)
 ```
 
 The above examples assumed that the column used to join the two tables was named the same in both tables.  This is good practice to try to do, but sometimes you have to work with data where that isn't the case.  In that situation you can use the `by=c("ColName.A"="ColName.B")` syntax where `ColName.A` represents the name of the column in the first data frame and `ColName.B` is the equivalent column in the second data frame.
+
+
+Finally, the combination of `gather` and `join` allows me to do some very complex calculations across many columns of a data set.  For example, I might gather up a set of columns, calculate some summary statistics, and then join the result back to original data set.  
+
+```{r}
+grade.book %>%
+  group_by(name) %>%
+  gather( key=Homework, value=Score, HW.1:HW.4 ) %>%
+  summarise( HW.avg = mean(Score) ) %>%
+  left_join( grade.book, . )
+```
+
 
 ## Exercises
 

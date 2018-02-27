@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2018-02-16">
+<meta name="date" content="2018-02-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -289,6 +289,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="data-manipulation" class="section level1">
 <h1><span class="header-section-number">Chapter 7</span> Data Manipulation</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library(tidyverse)   # Could load several of Dr Wickham&#39;s commonly used packages all at once.</span>
+<span class="kw">library</span>(dplyr)         <span class="co"># or just the one we&#39;ll use today.</span></code></pre></div>
 <p>Most of the time, our data is in the form of a data frame and we are interested in exploring the relationships. This chapter explores how to manipulate data frames and methods.</p>
 <div id="classical-functions-for-summarizing-rows-and-columns" class="section level2">
 <h2><span class="header-section-number">7.1</span> Classical functions for summarizing rows and columns</h2>
@@ -371,24 +373,34 @@ grades</code></pre></div>
 </div>
 <div id="package-dplyr" class="section level2">
 <h2><span class="header-section-number">7.2</span> Package <code>dplyr</code></h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)   <span class="co"># load the dplyr package!</span></code></pre></div>
 <p>Many of the tools to manipulate data frames in R were written without a consistent syntax and are difficult use together. To remedy this, Hadley Wickham (the writer of <code>ggplot2</code>) introduced a package called plyr which was quite useful. As with many projects, his first version was good but not great and he introduced an improved version that works exclusively with data.frames called <code>dplyr</code> which we will investigate. The package <code>dplyr</code> strives to provide a convenient and consistent set of functions to handle the most common data frame manipulations and a mechanism for chaining these operations together to perform complex tasks.</p>
 <p>The Dr Wickham has put together a very nice introduction to the package that explains in more detail how the various pieces work and I encourage you to read it at some point. [<a href="http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html" class="uri">http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html</a>].</p>
 <p>One of the aspects about the <code>data.frame</code> object is that R does some simplification for you, but it does not do it in a consistent manner. Somewhat obnoxiously character strings are always converted to factors and subsetting might return a <code>data.frame</code> or a <code>vector</code> or a <code>scalar</code>. This is fine at the command line, but can be problematic when programming. Furthermore, many operations are pretty slow using <code>data.frame</code>. To get around this, Dr Wickham introduced a modified version of the <code>data.frame</code> called a <code>tibble</code>. A <code>tibble</code> is a <code>data.frame</code> but with a few extra bits. For now we can ignore the differences.</p>
 <p>The pipe command <code>%&gt;%</code> allows for very readable code. The idea is that the <code>%&gt;%</code> operator works by translating the command <code>a %&gt;% f(b)</code> to the expression <code>f(a,b)</code>. This operator works on any function and was introduced in the <code>magrittr</code> package. The beauty of this comes when you have a suite of functions that takes input arguments of the same type as their output.</p>
-<p>For example if we wanted to start with <code>x</code>, and first apply function <code>f()</code>, then <code>g()</code>, and then <code>h()</code>, the usual R command would be <code>h(g(f(x)))</code> which is hard to read because you have to start reading at the innermost set of parentheses. Using the pipe command <code>%&gt;%</code>, this sequence of operations becomes <code>x %&gt;% f() %&gt;% g() %&gt;% h()</code>.</p>
-<p>Dr Wickham gave the following example of readability:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bopping</span>(
-  <span class="kw">scooping_up</span>(
-    <span class="kw">hopping_through</span>(foo_foo),
-    field_mice),
-  head)</code></pre></div>
-<p>is more readably written:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">foo_foo <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">hopping_through</span>(forest) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">scooping_up</span>( field_mice) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">bopping</span>( head )</code></pre></div>
-<p>In <code>dplyr</code>, all the functions below take a data set as its first argument and outputs an appropriately modified data set. This will allow me to chain together commands in a readable fashion.</p>
+<p>For example, if we wanted to start with <code>x</code>, and first apply function <code>f()</code>, then <code>g()</code>, and then <code>h()</code>, the usual R command would be <code>h(g(f(x)))</code> which is hard to read because you have to start reading at the <em>innermost</em> set of parentheses. Using the pipe command <code>%&gt;%</code>, this sequence of operations becomes <code>x %&gt;% f() %&gt;% g() %&gt;% h()</code>.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Written</th>
+<th align="center">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><code>a %&gt;% f(b)</code></td>
+<td align="center"><code>f(a,b)</code></td>
+</tr>
+<tr class="even">
+<td align="center"><code>b %&gt;% f(a, .)</code></td>
+<td align="center"><code>f(a, b)</code></td>
+</tr>
+<tr class="odd">
+<td align="center"><code>x %&gt;% f() %&gt;% g()</code></td>
+<td align="center"><code>g( f(x) )</code></td>
+</tr>
+</tbody>
+</table>
+<p>In <code>dplyr</code>, all the functions below take a <em>data set as its first argument</em> and <em>outputs an appropriately modified data set</em>. This will allow me to chain together commands in a readable fashion. The pipe command works with any function, not just the <code>dplyr</code> functions and I often find myself using it all over the place.</p>
 <div id="verbs" class="section level3">
 <h3><span class="header-section-number">7.2.1</span> Verbs</h3>
 <p>The foundational operations to perform on a data set are:</p>
@@ -416,7 +428,8 @@ grades</code></pre></div>
 ## 3  Kelso    80    82    81 81.00000
 ## 4   Turk    70    85    92 82.33333</code></pre>
 <p>I could select the columns Exam columns by hand, or by using an extension of the <code>:</code> operator</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>( Exam1, Exam2 )   <span class="co"># Exam1 and Exam2</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select( grades,  Exam1, Exam2 )   # select from `grades` columns Exam1, Exam2</span>
+grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>( Exam1, Exam2 )   <span class="co"># Exam1 and Exam2</span></code></pre></div>
 <pre><code>##   Exam1 Exam2
 ## 1    93    98
 ## 2    89    70
@@ -447,6 +460,7 @@ grades</code></pre></div>
 ## 2    89    70
 ## 3    80    82
 ## 4    70    85</code></pre>
+<p>The <code>dplyr::select</code> function is quite handy, but there are several other packages out there that have a <code>select</code> function and we can get into trouble with loading other packages with the same function names. If I encounter the <code>select</code> function behaving in a weird manner or complaining about an input argument, my first remedy is to be explicit about it is the <code>dplyr::select()</code> function by appending the package name at the start.</p>
 </div>
 <div id="filter" class="section level5">
 <h5><span class="header-section-number">7.2.1.1.2</span> <code>filter()</code></h5>
@@ -569,9 +583,18 @@ grades <span class="op">%&gt;%</span>
 <span class="co"># </span>
 <span class="co"># grades %&gt;%</span>
 <span class="co">#   mutate_at( starts_with(&quot;ave&quot;), round )</span>
-<span class="co">#   </span>
+<span class="co">#    </span>
 <span class="co"># grades %&gt;%</span>
 <span class="co">#   mutate_at( Exam1:average, round, digits=2 )</span></code></pre></div>
+<p>Another situation I often run into is the need to select many columns, and calculate a sum or mean across them. Unfortunately the natural <em>tidyverse</em> way of doing this is a bit clumsy and I often resort to the following trick of using the base <code>apply()</code> function inside of a mutate command. Remember the <code>.</code> represents the data frame passed into the <code>mutate</code> function, so in each line we grab the appropriate columns and then stuff the result into <code>apply</code> and assign the output of the apply function to the new column.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grades <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>( <span class="dt">Exam.Total =</span> <span class="kw">select</span>(., Exam1<span class="op">:</span>Final) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">apply</span>(<span class="dv">1</span>, sum) ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>( <span class="dt">Exam.Avg   =</span> <span class="kw">select</span>(., Exam1<span class="op">:</span>Final) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">apply</span>(<span class="dv">1</span>, mean))</code></pre></div>
+<pre><code>##   l.name Exam1 Exam2 Final  average Exam.Total Exam.Avg
+## 1    Cox    93    98    96 95.66667        287 95.66667
+## 2 Dorian    89    70    85 81.33333        244 81.33333
+## 3  Kelso    80    82    81 81.00000        243 81.00000
+## 4   Turk    70    85    92 82.33333        247 82.33333</code></pre>
 </div>
 <div id="summarise" class="section level4">
 <h4><span class="header-section-number">7.2.1.4</span> summarise()</h4>
@@ -601,20 +624,21 @@ grades <span class="op">%&gt;%</span><span class="st"> </span>
 </div>
 <div id="miscellaneous-functions" class="section level4">
 <h4><span class="header-section-number">7.2.1.5</span> Miscellaneous functions</h4>
-<p>There are some more function that are useful but aren’t as commonly used. For sampling the functions <code>sample_n()</code> and <code>sample_frac()</code> will take a subsample of either n rows or of a fraction of the data set. The function <code>n()</code> returns the number of rows in the data set. Finally <code>rename()</code> will rename a selected column.</p>
+<p>There are some more function that are useful but aren’t as commonly used. For sampling the functions <code>sample_n()</code> and <code>sample_frac()</code> will take a sub-sample of either n rows or of a fraction of the data set. The function <code>n()</code> returns the number of rows in the data set. Finally <code>rename()</code> will rename a selected column.</p>
 </div>
 </div>
 <div id="split-apply-combine" class="section level3">
 <h3><span class="header-section-number">7.2.2</span> Split, apply, combine</h3>
-<p>Aside from unifying the syntax behind the common operations, the major strength of the <code>dplyr</code> package is the ability to split a data frame into a bunch of sub-dataframes, apply a sequence of one or more of the operations we just described, and then combine results back together. We’ll consider data from an experiment from spinning wool into yarn. This experiment considered two different types of wool (A or B) and three different levels of tension on the thread. The response variable is the number of breaks in the resulting yarn. For each of the 6 <code>wool:tension</code> combinations, there are 9 replicated observations per <code>wool:tension</code> level.</p>
+<p>Aside from unifying the syntax behind the common operations, the major strength of the <code>dplyr</code> package is the ability to split a data frame into a bunch of sub-data frames, apply a sequence of one or more of the operations we just described, and then combine results back together. We’ll consider data from an experiment from spinning wool into yarn. This experiment considered two different types of wool (A or B) and three different levels of tension on the thread. The response variable is the number of breaks in the resulting yarn. For each of the 6 <code>wool:tension</code> combinations, there are 9 replicated observations per <code>wool:tension</code> level.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(warpbreaks)
 <span class="kw">str</span>(warpbreaks)</code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    54 obs. of  3 variables:
 ##  $ breaks : num  26 30 54 25 70 52 51 26 67 18 ...
 ##  $ wool   : Factor w/ 2 levels &quot;A&quot;,&quot;B&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ tension: Factor w/ 3 levels &quot;L&quot;,&quot;M&quot;,&quot;H&quot;: 1 1 1 1 1 1 1 1 1 2 ...</code></pre>
-<p>The first we must do is to create a data frame with additional information about how to break the data into sub-dataframes. In this case, I want to break the data up into the 6 wool-by-tension combinations. Initially we will just figure out how many rows are in each wool-by-tension combination.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># group_by:  what variable(s) shall we group one</span>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-132-1.png" width="672" /></p>
+<p>The first we must do is to create a data frame with additional information about how to break the data into sub-data frames. In this case, I want to break the data up into the 6 wool-by-tension combinations. Initially we will just figure out how many rows are in each wool-by-tension combination.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># group_by:  what variable(s) shall we group on.</span>
 <span class="co"># n() is a function that returns how many rows are in the </span>
 <span class="co">#   currently selected sub-dataframe</span>
 warpbreaks <span class="op">%&gt;%</span><span class="st"> </span>
@@ -731,16 +755,17 @@ temp.df2 &lt;-<span class="st"> </span>temp.df1 <span class="op">%&gt;%</span><s
 <li>Look at the help files for the description of the columns.</li>
 </ol>
 <ol start="3" style="list-style-type: lower-alpha">
-<li>Remove all the observations except for ones on day 10 or day 20.</li>
+<li>Remove all the observations except for observations from day 10 or day 20.</li>
 <li>Calculate the mean and standard deviation of the chick weights for each diet group on days 10 and 20.</li>
 </ol></li>
 <li>The OpenIntro textbook on statistics includes a data set on body dimensions.
 <ol style="list-style-type: lower-alpha">
 <li><p>Load the file using</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Body &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;http://www.openintro.org/stat/data/bdims.csv&#39;</span>)</code></pre></div></li>
-<li>The column sex is coded as a 1 if the individual is male and 0 if female. This is a non-intuitive labeling system. Create a new column <code>sex.MF</code> that uses labels Male and Female.</li>
-<li><p>The columns wgt and hgt measure weight and height in kilograms and centimeters (respectively). Use these to calculate the Body Mass Index (BMI) for each individual where <span class="math display">\[BMI=\frac{Weight\,(kg)}{\left[Height\,(m)\right]^{2}}\]</span></p></li>
-<li><p>Double check that your calculated BMI column is correct by examining the summary statistics of the column. BMI values should be between 18 to 40 or so. Did you make an error in your calculation?</p></li>
+<li>The column sex is coded as a 1 if the individual is male and 0 if female. This is a non-intuitive labeling system. Create a new column <code>sex.MF</code> that uses labels Male and Female. <em>Hint: recall either the <code>factor()</code> or <code>cut()</code> command!</em></li>
+<li>The columns <code>wgt</code> and <code>hgt</code> measure weight and height in kilograms and centimeters (respectively). Use these to calculate the Body Mass Index (BMI) for each individual where <span class="math display">\[BMI=\frac{Weight\,(kg)}{\left[Height\,(m)\right]^{2}}\]</span></li>
+<li>Double check that your calculated BMI column is correct by examining the summary statistics of the column. BMI values should be between 18 to 40 or so. Did you make an error in your calculation?<br />
+</li>
 <li><p>The function <code>cut</code> takes a vector of continuous numerical data and creates a factor based on your give cut-points.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define a continuous vector to convert to a factor</span>
 x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>

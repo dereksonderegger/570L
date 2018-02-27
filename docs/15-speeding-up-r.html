@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2018-02-16">
+<meta name="date" content="2018-02-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -310,9 +310,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   x<span class="op">^</span>(<span class="fl">0.5</span>)          <span class="co"># second expression to compare</span>
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: microseconds
-##     expr   min    lq mean median    uq   max neval cld
-##  sqrt(x)  2.58  2.68  2.8   2.75  2.83  3.98   100  a 
-##  x^(0.5) 30.38 30.75 30.9  30.84 30.95 36.84   100   b</code></pre>
+##     expr   min   lq  mean median   uq   max neval cld
+##  sqrt(x)  2.57  2.7  2.89   2.78  2.9  6.19   100  a 
+##  x^(0.5) 30.32 30.7 31.42  30.94 31.1 65.73   100   b</code></pre>
 <p>What <code>microbenchmark</code> does is run the two expressions a number of times and then produces the 5-number summary of those times. By running it multiple times, we account for the randomness associated with a operating system that is also running at the same time.</p>
 <div id="faster-for-loops" class="section level2">
 <h2><span class="header-section-number">15.1</span> Faster for loops?</h2>
@@ -351,9 +351,9 @@ data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class
   <span class="kw">f2.noReturn</span>(data)
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: milliseconds
-##               expr  min  lq mean median   uq  max neval cld
-##           f1(data) 3.34 4.0 5.22   4.74 6.08 11.7   100   a
-##  f2.noReturn(data) 3.24 4.1 5.24   4.64 5.71 12.6   100   a</code></pre>
+##               expr  min   lq mean median   uq  max neval cld
+##           f1(data) 3.40 5.15 7.92   6.36 7.59 85.5   100   a
+##  f2.noReturn(data) 3.46 5.69 7.58   6.57 8.07 20.5   100   a</code></pre>
 <p>In fact, it looks like it is a touch slower, but not massively compared to the run-to-run variability. I prefer to use the <code>return</code> statement for readability, but if we agree have the last line of code in the function be whatever needs to be returned, readability isn’t strongly effected.</p>
 <p>We next consider whether it would be faster to allocate the output vector once we figure out the number of rows needed, or just build it on the fly?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f3.AllocOutput &lt;-<span class="st"> </span><span class="cf">function</span>( input ){
@@ -369,9 +369,9 @@ data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class
   <span class="kw">f3.AllocOutput</span>(data)
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: milliseconds
-##                  expr  min   lq mean median   uq  max neval cld
-##              f1(data) 3.28 3.65 4.25   3.91 4.50 9.50   100   a
-##  f3.AllocOutput(data) 3.36 3.60 4.18   3.93 4.49 9.91   100   a</code></pre>
+##                  expr  min   lq mean median   uq   max neval cld
+##              f1(data) 3.46 3.99 5.06   4.63 5.59 11.69   100   a
+##  f3.AllocOutput(data) 3.46 3.84 4.72   4.47 5.27  8.87   100   a</code></pre>
 <p>If anything, allocating the size of output first was slower. So given this, we shouldn’t feel to bad being lazy and using <code>output &lt;- NULL</code> to initiallize things.</p>
 </div>
 <div id="vectorizing-loops" class="section level2">
@@ -387,9 +387,9 @@ data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class
   <span class="kw">f4.apply</span>(data)
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: microseconds
-##            expr  min   lq mean median   uq  max neval cld
-##        f1(data) 3391 3766 4344   4156 4668 7671   100   b
-##  f4.apply(data)  268  325  402    349  393 3340   100  a</code></pre>
+##            expr  min   lq mean median   uq   max neval cld
+##        f1(data) 3522 4255 5883   5126 6790 11253   100   b
+##  f4.apply(data)  289  357  537    423  536  2857   100  a</code></pre>
 <p>This is the type of speed up that matters. We have a 10-fold speed up in execution time and particularly the maximum time has dropped impressively.</p>
 <p>Unfortunately, I have always found the <code>apply</code> functions a little cumbersome and I prefer to use <code>dplyr</code> instead strictly for readability.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f5.dplyr &lt;-<span class="st"> </span><span class="cf">function</span>( input ){
@@ -402,9 +402,9 @@ data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class
   <span class="kw">f5.dplyr</span>(data)
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: microseconds
-##            expr  min   lq mean median   uq    max neval cld
-##  f4.apply(data)  262  301 2440    333  370 209565   100   a
-##  f5.dplyr(data) 1778 1979 2360   2169 2563   5967   100   a</code></pre>
+##            expr  min   lq mean median   uq  max neval cld
+##  f4.apply(data)  257  290  340    318  359  759   100  a 
+##  f5.dplyr(data) 1774 1891 2224   2029 2312 6344   100   b</code></pre>
 <p>Unfortunately <code>dplyr</code> is a lot slower than <code>apply</code> in this case. I wonder if the dynamics would change with a larger <code>n</code>?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class="dv">10000</span>)
 <span class="kw">microbenchmark</span>(
@@ -412,9 +412,9 @@ data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class
   <span class="kw">f5.dplyr</span>(data)
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: milliseconds
-##            expr  min    lq  mean median    uq   max neval cld
-##  f4.apply(data) 23.6 26.58 30.83  29.47 32.10 73.54   100   b
-##  f5.dplyr(data)  2.2  2.62  2.96   2.82  3.08  6.31   100  a</code></pre>
+##            expr   min    lq  mean median    uq   max neval cld
+##  f4.apply(data) 23.10 25.65 30.44  27.15 30.04 257.4   100   b
+##  f5.dplyr(data)  2.16  2.47  2.91   2.66  2.84   7.7   100  a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class="dv">100000</span>)
 <span class="kw">microbenchmark</span>(
   <span class="kw">f4.apply</span>(data),
@@ -422,8 +422,8 @@ data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##            expr    min     lq  mean median     uq max neval cld
-##  f4.apply(data) 282.83 396.38 489.0 452.27 584.49 792   100   b
-##  f5.dplyr(data)   3.78   4.48  12.3   4.85   5.23 258   100  a</code></pre>
+##  f4.apply(data) 278.69 357.32 451.4 417.46 551.20 921   100   b
+##  f5.dplyr(data)   3.94   4.52  13.9   4.92   5.53 301   100  a</code></pre>
 <p>What just happened? The package <code>dplyr</code> is designed to work well for large data sets, and utilizes a modified structure, called a <code>tibble</code>, which provides massive benefits for large tables, but at the small scale, the overhead of converting the <code>data.frame</code> to a <code>tibble</code> overwhelms any speed up. But because the small sample case is already fast enough to not be noticable, we don’t really care about the small <code>n</code> case.</p>
 </div>
 <div id="parallel-processing" class="section level2">
@@ -438,7 +438,7 @@ data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">doMC<span class="op">::</span><span class="kw">registerDoMC</span>(<span class="dt">cores =</span> <span class="dv">2</span>)  <span class="co"># my laptop only has two cores.</span></code></pre></div>
 <p>We will consider an example that is common in modern statistics. We will examine parallel computing utilizing a bootstrap example where we create bootstrap samples for calculating confidence intervals for regression coefficients.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(trees, <span class="kw">aes</span>(<span class="dt">x=</span>Girth, <span class="dt">y=</span>Volume)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&#39;lm&#39;</span>)</code></pre></div>
-<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-311-1.png" width="672" /></p>
+<p><img src="A_Sufficient_Introduction_to_R_files/figure-html/unnamed-chunk-312-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>( Volume <span class="op">~</span><span class="st"> </span>Girth, <span class="dt">data=</span>trees)</code></pre></div>
 <p>This is how we would do this previously.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># f is a formula</span>
@@ -478,8 +478,8 @@ boot.foreach &lt;-<span class="st"> </span><span class="cf">function</span>(f, d
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##                                 expr min  lq mean median  uq max neval cld
-##      boot.for(Volume ~ Girth, trees) 246 264  323    346 370 530   100  a 
-##  boot.foreach(Volume ~ Girth, trees) 391 410  436    426 447 786   100   b</code></pre>
+##      boot.for(Volume ~ Girth, trees) 232 259  323    348 363 528   100  a 
+##  boot.foreach(Volume ~ Girth, trees) 382 419  453    440 472 634   100   b</code></pre>
 <p>In this case, the overhead associated with splitting the job across two cores, copying the data over, and then combining the results back together was more than we saved by using both cores. If the nugget of computation within each pass of the <code>for</code> loop was larger, then it would pay to use both cores.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># massiveTrees has 31000 observations</span>
 massiveTrees &lt;-<span class="st"> </span><span class="ot">NULL</span>
@@ -492,11 +492,11 @@ massiveTrees &lt;-<span class="st"> </span><span class="ot">NULL</span>
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: seconds
 ##                                        expr  min   lq mean median   uq
-##      boot.for(Volume ~ Girth, massiveTrees) 3.26 3.80 3.95   3.91 3.97
-##  boot.foreach(Volume ~ Girth, massiveTrees) 2.18 2.42 2.48   2.44 2.48
+##      boot.for(Volume ~ Girth, massiveTrees) 3.15 3.44 3.60   3.59 3.74
+##  boot.foreach(Volume ~ Girth, massiveTrees) 1.73 2.04 2.33   2.43 2.55
 ##   max neval cld
-##  5.69   100   b
-##  3.49   100  a</code></pre>
+##  5.11   100   b
+##  2.86   100  a</code></pre>
 <p>Because we often generate a bunch of results that we want to see as a data.frame, the <code>foreach</code> function includes and option to do it for us.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">output &lt;-<span class="st"> </span><span class="kw">foreach</span>( <span class="dt">i=</span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">.combine=</span>data.frame ) <span class="op">%dopar%</span><span class="st"> </span>{
   <span class="co"># Do stuff</span>
@@ -528,8 +528,8 @@ my.fun &lt;-<span class="st"> </span><span class="cf">function</span>(df, index)
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##      expr min  lq mean median  uq  max neval cld
-##    serial 702 731  816    791 884 1290   100   b
-##  parallel 708 733  761    748 769 1186   100  a</code></pre>
+##    serial 675 734  821    810 891 1229   100   a
+##  parallel 704 749  814    775 818 1240   100   a</code></pre>
 <p>In this case, we had a bit of a spead up, but not a factor of 2. This is due to the overhead of splitting the job across both cores.</p>
 </div>
 <div id="carettrain" class="section level3">
@@ -559,9 +559,9 @@ grid &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
 ##                                                                                                                                 expr
 ##    model &lt;- train(lpsa ~ ., data = prostate, method = &quot;glmnet&quot;,      trControl = ctrl.serial, tuneGrid = grid, lambda = grid$lambda)
 ##  model &lt;- train(lpsa ~ ., data = prostate, method = &quot;glmnet&quot;,      trControl = ctrl.parallel, tuneGrid = grid, lambda = grid$lambda)
-##   min   lq mean median   uq  max neval cld
-##  1.18 1.25 1.29   1.27 1.29 1.79   100  a 
-##  1.31 1.43 1.47   1.46 1.48 2.21   100   b</code></pre>
+##   min  lq mean median   uq  max neval cld
+##  1.16 1.2 1.24   1.22 1.25 1.78   100  a 
+##  1.35 1.4 1.46   1.43 1.48 2.11   100   b</code></pre>
 <p>Again, we saw only moderate gains by using both cores, however it didn’t really cost us anything. Because the <code>caret</code> package by default allows parallel processing, it doesn’t hurt to just load the <code>doMC</code> package and register the number of cores. Even in just the two core case, it is a good habit to get into so that when you port your code to a huge computer with many cores, the only thing to change is how many cores you have access to.</p>
 
 </div>

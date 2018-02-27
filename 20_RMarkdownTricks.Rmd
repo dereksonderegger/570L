@@ -209,15 +209,6 @@ knitted, then RMarkdown will turn our simple/grid/pipe table into something pret
 The `knitr` package includes a function that produces simple tables. It doesn't
 have much customizability, but it gets the job done.
 
-```{r, results='hold'}
-# in this code chunk, I've used the "results='hold'" option to prevent
-# the RMarkdown processor from turning this into something pretty
-knitr::kable( data )
-```
-
-which, if I don't prevent the RMarkdown processor from doing its job, will get
-rendered as such:
-
 ```{r}
 knitr::kable( data )
 ```
@@ -237,7 +228,7 @@ The `pander` package deals with summary and anova tables from
 a variety of different analyses. So you can simply ask for a
 nice looking version using the following:
 
-```{r}
+```{r, results='hold'}
 model <- lm( Volume ~ Girth, data=trees )    # a simple regression
 pander( summary(model) )    # my usual summary table
 pander( anova( model ) )    # my usual anova table

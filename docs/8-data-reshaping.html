@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2018-02-16">
+<meta name="date" content="2018-02-26">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -289,8 +289,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="data-reshaping" class="section level1">
 <h1><span class="header-section-number">Chapter 8</span> Data Reshaping</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)   <span class="co"># for the gather/spread commands</span>
-<span class="kw">library</span>(dplyr)   <span class="co"># for the join stuff</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library(tidyr)   # for the gather/spread commands</span>
+<span class="co"># library(dplyr)   # for the join stuff</span>
+<span class="kw">library</span>(tidyverse) <span class="co"># dplyr, tidyr, ggplot2, etc.</span></code></pre></div>
 <p>Most of the time, our data is in the form of a data frame and we are interested in exploring the relationships. However most procedures in R expect the data to show up in a ‘long’ format where each row is an observation and each column is a covariate. In practice, the data is often not stored like that and the data comes to us with repeated observations included on a single row. This is often done as a memory saving technique or because there is some structure in the data that makes the ‘wide’ format attractive. As a result, we need a way to convert data from ‘wide’ to ‘long’ and vice-versa.</p>
 <p>Next we need a way to squish two data frames together. It is often advantagous to store data that would be be repeated seperately in a different table so that a particular piece of information lives in only one location. This makes the data easier to modify, and more likely to maintain consistence. However, this practice requires that, when necessary, we can add information to a table, that might involve a lot of duplicated rows.</p>
 <div id="tidyr" class="section level2">
@@ -316,27 +317,27 @@ grade.book</code></pre></div>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first we gather the score columns into columns we&#39;ll name Assesment and Score</span>
 tidy.scores &lt;-<span class="st"> </span>grade.book <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">gather</span>( <span class="dt">key=</span>Assessement,  <span class="co"># What should I call the key column</span>
+<span class="st">  </span><span class="kw">gather</span>( <span class="dt">key=</span>Homework,  <span class="co"># What should I call the key column</span>
           <span class="dt">value=</span>Score,      <span class="co"># What should I call the values column</span>
           HW.<span class="dv">1</span><span class="op">:</span>HW.<span class="dv">4</span>         <span class="co"># which columns to apply this to</span>
           )
 tidy.scores</code></pre></div>
-<pre><code>##       name Assessement Score
-## 1   Alison        HW.1     8
-## 2  Brandon        HW.1     5
-## 3  Charles        HW.1     9
-## 4   Alison        HW.2     5
-## 5  Brandon        HW.2     3
-## 6  Charles        HW.2     7
-## 7   Alison        HW.3     8
-## 8  Brandon        HW.3     6
-## 9  Charles        HW.3     9
-## 10  Alison        HW.4     4
-## 11 Brandon        HW.4     9
-## 12 Charles        HW.4    10</code></pre>
+<pre><code>##       name Homework Score
+## 1   Alison     HW.1     8
+## 2  Brandon     HW.1     5
+## 3  Charles     HW.1     9
+## 4   Alison     HW.2     5
+## 5  Brandon     HW.2     3
+## 6  Charles     HW.2     7
+## 7   Alison     HW.3     8
+## 8  Brandon     HW.3     6
+## 9  Charles     HW.3     9
+## 10  Alison     HW.4     4
+## 11 Brandon     HW.4     9
+## 12 Charles     HW.4    10</code></pre>
 <p>To spread the key:value pairs out into a matrix, we use the <code>spread()</code> command.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Turn the Assessment/Score pair of columns into one column per factor level of Assessment</span>
-tidy.scores <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>( <span class="dt">key=</span>Assessement, <span class="dt">value=</span>Score )</code></pre></div>
+tidy.scores <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>( <span class="dt">key=</span>Homework, <span class="dt">value=</span>Score )</code></pre></div>
 <pre><code>##      name HW.1 HW.2 HW.3 HW.4
 ## 1  Alison    8    5    8    4
 ## 2 Brandon    5    3    6    9
@@ -412,12 +413,12 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <pre><code>## # A tibble: 6 x 2
 ##   Lake_ID Fish.Weight
 ##     &lt;chr&gt;       &lt;dbl&gt;
-## 1       A    251.5248
-## 2       A    229.1033
-## 3       B    266.7745
-## 4       B    255.5740
-## 5       C    267.3113
-## 6       C    261.9797</code></pre>
+## 1       A    283.5780
+## 2       A    240.3813
+## 3       B    225.9484
+## 4       B    277.9950
+## 5       C    234.6771
+## 6       C    288.8660</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Lake.Data</code></pre></div>
 <pre><code>## # A tibble: 3 x 5
 ##   Lake_ID   Lake_Name    pH  area avg_depth
@@ -431,12 +432,12 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <pre><code>## # A tibble: 7 x 6
 ##   Lake_ID Fish.Weight   Lake_Name    pH  area avg_depth
 ##     &lt;chr&gt;       &lt;dbl&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-## 1       A    251.5248        &lt;NA&gt;    NA    NA        NA
-## 2       A    229.1033        &lt;NA&gt;    NA    NA        NA
-## 3       B    266.7745 Lake Elaine   6.5    40         8
-## 4       B    255.5740 Lake Elaine   6.5    40         8
-## 5       C    267.3113 Mormon Lake   6.3   210        10
-## 6       C    261.9797 Mormon Lake   6.3   210        10
+## 1       A    283.5780        &lt;NA&gt;    NA    NA        NA
+## 2       A    240.3813        &lt;NA&gt;    NA    NA        NA
+## 3       B    225.9484 Lake Elaine   6.5    40         8
+## 4       B    277.9950 Lake Elaine   6.5    40         8
+## 5       C    234.6771 Mormon Lake   6.3   210        10
+## 6       C    288.8660 Mormon Lake   6.3   210        10
 ## 7       D          NA   Lake Mary   6.1   240        38</code></pre>
 <p>Notice that because we didn’t have any fish caught in lake <code>D</code> and we don’t have any Lake information about lake <code>A</code>, when we join these two tables, we end up introducing missing observations into the resulting data frame.</p>
 <p>The other types of joins govern the behavor or these missing data.</p>
@@ -447,22 +448,33 @@ Lake.Data &lt;-<span class="st"> </span><span class="kw">tibble</span>(
 <pre><code>## # A tibble: 6 x 6
 ##   Lake_ID Fish.Weight   Lake_Name    pH  area avg_depth
 ##     &lt;chr&gt;       &lt;dbl&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-## 1       A    251.5248        &lt;NA&gt;    NA    NA        NA
-## 2       A    229.1033        &lt;NA&gt;    NA    NA        NA
-## 3       B    266.7745 Lake Elaine   6.5    40         8
-## 4       B    255.5740 Lake Elaine   6.5    40         8
-## 5       C    267.3113 Mormon Lake   6.3   210        10
-## 6       C    261.9797 Mormon Lake   6.3   210        10</code></pre>
+## 1       A    283.5780        &lt;NA&gt;    NA    NA        NA
+## 2       A    240.3813        &lt;NA&gt;    NA    NA        NA
+## 3       B    225.9484 Lake Elaine   6.5    40         8
+## 4       B    277.9950 Lake Elaine   6.5    40         8
+## 5       C    234.6771 Mormon Lake   6.3   210        10
+## 6       C    288.8660 Mormon Lake   6.3   210        10</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inner_join</span>(Fish.Data, Lake.Data)</code></pre></div>
 <pre><code>## Joining, by = &quot;Lake_ID&quot;</code></pre>
 <pre><code>## # A tibble: 4 x 6
 ##   Lake_ID Fish.Weight   Lake_Name    pH  area avg_depth
 ##     &lt;chr&gt;       &lt;dbl&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-## 1       B    266.7745 Lake Elaine   6.5    40         8
-## 2       B    255.5740 Lake Elaine   6.5    40         8
-## 3       C    267.3113 Mormon Lake   6.3   210        10
-## 4       C    261.9797 Mormon Lake   6.3   210        10</code></pre>
+## 1       B    225.9484 Lake Elaine   6.5    40         8
+## 2       B    277.9950 Lake Elaine   6.5    40         8
+## 3       C    234.6771 Mormon Lake   6.3   210        10
+## 4       C    288.8660 Mormon Lake   6.3   210        10</code></pre>
 <p>The above examples assumed that the column used to join the two tables was named the same in both tables. This is good practice to try to do, but sometimes you have to work with data where that isn’t the case. In that situation you can use the <code>by=c(&quot;ColName.A&quot;=&quot;ColName.B&quot;)</code> syntax where <code>ColName.A</code> represents the name of the column in the first data frame and <code>ColName.B</code> is the equivalent column in the second data frame.</p>
+<p>Finally, the combination of <code>gather</code> and <code>join</code> allows me to do some very complex calculations across many columns of a data set. For example, I might gather up a set of columns, calculate some summary statistics, and then join the result back to original data set.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grade.book <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(name) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>( <span class="dt">key=</span>Homework, <span class="dt">value=</span>Score, HW.<span class="dv">1</span><span class="op">:</span>HW.<span class="dv">4</span> ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>( <span class="dt">HW.avg =</span> <span class="kw">mean</span>(Score) ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>( grade.book, . )</code></pre></div>
+<pre><code>## Joining, by = &quot;name&quot;</code></pre>
+<pre><code>##      name HW.1 HW.2 HW.3 HW.4 HW.avg
+## 1  Alison    8    5    8    4   6.25
+## 2 Brandon    5    3    6    9   5.75
+## 3 Charles    9    7    9   10   8.75</code></pre>
 </div>
 <div id="exercises-7" class="section level2">
 <h2><span class="header-section-number">8.4</span> Exercises</h2>

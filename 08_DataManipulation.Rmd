@@ -13,6 +13,10 @@ if( length(pkgs > 0)){
 }
 ```
 
+```{r, warning=FALSE, message=FALSE}
+# library(tidyverse)   # Could load several of Dr Wickham's commonly used packages all at once.
+library(dplyr)         # or just the one we'll use today.
+```
 
 Most of the time, our data is in the form of a data frame and we are interested in exploring the relationships. This chapter explores how to manipulate data frames and methods. 
 
@@ -80,10 +84,6 @@ There are several variants of the `apply()` function, and the variant I use most
 
 ## Package `dplyr`
 
-```{r, warning=FALSE, message=FALSE}
-library(dplyr)   # load the dplyr package!
-```
-
 Many of the tools to manipulate data frames in R were written without a consistent syntax and are difficult use together. To remedy this, Hadley Wickham (the writer of `ggplot2`) introduced a package called plyr which was quite useful. As with many projects, his first version was good but not great and he introduced an improved version that works exclusively with data.frames called `dplyr` which we will investigate. The package `dplyr` strives to provide a convenient and consistent set of functions to handle the most common data frame manipulations and a mechanism for chaining these operations together to perform complex tasks. 
 
 The Dr Wickham has put together a very nice introduction to the package that explains in more detail how the various pieces work and I encourage you to read it at some point. [http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html].
@@ -92,26 +92,16 @@ One of the aspects about the `data.frame` object is that R does some simplificat
 
 The pipe command `%>%` allows for very readable code. The idea is that the `%>%` operator works by translating the command `a %>% f(b)` to the expression `f(a,b)`. This operator works on any function and was introduced in the `magrittr` package. The beauty of this comes when you have a suite of functions that takes input arguments of the same type as their output. 
 
-For example if we wanted to start with `x`, and first apply function `f()`, then `g()`, and then `h()`, the usual R command would be `h(g(f(x)))` which is hard to read because you have to start reading at the innermost set of parentheses. Using the pipe command `%>%`, this sequence of operations becomes `x %>% f() %>% g() %>% h()`.
+For example, if we wanted to start with `x`, and first apply function `f()`, then `g()`, and then `h()`, the usual R command would be `h(g(f(x)))` which is hard to read because you have to start reading at the *innermost* set of parentheses. Using the pipe command `%>%`, this sequence of operations becomes `x %>% f() %>% g() %>% h()`.
 
-Dr Wickham gave the following example of readability:
-```{r, eval=FALSE}
-bopping(
-  scooping_up(
-    hopping_through(foo_foo),
-    field_mice),
-  head)
-```
 
-is more readably written:
-```{r, eval=FALSE}
-foo_foo %>% 
-  hopping_through(forest) %>%
-  scooping_up( field_mice) %>%
-  bopping( head )
-```
+|     Written         |  Meaning       |
+|:-------------------:|:--------------:|
+| `a %>% f(b)`        |   `f(a,b)`     |
+| `b %>% f(a, .)`     |   `f(a, b)`    |
+| `x %>% f() %>% g()` |  `g( f(x) )`   |
 
-In `dplyr`, all the functions below take a data set as its first argument and outputs an appropriately modified data set. This will allow me to chain together commands in a readable fashion. 
+In `dplyr`, all the functions below take a _data set as its first argument_ and _outputs an appropriately modified data set_. This will allow me to chain together commands in a readable fashion. The pipe command works with any function, not just the `dplyr` functions and I often find myself using it all over the place.
 
 
 ### Verbs
@@ -149,6 +139,7 @@ grades
 
 I could select the columns Exam columns by hand, or by using an extension of the `:` operator
 ```{r}
+# select( grades,  Exam1, Exam2 )   # select from `grades` columns Exam1, Exam2
 grades %>% select( Exam1, Exam2 )   # Exam1 and Exam2
 grades %>% select( Exam1:Final )    # Columns Exam1 through Final
 grades %>% select( -Exam1 )         # Negative indexing by name works
@@ -160,6 +151,7 @@ The `select()` command has a few other tricks. There are functional calls that d
 grades %>% select( starts_with('Exam') )   # Exam1 and Exam2
 ```
 
+The `dplyr::select` function is quite handy, but there are several other packages out there that have a `select` function and we can get into trouble with loading other packages with the same function names.  If I encounter the `select` function behaving in a weird manner or complaining about an input argument, my first remedy is to be explicit about it is the `dplyr::select()` function by appending the package name at the start. 
 
 ##### `filter()`
 
@@ -257,9 +249,16 @@ grades %>%
 # 
 # grades %>%
 #   mutate_at( starts_with("ave"), round )
-#   
+#    
 # grades %>%
 #   mutate_at( Exam1:average, round, digits=2 )
+```
+
+Another situation I often run into is the need to select many columns, and calculate a sum or mean across them. Unfortunately the natural _tidyverse_ way of doing this is a bit clumsy and I often resort to the following trick of using the base `apply()` function inside of a mutate command.  Remember the `.` represents the data frame passed into the `mutate` function, so in each line we grab the appropriate columns and then stuff the result into `apply` and assign the output of the apply function to the new column.
+```{r}
+grades %>%
+  mutate( Exam.Total = select(., Exam1:Final) %>% apply(1, sum) ) %>%
+  mutate( Exam.Avg   = select(., Exam1:Final) %>% apply(1, mean))
 ```
 
 
@@ -294,25 +293,31 @@ grades  %>%
 
 #### Miscellaneous functions
 
-There are some more function that are useful but aren't as commonly used. For sampling the functions `sample_n()` and `sample_frac()` will take a subsample of either n rows or of a fraction of the data set. The function `n()` returns the number of rows in the data set. Finally `rename()` will rename a selected column.
+There are some more function that are useful but aren't as commonly used. For sampling the functions `sample_n()` and `sample_frac()` will take a sub-sample of either n rows or of a fraction of the data set. The function `n()` returns the number of rows in the data set. Finally `rename()` will rename a selected column.
 
 ### Split, apply, combine
 
-Aside from unifying the syntax behind the common operations, the major strength of the `dplyr` package is the ability to split a data frame into a bunch of sub-dataframes, apply a sequence of one or more of the operations we just described, and then combine results back together. We'll consider data from an experiment from spinning wool into yarn. This experiment considered two different types of wool (A or B) and three different levels of tension on the thread. The response variable is the number of breaks in the resulting yarn. For each of the 6 `wool:tension` combinations, there are 9 replicated observations per `wool:tension` level.
+Aside from unifying the syntax behind the common operations, the major strength of the `dplyr` package is the ability to split a data frame into a bunch of sub-data frames, apply a sequence of one or more of the operations we just described, and then combine results back together. We'll consider data from an experiment from spinning wool into yarn. This experiment considered two different types of wool (A or B) and three different levels of tension on the thread. The response variable is the number of breaks in the resulting yarn. For each of the 6 `wool:tension` combinations, there are 9 replicated observations per `wool:tension` level.
 ```{r}
 data(warpbreaks)
 str(warpbreaks)
 ```
 
-The first we must do is to create a data frame with additional information about how to break the data into sub-dataframes. In this case, I want to break the data up into the 6 wool-by-tension combinations. Initially we will just figure out how many rows are in each wool-by-tension combination.
+```{r, warning=FALSE, message=FALSE, echo=FALSE, fig.height=2.5}
+library(ggplot2)
+ggplot2::ggplot(warpbreaks, aes(x=tension, y=breaks, color=wool)) + ggplot2::geom_point() + facet_grid(~wool)
+```
+
+The first we must do is to create a data frame with additional information about how to break the data into sub-data frames. In this case, I want to break the data up into the 6 wool-by-tension combinations. Initially we will just figure out how many rows are in each wool-by-tension combination.
 ```{r}
-# group_by:  what variable(s) shall we group one
+# group_by:  what variable(s) shall we group on.
 # n() is a function that returns how many rows are in the 
 #   currently selected sub-dataframe
 warpbreaks %>% 
   group_by( wool, tension) %>%    # grouping
   summarise(n = n() )             # how many in each group
 ```
+
 
 The `group_by` function takes a data.frame and returns the same data.frame, but with some extra information so that any subsequent function acts on each unique combination defined in the `group_by`.  If you wish to remove this behavior, use `group_by()` to reset the grouping to have no grouping variable.
 
@@ -388,7 +393,7 @@ race.results %>%
         data(ChickWeight)
         ```
     b. Look at the help files for the description of the columns.
-    c) Remove all the observations except for ones on day 10 or day 20.
+    c) Remove all the observations except for observations from day 10 or day 20.
     d) Calculate the mean and standard deviation of the chick weights for each diet group on days 10 and 20. 
 
 2. The OpenIntro textbook on statistics includes a data set on body dimensions. 
@@ -396,12 +401,10 @@ race.results %>%
         ```{r}
         Body <- read.csv('http://www.openintro.org/stat/data/bdims.csv')
         ```
-    b) The column sex is coded as a 1 if the individual is male and 0 if female. This is a non-intuitive labeling system. Create a new column `sex.MF` that uses labels Male and Female. 
-    c) The columns wgt and hgt measure weight and height in kilograms and centimeters (respectively). Use these to calculate the Body Mass Index (BMI) for each individual where 
+    b) The column sex is coded as a 1 if the individual is male and 0 if female. This is a non-intuitive labeling system. Create a new column `sex.MF` that uses labels Male and Female. _Hint: recall either the `factor()` or `cut()` command!_
+    c) The columns `wgt` and `hgt` measure weight and height in kilograms and centimeters (respectively). Use these to calculate the Body Mass Index (BMI) for each individual where 
     $$BMI=\frac{Weight\,(kg)}{\left[Height\,(m)\right]^{2}}$$ 
-    
     d) Double check that your calculated BMI column is correct by examining the summary statistics of the column. BMI values should be between 18 to 40 or so.  Did you make an error in your calculation?  
-    
     e) The function `cut` takes a vector of continuous numerical data and creates a factor based on your give cut-points. 
         ```{r}
         # Define a continuous vector to convert to a factor
@@ -426,7 +429,6 @@ race.results %>%
                                 breaks=c(10,20,30,40,50,60,70),
                                 right=FALSE))
         ```
-    
     f) Find the average BMI for each Sex-by-Age combination.
     
     
