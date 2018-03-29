@@ -138,7 +138,7 @@ donors <- rbind(donors, data.frame(
   State='AZ'))
 donations <- rbind(donations, data.frame(
   Donation_ID = c('Donation_4', 'Donation_5'),
-  Donor_ID = c('Donor_1','Donor_4'),
+  Donor_ID = c('Donor_1','Donor_3'),
   Date = lubridate::mdy( c('8-26-2017', '8-26-2017') ),
   Hemoglobin=c(17.6, 16.1), 
   Systolic=c(120, 137), 

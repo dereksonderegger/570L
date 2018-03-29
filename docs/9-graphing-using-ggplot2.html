@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Sufficient Introduction to R</title>
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2018-02-26">
+<meta name="date" content="2018-03-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -415,7 +415,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><p>The column in the data that we wish to investigate is defined in the <code>aes(x=class)</code> part. This means the x-axis will be the car’s class, which is indicated by the column named <code>class</code>.</p></li>
 <li><p>The way we want to display this information is using a bar chart.</p></li>
 </ol>
-<p>By default, the <code>geom_box()</code> just counts the number of cases and displays how many observations were in each factor level. This behavior can modified using the <code>stat=</code> option. In particular, if I have a data frame that I have already summarized, <code>stat=identity</code> will allow you to set the height of the bar.</p>
+<p>By default, the <code>geom_bar()</code> just counts the number of cases and displays how many observations were in each factor level. If I have a data frame that I have already summarized, <code>geom_col</code> will allow you to set the height of the bar by a <span class="math inline">\(y\)</span> column.</p>
 </div>
 <div id="histograms-1" class="section level3">
 <h3><span class="header-section-number">9.1.2</span> Histograms</h3>
@@ -525,7 +525,7 @@ mtcars<span class="op">$</span>cyl &lt;-<span class="st"> </span><span class="kw
 <pre><code>## Installing dsData</code></pre>
 <pre><code>## &#39;/Library/Frameworks/R.framework/Resources/bin/R&#39; --no-site-file  \
 ##   --no-environ --no-save --no-restore --quiet CMD INSTALL  \
-##   &#39;/private/var/folders/d1/drs_scp95wd_s6zsdksk312m0000gn/T/RtmpHtNLo0/devtools53d678528ab7/dereksonderegger-dsData-a8349ec&#39;  \
+##   &#39;/private/var/folders/d1/drs_scp95wd_s6zsdksk312m0000gn/T/RtmpIFV4tp/devtoolsb6f34c27dfe2/dereksonderegger-dsData-43b2f6d&#39;  \
 ##   --library=&#39;/Library/Frameworks/R.framework/Versions/3.4/Resources/library&#39;  \
 ##   --install-tests</code></pre>
 <pre><code>## </code></pre>
@@ -631,11 +631,11 @@ stats &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span cla
           <span class="dt">upr =</span> Mean <span class="op">+</span><span class="st"> </span>StdErr )
 stats</code></pre></div>
 <pre><code>## # A tibble: 3 x 5
-##      Species  Mean     StdErr       lwr       upr
-##       &lt;fctr&gt; &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1     setosa 0.246 0.01490377 0.2310962 0.2609038
-## 2 versicolor 1.326 0.02796645 1.2980335 1.3539665
-## 3  virginica 2.026 0.03884138 1.9871586 2.0648414</code></pre>
+##   Species     Mean StdErr   lwr   upr
+##   &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 setosa     0.246 0.0149 0.231 0.261
+## 2 versicolor 1.33  0.0280 1.30  1.35 
+## 3 virginica  2.03  0.0388 1.99  2.06</code></pre>
 <p>Next we take these summary statistics and define the following graph which makes a bar graph of the means and error bars that are <span class="math inline">\(\pm\)</span> 1 estimated standard deviation of the mean (usually referred to as the standard errors of the means). By default, <code>geom_bar()</code> tries to draw a bar plot based on how many observations each group has. What I want, though, is to draw bars of the height I specified, so to do that I have to add <code>stat='identity'</code> to specify that it should just use the heights I tell it.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(stats, <span class="kw">aes</span>(<span class="dt">x=</span>Species)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>( <span class="kw">aes</span>(<span class="dt">y=</span>Mean), <span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>) <span class="op">+</span>
@@ -767,6 +767,7 @@ gitbook.start({
 "facebook": false,
 "twitter": false,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
@@ -796,9 +797,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

@@ -86,7 +86,7 @@ ggplot(data=mpg, aes(x=class)) +
 3. The way we want to display this information is using a bar chart.
 
 
-By default, the `geom_box()` just counts the number of cases and displays how many observations were in each factor level. This behavior can modified using the `stat=` option. In particular, if I have a data frame that I have already summarized, `stat=identity` will allow you to set the height of the bar.
+By default, the `geom_bar()` just counts the number of cases and displays how many observations were in each factor level. If I have a data frame that I have already summarized, `geom_col` will allow you to set the height of the bar by a $y$ column. 
 
 ### Histograms
 Histograms also focus on a single variable and give how frequently particular ranges of the data occur.

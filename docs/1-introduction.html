@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Sufficient Introduction to R</title>
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2018-02-26">
+<meta name="date" content="2018-03-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -487,13 +487,13 @@ Grades <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise</span>( <span class="dt">Mean =</span> <span class="kw">mean</span>(Butterfat), 
              <span class="dt">Std.Dev =</span> <span class="kw">sd</span>(Butterfat) )</code></pre></div>
 <pre><code>## # A tibble: 5 x 3
-##              Breed   Mean   Std.Dev
-##             &lt;fctr&gt;  &lt;dbl&gt;     &lt;dbl&gt;
-## 1         Ayrshire 4.0600 0.2608892
-## 2         Canadian 4.4385 0.3655173
-## 3         Guernsey 4.9500 0.4833001
-## 4 Holstein-Fresian 3.6695 0.2588736
-## 5           Jersey 5.2925 0.5993231</code></pre>
+##   Breed             Mean Std.Dev
+##   &lt;fct&gt;            &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Ayrshire          4.06   0.261
+## 2 Canadian          4.44   0.366
+## 3 Guernsey          4.95   0.483
+## 4 Holstein-Fresian  3.67   0.259
+## 5 Jersey            5.29   0.599</code></pre>
 </div>
 <div id="graphing-data" class="section level2">
 <h2><span class="header-section-number">1.6</span> Graphing Data</h2>
@@ -751,6 +751,7 @@ gitbook.start({
 "facebook": false,
 "twitter": false,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
@@ -780,9 +781,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

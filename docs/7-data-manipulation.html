@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Sufficient Introduction to R</title>
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2018-02-26">
+<meta name="date" content="2018-03-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -487,10 +487,10 @@ grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">f
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># grab the first 2 rows</span>
 grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</code></pre></div>
 <pre><code>## # A tibble: 2 x 5
-##   l.name Exam1 Exam2 Final  average
-##   &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-## 1    Cox    93    98    96 95.66667
-## 2 Dorian    89    70    85 81.33333</code></pre>
+##   l.name Exam1 Exam2 Final average
+##   &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Cox      93.   98.   96.    95.7
+## 2 Dorian   89.   70.   85.    81.3</code></pre>
 </div>
 </div>
 <div id="arrange" class="section level4">
@@ -646,14 +646,14 @@ warpbreaks <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>() )             <span class="co"># how many in each group</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ## # Groups:   wool [?]
-##     wool tension     n
-##   &lt;fctr&gt;  &lt;fctr&gt; &lt;int&gt;
-## 1      A       L     9
-## 2      A       M     9
-## 3      A       H     9
-## 4      B       L     9
-## 5      B       M     9
-## 6      B       H     9</code></pre>
+##   wool  tension     n
+##   &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;
+## 1 A     L           9
+## 2 A     M           9
+## 3 A     H           9
+## 4 B     L           9
+## 5 B     M           9
+## 6 B     H           9</code></pre>
 <p>The <code>group_by</code> function takes a data.frame and returns the same data.frame, but with some extra information so that any subsequent function acts on each unique combination defined in the <code>group_by</code>. If you wish to remove this behavior, use <code>group_by()</code> to reset the grouping to have no grouping variable.</p>
 <p>Using the same <code>summarise</code> function, we could calculate the group mean and standard deviation for each wool-by-tension group.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">warpbreaks <span class="op">%&gt;%</span><span class="st"> </span>
@@ -663,14 +663,14 @@ warpbreaks <span class="op">%&gt;%</span><span class="st"> </span>
              <span class="dt">sd.breaks   =</span> <span class="kw">sd</span>(breaks))      <span class="co"># statistics.</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ## # Groups:   wool [?]
-##     wool tension     n mean.breaks sd.breaks
-##   &lt;fctr&gt;  &lt;fctr&gt; &lt;int&gt;       &lt;dbl&gt;     &lt;dbl&gt;
-## 1      A       L     9    44.55556 18.097729
-## 2      A       M     9    24.00000  8.660254
-## 3      A       H     9    24.55556 10.272671
-## 4      B       L     9    28.22222  9.858724
-## 5      B       M     9    28.77778  9.431036
-## 6      B       H     9    18.77778  4.893306</code></pre>
+##   wool  tension     n mean.breaks sd.breaks
+##   &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+## 1 A     L           9        44.6     18.1 
+## 2 A     M           9        24.0      8.66
+## 3 A     H           9        24.6     10.3 
+## 4 B     L           9        28.2      9.86
+## 5 B     M           9        28.8      9.43
+## 6 B     H           9        18.8      4.89</code></pre>
 <p>If instead of summarizing each split, we might want to just do some calculation and the output should have the same number of rows as the input data frame. In this case I’ll tell <code>dplyr</code> that we are mutating the data frame instead of summarizing it. For example, suppose that I want to calculate the residual value <span class="math display">\[e_{ijk}=y_{ijk}-\bar{y}_{ij\cdot}\]</span> where <span class="math inline">\(\bar{y}_{ij\cdot}\)</span> is the mean of each <code>wool:tension</code> combination.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">warpbreaks <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">   </span><span class="kw">group_by</span>(wool, tension) <span class="op">%&gt;%</span><span class="st">                 </span><span class="co"># group by wool:tension</span>
@@ -678,14 +678,14 @@ warpbreaks <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">   </span><span class="kw">head</span>(  )                                    <span class="co"># show the first couple of rows</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ## # Groups:   wool, tension [1]
-##   breaks   wool tension      resid
-##    &lt;dbl&gt; &lt;fctr&gt;  &lt;fctr&gt;      &lt;dbl&gt;
-## 1     26      A       L -18.555556
-## 2     30      A       L -14.555556
-## 3     54      A       L   9.444444
-## 4     25      A       L -19.555556
-## 5     70      A       L  25.444444
-## 6     52      A       L   7.444444</code></pre>
+##   breaks wool  tension  resid
+##    &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;    &lt;dbl&gt;
+## 1    26. A     L       -18.6 
+## 2    30. A     L       -14.6 
+## 3    54. A     L         9.44
+## 4    25. A     L       -19.6 
+## 5    70. A     L        25.4 
+## 6    52. A     L         7.44</code></pre>
 </div>
 <div id="chaining-commands-together" class="section level3">
 <h3><span class="header-section-number">7.2.3</span> Chaining commands together</h3>
@@ -711,16 +711,16 @@ race.results &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
   gender, place)            <span class="co"># arrange the result by gender and place</span></code></pre></div>
 <pre><code>## # A tibble: 8 x 4
 ## # Groups:   gender [2]
-##     name  time gender place
-##   &lt;fctr&gt; &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;
-## 1 Rachel 19.82      F     1
-## 2 Bonnie 23.45      F     2
-## 3  April 24.22      F     3
-## 4  Elise 28.83      F     4
-## 5  David 15.73      M     1
-## 6   Jeff 19.51      M     2
-## 7  Derek 20.23      M     3
-## 8    Bob 21.23      M     4</code></pre>
+##   name    time gender place
+##   &lt;fct&gt;  &lt;dbl&gt; &lt;fct&gt;  &lt;dbl&gt;
+## 1 Rachel  19.8 F         1.
+## 2 Bonnie  23.4 F         2.
+## 3 April   24.2 F         3.
+## 4 Elise   28.8 F         4.
+## 5 David   15.7 M         1.
+## 6 Jeff    19.5 M         2.
+## 7 Derek   20.2 M         3.
+## 8 Bob     21.2 M         4.</code></pre>
 <p>This is very difficult to read because you have to read the code <em>from the inside out</em>.</p>
 <p>Another (and slightly more readable) way to complete our task is to save each intermediate step of our process and then use that in the next step:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp.df0 &lt;-<span class="st"> </span>race.results <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>( gender)
@@ -733,16 +733,16 @@ temp.df2 &lt;-<span class="st"> </span>temp.df1 <span class="op">%&gt;%</span><s
 <span class="st">  </span><span class="kw">arrange</span>( gender, place )</code></pre></div>
 <pre><code>## # A tibble: 8 x 4
 ## # Groups:   gender [2]
-##     name  time gender place
-##   &lt;fctr&gt; &lt;dbl&gt; &lt;fctr&gt; &lt;dbl&gt;
-## 1 Rachel 19.82      F     1
-## 2 Bonnie 23.45      F     2
-## 3  April 24.22      F     3
-## 4  Elise 28.83      F     4
-## 5  David 15.73      M     1
-## 6   Jeff 19.51      M     2
-## 7  Derek 20.23      M     3
-## 8    Bob 21.23      M     4</code></pre>
+##   name    time gender place
+##   &lt;fct&gt;  &lt;dbl&gt; &lt;fct&gt;  &lt;dbl&gt;
+## 1 Rachel  19.8 F         1.
+## 2 Bonnie  23.4 F         2.
+## 3 April   24.2 F         3.
+## 4 Elise   28.8 F         4.
+## 5 David   15.7 M         1.
+## 6 Jeff    19.5 M         2.
+## 7 Derek   20.2 M         3.
+## 8 Bob     21.2 M         4.</code></pre>
 </div>
 </div>
 <div id="exercises-6" class="section level2">
@@ -823,6 +823,7 @@ gitbook.start({
 "facebook": false,
 "twitter": false,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
@@ -852,9 +853,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Sufficient Introduction to R</title>
   <meta name="description" content="These notes serve as an introduction to R, but certainly is not comprehensive. The intention is to teach students enough to be able to work with data frames and make graphs using ggplot2. I also cover a range of common data issues that PhD students often have to address.">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Sufficient Introduction to R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Derek L. Sonderegger">
 
 
-<meta name="date" content="2018-02-26">
+<meta name="date" content="2018-03-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -310,9 +310,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   x<span class="op">^</span>(<span class="fl">0.5</span>)          <span class="co"># second expression to compare</span>
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: microseconds
-##     expr   min   lq  mean median   uq   max neval cld
-##  sqrt(x)  2.57  2.7  2.89   2.78  2.9  6.19   100  a 
-##  x^(0.5) 30.32 30.7 31.42  30.94 31.1 65.73   100   b</code></pre>
+##     expr   min    lq  mean median    uq   max neval cld
+##  sqrt(x)  2.59  2.69  2.92   2.77  2.89  9.33   100  a 
+##  x^(0.5) 30.37 30.73 31.59  30.87 31.00 52.08   100   b</code></pre>
 <p>What <code>microbenchmark</code> does is run the two expressions a number of times and then produces the 5-number summary of those times. By running it multiple times, we account for the randomness associated with a operating system that is also running at the same time.</p>
 <div id="faster-for-loops" class="section level2">
 <h2><span class="header-section-number">15.1</span> Faster for loops?</h2>
@@ -351,9 +351,9 @@ data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class
   <span class="kw">f2.noReturn</span>(data)
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: milliseconds
-##               expr  min   lq mean median   uq  max neval cld
-##           f1(data) 3.40 5.15 7.92   6.36 7.59 85.5   100   a
-##  f2.noReturn(data) 3.46 5.69 7.58   6.57 8.07 20.5   100   a</code></pre>
+##               expr min   lq mean median   uq  max neval cld
+##           f1(data) 3.3 3.43 3.70   3.56 3.71 8.23   100   a
+##  f2.noReturn(data) 3.3 3.41 3.84   3.54 3.84 9.20   100   a</code></pre>
 <p>In fact, it looks like it is a touch slower, but not massively compared to the run-to-run variability. I prefer to use the <code>return</code> statement for readability, but if we agree have the last line of code in the function be whatever needs to be returned, readability isn’t strongly effected.</p>
 <p>We next consider whether it would be faster to allocate the output vector once we figure out the number of rows needed, or just build it on the fly?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f3.AllocOutput &lt;-<span class="st"> </span><span class="cf">function</span>( input ){
@@ -369,9 +369,9 @@ data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class
   <span class="kw">f3.AllocOutput</span>(data)
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: milliseconds
-##                  expr  min   lq mean median   uq   max neval cld
-##              f1(data) 3.46 3.99 5.06   4.63 5.59 11.69   100   a
-##  f3.AllocOutput(data) 3.46 3.84 4.72   4.47 5.27  8.87   100   a</code></pre>
+##                  expr  min   lq mean median   uq  max neval cld
+##              f1(data) 3.32 3.54 3.97   3.80 4.14 8.15   100   a
+##  f3.AllocOutput(data) 3.29 3.50 4.00   3.77 4.09 9.07   100   a</code></pre>
 <p>If anything, allocating the size of output first was slower. So given this, we shouldn’t feel to bad being lazy and using <code>output &lt;- NULL</code> to initiallize things.</p>
 </div>
 <div id="vectorizing-loops" class="section level2">
@@ -387,9 +387,9 @@ data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class
   <span class="kw">f4.apply</span>(data)
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: microseconds
-##            expr  min   lq mean median   uq   max neval cld
-##        f1(data) 3522 4255 5883   5126 6790 11253   100   b
-##  f4.apply(data)  289  357  537    423  536  2857   100  a</code></pre>
+##            expr  min   lq mean median   uq  max neval cld
+##        f1(data) 3291 3538 3922   3742 4086 6578   100   b
+##  f4.apply(data)  264  305  375    337  385 2272   100  a</code></pre>
 <p>This is the type of speed up that matters. We have a 10-fold speed up in execution time and particularly the maximum time has dropped impressively.</p>
 <p>Unfortunately, I have always found the <code>apply</code> functions a little cumbersome and I prefer to use <code>dplyr</code> instead strictly for readability.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f5.dplyr &lt;-<span class="st"> </span><span class="cf">function</span>( input ){
@@ -403,8 +403,8 @@ data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: microseconds
 ##            expr  min   lq mean median   uq  max neval cld
-##  f4.apply(data)  257  290  340    318  359  759   100  a 
-##  f5.dplyr(data) 1774 1891 2224   2029 2312 6344   100   b</code></pre>
+##  f4.apply(data)  265  291  328    316  350  575   100  a 
+##  f5.dplyr(data) 1772 1865 2142   2021 2200 5981   100   b</code></pre>
 <p>Unfortunately <code>dplyr</code> is a lot slower than <code>apply</code> in this case. I wonder if the dynamics would change with a larger <code>n</code>?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class="dv">10000</span>)
 <span class="kw">microbenchmark</span>(
@@ -412,18 +412,18 @@ data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class
   <span class="kw">f5.dplyr</span>(data)
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: milliseconds
-##            expr   min    lq  mean median    uq   max neval cld
-##  f4.apply(data) 23.10 25.65 30.44  27.15 30.04 257.4   100   b
-##  f5.dplyr(data)  2.16  2.47  2.91   2.66  2.84   7.7   100  a</code></pre>
+##            expr  min    lq mean median    uq   max neval cld
+##  f4.apply(data) 23.3 26.20 33.2  28.96 33.29 238.9   100   b
+##  f5.dplyr(data)  2.2  2.43  3.0   2.67  3.02  19.6   100  a</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">make.data</span>(<span class="dv">100000</span>)
 <span class="kw">microbenchmark</span>(
   <span class="kw">f4.apply</span>(data),
   <span class="kw">f5.dplyr</span>(data)
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: milliseconds
-##            expr    min     lq  mean median     uq max neval cld
-##  f4.apply(data) 278.69 357.32 451.4 417.46 551.20 921   100   b
-##  f5.dplyr(data)   3.94   4.52  13.9   4.92   5.53 301   100  a</code></pre>
+##            expr   min     lq   mean median     uq  max neval cld
+##  f4.apply(data) 288.1 374.29 493.32 463.37 579.22 1067   100   b
+##  f5.dplyr(data)   3.4   4.52   8.54   4.97   6.23  170   100  a</code></pre>
 <p>What just happened? The package <code>dplyr</code> is designed to work well for large data sets, and utilizes a modified structure, called a <code>tibble</code>, which provides massive benefits for large tables, but at the small scale, the overhead of converting the <code>data.frame</code> to a <code>tibble</code> overwhelms any speed up. But because the small sample case is already fast enough to not be noticable, we don’t really care about the small <code>n</code> case.</p>
 </div>
 <div id="parallel-processing" class="section level2">
@@ -477,9 +477,12 @@ boot.foreach &lt;-<span class="st"> </span><span class="cf">function</span>(f, d
   <span class="kw">boot.foreach</span>( Volume<span class="op">~</span>Girth, trees )
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: milliseconds
-##                                 expr min  lq mean median  uq max neval cld
-##      boot.for(Volume ~ Girth, trees) 232 259  323    348 363 528   100  a 
-##  boot.foreach(Volume ~ Girth, trees) 382 419  453    440 472 634   100   b</code></pre>
+##                                 expr min  lq mean median  uq  max neval
+##      boot.for(Volume ~ Girth, trees) 233 253  319    337 360  596   100
+##  boot.foreach(Volume ~ Girth, trees) 358 413  450    430 453 1230   100
+##  cld
+##   a 
+##    b</code></pre>
 <p>In this case, the overhead associated with splitting the job across two cores, copying the data over, and then combining the results back together was more than we saved by using both cores. If the nugget of computation within each pass of the <code>for</code> loop was larger, then it would pay to use both cores.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># massiveTrees has 31000 observations</span>
 massiveTrees &lt;-<span class="st"> </span><span class="ot">NULL</span>
@@ -492,11 +495,11 @@ massiveTrees &lt;-<span class="st"> </span><span class="ot">NULL</span>
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: seconds
 ##                                        expr  min   lq mean median   uq
-##      boot.for(Volume ~ Girth, massiveTrees) 3.15 3.44 3.60   3.59 3.74
-##  boot.foreach(Volume ~ Girth, massiveTrees) 1.73 2.04 2.33   2.43 2.55
+##      boot.for(Volume ~ Girth, massiveTrees) 3.04 3.61 3.82   3.72 3.85
+##  boot.foreach(Volume ~ Girth, massiveTrees) 1.65 1.98 2.32   2.37 2.54
 ##   max neval cld
-##  5.11   100   b
-##  2.86   100  a</code></pre>
+##  9.55   100   b
+##  3.50   100  a</code></pre>
 <p>Because we often generate a bunch of results that we want to see as a data.frame, the <code>foreach</code> function includes and option to do it for us.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">output &lt;-<span class="st"> </span><span class="kw">foreach</span>( <span class="dt">i=</span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">.combine=</span>data.frame ) <span class="op">%dopar%</span><span class="st"> </span>{
   <span class="co"># Do stuff</span>
@@ -528,8 +531,8 @@ my.fun &lt;-<span class="st"> </span><span class="cf">function</span>(df, index)
 ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##      expr min  lq mean median  uq  max neval cld
-##    serial 675 734  821    810 891 1229   100   a
-##  parallel 704 749  814    775 818 1240   100   a</code></pre>
+##    serial 679 737  848    839 907 1658   100   b
+##  parallel 685 721  787    751 801 1258   100  a</code></pre>
 <p>In this case, we had a bit of a spead up, but not a factor of 2. This is due to the overhead of splitting the job across both cores.</p>
 </div>
 <div id="carettrain" class="section level3">
@@ -559,9 +562,9 @@ grid &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
 ##                                                                                                                                 expr
 ##    model &lt;- train(lpsa ~ ., data = prostate, method = &quot;glmnet&quot;,      trControl = ctrl.serial, tuneGrid = grid, lambda = grid$lambda)
 ##  model &lt;- train(lpsa ~ ., data = prostate, method = &quot;glmnet&quot;,      trControl = ctrl.parallel, tuneGrid = grid, lambda = grid$lambda)
-##   min  lq mean median   uq  max neval cld
-##  1.16 1.2 1.24   1.22 1.25 1.78   100  a 
-##  1.35 1.4 1.46   1.43 1.48 2.11   100   b</code></pre>
+##   min   lq mean median   uq  max neval cld
+##  1.17 1.20 1.23   1.21 1.23 1.49   100  a 
+##  1.33 1.35 1.39   1.36 1.40 2.03   100   b</code></pre>
 <p>Again, we saw only moderate gains by using both cores, however it didn’t really cost us anything. Because the <code>caret</code> package by default allows parallel processing, it doesn’t hurt to just load the <code>doMC</code> package and register the number of cores. Even in just the two core case, it is a good habit to get into so that when you port your code to a huge computer with many cores, the only thing to change is how many cores you have access to.</p>
 
 </div>
@@ -591,6 +594,7 @@ gitbook.start({
 "facebook": false,
 "twitter": false,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
@@ -620,9 +624,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
